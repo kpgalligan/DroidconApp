@@ -45,7 +45,7 @@
     <style name="ProfileIcons">
         <item name="android:layout_marginTop">@dimen/padding_small</item>
         <item name="android:layout_marginBottom">@dimen/padding_small</item>
-        <item name="android:layout_marginLeft">@dimen/padding_xxlarge</item>
+        <item name="android:layout_marginLeft">@dimen/padding_social_icon</item>
         <item name="android:layout_marginRight">@dimen/padding_xxlarge</item>
     </style>
 

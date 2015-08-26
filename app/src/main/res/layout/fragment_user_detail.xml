@@ -44,8 +44,8 @@
 
                 <de.hdodenhof.circleimageview.CircleImageView
                     android:id="@+id/profile_image"
-                    android:layout_width="@dimen/height_xlarge"
-                    android:layout_height="@dimen/height_xlarge"
+                    android:layout_width="@dimen/height_xxxlarge"
+                    android:layout_height="@dimen/height_xxxlarge"
                     android:layout_centerVertical="true"
                     android:layout_marginRight="@dimen/padding_medium"
                     tools:src="@drawable/profile_placeholder"/>
@@ -63,7 +63,7 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_vertical"
                         android:textColor="@color/white"
-                        android:textSize="@dimen/text_xxlarge"
+                        android:textSize="@dimen/text_xxxlarge"
                         tools:text="First Last"/>
 
                     <TextView
@@ -74,6 +74,8 @@
                         android:visibility="gone"
                         tools:visibility="visible"
                         android:textColor="@color/white"
+                        android:textSize="@dimen/text_small"
+                        android:layout_marginTop="@dimen/padding_small"
                         tools:text="Company"/>
 
                 </LinearLayout>
