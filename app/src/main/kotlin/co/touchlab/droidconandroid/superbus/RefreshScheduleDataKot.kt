@@ -74,12 +74,12 @@ fun saveConventionData(context: Context?, convention: Convention) {
                                 userAccountDao.createOrUpdate(userAccount)
 
                                 val resultList = eventSpeakerDao.createWhere()!!
+                                        .and()
                                         .eq("event_id", event.id)!!
-                                        .and()!!
                                         .eq("userAccount_id", userAccount.id)!!
                                         .query()!!
 
-                                var eventSpeaker = if (resultList.size() == 0) EventSpeaker() else resultList[0]
+                                var eventSpeaker = (if (resultList.size() == 0) EventSpeaker() else resultList[0])as EventSpeaker
 
                                 eventSpeaker.event = event
                                 eventSpeaker.userAccount = userAccount
