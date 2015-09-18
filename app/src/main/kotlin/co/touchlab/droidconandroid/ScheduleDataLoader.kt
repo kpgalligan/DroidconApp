@@ -5,6 +5,7 @@ import android.text.format.DateUtils
 import co.touchlab.android.threading.loaders.AbstractEventBusLoader
 import co.touchlab.droidconandroid.data.AppPrefs
 import co.touchlab.droidconandroid.data.DatabaseHelper
+import co.touchlab.droidconandroid.data.Event
 import co.touchlab.droidconandroid.data.ScheduleBlock
 import co.touchlab.droidconandroid.superbus.RefreshScheduleDataKot
 import co.touchlab.droidconandroid.tasks.AddRsvpTaskKot
@@ -23,14 +24,15 @@ class ScheduleDataLoader(val c: Context, val all: Boolean, val day: Long) : Abst
         val databaseHelper = DatabaseHelper.getInstance(getContext())
         val eventDao = databaseHelper.getEventDao()
         val blockDao = databaseHelper.getBlockDao()
-        val baseQuery = eventDao.createWhere().between("startDateLong", day, day + DateUtils.DAY_IN_MILLIS)
+        val where = eventDao.createWhere()
+
         val events = if(all)
         {
-            baseQuery.query()!!
+            where.between("startDateLong", day, day + DateUtils.DAY_IN_MILLIS).query()!!
         }
         else
         {
-            baseQuery.and().isNotNull("rsvpUuid")!!.query()!!
+            where.and().between("startDateLong", day, day + DateUtils.DAY_IN_MILLIS).isNotNull("rsvpUuid")!!.query()!!
         }
 
         val blocks = blockDao.createWhere().between("startDateLong", day, day + DateUtils.DAY_IN_MILLIS).query()
@@ -38,10 +40,10 @@ class ScheduleDataLoader(val c: Context, val all: Boolean, val day: Long) : Abst
         val eventsAndBlocks = ArrayList<ScheduleBlock>()
 
         for (event in events) {
-            eventDao.fillForeignCollection(event, "speakerList")
+            eventDao.fillForeignCollection(event as Event, "speakerList")
         }
         
-        eventsAndBlocks.addAll(events)
+        eventsAndBlocks.addAll(events as List<Event>)
         eventsAndBlocks.addAll(blocks)
 
         Collections.sort(eventsAndBlocks, object : Comparator<ScheduleBlock>

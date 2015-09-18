@@ -121,6 +121,6 @@ dependencies {
         transitive = true;
     }
 
-    compile 'co.touchlab.squeaky:squeaky:0.3.0.0'
-    apt 'co.touchlab.squeaky:squeaky-processor:0.3.0.0'
+    compile 'co.touchlab.squeaky:squeaky-core:0.3.0.3'
+    apt 'co.touchlab.squeaky:squeaky-processor:0.3.0.3'
 }
