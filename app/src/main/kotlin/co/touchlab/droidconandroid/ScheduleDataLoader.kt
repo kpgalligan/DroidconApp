@@ -3,13 +3,11 @@ package co.touchlab.droidconandroid
 import android.content.Context
 import android.text.format.DateUtils
 import co.touchlab.android.threading.loaders.AbstractEventBusLoader
-import co.touchlab.droidconandroid.data.AppPrefs
-import co.touchlab.droidconandroid.data.DatabaseHelper
-import co.touchlab.droidconandroid.data.Event
-import co.touchlab.droidconandroid.data.ScheduleBlock
+import co.touchlab.droidconandroid.data.*
 import co.touchlab.droidconandroid.superbus.RefreshScheduleDataKot
 import co.touchlab.droidconandroid.tasks.AddRsvpTaskKot
 import co.touchlab.droidconandroid.tasks.RemoveRsvpTaskKot
+import co.touchlab.squeaky.stmt.Where
 import java.util.ArrayList
 import java.util.Collections
 import java.util.Comparator
@@ -24,18 +22,18 @@ class ScheduleDataLoader(val c: Context, val all: Boolean, val day: Long) : Abst
         val databaseHelper = DatabaseHelper.getInstance(getContext())
         val eventDao = databaseHelper.getEventDao()
         val blockDao = databaseHelper.getBlockDao()
-        val where = eventDao.createWhere()
+        val where = Where<Event, Long>(eventDao)
 
         val events = if(all)
         {
-            where.between("startDateLong", day, day + DateUtils.DAY_IN_MILLIS).query()!!
+            where.between("startDateLong", day, day + DateUtils.DAY_IN_MILLIS).query()!!.list()!!
         }
         else
         {
-            where.and().between("startDateLong", day, day + DateUtils.DAY_IN_MILLIS).isNotNull("rsvpUuid")!!.query()!!
+            where.and().between("startDateLong", day, day + DateUtils.DAY_IN_MILLIS).isNotNull("rsvpUuid")!!.query()!!.list()!!
         }
 
-        val blocks = blockDao.createWhere().between("startDateLong", day, day + DateUtils.DAY_IN_MILLIS).query()
+        val blocks = Where<Block, Long>(blockDao).between("startDateLong", day, day + DateUtils.DAY_IN_MILLIS).query().list()
 
         val eventsAndBlocks = ArrayList<ScheduleBlock>()
 

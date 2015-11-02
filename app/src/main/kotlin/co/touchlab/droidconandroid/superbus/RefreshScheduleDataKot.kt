@@ -15,6 +15,8 @@ import co.touchlab.droidconandroid.network.RsvpRequest
 import co.touchlab.droidconandroid.network.dao.Convention
 import co.touchlab.droidconandroid.tasks.persisted.PersistedTaskQueueFactory
 import co.touchlab.droidconandroid.utils.TimeUtils
+import co.touchlab.squeaky.dao.Dao
+import co.touchlab.squeaky.stmt.Where
 import com.crashlytics.android.Crashlytics
 import com.google.gson.Gson
 import org.apache.commons.lang3.StringUtils
@@ -73,11 +75,11 @@ fun saveConventionData(context: Context?, convention: Convention) {
 
                                 userAccountDao.createOrUpdate(userAccount)
 
-                                val resultList = eventSpeakerDao.createWhere()!!
+                                val resultList = Where<EventSpeaker, Long>(eventSpeakerDao)!!
                                         .and()
                                         .eq("event_id", event.id)!!
                                         .eq("userAccount_id", userAccount.id)!!
-                                        .query()!!
+                                        .query()!!.list()!!
 
                                 var eventSpeaker = (if (resultList.size() == 0) EventSpeaker() else resultList[0])as EventSpeaker
 

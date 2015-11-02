@@ -90,6 +90,12 @@ public class SendNewAvatar extends Task
     }
 
     @Override
+    protected void onComplete(Context context)
+    {
+        super.onComplete(context);
+    }
+
+    @Override
     protected boolean handleError(Context context, Throwable e)
     {
         return false;
