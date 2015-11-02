@@ -7,6 +7,7 @@ import java.util.List;
 
 import co.touchlab.squeaky.dao.Dao;
 import co.touchlab.squeaky.field.DatabaseField;
+import co.touchlab.squeaky.stmt.Where;
 import co.touchlab.squeaky.table.DatabaseTable;
 
 /**
@@ -123,7 +124,7 @@ public class UserAccount
     public static UserAccount findByCode(DatabaseHelper databaseHelper, String code) throws SQLException
     {
         Dao<UserAccount, Long> dao = databaseHelper.getUserAccountDao();
-        List<UserAccount> list = dao.createWhere().eq("userCode", code).query();
+        List<UserAccount> list = new Where(dao).eq("userCode", code).query().list();
         return list.size() == 0 ? null : list.get(0);
     }
 
