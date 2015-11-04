@@ -22,7 +22,8 @@ public class DatabaseHelper extends SqueakyOpenHelper
 
     private static final String DATABASE_FILE_NAME = "droidcon";
     public static final  int    BASELINE           = 3;
-    private static final int VERSION = BASELINE;
+    private static final int    VOTE               = 4;
+    private static final int    VERSION            = VOTE;
     private static DatabaseHelper instance;
 
     private DatabaseHelper(Context context)
@@ -58,7 +59,10 @@ public class DatabaseHelper extends SqueakyOpenHelper
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion)
     {
-
+        if(oldVersion < VOTE)
+        {
+            db.execSQL("alter table event add column voted boolean default false");
+        }
     }
 
     @Override
@@ -114,7 +118,7 @@ public class DatabaseHelper extends SqueakyOpenHelper
             transaction.call();
             db.setTransactionSuccessful();
         }
-        catch (Exception e)
+        catch(Exception e)
         {
             Log.e(DatabaseHelper.class.getName(), e.getMessage());
             throw new RuntimeException(e);

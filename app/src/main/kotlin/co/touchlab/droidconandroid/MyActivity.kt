@@ -216,7 +216,10 @@ public class MyActivity : AppCompatActivity(), FilterInterface, NfcAdapter.Creat
                     R.string.my_schedule -> {
                         fragment = ScheduleFragment.newInstance(false)
                         tag = ScheduleFragment.MY_SCHEDULE
-
+                    }
+                    R.string.vote -> {
+                        fragment = VoteFragment.newInstance()
+                        tag = VoteFragment.VOTING
                     }
                     R.string.social -> FindUserKot.startMe(this@MyActivity)
                     R.string.profile -> EditUserProfile.callMe(this@MyActivity)
@@ -295,6 +298,7 @@ public class MyActivity : AppCompatActivity(), FilterInterface, NfcAdapter.Creat
         drawerItems.add("header_placeholder")
         drawerItems.add(NavigationItem(R.string.explore, R.drawable.ic_explore))
         drawerItems.add(NavigationItem(R.string.my_schedule, R.drawable.ic_myschedule))
+        drawerItems.add(NavigationItem(R.string.vote, R.drawable.ic_myschedule))
 //        drawerItems.add(NavigationItem(R.string.map, R.drawable.ic_map))
 //        drawerItems.add(NavigationItem(R.string.social, R.drawable.ic_social))
         drawerItems.add("divider_placeholder")
