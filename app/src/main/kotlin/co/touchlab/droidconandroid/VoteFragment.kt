@@ -1,56 +1,49 @@
 package co.touchlab.droidconandroid
 
 import android.os.Bundle
-import android.os.Handler
-import android.support.design.widget.TabLayout
 import android.support.v4.app.Fragment
-import android.support.v4.app.FragmentManager
-import android.support.v4.app.FragmentPagerAdapter
-import android.support.v4.view.ViewPager
-import android.text.TextUtils
-import android.text.format.DateUtils
+import android.support.v7.widget.LinearLayoutManager
+import android.support.v7.widget.RecyclerView
 import android.view
 import android.view.LayoutInflater
 import android.view.View
+import android.widget.TextView
+import android.widget.Toast
 import co.touchlab.android.threading.eventbus.EventBusExt
-import co.touchlab.droidconandroid.data.AppPrefs
-import co.touchlab.droidconandroid.data.Track
-import co.touchlab.droidconandroid.superbus.RefreshScheduleDataKot
-import co.touchlab.droidconandroid.utils.TimeUtils
+import co.touchlab.android.threading.tasks.TaskQueue
+import co.touchlab.droidconandroid.data.Event
+import co.touchlab.droidconandroid.network.dao.Convention
+import co.touchlab.droidconandroid.tasks.FindVoteTaskKot
+import co.touchlab.droidconandroid.ui.EventAdapter
+import co.touchlab.droidconandroid.ui.EventClickListener
+import co.touchlab.droidconandroid.ui.VoteAdapter
+import co.touchlab.droidconandroid.ui.VoteClickListener
 import java.text.SimpleDateFormat
-import java.util.ArrayList
-import java.util.Date
+
 
 /**
  *
- * Created by izzyoji :) on 8/5/15.
+ * Created by toidiu on 8/5/15.
  */
-class ScheduleFragment : Fragment(), FilterableFragmentInterface
-{
+class VoteFragment : Fragment() {
 
-    companion object
-    {
-        val ALL_EVENTS = "all_events"
+    var test: TextView? = null
+    var rv: RecyclerView? = null
+    var adapter: VoteAdapter? = null
 
-        val EXPLORE = "EXPLORE"
-        val MY_SCHEDULE = "MY_SCHEDULE"
+    companion object {
+        val VOTING: String = "VOTING"
 
-        private var pagerAdapter: ScheduleFragmentPagerAdapter? = null
-        val tabDateFormat = SimpleDateFormat("MMM dd")
-
-        fun newInstance(all: Boolean): ScheduleFragment
-        {
-            val fragment = ScheduleFragment()
+        fun newInstance(): VoteFragment {
+            val fragment = VoteFragment()
             val args = Bundle()
-            args.putBoolean(ALL_EVENTS, all)
             fragment.setArguments(args)
             return fragment
         }
     }
 
-    override fun onCreateView(inflater: LayoutInflater?, container: view.ViewGroup?, savedInstanceState: Bundle?): View?
-    {
-        return inflater!!.inflate(R.layout.fragment_schedule, null)
+    override fun onCreateView(inflater: LayoutInflater?, container: view.ViewGroup?, savedInstanceState: Bundle?): View? {
+        return inflater!!.inflate(R.layout.fragment_vote, null)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -63,87 +56,32 @@ class ScheduleFragment : Fragment(), FilterableFragmentInterface
         EventBusExt.getDefault().unregister(this)
     }
 
-    public fun onEventMainThread(eventDetailTask: RefreshScheduleDataKot)
-    {
-        Handler().post(RefreshRunnable())
-    }
-
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super<Fragment>.onActivityCreated(savedInstanceState)
 
-        Handler().post(RefreshRunnable())
+        rv = view.findViewById(R.id.rv) as RecyclerView
+        rv!!.setLayoutManager(LinearLayoutManager(getActivity()))
+
+        TaskQueue.loadQueueDefault(activity).execute(FindVoteTaskKot())
     }
 
-    inner class RefreshRunnable(): Runnable
-    {
-        override fun run() {
-            val pager = getView().findViewById(R.id.pager)!! as ViewPager
-            val tabs = getView().findViewById(R.id.tabs)!! as TabLayout
-            val tabWrapper = getView().findViewById(R.id.tabs_wrapper)
-            if (getArguments().getBoolean(ALL_EVENTS)) {
-                tabWrapper.setBackgroundColor(getResources().getColor(R.color.primary))
-            } else {
-                tabWrapper.setBackgroundColor(getResources().getColor(R.color.blue_grey))
+    fun initRvAdapter (data: List<Event>) {
+        adapter = VoteAdapter(data, (activity as FilterInterface).getCurrentFilters(), object : VoteClickListener {
+            override fun onEventClick(event: Event) {
+                Toast.makeText(activity, ""+event.id, Toast.LENGTH_SHORT).show()
+                val fragment = VoteDetailFragment.newInstance(event.id)
+
+                activity.getSupportFragmentManager()
+                        .beginTransaction()
+                        .add(R.id.container, fragment)
+                        .commit()
             }
-
-            val dates: ArrayList<Long> = ArrayList<Long>()
-            val startString: String? = AppPrefs.getInstance(getActivity()).getConventionStartDate()
-            val endString: String? = AppPrefs.getInstance(getActivity()).getConventionEndDate()
-
-            if (!TextUtils.isEmpty(startString) && !TextUtils.isEmpty(endString)) {
-                var start: Long = TimeUtils.sanitize(TimeUtils.DATE_FORMAT.get().parse(startString))
-                val end: Long = TimeUtils.sanitize(TimeUtils.DATE_FORMAT.get().parse(endString))
-
-                while (start <= end) {
-                    dates.add(start)
-                    start += DateUtils.DAY_IN_MILLIS
-                }
-
-                pagerAdapter = ScheduleFragmentPagerAdapter(getChildFragmentManager(), dates, getArguments().getBoolean(ALL_EVENTS))
-                pager.setAdapter(pagerAdapter);
-                pager.addOnPageChangeListener(TabLayout.TabLayoutOnPageChangeListener(tabs))
-                tabs.setTabsFromPagerAdapter(pagerAdapter)
-                tabs.setOnTabSelectedListener(TabLayout.ViewPagerOnTabSelectedListener(pager))
-            }
-        }
+        })
+        rv!!.setAdapter(adapter!!)
     }
 
-    override fun applyFilters(track: Track) {
-        pagerAdapter!!.updateFrags(track)
-    }
-}
-
-class ScheduleFragmentPagerAdapter : FragmentPagerAdapter
-{
-    private var dates: List<Long>
-    private var allEvents: Boolean
-    private var fragmentManager: FragmentManager
-
-    constructor(fm: FragmentManager, dates: List<Long>, allEvents: Boolean) : super(fm) {
-        this.dates = dates;
-        this.allEvents = allEvents
-        this.fragmentManager = fm
-    }
-
-    override fun getCount(): Int {
-        return dates.size()
-    }
-
-    override fun getItem(position: Int): ScheduleDataFragment? {
-        return ScheduleDataFragment.newInstance(allEvents, dates.get(position), position)
-    }
-
-    override fun getPageTitle(position: Int): CharSequence? {
-        return ScheduleFragment.tabDateFormat.format(Date(dates.get(position)))
-    }
-
-    fun updateFrags(track: Track) {
-
-        for (fragment in fragmentManager.getFragments()) {
-            if(fragment != null) {
-                (fragment as ScheduleDataFragment).filter(track)
-            }
-        }
-
+    //----------EVENT------------------
+    public fun onEventMainThread(t: FindVoteTaskKot) {
+        initRvAdapter(t.list)
     }
 }

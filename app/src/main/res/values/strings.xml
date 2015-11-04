@@ -25,6 +25,7 @@
     <string name="navigation_drawer_close">Close</string>
     <string name="explore">Explore sessions</string>
     <string name="my_schedule">My schedule</string>
+    <string name="vote">Vote</string>
     <string name="map">Map</string>
     <string name="social">Social</string>
     <string name="profile">My Profile</string>
