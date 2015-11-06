@@ -2,18 +2,20 @@ package co.touchlab.droidconandroid
 
 import android.os.Bundle
 import android.support.v4.app.Fragment
+import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.util.Log
 import android.view
-import android.view.LayoutInflater
-import android.view.View
+import android.view.*
+import android.widget.Toast
 import co.touchlab.android.threading.eventbus.EventBusExt
 import co.touchlab.android.threading.tasks.TaskQueue
 import co.touchlab.droidconandroid.data.Event
 import co.touchlab.droidconandroid.tasks.FindVoteTaskKot
 import co.touchlab.droidconandroid.ui.VoteAdapter
 import co.touchlab.droidconandroid.ui.VoteClickListener
+import com.wnafee.vector.compat.ResourcesCompat
 
 
 /**
@@ -26,6 +28,8 @@ class VoteFragment : Fragment() {
     var adapter: VoteAdapter? = null
 
     companion object {
+        val Tag: String = "VoteFragment"
+
         fun newInstance(): VoteFragment = VoteFragment()
     }
 
@@ -36,7 +40,9 @@ class VoteFragment : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super<Fragment>.onCreate(savedInstanceState)
         EventBusExt.getDefault().register(this)
+        setHasOptionsMenu(true);
     }
+
 
     override fun onDestroy() {
         super<Fragment>.onDestroy()
@@ -49,23 +55,54 @@ class VoteFragment : Fragment() {
         rv = view.findViewById(R.id.rv) as RecyclerView
         rv!!.setLayoutManager(LinearLayoutManager(getActivity()))
 
+        (activity as AppCompatActivity).supportActionBar.setTitle(R.string.vote)
+
         TaskQueue.loadQueueDefault(activity).execute(FindVoteTaskKot())
     }
+//
+//    private fun initListeners() {
+//        val supportFragmentManager = (activity as AppCompatActivity).supportFragmentManager
+//        supportFragmentManager.addOnBackStackChangedListener {
+//
+//            if (supportFragmentManager.findFragmentByTag(Tag) != null)
+//                (activity as AppCompatActivity).supportActionBar.setTitle(R.string.vote)
+//        }
+//
+//    }
 
     fun initRvAdapter(data: List<Event>) {
         adapter = VoteAdapter(data, object : VoteClickListener {
             override fun onEventClick(event: Event) {
                 val fragment = VoteDetailFragment.newInstance(event.id)
 
-                activity.supportFragmentManager
-                        .beginTransaction()
-                        .add(R.id.container, fragment)
-                        .addToBackStack(null)
-                        .commit()
+                fragment.show(activity.supportFragmentManager, null)
+//                activity.supportFragmentManager
+//                        .beginTransaction()
+//                        .add(R.id.container, fragment)
+//                        .addToBackStack(null)
+//                        .commit()
             }
         })
 
         rv!!.setAdapter(adapter!!)
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?, inflater: MenuInflater?) {
+        Log.d("ak-----------", "--------2");
+
+        inflater!!.inflate(R.menu.vote_list, menu)
+        val votedList = menu!!.findItem(R.id.action_voted)
+        votedList.setIcon(ResourcesCompat.getDrawable(activity, R.drawable.ic_voted))
+        return super<Fragment>.onCreateOptionsMenu(menu, inflater)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
+        when {
+            item!!.itemId == R.id.action_voted -> {
+
+            }
+        }
+        return super<Fragment>.onOptionsItemSelected(item)
     }
 
     //----------EVENT------------------

@@ -112,7 +112,9 @@ Wanna join a team where Android isn\'t "that other platform", where we care abou
     <string name="gallery">Gallery</string>
     <string name="camera">Camera</string>
     <string name="vote_prompt">Vote promt:</string>
-    <string name="vote_with">with</string>
+    <string name="vote_with">with\ </string>
     <string name="vote_submit">SUBMIT</string>
+    <string name="vote_pass">PASS</string>
+    <string name="vote_voted">Voted</string>
 
 </resources>
