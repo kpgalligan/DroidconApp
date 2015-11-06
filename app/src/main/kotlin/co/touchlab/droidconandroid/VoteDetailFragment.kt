@@ -1,9 +1,7 @@
 package co.touchlab.droidconandroid
 
 import android.os.Bundle
-import android.os.Handler
-import android.support.v4.app.Fragment
-import android.support.v7.app.AppCompatActivity
+import android.support.v4.app.DialogFragment
 import android.view
 import android.view.LayoutInflater
 import android.view.View
@@ -20,7 +18,7 @@ import co.touchlab.droidconandroid.tasks.EventDetailLoadTask
  *
  * Created by toidiu on 8/5/15.
  */
-class VoteDetailFragment : Fragment() {
+class VoteDetailFragment : DialogFragment() {
 
     companion object {
         val EVENT_ID = "EVENT_ID"
@@ -30,6 +28,7 @@ class VoteDetailFragment : Fragment() {
             val args = Bundle()
             args.putLong(EVENT_ID, id)
             fragment.arguments = args
+            fragment.isCancelable = true
             return fragment
         }
     }
@@ -43,22 +42,20 @@ class VoteDetailFragment : Fragment() {
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        super<Fragment>.onCreate(savedInstanceState)
+        super<DialogFragment>.onCreate(savedInstanceState)
         EventBusExt.getDefault().register(this)
         eventId = arguments.getLong(EVENT_ID)
-
-        (activity as AppCompatActivity).supportActionBar.title = ""
 
         TaskQueue.loadQueueDefault(activity).execute(EventDetailLoadTask(eventId!!))
     }
 
     override fun onDestroy() {
-        super<Fragment>.onDestroy()
+        super<DialogFragment>.onDestroy()
         EventBusExt.getDefault().unregister(this)
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super<Fragment>.onActivityCreated(savedInstanceState)
+        super<DialogFragment>.onActivityCreated(savedInstanceState)
     }
 
     fun initEvent() {
@@ -67,35 +64,42 @@ class VoteDetailFragment : Fragment() {
         val speaker = view.findViewById(R.id.speaker) as TextView
 
 
+        val cancel = view.findViewById(R.id.cancel)
+        val pass = view.findViewById(R.id.pass) as TextView
+        val submit = view.findViewById(R.id.submit_vote) as TextView
+
+        val dao = DatabaseHelper.getInstance(activity).eventDao
+
         title.text = "" + event!!.name
         descrip.text = event!!.description
         speaker.text = event!!.allSpeakersString()
+
+        cancel.setOnClickListener { fragmentManager.popBackStackImmediate() }
+        pass.setOnClickListener {
+            event!!.vote = 0
+            dao.update(event)
+            fragmentManager.popBackStackImmediate()
+        }
+        submit.setOnClickListener {
+            dao.update(event)
+            fragmentManager.popBackStackImmediate()
+        }
 
         initRating()
     }
 
     private fun initRating() {
-        val dao = DatabaseHelper.getInstance(activity).eventDao
-        val handler = Handler(activity.mainLooper);
 
         rating = view.findViewById(R.id.rating) as RatingBar
         rating!!.rating = event!!.vote.toFloat()
 
         rating!!.onRatingBarChangeListener = object : RatingBar.OnRatingBarChangeListener {
             override fun onRatingChanged(ratingBar: RatingBar?, rating: Float, fromUser: Boolean) {
-
                 event!!.vote = Math.round(rating)
-
-                handler.removeCallbacksAndMessages(null);
-                val eventRunnable = Runnable() {
-                    run { dao.update(Event()) }
-                };
-                handler.postDelayed(eventRunnable, 1000L)
             }
 
         }
     }
-
 
     //----------EVENT------------------
     public fun onEventMainThread(t: EventDetailLoadTask) {

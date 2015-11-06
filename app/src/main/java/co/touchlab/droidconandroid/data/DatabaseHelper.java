@@ -61,7 +61,7 @@ public class DatabaseHelper extends SqueakyOpenHelper
     {
         if(oldVersion < VOTE)
         {
-            db.execSQL("alter table event add column vote int default 0");
+            db.execSQL("alter table event add column vote_detail int default 0");
         }
     }
 

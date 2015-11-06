@@ -5,6 +5,9 @@ import android.content.Intent
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.Toolbar
+import android.view.Menu
+import android.view.MenuItem
+import com.wnafee.vector.compat.ResourcesCompat
 
 /**
  *
@@ -25,20 +28,39 @@ public class VotingActivity : AppCompatActivity() {
         setContentView(R.layout.activity_vote);
 
         toolbar = findViewById(R.id.toolbar) as Toolbar;
-        toolbar!!.setTitle(R.string.vote)
         setSupportActionBar(toolbar);
-        toolbar!!.setBackgroundColor(getResources().getColor(R.color.droidcon_green))
+        toolbar!!.setBackgroundColor(resources.getColor(R.color.droidcon_green))
 
         val fragment = VoteFragment.newInstance()
         getSupportFragmentManager()
                 .beginTransaction()
-                .add(R.id.container, fragment)
+                .add(R.id.container, fragment, VoteFragment.Tag)
                 .commit()
 
         //        EventBusExt.getDefault()!!.register(this)
         //        TaskQueue.loadQueueDefault(this).execute(FindVoteTaskKot())
 
     }
+
+//    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+//        getMenuInflater().inflate(R.menu.vote_detail, menu)
+//        val pass = menu!!.findItem(R.id.action_pass)
+////        pass.setIcon(ResourcesCompat.getDrawable(this, R.drawable.ic_filter))
+//        return super<AppCompatActivity>.onCreateOptionsMenu(menu)
+//    }
+//
+//    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
+//        when {
+//            item!!.getItemId() == R.id.action_pass -> {
+////                drawerLayout!!.openDrawer(findViewById(R.id.filter_wrapper))
+//            }
+////            item.getItemId() == R.id.action_search -> {
+////                FindUserKot.startMe(this@MyActivity)
+////            }
+//        }
+//        return super<AppCompatActivity>.onOptionsItemSelected(item)
+//    }
+
 
     //    override fun onDestroy() {
     //        super.onDestroy()

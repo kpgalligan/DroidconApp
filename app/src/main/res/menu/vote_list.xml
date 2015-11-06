@@ -1,0 +1,8 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+      xmlns:tools="http://schemas.android.com/tools"
+      xmlns:app="http://schemas.android.com/apk/res-auto"
+      tools:context="co.touchlab.droidconandroid.FindUser" >
+      <item android:id="@+id/action_voted"
+            android:title="@string/vote_voted"
+            app:showAsAction="always" />
+</menu>
