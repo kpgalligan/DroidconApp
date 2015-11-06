@@ -53,6 +53,10 @@ public class Event implements ScheduleBlock
     @ForeignCollectionField(foreignFieldName = "event")
     public List<EventSpeaker> speakerList;
 
+    @DatabaseField
+    public int vote;
+
+
     public boolean isRsvped()
     {
         return rsvpUuid != null;

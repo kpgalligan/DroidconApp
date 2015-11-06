@@ -26,14 +26,16 @@ open class EventDetailLoadTask(val eventId: Long) : Task()
 
     override fun run(context: Context?)
     {
-        val dao = DatabaseHelper.getInstance(context).getEventDao()
+        val dao = DatabaseHelper.getInstance(context).eventDao
         event = dao.queryForId(eventId)
 
         if(event!!.isRsvped())
             conflict = hasConflict(event!!, dao.queryForAll().list())
 
         val eventSpeakerDao = DatabaseHelper.getInstance(context).getEventSpeakerDao()
-        val results = Where<EventSpeaker, Long>(eventSpeakerDao)!!.eq("event_id", eventId)!!.query()!!.list()!!
+//        val results = Where<EventSpeaker, Long>(eventSpeakerDao).eq("event_id", eventId)!!.query()!!.list()!!
+
+        val results = eventSpeakerDao.queryForEq("event_id", eventId).list()
 
         speakers = ArrayList(results.size())
 
@@ -41,6 +43,8 @@ open class EventDetailLoadTask(val eventId: Long) : Task()
         {
             speakers!!.add(eventSpeaker.userAccount!!)
         }
+
+        event!!.speakerList = results
     }
 
     override fun onComplete(context: Context?) {
