@@ -4,5 +4,7 @@
       tools:context="co.touchlab.droidconandroid.FindUser" >
       <item android:id="@+id/action_voted"
             android:title="@string/vote_voted"
+            android:icon="@drawable/ic_voted"
+            android:checked="true"
             app:showAsAction="always" />
 </menu>
