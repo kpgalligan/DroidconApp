@@ -54,7 +54,7 @@ public class Event implements ScheduleBlock
     public List<EventSpeaker> speakerList;
 
     @DatabaseField
-    public int vote;
+    public Integer vote;
 
 
     public boolean isRsvped()

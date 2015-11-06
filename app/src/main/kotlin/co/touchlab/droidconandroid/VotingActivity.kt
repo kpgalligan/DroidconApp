@@ -5,9 +5,6 @@ import android.content.Intent
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.Toolbar
-import android.view.Menu
-import android.view.MenuItem
-import com.wnafee.vector.compat.ResourcesCompat
 
 /**
  *
@@ -16,7 +13,7 @@ import com.wnafee.vector.compat.ResourcesCompat
 public class VotingActivity : AppCompatActivity() {
 
     public companion object {
-        public fun getLaunchIntent(c: Context): Intent =  Intent(c, javaClass<VotingActivity>())
+        public fun getLaunchIntent(c: Context): Intent = Intent(c, javaClass<VotingActivity>())
 
     }
 
@@ -42,24 +39,24 @@ public class VotingActivity : AppCompatActivity() {
 
     }
 
-//    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-//        getMenuInflater().inflate(R.menu.vote_detail, menu)
-//        val pass = menu!!.findItem(R.id.action_pass)
-////        pass.setIcon(ResourcesCompat.getDrawable(this, R.drawable.ic_filter))
-//        return super<AppCompatActivity>.onCreateOptionsMenu(menu)
-//    }
-//
-//    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
-//        when {
-//            item!!.getItemId() == R.id.action_pass -> {
-////                drawerLayout!!.openDrawer(findViewById(R.id.filter_wrapper))
-//            }
-////            item.getItemId() == R.id.action_search -> {
-////                FindUserKot.startMe(this@MyActivity)
-////            }
-//        }
-//        return super<AppCompatActivity>.onOptionsItemSelected(item)
-//    }
+    //    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+    //        getMenuInflater().inflate(R.menu.vote_detail, menu)
+    //        val pass = menu!!.findItem(R.id.action_pass)
+    ////        pass.setIcon(ResourcesCompat.getDrawable(this, R.drawable.ic_filter))
+    //        return super<AppCompatActivity>.onCreateOptionsMenu(menu)
+    //    }
+    //
+    //    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
+    //        when {
+    //            item!!.getItemId() == R.id.action_pass -> {
+    ////                drawerLayout!!.openDrawer(findViewById(R.id.filter_wrapper))
+    //            }
+    ////            item.getItemId() == R.id.action_search -> {
+    ////                FindUserKot.startMe(this@MyActivity)
+    ////            }
+    //        }
+    //        return super<AppCompatActivity>.onOptionsItemSelected(item)
+    //    }
 
 
     //    override fun onDestroy() {

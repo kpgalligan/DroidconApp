@@ -74,15 +74,15 @@ class VoteDetailFragment : DialogFragment() {
         descrip.text = event!!.description
         speaker.text = event!!.allSpeakersString()
 
-        cancel.setOnClickListener { fragmentManager.popBackStackImmediate() }
+        cancel.setOnClickListener { dismiss() }
         pass.setOnClickListener {
             event!!.vote = 0
             dao.update(event)
-            fragmentManager.popBackStackImmediate()
+            dismiss()
         }
         submit.setOnClickListener {
             dao.update(event)
-            fragmentManager.popBackStackImmediate()
+            dismiss()
         }
 
         initRating()
@@ -91,7 +91,8 @@ class VoteDetailFragment : DialogFragment() {
     private fun initRating() {
 
         rating = view.findViewById(R.id.rating) as RatingBar
-        rating!!.rating = event!!.vote.toFloat()
+        if (event!!.vote != null)
+            rating!!.rating = event!!.vote.toFloat()
 
         rating!!.onRatingBarChangeListener = object : RatingBar.OnRatingBarChangeListener {
             override fun onRatingChanged(ratingBar: RatingBar?, rating: Float, fromUser: Boolean) {

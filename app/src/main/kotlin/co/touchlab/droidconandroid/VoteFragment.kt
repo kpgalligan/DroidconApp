@@ -8,14 +8,12 @@ import android.support.v7.widget.RecyclerView
 import android.util.Log
 import android.view
 import android.view.*
-import android.widget.Toast
 import co.touchlab.android.threading.eventbus.EventBusExt
 import co.touchlab.android.threading.tasks.TaskQueue
 import co.touchlab.droidconandroid.data.Event
 import co.touchlab.droidconandroid.tasks.FindVoteTaskKot
 import co.touchlab.droidconandroid.ui.VoteAdapter
 import co.touchlab.droidconandroid.ui.VoteClickListener
-import com.wnafee.vector.compat.ResourcesCompat
 
 
 /**
@@ -26,6 +24,7 @@ class VoteFragment : Fragment() {
 
     var rv: RecyclerView? = null
     var adapter: VoteAdapter? = null
+    var votedList: MenuItem? = null
 
     companion object {
         val Tag: String = "VoteFragment"
@@ -53,34 +52,18 @@ class VoteFragment : Fragment() {
         super<Fragment>.onActivityCreated(savedInstanceState)
 
         rv = view.findViewById(R.id.rv) as RecyclerView
-        rv!!.setLayoutManager(LinearLayoutManager(getActivity()))
+        rv!!.layoutManager = LinearLayoutManager(activity)
 
         (activity as AppCompatActivity).supportActionBar.setTitle(R.string.vote)
 
-        TaskQueue.loadQueueDefault(activity).execute(FindVoteTaskKot())
+        TaskQueue.loadQueueDefault(activity).execute(FindVoteTaskKot(true))
     }
-//
-//    private fun initListeners() {
-//        val supportFragmentManager = (activity as AppCompatActivity).supportFragmentManager
-//        supportFragmentManager.addOnBackStackChangedListener {
-//
-//            if (supportFragmentManager.findFragmentByTag(Tag) != null)
-//                (activity as AppCompatActivity).supportActionBar.setTitle(R.string.vote)
-//        }
-//
-//    }
 
     fun initRvAdapter(data: List<Event>) {
         adapter = VoteAdapter(data, object : VoteClickListener {
             override fun onEventClick(event: Event) {
                 val fragment = VoteDetailFragment.newInstance(event.id)
-
                 fragment.show(activity.supportFragmentManager, null)
-//                activity.supportFragmentManager
-//                        .beginTransaction()
-//                        .add(R.id.container, fragment)
-//                        .addToBackStack(null)
-//                        .commit()
             }
         })
 
@@ -88,18 +71,29 @@ class VoteFragment : Fragment() {
     }
 
     override fun onCreateOptionsMenu(menu: Menu?, inflater: MenuInflater?) {
-        Log.d("ak-----------", "--------2");
-
         inflater!!.inflate(R.menu.vote_list, menu)
-        val votedList = menu!!.findItem(R.id.action_voted)
-        votedList.setIcon(ResourcesCompat.getDrawable(activity, R.drawable.ic_voted))
+        votedList = menu!!.findItem(R.id.action_voted)
         return super<Fragment>.onCreateOptionsMenu(menu, inflater)
     }
 
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
+
         when {
             item!!.itemId == R.id.action_voted -> {
 
+                Log.d("-----dfa", "adfsadf" + votedList!!.isChecked)
+                votedList!!.setChecked(!votedList!!.isChecked)
+
+                when (votedList!!.isChecked) {
+                    true -> {
+                        votedList!!.setIcon(R.drawable.ic_voted)
+                        TaskQueue.loadQueueDefault(activity).execute(FindVoteTaskKot(true))
+                    }
+                    false -> {
+                        votedList!!.setIcon(R.drawable.ic_notvoted)
+                        TaskQueue.loadQueueDefault(activity).execute(FindVoteTaskKot(false))
+                    }
+                }
             }
         }
         return super<Fragment>.onOptionsItemSelected(item)
