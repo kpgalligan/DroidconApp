@@ -25,12 +25,12 @@
     <string name="navigation_drawer_close">Close</string>
     <string name="explore">Explore sessions</string>
     <string name="my_schedule">My schedule</string>
-    <string name="vote">Vote</string>
     <string name="map">Map</string>
     <string name="social">Social</string>
     <string name="profile">My Profile</string>
     <string name="sponsors">Sponsors</string>
     <string name="about">About</string>
+    <string name="vote">Vote</string>
 
     <!-- welcome copy-->
     <string name="welcome_0_title">Welcome to Droidcon!</string>
@@ -111,5 +111,8 @@ Wanna join a team where Android isn\'t "that other platform", where we care abou
     <string name="photoChooser">Get new image from...</string>
     <string name="gallery">Gallery</string>
     <string name="camera">Camera</string>
+    <string name="vote_prompt">Vote promt:</string>
+    <string name="vote_with">with</string>
+    <string name="vote_submit">SUBMIT</string>
 
 </resources>

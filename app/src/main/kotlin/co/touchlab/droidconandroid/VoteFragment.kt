@@ -4,21 +4,16 @@ import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
+import android.util.Log
 import android.view
 import android.view.LayoutInflater
 import android.view.View
-import android.widget.TextView
-import android.widget.Toast
 import co.touchlab.android.threading.eventbus.EventBusExt
 import co.touchlab.android.threading.tasks.TaskQueue
 import co.touchlab.droidconandroid.data.Event
-import co.touchlab.droidconandroid.network.dao.Convention
 import co.touchlab.droidconandroid.tasks.FindVoteTaskKot
-import co.touchlab.droidconandroid.ui.EventAdapter
-import co.touchlab.droidconandroid.ui.EventClickListener
 import co.touchlab.droidconandroid.ui.VoteAdapter
 import co.touchlab.droidconandroid.ui.VoteClickListener
-import java.text.SimpleDateFormat
 
 
 /**
@@ -27,19 +22,11 @@ import java.text.SimpleDateFormat
  */
 class VoteFragment : Fragment() {
 
-    var test: TextView? = null
     var rv: RecyclerView? = null
     var adapter: VoteAdapter? = null
 
     companion object {
-        val VOTING: String = "VOTING"
-
-        fun newInstance(): VoteFragment {
-            val fragment = VoteFragment()
-            val args = Bundle()
-            fragment.setArguments(args)
-            return fragment
-        }
+        fun newInstance(): VoteFragment = VoteFragment()
     }
 
     override fun onCreateView(inflater: LayoutInflater?, container: view.ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -65,18 +52,19 @@ class VoteFragment : Fragment() {
         TaskQueue.loadQueueDefault(activity).execute(FindVoteTaskKot())
     }
 
-    fun initRvAdapter (data: List<Event>) {
-        adapter = VoteAdapter(data, (activity as FilterInterface).getCurrentFilters(), object : VoteClickListener {
+    fun initRvAdapter(data: List<Event>) {
+        adapter = VoteAdapter(data, object : VoteClickListener {
             override fun onEventClick(event: Event) {
-                Toast.makeText(activity, ""+event.id, Toast.LENGTH_SHORT).show()
                 val fragment = VoteDetailFragment.newInstance(event.id)
 
-                activity.getSupportFragmentManager()
+                activity.supportFragmentManager
                         .beginTransaction()
                         .add(R.id.container, fragment)
+                        .addToBackStack(null)
                         .commit()
             }
         })
+
         rv!!.setAdapter(adapter!!)
     }
 
