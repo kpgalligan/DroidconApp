@@ -72,11 +72,13 @@ class VoteAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder> {
         if (item is Event) {
             return VIEW_TYPE_VOTE
         } else if (item is String) {
-            Log.d("","asdfasdfasdf----------")
-
             return VIEW_TYPE_PAGE_TITLE
         }
         throw UnsupportedOperationException()
+    }
+
+    fun remove(){
+//        dataSet.
     }
 
     public class VoteTitleViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
