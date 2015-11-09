@@ -10,7 +10,6 @@ import co.touchlab.squeaky.table.DatabaseTable;
 public class TalkSubmission
 {
 
-
     public TalkSubmission()
     {
     }

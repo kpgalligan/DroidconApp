@@ -8,6 +8,7 @@ import android.support.v7.widget.Toolbar
 import co.touchlab.android.threading.eventbus.EventBusExt
 import co.touchlab.android.threading.tasks.TaskQueue
 import co.touchlab.droidconandroid.tasks.GetTalkSubmissionTask
+import co.touchlab.droidconandroid.tasks.persisted.PersistedTaskQueueFactory
 
 /**
  *
@@ -37,7 +38,7 @@ public class VotingActivity : AppCompatActivity() {
                 .add(R.id.container, fragment, VoteFragment.Tag)
                 .commit()
 
-                EventBusExt.getDefault()!!.register(this)
+//                EventBusExt.getDefault()!!.register(this)
 
 
 
@@ -50,7 +51,7 @@ public class VotingActivity : AppCompatActivity() {
 
 
         //FIXME get list of talk submissions and my votes. Merge with whats currently in DB
-//        TaskQueue.loadQueueDefault(this).execute(GetVoteTaskKot())
+        TaskQueue.loadQueueDefault(this).execute(GetTalkSubmissionTask())
 
     }
 
@@ -73,15 +74,15 @@ public class VotingActivity : AppCompatActivity() {
     //        return super<AppCompatActivity>.onOptionsItemSelected(item)
     //    }
 
-
-        override fun onDestroy() {
-            super.onDestroy()
-            EventBusExt.getDefault()!!.unregister(this)
-        }
-
-
-    //----------EVENT------------------
-        public fun onEventMainThread(t: GetTalkSubmissionTask) {
-        }
+//
+//        override fun onDestroy() {
+//            super.onDestroy()
+//            EventBusExt.getDefault()!!.unregister(this)
+//        }
+//
+//
+//    //----------EVENT------------------
+//        public fun onEventMainThread(t: GetTalkSubmissionTask) {
+//        }
 
 }

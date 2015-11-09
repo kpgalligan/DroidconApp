@@ -10,7 +10,7 @@ import android.view.*
 import co.touchlab.android.threading.eventbus.EventBusExt
 import co.touchlab.android.threading.tasks.TaskQueue
 import co.touchlab.droidconandroid.data.Event
-import co.touchlab.droidconandroid.tasks.FindVoteDbTaskKot
+import co.touchlab.droidconandroid.tasks.GetDbTalkSubmissionTask
 import co.touchlab.droidconandroid.tasks.GetTalkSubmissionTask
 import co.touchlab.droidconandroid.ui.VoteAdapter
 import co.touchlab.droidconandroid.ui.VoteClickListener
@@ -55,9 +55,7 @@ class VoteFragment : Fragment() ,VotedListener {
         rv!!.layoutManager = LinearLayoutManager(activity)
 
         (activity as AppCompatActivity).supportActionBar.setTitle(R.string.vote)
-
-        //FIXME change to get talkSubmissions rather than event
-        TaskQueue.loadQueueDefault(activity).execute(FindVoteDbTaskKot(true))
+        TaskQueue.loadQueueDefault(activity).execute(GetDbTalkSubmissionTask(true))
     }
 
     fun initRvAdapter(data: List<Event>) {
@@ -82,21 +80,18 @@ class VoteFragment : Fragment() ,VotedListener {
         when {
             item!!.itemId == R.id.action_voted -> {
 
-//                votedList!!.setChecked(!votedList!!.isChecked)
-//
-//                when (votedList!!.isChecked) {
-//                    true -> {
-//                        votedList!!.setIcon(R.drawable.ic_voted)
-//                        TaskQueue.loadQueueDefault(activity).execute(FindVoteDbTaskKot(true))
-//                    }
-//                    false -> {
-//                        votedList!!.setIcon(R.drawable.ic_notvoted)
-//                        TaskQueue.loadQueueDefault(activity).execute(FindVoteDbTaskKot(false))
-//                    }
-//                }
+                votedList!!.setChecked(!votedList!!.isChecked)
 
-                TaskQueue.loadQueueDefault(activity).execute(GetTalkSubmissionTask())
-
+                when (votedList!!.isChecked) {
+                    true -> {
+                        votedList!!.setIcon(R.drawable.ic_voted)
+                        TaskQueue.loadQueueDefault(activity).execute(GetDbTalkSubmissionTask(true))
+                    }
+                    false -> {
+                        votedList!!.setIcon(R.drawable.ic_notvoted)
+                        TaskQueue.loadQueueDefault(activity).execute(GetDbTalkSubmissionTask(false))
+                    }
+                }
 
             }
         }
@@ -108,8 +103,8 @@ class VoteFragment : Fragment() ,VotedListener {
     }
 
     //----------EVENT------------------
-    public fun onEventMainThread(t: FindVoteDbTaskKot) {
-        initRvAdapter(t.list)
+    public fun onEventMainThread(t: GetDbTalkSubmissionTask) {
+//        initRvAdapter(t.list)
     }
 }
 
