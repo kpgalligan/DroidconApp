@@ -5,8 +5,10 @@ import co.touchlab.android.threading.eventbus.EventBusExt
 import co.touchlab.android.threading.tasks.Task
 import co.touchlab.droidconandroid.data.DatabaseHelper
 import co.touchlab.droidconandroid.data.Event
+import co.touchlab.droidconandroid.data.EventSpeaker
 import co.touchlab.droidconandroid.data.UserAccount
 import co.touchlab.droidconandroid.ui.hasConflict
+import co.touchlab.squeaky.stmt.Where
 import java.util.ArrayList
 
 /**
@@ -28,12 +30,12 @@ open class EventDetailLoadTask(val eventId: Long) : Task()
         event = dao.queryForId(eventId)
 
         if(event!!.isRsvped())
-            conflict = hasConflict(event!!, dao.queryForAll())
+            conflict = hasConflict(event!!, dao.queryForAll().list())
 
         val eventSpeakerDao = DatabaseHelper.getInstance(context).getEventSpeakerDao()
-        val results = eventSpeakerDao.createWhere()!!.eq("event_id", eventId)!!.query()!!
+        val results = Where<EventSpeaker, Long>(eventSpeakerDao)!!.eq("event_id", eventId)!!.query()!!.list()!!
 
-        speakers = ArrayList(results.size)
+        speakers = ArrayList(results.size())
 
         for (eventSpeaker in results)
         {
