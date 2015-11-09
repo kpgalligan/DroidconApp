@@ -5,6 +5,9 @@ import android.content.Intent
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.Toolbar
+import co.touchlab.android.threading.eventbus.EventBusExt
+import co.touchlab.android.threading.tasks.TaskQueue
+import co.touchlab.droidconandroid.tasks.GetTalkSubmissionTask
 
 /**
  *
@@ -29,13 +32,25 @@ public class VotingActivity : AppCompatActivity() {
         toolbar!!.setBackgroundColor(resources.getColor(R.color.droidcon_green))
 
         val fragment = VoteFragment.newInstance()
-        getSupportFragmentManager()
+        supportFragmentManager
                 .beginTransaction()
                 .add(R.id.container, fragment, VoteFragment.Tag)
                 .commit()
 
-        //        EventBusExt.getDefault()!!.register(this)
-        //        TaskQueue.loadQueueDefault(this).execute(FindVoteTaskKot())
+                EventBusExt.getDefault()!!.register(this)
+
+
+
+        //FIXME
+        // make table for talk submissions
+        // task to get talk sub
+        // persisted task to upload any votes
+
+        //FIXME send any pending votes by restarting persisted queue
+
+
+        //FIXME get list of talk submissions and my votes. Merge with whats currently in DB
+//        TaskQueue.loadQueueDefault(this).execute(GetVoteTaskKot())
 
     }
 
@@ -59,15 +74,14 @@ public class VotingActivity : AppCompatActivity() {
     //    }
 
 
-    //    override fun onDestroy() {
-    //        super.onDestroy()
-    //        EventBusExt.getDefault()!!.unregister(this)
-    //    }
+        override fun onDestroy() {
+            super.onDestroy()
+            EventBusExt.getDefault()!!.unregister(this)
+        }
 
 
     //----------EVENT------------------
-    //    public fun onEventMainThread(t: FindVoteTaskKot) {
-    //        initRvAdapter(t.list)
-    //    }
+        public fun onEventMainThread(t: GetTalkSubmissionTask) {
+        }
 
 }

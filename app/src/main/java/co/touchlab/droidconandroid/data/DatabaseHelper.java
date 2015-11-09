@@ -26,6 +26,9 @@ public class DatabaseHelper extends SqueakyOpenHelper
     private static final int    VERSION            = VOTE;
     private static DatabaseHelper instance;
 
+    // @reminder Ordering matters, create foreign key dependant classes later
+    private final Class[] tableClasses = new Class[] {Venue.class, Event.class, Block.class, Invite.class, UserAccount.class, EventAttendee.class, EventSpeaker.class, TalkSubmission.class};
+
     private DatabaseHelper(Context context)
     {
         super(context, DATABASE_FILE_NAME, null, VERSION);
@@ -61,7 +64,15 @@ public class DatabaseHelper extends SqueakyOpenHelper
     {
         if(oldVersion < VOTE)
         {
-            db.execSQL("alter table event add column vote_detail int default null");
+            try
+            {
+                TableUtils.createTables(db, TalkSubmission.class);
+            }
+            catch(SQLException e)
+            {
+
+            }
+
         }
     }
 
@@ -71,9 +82,6 @@ public class DatabaseHelper extends SqueakyOpenHelper
         super.onOpen(db);
         db.execSQL("PRAGMA foreign_keys=ON;");
     }
-
-    // @reminder Ordering matters, create foreign key dependant classes later
-    private final Class[] tableClasses = new Class[] {Venue.class, Event.class, Block.class, Invite.class, UserAccount.class, EventAttendee.class, EventSpeaker.class};
 
     @NotNull
     public Dao<Venue, Long> getVenueDao()
@@ -104,6 +112,13 @@ public class DatabaseHelper extends SqueakyOpenHelper
     {
         return (Dao<Block, Long>) getDao(Block.class);
     }
+
+    @NotNull
+    public Dao<TalkSubmission, Long> getTalkSubDao()
+    {
+        return (Dao<TalkSubmission, Long>) getDao(TalkSubmission.class);
+    }
+
 
     /**
      * @param transaction .

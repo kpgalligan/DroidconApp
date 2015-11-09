@@ -10,12 +10,14 @@ import co.touchlab.squeaky.stmt.Where
 import java.util.*
 
 /**
- * Created by kgalligan on 7/20/14.
+ * Created by toidiu on 7/20/14.
  */
-class FindVoteTaskKot(val openForVote: Boolean) : Task() {
+class FindVoteDbTaskKot(val openForVote: Boolean) : Task() {
     var list: List<Event> = ArrayList()
 
     override fun run(context: Context?) {
+
+
 
         val dao: Dao<Event, Long> = DatabaseHelper.getInstance(context).eventDao
 
