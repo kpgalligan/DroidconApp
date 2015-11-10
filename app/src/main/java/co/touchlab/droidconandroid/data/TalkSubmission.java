@@ -1,5 +1,7 @@
 package co.touchlab.droidconandroid.data;
 
+import java.io.Serializable;
+
 import co.touchlab.squeaky.field.DatabaseField;
 import co.touchlab.squeaky.table.DatabaseTable;
 
@@ -7,14 +9,14 @@ import co.touchlab.squeaky.table.DatabaseTable;
  * Created by kgalligan on 7/28/14.
  */
 @DatabaseTable
-public class TalkSubmission
+public class TalkSubmission implements Serializable
 {
 
     public TalkSubmission()
     {
     }
 
-    public TalkSubmission(Integer id, Integer vote, String title, String description)
+    public TalkSubmission(Long id, Integer vote, String title, String description)
     {
         this.id = id;
         this.vote = vote;
@@ -24,7 +26,7 @@ public class TalkSubmission
 
 
     @DatabaseField(id = true)
-    public Integer id;
+    public Long id;
 
 //    @DatabaseField(foreign = true, canBeNull = false, foreignAutoRefresh = true)
 //    public UserAccount userAccount;
@@ -37,5 +39,8 @@ public class TalkSubmission
 
     @DatabaseField
     public String description;
+
+    @DatabaseField
+    public String speaker;
 
 }

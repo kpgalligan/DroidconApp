@@ -7,11 +7,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.widget.RatingBar
 import android.widget.TextView
-import co.touchlab.android.threading.eventbus.EventBusExt
-import co.touchlab.android.threading.tasks.TaskQueue
 import co.touchlab.droidconandroid.data.DatabaseHelper
-import co.touchlab.droidconandroid.data.Event
-import co.touchlab.droidconandroid.tasks.EventDetailLoadTask
+import co.touchlab.droidconandroid.data.TalkSubmission
+import co.touchlab.droidconandroid.tasks.persisted.PersistedTaskQueueFactory
+import co.touchlab.droidconandroid.tasks.persisted.UpdateVotePersisted
 
 
 /**
@@ -21,12 +20,12 @@ import co.touchlab.droidconandroid.tasks.EventDetailLoadTask
 class VoteDetailFragment : DialogFragment() {
 
     companion object {
-        val EVENT_ID = "EVENT_ID"
+        val TALK = "TALK"
 
-        fun newInstance(id: Long): VoteDetailFragment {
+        fun newInstance(talk: TalkSubmission): VoteDetailFragment {
             val fragment = VoteDetailFragment()
             val args = Bundle()
-            args.putLong(EVENT_ID, id)
+            args.putSerializable(TALK, talk)
             fragment.arguments = args
             fragment.isCancelable = true
             return fragment
@@ -34,8 +33,7 @@ class VoteDetailFragment : DialogFragment() {
     }
 
     var rating: RatingBar? = null
-    var eventId: Long? = null
-    var event: Event? = null
+    var talk: TalkSubmission? = null
 
     override fun onCreateView(inflater: LayoutInflater?, container: view.ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater!!.inflate(R.layout.fragment_vote_detail, null)
@@ -43,19 +41,14 @@ class VoteDetailFragment : DialogFragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super<DialogFragment>.onCreate(savedInstanceState)
-        EventBusExt.getDefault().register(this)
-        eventId = arguments.getLong(EVENT_ID)
+        talk = arguments.getSerializable(TALK) as TalkSubmission
 
-        TaskQueue.loadQueueDefault(activity).execute(EventDetailLoadTask(eventId!!))
-    }
-
-    override fun onDestroy() {
-        super<DialogFragment>.onDestroy()
-        EventBusExt.getDefault().unregister(this)
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super<DialogFragment>.onActivityCreated(savedInstanceState)
+
+        initEvent()
     }
 
     fun initEvent() {
@@ -68,43 +61,42 @@ class VoteDetailFragment : DialogFragment() {
         val pass = view.findViewById(R.id.pass) as TextView
         val submit = view.findViewById(R.id.submit_vote) as TextView
 
-        val dao = DatabaseHelper.getInstance(activity).eventDao
 
-        title.text = "" + event!!.name
-        descrip.text = event!!.description
-        speaker.text = event!!.allSpeakersString()
+        title.text = talk!!.title
+        descrip.text = talk!!.description
+        speaker.text = talk!!.speaker
 
         cancel.setOnClickListener { dismiss() }
         pass.setOnClickListener {
-            event!!.vote = 0
-            dao.update(event)
+            talk!!.vote = 0
+            updateTalk()
             dismiss()
         }
         submit.setOnClickListener {
-            dao.update(event)
+            updateTalk()
             dismiss()
         }
 
         initRating()
     }
 
+    private fun updateTalk() {
+        val dao = DatabaseHelper.getInstance(activity).talkSubDao
+        PersistedTaskQueueFactory.getInstance(activity).execute(UpdateVotePersisted(talk!!.id, talk!!.vote))
+        dao.update(talk)
+    }
+
     private fun initRating() {
 
         rating = view.findViewById(R.id.rating) as RatingBar
-        if (event!!.vote != null)
-            rating!!.rating = event!!.vote.toFloat()
+        if (talk!!.vote != null)
+            rating!!.rating = talk!!.vote.toFloat()
 
         rating!!.onRatingBarChangeListener = object : RatingBar.OnRatingBarChangeListener {
             override fun onRatingChanged(ratingBar: RatingBar?, rating: Float, fromUser: Boolean) {
-                event!!.vote = Math.round(rating)
+                talk!!.vote = Math.round(rating)
             }
 
         }
-    }
-
-    //----------EVENT------------------
-    public fun onEventMainThread(t: EventDetailLoadTask) {
-        this.event = t.event!!
-        initEvent()
     }
 }

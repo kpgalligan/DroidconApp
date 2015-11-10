@@ -10,6 +10,7 @@ import android.view.*
 import co.touchlab.android.threading.eventbus.EventBusExt
 import co.touchlab.android.threading.tasks.TaskQueue
 import co.touchlab.droidconandroid.data.Event
+import co.touchlab.droidconandroid.data.TalkSubmission
 import co.touchlab.droidconandroid.tasks.GetDbTalkSubmissionTask
 import co.touchlab.droidconandroid.tasks.GetTalkSubmissionTask
 import co.touchlab.droidconandroid.ui.VoteAdapter
@@ -58,10 +59,10 @@ class VoteFragment : Fragment() ,VotedListener {
         TaskQueue.loadQueueDefault(activity).execute(GetDbTalkSubmissionTask(true))
     }
 
-    fun initRvAdapter(data: List<Event>) {
+    fun initRvAdapter(data: List<TalkSubmission>) {
         adapter = VoteAdapter(data, object : VoteClickListener {
-            override fun onEventClick(event: Event) {
-                val fragment = VoteDetailFragment.newInstance(event.id)
+            override fun onEventClick(item: TalkSubmission) {
+                val fragment = VoteDetailFragment.newInstance(item)
                 fragment.show(activity.supportFragmentManager, null)
             }
         })
@@ -104,7 +105,7 @@ class VoteFragment : Fragment() ,VotedListener {
 
     //----------EVENT------------------
     public fun onEventMainThread(t: GetDbTalkSubmissionTask) {
-//        initRvAdapter(t.list)
+        initRvAdapter(t.list)
     }
 }
 

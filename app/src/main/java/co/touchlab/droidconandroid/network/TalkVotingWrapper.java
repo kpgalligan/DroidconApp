@@ -10,20 +10,20 @@ import co.touchlab.droidconandroid.data.TalkSubmission;
 public class TalkVotingWrapper
 {
 
-    //    public Wrapper wrapper;
-    //
-    //
-    //    public static class Wrapper
-    //    {
     public NetTalkSub talkSubmission;
     public NetVoteSub votingSubmission;
-    //    }
 
     public static class NetTalkSub
     {
-        public int    id;
-        public String title;
-        public String description;
+        public Long     id;
+        public String   title;
+        public String   description;
+        public UserName userAccount;
+    }
+
+    public static class UserName
+    {
+        public String name;
     }
 
     public static class NetVoteSub
