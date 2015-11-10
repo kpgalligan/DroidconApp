@@ -7,7 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import co.touchlab.droidconandroid.R
-import co.touchlab.droidconandroid.data.Event
+import co.touchlab.droidconandroid.data.TalkSubmission
 import java.util.*
 
 /**
@@ -23,10 +23,10 @@ class VoteAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder> {
     private var dataSet: List<Any> = ArrayList()
     private val voteClickListener: VoteClickListener
 
-    constructor(events: List<Event>, eventClickListener: VoteClickListener) : super() {
+    constructor(data: List<TalkSubmission>, eventClickListener: VoteClickListener) : super() {
 //        dataSet + title + events
         dataSet += title
-        dataSet += events
+        dataSet += data
         this.voteClickListener = eventClickListener
     }
 
@@ -53,13 +53,13 @@ class VoteAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder> {
         if (getItemViewType(position) == VIEW_TYPE_VOTE ) {
 
             holder as VoteBlockViewHolder
-            val event = dataSet.get(position) as Event
+            val talk = dataSet.get(position) as TalkSubmission
 
-            holder.title.setText(event.name)
-            holder.descrip.setText(event.description)
+            holder.title.setText(talk.title)
+            holder.descrip.setText(talk.description)
 
             holder.card.setOnClickListener {
-                voteClickListener.onEventClick(event)
+                voteClickListener.onEventClick(talk)
             }
 
 
@@ -69,7 +69,7 @@ class VoteAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     override fun getItemViewType(position: Int): Int {
         val item = dataSet.get(position)
-        if (item is Event) {
+        if (item is TalkSubmission) {
             return VIEW_TYPE_VOTE
         } else if (item is String) {
             return VIEW_TYPE_PAGE_TITLE
@@ -101,6 +101,6 @@ class VoteAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
 interface VoteClickListener {
 
-    fun onEventClick(event: Event)
+    fun onEventClick(item: TalkSubmission)
 
 }

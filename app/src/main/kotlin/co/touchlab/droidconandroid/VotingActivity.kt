@@ -5,10 +5,10 @@ import android.content.Intent
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.Toolbar
-import co.touchlab.android.threading.eventbus.EventBusExt
 import co.touchlab.android.threading.tasks.TaskQueue
 import co.touchlab.droidconandroid.tasks.GetTalkSubmissionTask
 import co.touchlab.droidconandroid.tasks.persisted.PersistedTaskQueueFactory
+import co.touchlab.droidconandroid.tasks.persisted.UpdateVotePersisted
 
 /**
  *
@@ -38,51 +38,21 @@ public class VotingActivity : AppCompatActivity() {
                 .add(R.id.container, fragment, VoteFragment.Tag)
                 .commit()
 
-//                EventBusExt.getDefault()!!.register(this)
+        //                EventBusExt.getDefault()!!.register(this)
 
 
-
-        //FIXME
-        // make table for talk submissions
-        // task to get talk sub
-        // persisted task to upload any votes
-
-        //FIXME send any pending votes by restarting persisted queue
-
-
-        //FIXME get list of talk submissions and my votes. Merge with whats currently in DB
-        TaskQueue.loadQueueDefault(this).execute(GetTalkSubmissionTask())
-
+        PersistedTaskQueueFactory.getInstance(this).execute(GetTalkSubmissionTask())
     }
 
-    //    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-    //        getMenuInflater().inflate(R.menu.vote_detail, menu)
-    //        val pass = menu!!.findItem(R.id.action_pass)
-    ////        pass.setIcon(ResourcesCompat.getDrawable(this, R.drawable.ic_filter))
-    //        return super<AppCompatActivity>.onCreateOptionsMenu(menu)
-    //    }
     //
-    //    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
-    //        when {
-    //            item!!.getItemId() == R.id.action_pass -> {
-    ////                drawerLayout!!.openDrawer(findViewById(R.id.filter_wrapper))
-    //            }
-    ////            item.getItemId() == R.id.action_search -> {
-    ////                FindUserKot.startMe(this@MyActivity)
-    ////            }
+    //        override fun onDestroy() {
+    //            super.onDestroy()
+    //            EventBusExt.getDefault()!!.unregister(this)
     //        }
-    //        return super<AppCompatActivity>.onOptionsItemSelected(item)
-    //    }
-
-//
-//        override fun onDestroy() {
-//            super.onDestroy()
-//            EventBusExt.getDefault()!!.unregister(this)
-//        }
-//
-//
-//    //----------EVENT------------------
-//        public fun onEventMainThread(t: GetTalkSubmissionTask) {
-//        }
+    //
+    //
+    //    //----------EVENT------------------
+    //        public fun onEventMainThread(t: GetTalkSubmissionTask) {
+    //        }
 
 }
