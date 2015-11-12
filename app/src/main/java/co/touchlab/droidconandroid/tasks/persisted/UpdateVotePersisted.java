@@ -27,9 +27,9 @@ public class UpdateVotePersisted extends BasePersistedTask
 
     public UpdateVotePersisted(Long talkId, int vote)
     {
+        this();
         this.talkId = talkId;
         this.vote = vote;
-        setPriority(HIGHER_PRIORITY);
     }
 
     @Override
