@@ -7,6 +7,7 @@ import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.view
 import android.view.*
+import android.widget.TextView
 import co.touchlab.android.threading.eventbus.EventBusExt
 import co.touchlab.android.threading.tasks.TaskQueue
 import co.touchlab.droidconandroid.data.TalkSubmission
@@ -14,6 +15,7 @@ import co.touchlab.droidconandroid.tasks.GetDbTalkSubmissionTask
 import co.touchlab.droidconandroid.ui.RemoveTalkListener
 import co.touchlab.droidconandroid.ui.VoteAdapter
 import co.touchlab.droidconandroid.ui.VoteClickListener
+import java.util.*
 
 
 /**
@@ -22,6 +24,7 @@ import co.touchlab.droidconandroid.ui.VoteClickListener
  */
 class VoteFragment : Fragment(), VoteClickListener {
 
+    var empty: TextView? = null
     var rv: RecyclerView? = null
     var adapter: VoteAdapter? = null
     var votedList: MenuItem? = null
@@ -51,6 +54,7 @@ class VoteFragment : Fragment(), VoteClickListener {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super<Fragment>.onActivityCreated(savedInstanceState)
 
+        empty = view.findViewById(R.id.empty_list) as TextView
         rv = view.findViewById(R.id.rv) as RecyclerView
         rv!!.layoutManager = LinearLayoutManager(activity)
 
@@ -60,8 +64,24 @@ class VoteFragment : Fragment(), VoteClickListener {
 
     fun initRvAdapter(data: List<TalkSubmission>, openVotes: Boolean) {
         adapter = VoteAdapter(data, this, openVotes)
-
         rv!!.setAdapter(adapter!!)
+
+        refreshView()
+    }
+
+    private fun refreshView() {
+        if (adapter!!.isDataEmpty()) {
+            when (adapter!!.displayState()) {
+                true ->
+                    empty!!.setText(R.string.empty_open_vote)
+                false ->
+                    empty!!.setText(R.string.empty_close_vote)
+            }
+            empty!!.visibility = View.VISIBLE
+
+        } else {
+            empty!!.visibility = View.GONE
+        }
     }
 
     override fun onCreateOptionsMenu(menu: Menu?, inflater: MenuInflater?) {
@@ -105,6 +125,7 @@ class VoteFragment : Fragment(), VoteClickListener {
 
     public fun onEventMainThread(t: RemoveTalkListener) {
         adapter!!.remove(t.item)
+        refreshView()
     }
 }
 

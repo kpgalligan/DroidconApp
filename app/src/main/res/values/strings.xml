@@ -115,6 +115,8 @@ Wanna join a team where Android isn\'t "that other platform", where we care abou
     <string name="vote_with">with\ </string>
     <string name="vote_submit">SUBMIT</string>
     <string name="vote_pass">PASS</string>
-    <string name="vote_voted">Voted</string>
+    <string name="vote_voted">Toggle Voted</string>
+    <string name="empty_open_vote">No new talk submissions available.\nCheck back later!</string>
+    <string name="empty_close_vote">You haven\'t voted on talks yet.</string>
 
 </resources>

@@ -5,10 +5,8 @@ import android.content.Intent
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.Toolbar
-import co.touchlab.android.threading.tasks.TaskQueue
 import co.touchlab.droidconandroid.tasks.persisted.GetTalkSubmissionPersisted
 import co.touchlab.droidconandroid.tasks.persisted.PersistedTaskQueueFactory
-import co.touchlab.droidconandroid.tasks.persisted.UpdateVotePersisted
 
 /**
  *
@@ -38,6 +36,8 @@ public class VotingActivity : AppCompatActivity() {
                 .add(R.id.container, fragment, VoteFragment.Tag)
                 .commit()
 
+
+//        PersistedTaskQueueFactory.getInstance(this).restartQueue()
         PersistedTaskQueueFactory.getInstance(this).execute(GetTalkSubmissionPersisted())
     }
 

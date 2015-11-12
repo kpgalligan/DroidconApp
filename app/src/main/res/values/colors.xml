@@ -47,6 +47,9 @@
     <color name="bg_profile">#151239</color>
 
     <color name="voting_primary">#00d0ff</color>
+    <color name="vote_gray">#eeeeee</color>
+    <color name="vote_title_gray">#979797</color>
+    <color name="vote_card_gray">#dcdcdc</color>
 
 
     <color name="sign_in_primary">#26c6da</color>

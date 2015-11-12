@@ -1,5 +1,6 @@
 package co.touchlab.droidconandroid.ui
 
+import android.support.v7.widget.CardView
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
@@ -28,6 +29,7 @@ class VoteAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder> {
         when (openVotes) {
             true ->
                 dataSet.add(openTitle)
+
             false ->
                 dataSet.add(closeTitle)
         }
@@ -55,7 +57,7 @@ class VoteAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder?, position: Int) {
-        val context = holder!!.itemView.getContext()
+        val resources = holder!!.itemView.context.resources
 
         if (getItemViewType(position) == VIEW_TYPE_VOTE ) {
 
@@ -64,6 +66,12 @@ class VoteAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
             holder.title.setText(talk.title)
             holder.descrip.setText(talk.description)
+            when (openVotes) {
+                true ->
+                    holder.card.setCardBackgroundColor(resources.getColor(R.color.white))
+                false ->
+                    holder.card.setCardBackgroundColor(resources.getColor(R.color.vote_card_gray))
+            }
 
             holder.card.setOnClickListener {
                 voteClickListener.onTalkItemClick(talk)
@@ -86,6 +94,10 @@ class VoteAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder> {
         throw UnsupportedOperationException()
     }
 
+    fun isDataEmpty(): Boolean {
+        return dataSet.size() <= 1
+    }
+
     fun remove(item: TalkSubmission) {
         if (!openVotes!!) return
 
@@ -104,9 +116,13 @@ class VoteAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     }
 
+    fun displayState(): Boolean {
+        return this.openVotes!!
+    }
 
 }
 
+//-------------------------VIEW HOLDER
 public class VoteTitleViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
     public val pageTitle: TextView
 
@@ -118,21 +134,20 @@ public class VoteTitleViewHolder(itemView: View) : RecyclerView.ViewHolder(itemV
 public class VoteBlockViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
     public val title: TextView
     public val descrip: TextView
-    public val card: View
+    public val card: CardView
 
     init {
         title = itemView.findViewById(R.id.title) as TextView
         descrip = itemView.findViewById(R.id.description) as TextView
-        card = itemView.findViewById(R.id.card)
+        card = itemView.findViewById(R.id.card) as CardView
     }
 }
 
-
+//-------------------------INTEFACE
 interface VoteClickListener {
 
     fun onTalkItemClick(item: TalkSubmission)
 
 }
 
-class RemoveTalkListener(val item: TalkSubmission) {
-}
+data class RemoveTalkListener(val item: TalkSubmission)
