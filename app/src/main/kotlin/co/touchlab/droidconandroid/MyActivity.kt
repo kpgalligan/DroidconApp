@@ -68,7 +68,7 @@ public class MyActivity : AppCompatActivity(), FilterInterface, NfcAdapter.Creat
         }
         else if ( AppPrefs.getInstance(this).conventionStartDate != "" )
         {
-            startActivity(VotingActivity.getLaunchIntent(this@MyActivity))
+            VotingActivity.callMe(this@MyActivity)
             finish()
             return
         }
