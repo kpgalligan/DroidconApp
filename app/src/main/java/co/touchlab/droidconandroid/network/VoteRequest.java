@@ -18,9 +18,9 @@ public interface VoteRequest
     //    /api/voter/updateVote/:subId
     @FormUrlEncoded
     @POST("/api/voter/updateVote/{subId}")
-    Response updateVote(@Path("subId") Long talkId, @Field("vote") Integer vote);
+    Response updateVote(@Path("subId") Long talkId, @Field("vote") Integer vote) throws NetworkErrorHandler.NetworkException;
 
 
     @GET("/api/voter/voteSubmissions")
-    List<TalkVotingWrapper> getTalkSubmission() throws Exception;
+    List<TalkVotingWrapper> getTalkSubmission() throws NetworkErrorHandler.NetworkException;
 }

@@ -1,4 +1,4 @@
-package co.touchlab.droidconandroid.tasks;
+package co.touchlab.droidconandroid.tasks.persisted;
 
 import android.content.Context;
 
@@ -6,28 +6,36 @@ import java.sql.SQLException;
 import java.util.List;
 
 import co.touchlab.android.threading.tasks.TaskQueue;
+import co.touchlab.android.threading.tasks.helper.RetrofitPersistedTask;
 import co.touchlab.android.threading.tasks.persisted.PersistedTask;
 import co.touchlab.droidconandroid.data.DatabaseHelper;
 import co.touchlab.droidconandroid.data.TalkSubmission;
 import co.touchlab.droidconandroid.network.DataHelper;
 import co.touchlab.droidconandroid.network.TalkVotingWrapper;
 import co.touchlab.droidconandroid.network.VoteRequest;
+import co.touchlab.droidconandroid.tasks.GetDbTalkSubmissionTask;
 import co.touchlab.squeaky.dao.Dao;
 
 /**
  * Created by toidiu on 7/20/14.
  */
-public class GetTalkSubmissionTask extends PersistedTask
+public class GetTalkSubmissionPersisted extends BasePersistedTask
 {
     public List<TalkSubmission> list;
 
 
-    public GetTalkSubmissionTask()
+    public GetTalkSubmissionPersisted()
     {
     }
 
+//    @Override
+//    protected void run(Context context) throws Throwable
+//    {
+//
+//    }
+
     @Override
-    protected void run(Context context) throws Throwable
+    protected void runNetwork(Context context) throws Throwable
     {
         VoteRequest voteRequest = DataHelper.makeRequestAdapter(context).create(VoteRequest.class);
         List<TalkVotingWrapper> talkSubmission = voteRequest.getTalkSubmission();
@@ -61,7 +69,7 @@ public class GetTalkSubmissionTask extends PersistedTask
     @Override
     protected boolean same(PersistedTask persistedTask)
     {
-        return persistedTask instanceof GetTalkSubmissionTask;
+        return persistedTask instanceof GetTalkSubmissionPersisted;
     }
 
     @Override

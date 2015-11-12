@@ -7,10 +7,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.widget.RatingBar
 import android.widget.TextView
+import co.touchlab.android.threading.eventbus.EventBusExt
 import co.touchlab.droidconandroid.data.DatabaseHelper
 import co.touchlab.droidconandroid.data.TalkSubmission
 import co.touchlab.droidconandroid.tasks.persisted.PersistedTaskQueueFactory
 import co.touchlab.droidconandroid.tasks.persisted.UpdateVotePersisted
+import co.touchlab.droidconandroid.ui.RemoveTalkListener
 
 
 /**
@@ -84,6 +86,7 @@ class VoteDetailFragment : DialogFragment() {
         val dao = DatabaseHelper.getInstance(activity).talkSubDao
         PersistedTaskQueueFactory.getInstance(activity).execute(UpdateVotePersisted(talk!!.id, talk!!.vote))
         dao.update(talk)
+        EventBusExt.getDefault().post(RemoveTalkListener(talk!!))
     }
 
     private fun initRating() {

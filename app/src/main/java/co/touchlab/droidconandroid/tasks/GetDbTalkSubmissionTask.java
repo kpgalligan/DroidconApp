@@ -17,12 +17,12 @@ import co.touchlab.squeaky.stmt.Where;
  */
 public class GetDbTalkSubmissionTask extends Task
 {
-    private final boolean openForVote;
+    public final boolean openVotes;
     public List<TalkSubmission> list = new ArrayList<>();
 
     public GetDbTalkSubmissionTask(boolean openForVote)
     {
-        this.openForVote = openForVote;
+        this.openVotes = openForVote;
     }
 
     @Override
@@ -30,7 +30,7 @@ public class GetDbTalkSubmissionTask extends Task
     {
         Dao<TalkSubmission, Long> dao = DatabaseHelper.getInstance(context).getTalkSubDao();
 
-        if(openForVote)
+        if(openVotes)
         {
             list = new Where<TalkSubmission, Long>(dao).isNull("vote").query().list();
         }

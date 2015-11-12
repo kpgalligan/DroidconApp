@@ -6,7 +6,7 @@ import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.Toolbar
 import co.touchlab.android.threading.tasks.TaskQueue
-import co.touchlab.droidconandroid.tasks.GetTalkSubmissionTask
+import co.touchlab.droidconandroid.tasks.persisted.GetTalkSubmissionPersisted
 import co.touchlab.droidconandroid.tasks.persisted.PersistedTaskQueueFactory
 import co.touchlab.droidconandroid.tasks.persisted.UpdateVotePersisted
 
@@ -38,21 +38,7 @@ public class VotingActivity : AppCompatActivity() {
                 .add(R.id.container, fragment, VoteFragment.Tag)
                 .commit()
 
-        //                EventBusExt.getDefault()!!.register(this)
-
-
-        PersistedTaskQueueFactory.getInstance(this).execute(GetTalkSubmissionTask())
+        PersistedTaskQueueFactory.getInstance(this).execute(GetTalkSubmissionPersisted())
     }
-
-    //
-    //        override fun onDestroy() {
-    //            super.onDestroy()
-    //            EventBusExt.getDefault()!!.unregister(this)
-    //        }
-    //
-    //
-    //    //----------EVENT------------------
-    //        public fun onEventMainThread(t: GetTalkSubmissionTask) {
-    //        }
 
 }
