@@ -1,7 +1,6 @@
 package co.touchlab.droidconandroid.ui
 
 import android.support.v7.widget.RecyclerView
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -18,15 +17,23 @@ class VoteAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     val VIEW_TYPE_VOTE: Int = 0
     val VIEW_TYPE_PAGE_TITLE: Int = 1
-    val title = "Open for voting"
+    val openTitle = "Open for voting"
+    val closeTitle = "Votes submitted"
+    var openVotes: Boolean? = false
 
-    private var dataSet: List<Any> = ArrayList()
+    private var dataSet: MutableList<Any> = ArrayList()
     private val voteClickListener: VoteClickListener
 
-    constructor(data: List<TalkSubmission>, eventClickListener: VoteClickListener) : super() {
-//        dataSet + title + events
-        dataSet += title
-        dataSet += data
+    constructor(data: List<TalkSubmission>, eventClickListener: VoteClickListener, openVotes: Boolean) : super() {
+        when (openVotes) {
+            true ->
+                dataSet.add(openTitle)
+            false ->
+                dataSet.add(closeTitle)
+        }
+
+        dataSet.addAll(data)
+        this.openVotes = openVotes;
         this.voteClickListener = eventClickListener
     }
 
@@ -53,22 +60,24 @@ class VoteAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder> {
         if (getItemViewType(position) == VIEW_TYPE_VOTE ) {
 
             holder as VoteBlockViewHolder
-            val talk = dataSet.get(position) as TalkSubmission
+            val talk = dataSet.elementAt(position) as TalkSubmission
 
             holder.title.setText(talk.title)
             holder.descrip.setText(talk.description)
 
             holder.card.setOnClickListener {
-                voteClickListener.onEventClick(talk)
+                voteClickListener.onTalkItemClick(talk)
             }
 
 
         } else if (getItemViewType(position) == VIEW_TYPE_PAGE_TITLE ) {
+            holder as VoteTitleViewHolder
+            holder.pageTitle.text = dataSet.elementAt(position).toString()
         }
     }
 
     override fun getItemViewType(position: Int): Int {
-        val item = dataSet.get(position)
+        val item = dataSet.elementAt(position)
         if (item is TalkSubmission) {
             return VIEW_TYPE_VOTE
         } else if (item is String) {
@@ -77,30 +86,53 @@ class VoteAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder> {
         throw UnsupportedOperationException()
     }
 
-    fun remove(){
-//        dataSet.
-    }
+    fun remove(item: TalkSubmission) {
+        if (!openVotes!!) return
 
-    public class VoteTitleViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+        val iterator = dataSet.iterator()
+        var i = 0
 
-    }
-
-    public class VoteBlockViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        public val title: TextView
-        public val descrip: TextView
-        public val card: View
-
-        init {
-            title = itemView.findViewById(R.id.title) as TextView
-            descrip = itemView.findViewById(R.id.description) as TextView
-            card = itemView.findViewById(R.id.card)
+        while (iterator.hasNext()) {
+            val d = iterator.next()
+            if (d is TalkSubmission && d.id == item.id) {
+                dataSet.remove(i)
+                notifyItemRemoved(i)
+                break
+            }
+            i++
         }
+
     }
+
 
 }
 
+public class VoteTitleViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+    public val pageTitle: TextView
+
+    init {
+        pageTitle = itemView.findViewById(R.id.page_title) as TextView
+    }
+}
+
+public class VoteBlockViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+    public val title: TextView
+    public val descrip: TextView
+    public val card: View
+
+    init {
+        title = itemView.findViewById(R.id.title) as TextView
+        descrip = itemView.findViewById(R.id.description) as TextView
+        card = itemView.findViewById(R.id.card)
+    }
+}
+
+
 interface VoteClickListener {
 
-    fun onEventClick(item: TalkSubmission)
+    fun onTalkItemClick(item: TalkSubmission)
 
+}
+
+class RemoveTalkListener(val item: TalkSubmission) {
 }

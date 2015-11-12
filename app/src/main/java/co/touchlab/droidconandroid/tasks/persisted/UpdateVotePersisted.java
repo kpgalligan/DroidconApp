@@ -14,7 +14,7 @@ import retrofit.client.Response;
 /**
  * Created by kgalligan on 8/21/15.
  */
-public class UpdateVotePersisted extends RetrofitPersistedTask
+public class UpdateVotePersisted extends BasePersistedTask
 {
     private Long talkId;
     private int  vote;
@@ -33,7 +33,7 @@ public class UpdateVotePersisted extends RetrofitPersistedTask
     }
 
     @Override
-    protected void runNetwork(Context context)
+    protected void runNetwork(Context context) throws Throwable
     {
         VoteRequest voteRequest = DataHelper.makeRequestAdapter(context).create(VoteRequest.class);
 

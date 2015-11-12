@@ -9,10 +9,9 @@ import android.view
 import android.view.*
 import co.touchlab.android.threading.eventbus.EventBusExt
 import co.touchlab.android.threading.tasks.TaskQueue
-import co.touchlab.droidconandroid.data.Event
 import co.touchlab.droidconandroid.data.TalkSubmission
 import co.touchlab.droidconandroid.tasks.GetDbTalkSubmissionTask
-import co.touchlab.droidconandroid.tasks.GetTalkSubmissionTask
+import co.touchlab.droidconandroid.ui.RemoveTalkListener
 import co.touchlab.droidconandroid.ui.VoteAdapter
 import co.touchlab.droidconandroid.ui.VoteClickListener
 
@@ -21,7 +20,7 @@ import co.touchlab.droidconandroid.ui.VoteClickListener
  *
  * Created by toidiu on 8/5/15.
  */
-class VoteFragment : Fragment() ,VotedListener {
+class VoteFragment : Fragment(), VoteClickListener {
 
     var rv: RecyclerView? = null
     var adapter: VoteAdapter? = null
@@ -59,13 +58,8 @@ class VoteFragment : Fragment() ,VotedListener {
         TaskQueue.loadQueueDefault(activity).execute(GetDbTalkSubmissionTask(true))
     }
 
-    fun initRvAdapter(data: List<TalkSubmission>) {
-        adapter = VoteAdapter(data, object : VoteClickListener {
-            override fun onEventClick(item: TalkSubmission) {
-                val fragment = VoteDetailFragment.newInstance(item)
-                fragment.show(activity.supportFragmentManager, null)
-            }
-        })
+    fun initRvAdapter(data: List<TalkSubmission>, openVotes: Boolean) {
+        adapter = VoteAdapter(data, this, openVotes)
 
         rv!!.setAdapter(adapter!!)
     }
@@ -99,16 +93,19 @@ class VoteFragment : Fragment() ,VotedListener {
         return super<Fragment>.onOptionsItemSelected(item)
     }
 
-    override fun eventVoted() {
-        adapter!!.remove()
+    override fun onTalkItemClick(item: TalkSubmission) {
+        val fragment = VoteDetailFragment.newInstance(item)
+        fragment.show(activity.supportFragmentManager, null)
     }
 
     //----------EVENT------------------
     public fun onEventMainThread(t: GetDbTalkSubmissionTask) {
-        initRvAdapter(t.list)
+        initRvAdapter(t.list, t.openVotes)
+    }
+
+    public fun onEventMainThread(t: RemoveTalkListener) {
+        adapter!!.remove(t.item)
     }
 }
 
-interface VotedListener {
-    fun eventVoted()
-}
+
