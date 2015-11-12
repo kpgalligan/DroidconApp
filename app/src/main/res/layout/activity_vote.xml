@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="false"
-    tools:context=".MyActivity">
+    tools:context=".VotingActivity">
 
     <!-- Your normal content view -->
     <LinearLayout
@@ -41,41 +41,41 @@
         android:elevation="8dp"
         android:fitsSystemWindows="false"/>
 
-    <RelativeLayout
-        android:layout_width="@dimen/drawer_width"
-        android:layout_height="match_parent"
-        android:layout_gravity="right|end"
-        android:paddingTop="40dp"
-        android:elevation="8dp"
-        android:id="@+id/filter_wrapper"
-        android:background="@color/white"
-        android:orientation="vertical"
-        android:fitsSystemWindows="false">
+    <!--<RelativeLayout-->
+        <!--android:layout_width="@dimen/drawer_width"-->
+        <!--android:layout_height="match_parent"-->
+        <!--android:layout_gravity="right|end"-->
+        <!--android:paddingTop="40dp"-->
+        <!--android:elevation="8dp"-->
+        <!--android:id="@+id/filter_wrapper"-->
+        <!--android:background="@color/white"-->
+        <!--android:orientation="vertical"-->
+        <!--android:fitsSystemWindows="false">-->
 
-        <com.wnafee.vector.MorphButton
-            android:layout_width="@dimen/height_xxtiny"
-            android:layout_height="@dimen/height_xxtiny"
-            app:vc_startDrawable="@drawable/ic_back"
-            android:background="?attr/selectableItemBackground"
-            app:vc_endDrawable="@drawable/ic_back"
-            android:layout_marginLeft="@dimen/padding_large"
-            android:id="@+id/back"/>
+        <!--<com.wnafee.vector.MorphButton-->
+            <!--android:layout_width="@dimen/height_xxtiny"-->
+            <!--android:layout_height="@dimen/height_xxtiny"-->
+            <!--app:vc_startDrawable="@drawable/ic_back"-->
+            <!--android:background="?attr/selectableItemBackground"-->
+            <!--app:vc_endDrawable="@drawable/ic_back"-->
+            <!--android:layout_marginLeft="@dimen/padding_large"-->
+            <!--android:id="@+id/back"/>-->
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/label"
-            android:textColor="@color/black"
-            android:textSize="@dimen/text_xlarge"
-            android:paddingLeft="@dimen/height_xlarge"
-            android:text="@string/filter"/>
+        <!--<TextView-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:id="@+id/label"-->
+            <!--android:textColor="@color/black"-->
+            <!--android:textSize="@dimen/text_xlarge"-->
+            <!--android:paddingLeft="@dimen/height_xlarge"-->
+            <!--android:text="@string/filter"/>-->
 
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/filter"
-            android:layout_below="@+id/label"
-            android:layout_width="@dimen/drawer_width"
-            android:layout_height="match_parent"/>
-    </RelativeLayout>
+        <!--<android.support.v7.widget.RecyclerView-->
+            <!--android:id="@+id/filter"-->
+            <!--android:layout_below="@+id/label"-->
+            <!--android:layout_width="@dimen/drawer_width"-->
+            <!--android:layout_height="match_parent"/>-->
+    <!--</RelativeLayout>-->
 
 
 </android.support.v4.widget.DrawerLayout>
