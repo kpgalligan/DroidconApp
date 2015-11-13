@@ -32,11 +32,11 @@ public class GetDbTalkSubmissionTask extends Task
 
         if(openVotes)
         {
-            list = new Where<TalkSubmission, Long>(dao).isNull("vote").query().list();
+            list = new Where<TalkSubmission, Long>(dao).isNull("vote").query().orderBy("random").list();
         }
         else
         {
-            list = new Where<TalkSubmission, Long>(dao).isNotNull("vote").query().list();
+            list = new Where<TalkSubmission, Long>(dao).isNotNull("vote").query().orderBy("random").list();
         }
 
     }

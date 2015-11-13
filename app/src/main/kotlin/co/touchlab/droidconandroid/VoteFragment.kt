@@ -12,10 +12,10 @@ import co.touchlab.android.threading.eventbus.EventBusExt
 import co.touchlab.android.threading.tasks.TaskQueue
 import co.touchlab.droidconandroid.data.TalkSubmission
 import co.touchlab.droidconandroid.tasks.GetDbTalkSubmissionTask
+import co.touchlab.droidconandroid.tasks.persisted.GetTalkSubmissionPersisted
 import co.touchlab.droidconandroid.ui.RemoveTalkListener
 import co.touchlab.droidconandroid.ui.VoteAdapter
 import co.touchlab.droidconandroid.ui.VoteClickListener
-import java.util.*
 
 
 /**
@@ -64,7 +64,12 @@ class VoteFragment : Fragment(), VoteClickListener {
 
     fun initRvAdapter(data: List<TalkSubmission>, openVotes: Boolean) {
         adapter = VoteAdapter(data, this, openVotes)
-        rv!!.setAdapter(adapter!!)
+
+//        if(adapter!=null){
+//
+//        }
+        rv!!.swapAdapter(adapter!!, false)
+//        rv!!.setAdapter(adapter!!)
 
         refreshView()
     }
@@ -119,6 +124,12 @@ class VoteFragment : Fragment(), VoteClickListener {
     }
 
     //----------EVENT------------------
+    public fun onEventMainThread(t: GetTalkSubmissionPersisted) {
+        if (adapter != null) {
+            TaskQueue.loadQueueDefault(activity).execute(GetDbTalkSubmissionTask(adapter!!.displayState()))
+        }
+    }
+
     public fun onEventMainThread(t: GetDbTalkSubmissionTask) {
         initRvAdapter(t.list, t.openVotes)
     }

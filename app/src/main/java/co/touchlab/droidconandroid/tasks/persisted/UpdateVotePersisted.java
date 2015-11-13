@@ -1,15 +1,10 @@
 package co.touchlab.droidconandroid.tasks.persisted;
 import android.content.Context;
-import android.util.Log;
 
 import com.crashlytics.android.Crashlytics;
 
-import co.touchlab.android.threading.tasks.helper.RetrofitPersistedTask;
-import co.touchlab.droidconandroid.data.AppPrefs;
 import co.touchlab.droidconandroid.network.DataHelper;
-import co.touchlab.droidconandroid.network.RsvpRequest;
 import co.touchlab.droidconandroid.network.VoteRequest;
-import retrofit.client.Response;
 
 /**
  * Created by kgalligan on 8/21/15.
@@ -33,17 +28,16 @@ public class UpdateVotePersisted extends BasePersistedTask
     }
 
     @Override
-    protected void runNetwork(Context context) throws Throwable
+    protected void run(Context context) throws Throwable
     {
         VoteRequest voteRequest = DataHelper.makeRequestAdapter(context).create(VoteRequest.class);
-
-        Response response = voteRequest.updateVote(talkId, vote);
+        voteRequest.updateVote(talkId, vote);
     }
 
     @Override
-    protected boolean handleError(Context context, Throwable e)
+    protected String errorString()
     {
-        Crashlytics.logException(e);
-        return true;
+        return "Something went wrong. Failed to register your vote.";
     }
+
 }

@@ -29,7 +29,8 @@
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
                 android:layout_marginRight="@dimen/padding_medium"
-                android:text="PASS"/>
+                android:text="PASS"
+                android:textStyle="bold"/>
 
             <FrameLayout
                 android:layout_width="match_parent"
@@ -50,6 +51,7 @@
                 android:layout_height="wrap_content"
                 android:textColor="@color/black"
                 android:textSize="@dimen/text_medium"
+                android:textStyle="bold"
                 tool:text="Android Material Design"/>
 
             <LinearLayout
@@ -60,19 +62,20 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/vote_with"/>
+                    android:text="with "
+                    android:textStyle="bold"/>
 
                 <TextView
                     android:id="@+id/speaker"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:textStyle="bold"
                     tool:text="Apoorv Kothari"/>
             </LinearLayout>
 
             <TextView
                 android:id="@+id/description"
                 android:layout_width="wrap_content"
-
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/padding_large"
                 android:textColor="@color/black"
@@ -84,7 +87,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/padding_large"
-                android:text="@string/vote_prompt"/>
+                android:text="@string/vote_prompt"
+                android:textStyle="bold"/>
 
             <RelativeLayout
                 android:layout_width="match_parent"
@@ -96,6 +100,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="-5dp"
+                    android:layout_marginTop="-5dp"
                     android:numStars="5"
                     android:stepSize="1.0"/>
 
@@ -107,7 +112,8 @@
                     android:layout_below="@+id/rating"
                     android:layout_centerVertical="true"
                     android:text="@string/vote_submit"
-                    android:textColor="@color/voting_primary"/>
+                    android:textColor="@color/voting_primary"
+                    android:textStyle="bold"/>
 
             </RelativeLayout>
         </LinearLayout>

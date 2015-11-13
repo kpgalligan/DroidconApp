@@ -1,6 +1,7 @@
 package co.touchlab.droidconandroid.network;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 import co.touchlab.droidconandroid.data.TalkSubmission;
 
@@ -40,12 +41,11 @@ public class TalkVotingWrapper
             NetTalkSub t = w.talkSubmission;
             NetVoteSub v = w.votingSubmission;
 
-
             Integer vote = (v == null)
                     ? null
                     : v.vote;
 
-            list.add(new TalkSubmission(t.id, vote, t.title, t.description));
+            list.add(new TalkSubmission(t.id, vote, t.title, t.description, t.userAccount.name));
         }
 
         return list;
