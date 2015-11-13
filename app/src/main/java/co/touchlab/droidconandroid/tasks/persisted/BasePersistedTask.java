@@ -1,8 +1,10 @@
 package co.touchlab.droidconandroid.tasks.persisted;
 import android.content.Context;
 
-import co.touchlab.android.threading.errorcontrol.NetworkException;
+import com.crashlytics.android.Crashlytics;
+
 import co.touchlab.android.threading.tasks.persisted.PersistedTask;
+import co.touchlab.droidconandroid.utils.Toaster;
 import retrofit.RetrofitError;
 
 /**
@@ -11,27 +13,20 @@ import retrofit.RetrofitError;
 abstract public class BasePersistedTask extends PersistedTask
 {
 
-    @Override
-    protected final void run(Context context) throws Throwable
-    {
-        try
-        {
-            runNetwork(context);
-        }
-        catch(RetrofitError e)
-        {
-            if(e.getKind() == RetrofitError.Kind.NETWORK)
-            {
-                throw new NetworkException(e);
-            }
-        }
-    }
-
-    protected abstract void runNetwork(Context context) throws Throwable;
+    protected abstract String errorString();
 
     @Override
-    protected boolean handleError(Context context, Throwable e)
+    protected final boolean handleError(Context context, Throwable e)
     {
-        return false;
+        if(e instanceof RetrofitError)
+        {
+            return true;
+        }
+        else
+        {
+            Toaster.showMessage(context, errorString());
+            Crashlytics.logException(e);
+            return true;
+        }
     }
 }

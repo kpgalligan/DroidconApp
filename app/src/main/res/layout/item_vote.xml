@@ -30,10 +30,10 @@
                 android:layout_width="match_parent"
                 android:layout_height="36dp"
                 android:ellipsize="end"
-                android:fontFamily="sans-serif-medium"
                 android:maxLines="2"
                 android:textColor="@color/black"
                 android:textSize="@dimen/text_small"
+                android:textStyle="bold"
                 tools:text="This is a title. This is a title. This is a title. This is a title. This is a title. This is a title. This is a title. This is a title. This is a title. "/>
 
             <TextView
