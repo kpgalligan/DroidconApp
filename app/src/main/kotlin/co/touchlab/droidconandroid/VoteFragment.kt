@@ -2,17 +2,21 @@ package co.touchlab.droidconandroid
 
 import android.os.Bundle
 import android.support.v4.app.Fragment
+import android.support.v4.widget.SwipeRefreshLayout
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.view
 import android.view.*
 import android.widget.TextView
+import android.widget.Toast
 import co.touchlab.android.threading.eventbus.EventBusExt
 import co.touchlab.android.threading.tasks.TaskQueue
+import co.touchlab.android.threading.tasks.utils.TaskQueueHelper
 import co.touchlab.droidconandroid.data.TalkSubmission
 import co.touchlab.droidconandroid.tasks.GetDbTalkSubmissionTask
 import co.touchlab.droidconandroid.tasks.persisted.GetTalkSubmissionPersisted
+import co.touchlab.droidconandroid.tasks.persisted.PersistedTaskQueueFactory
 import co.touchlab.droidconandroid.ui.RemoveTalkListener
 import co.touchlab.droidconandroid.ui.VoteAdapter
 import co.touchlab.droidconandroid.ui.VoteClickListener
@@ -28,13 +32,17 @@ class VoteFragment : Fragment(), VoteClickListener {
     var rv: RecyclerView? = null
     var adapter: VoteAdapter? = null
     var votedList: MenuItem? = null
+    var swipeContainer: SwipeRefreshLayout? = null
 
+    //region ---------------------------------------Companion Obj
     companion object {
         val Tag: String = "VoteFragment"
 
         fun newInstance(): VoteFragment = VoteFragment()
     }
+    //endregion
 
+    //region ----------------------------------------LifeCycle
     override fun onCreateView(inflater: LayoutInflater?, container: view.ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater!!.inflate(R.layout.fragment_vote, null)
     }
@@ -45,6 +53,11 @@ class VoteFragment : Fragment(), VoteClickListener {
         setHasOptionsMenu(true);
     }
 
+    override fun onResume() {
+        super<Fragment>.onResume()
+
+        refreshProgress()
+    }
 
     override fun onDestroy() {
         super<Fragment>.onDestroy()
@@ -54,39 +67,19 @@ class VoteFragment : Fragment(), VoteClickListener {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super<Fragment>.onActivityCreated(savedInstanceState)
 
+        //empty view
         empty = view.findViewById(R.id.empty_list) as TextView
+
+        //swipe to refresh
+        swipeContainer = view.findViewById(R.id.swipeContainer) as SwipeRefreshLayout
+        initSwipeToRefresh()
+
+        //recycler list
         rv = view.findViewById(R.id.rv) as RecyclerView
         rv!!.layoutManager = LinearLayoutManager(activity)
 
         (activity as AppCompatActivity).supportActionBar.setTitle(R.string.vote)
         TaskQueue.loadQueueDefault(activity).execute(GetDbTalkSubmissionTask(true))
-    }
-
-    fun initRvAdapter(data: List<TalkSubmission>, openVotes: Boolean) {
-        adapter = VoteAdapter(data, this, openVotes)
-
-//        if(adapter!=null){
-//
-//        }
-        rv!!.swapAdapter(adapter!!, false)
-//        rv!!.setAdapter(adapter!!)
-
-        refreshView()
-    }
-
-    private fun refreshView() {
-        if (adapter!!.isDataEmpty()) {
-            when (adapter!!.displayState()) {
-                true ->
-                    empty!!.setText(R.string.empty_open_vote)
-                false ->
-                    empty!!.setText(R.string.empty_close_vote)
-            }
-            empty!!.visibility = View.VISIBLE
-
-        } else {
-            empty!!.visibility = View.GONE
-        }
     }
 
     override fun onCreateOptionsMenu(menu: Menu?, inflater: MenuInflater?) {
@@ -117,6 +110,60 @@ class VoteFragment : Fragment(), VoteClickListener {
         }
         return super<Fragment>.onOptionsItemSelected(item)
     }
+    //endregion
+
+    //region ----------------------------Init
+    private fun initSwipeToRefresh() {
+        swipeContainer!!.setOnRefreshListener(object : SwipeRefreshLayout.OnRefreshListener {
+            override fun onRefresh() {
+                PersistedTaskQueueFactory.getInstance(activity).execute(GetTalkSubmissionPersisted())
+            }
+        })
+        swipeContainer!!.setColorSchemeResources(R.color.droidcon_green);
+    }
+
+    fun initRvAdapter(data: List<TalkSubmission>, openVotes: Boolean) {
+        adapter = VoteAdapter(data, this, openVotes)
+
+        rv!!.swapAdapter(adapter!!, false)
+        refreshView()
+    }
+
+    //endregion
+
+    //region ----------------------------------Refresh View
+    private fun refreshProgress() {
+        val refreshing = TaskQueueHelper.hasTasksOfType(
+                PersistedTaskQueueFactory.getInstance(activity),
+                GetTalkSubmissionPersisted().javaClass)
+
+        if (refreshing) {
+            swipeContainer!!.post {
+                swipeContainer!!.setRefreshing(true)
+            }
+        }
+        else{
+            swipeContainer!!.post {
+                swipeContainer!!.setRefreshing(false)
+            }
+        }
+    }
+
+    private fun refreshView() {
+        if (adapter!!.isDataEmpty()) {
+            when (adapter!!.displayState()) {
+                true ->
+                    empty!!.setText(R.string.empty_open_vote)
+                false ->
+                    empty!!.setText(R.string.empty_close_vote)
+            }
+            empty!!.visibility = View.VISIBLE
+
+        } else {
+            empty!!.visibility = View.GONE
+        }
+    }
+    //endregion
 
     override fun onTalkItemClick(item: TalkSubmission) {
         val fragment = VoteDetailFragment.newInstance(item)
@@ -125,6 +172,8 @@ class VoteFragment : Fragment(), VoteClickListener {
 
     //----------EVENT------------------
     public fun onEventMainThread(t: GetTalkSubmissionPersisted) {
+        refreshProgress()
+
         if (adapter != null) {
             TaskQueue.loadQueueDefault(activity).execute(GetDbTalkSubmissionTask(adapter!!.displayState()))
         }
