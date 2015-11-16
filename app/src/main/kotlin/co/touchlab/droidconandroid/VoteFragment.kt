@@ -1,19 +1,30 @@
 package co.touchlab.droidconandroid
 
+import android.app.Activity
+import android.app.Dialog
+import android.content.Intent
+import android.content.SharedPreferences
+import android.graphics.Bitmap
+import android.net.Uri
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v4.widget.SwipeRefreshLayout
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
+import android.util.Log
 import android.view
 import android.view.*
+import android.webkit.WebView
+import android.webkit.WebViewClient
 import android.widget.TextView
 import android.widget.Toast
 import co.touchlab.android.threading.eventbus.EventBusExt
 import co.touchlab.android.threading.tasks.TaskQueue
 import co.touchlab.android.threading.tasks.utils.TaskQueueHelper
+import co.touchlab.droidconandroid.data.AppPrefs
 import co.touchlab.droidconandroid.data.TalkSubmission
+import co.touchlab.droidconandroid.network.LoginServiceGenerator
 import co.touchlab.droidconandroid.tasks.GetDbTalkSubmissionTask
 import co.touchlab.droidconandroid.tasks.persisted.GetTalkSubmissionPersisted
 import co.touchlab.droidconandroid.tasks.persisted.PersistedTaskQueueFactory
@@ -78,7 +89,6 @@ class VoteFragment : Fragment(), VoteClickListener {
         rv = view.findViewById(R.id.rv) as RecyclerView
         rv!!.layoutManager = LinearLayoutManager(activity)
 
-        (activity as AppCompatActivity).supportActionBar.setTitle(R.string.vote)
         TaskQueue.loadQueueDefault(activity).execute(GetDbTalkSubmissionTask(true))
     }
 

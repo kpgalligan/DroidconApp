@@ -28,4 +28,7 @@ public interface VoteRequest
 
     @GET("/api/voter/canUserVote")
     Boolean canUserVote() throws NetworkErrorHandler.NetworkException;
+
+    @GET("/api/voter/canUserVote/{authCode}")
+    Boolean canUserVote(@Path("authCode") String authCode) throws NetworkErrorHandler.NetworkException;
 }
