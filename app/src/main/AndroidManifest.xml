@@ -37,11 +37,21 @@
 
         <activity
             android:name=".VotingActivity"
-            android:label="@string/about" />
+            android:label="@string/vote"/>
 
         <activity
             android:name=".AboutActivity"
-            android:label="@string/about" />
+            android:label="@string/about">
+
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+                <data
+                    android:host="co.touchlab.redirect"
+                    android:scheme="intent"/>
+            </intent-filter>
+        </activity>
 
         <activity
             android:name=".ScheduleDataActivity"

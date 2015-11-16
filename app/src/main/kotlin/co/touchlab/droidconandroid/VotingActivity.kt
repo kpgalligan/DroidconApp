@@ -2,7 +2,9 @@ package co.touchlab.droidconandroid
 
 import android.content.Context
 import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
+import android.support.v4.app.Fragment
 import android.support.v4.widget.DrawerLayout
 import android.support.v7.app.ActionBarDrawerToggle
 import android.support.v7.app.AppCompatActivity
@@ -10,8 +12,10 @@ import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.support.v7.widget.Toolbar
 import android.text.TextUtils
+import android.util.Log
 import co.touchlab.droidconandroid.data.AppPrefs
 import co.touchlab.droidconandroid.data.DatabaseHelper
+import co.touchlab.droidconandroid.network.LoginServiceGenerator
 import co.touchlab.droidconandroid.tasks.persisted.GetTalkSubmissionPersisted
 import co.touchlab.droidconandroid.tasks.persisted.PersistedTaskQueueFactory
 import co.touchlab.droidconandroid.ui.DrawerAdapter
@@ -23,7 +27,7 @@ import java.util.*
  *
  * Created by toidiu on 7/23/15.
  */
-public class VotingActivity : AppCompatActivity() {
+public class VotingActivity : AppCompatActivity(), VoteIntroFragment.OnIntroListener, VoteAuthFragment.OnAuthListener {
 
     public companion object {
         public fun callMe(c: Context) {
@@ -42,17 +46,25 @@ public class VotingActivity : AppCompatActivity() {
         setSupportActionBar(toolbar);
         toolbar!!.setBackgroundColor(resources.getColor(R.color.droidcon_green))
 
-        setUpDrawers()
-
-        val fragment = VoteFragment.newInstance()
-        supportFragmentManager
-                .beginTransaction()
-                .add(R.id.container, fragment, VoteFragment.Tag)
-                .commit()
+        if(savedInstanceState == null) {
+            if (!AppPrefs.getInstance(this).getSeenVoteIntro()) {
+                supportFragmentManager
+                        .beginTransaction()
+                        .add(R.id.container, VoteIntroFragment.newInstance(), VoteIntroFragment.Tag)
+                        .commit()
+            } else {
+                supportFragmentManager
+                        .beginTransaction()
+                        .add(R.id.container, VoteAuthFragment.newInstance(), VoteAuthFragment.Tag)
+                        .commit()
+            }
+        }
 
 
         PersistedTaskQueueFactory.getInstance(this).execute(GetTalkSubmissionPersisted())
     }
+
+
 
     private fun setUpDrawers() {
         val drawerLayout = findViewById(R.id.drawer_layout) as DrawerLayout;
@@ -107,4 +119,19 @@ public class VotingActivity : AppCompatActivity() {
     }
 
 
+    override fun onIntroDone() {
+        AppPrefs.getInstance(this).setSeenVoteIntro(true)
+        supportFragmentManager
+                .beginTransaction()
+                .replace(R.id.container, VoteAuthFragment.newInstance(), VoteAuthFragment.Tag)
+                .commit()
+    }
+
+
+    override fun onAuthSuccessful() {
+        supportFragmentManager
+                .beginTransaction()
+                .replace(R.id.container, VoteFragment.newInstance(), VoteFragment.Tag)
+                .commit()
+    }
 }

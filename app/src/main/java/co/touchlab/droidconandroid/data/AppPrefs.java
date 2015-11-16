@@ -23,6 +23,7 @@ public class AppPrefs
     public static final String CONVENTION_END = "convention_end";
     public static final String REFRESH_TIME = "refresh_time";
     public static final String MY_RSVPS_LOADED = "myrsvps3";
+    public static final String VOTE_INTRO = "vote_intro";
     private static AppPrefs instance;
 
     private SharedPreferences prefs;
@@ -171,6 +172,9 @@ public class AppPrefs
     {
         return prefs.getLong(REFRESH_TIME, 0);
     }
+
+    public boolean getSeenVoteIntro(){return prefs.getBoolean(VOTE_INTRO, false);}
+    public void setSeenVoteIntro(boolean seen){prefs.edit().putBoolean(VOTE_INTRO, seen).apply();}
 
     //helper methods
     private void setBoolean(String key, Boolean value)
