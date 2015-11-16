@@ -70,7 +70,7 @@ public class DatabaseHelper extends SqueakyOpenHelper
             }
             catch(SQLException e)
             {
-
+                throw new RuntimeException(e);
             }
 
         }

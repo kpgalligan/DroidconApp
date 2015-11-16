@@ -58,15 +58,15 @@ public class VotingActivity : AppCompatActivity() {
                 this, drawerLayout, toolbar,
                 R.string.navigation_drawer_open, R.string.navigation_drawer_close
         );
-        drawerLayout!!.setDrawerListener(drawerToggle);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setHomeButtonEnabled(true);
+        drawerLayout.setDrawerListener(drawerToggle);
+        supportActionBar.setDisplayHomeAsUpEnabled(true);
+        supportActionBar.setHomeButtonEnabled(true);
         drawerToggle.syncState();
         //
         val navigationRecycler = findView(R.id.drawer_list) as RecyclerView
         val drawerAdapter = DrawerAdapter(getDrawerItems(), object : DrawerClickListener {
             override fun onNavigationItemClick(position: Int, titleRes: Int) {
-                drawerLayout!!.closeDrawer(navigationRecycler)
+                drawerLayout.closeDrawer(navigationRecycler)
                 when (titleRes) {
                     R.string.vote -> VotingActivity.callMe(this@VotingActivity)
                     R.string.profile -> EditUserProfile.callMe(this@VotingActivity)
@@ -76,19 +76,19 @@ public class VotingActivity : AppCompatActivity() {
             }
 
             override fun onHeaderItemClick() {
-                val userId = AppPrefs.getInstance(this@VotingActivity).getUserId()
+                val userId = AppPrefs.getInstance(this@VotingActivity).userId
                 if (userId != null) {
-                    val ua = DatabaseHelper.getInstance(this@VotingActivity).getUserAccountDao().queryForId(userId)
+                    val ua = DatabaseHelper.getInstance(this@VotingActivity).userAccountDao.queryForId(userId)
                     if (ua != null && ua.userCode != null && !TextUtils.isEmpty(ua.userCode)) {
-                        drawerLayout!!.closeDrawer(navigationRecycler)
+                        drawerLayout.closeDrawer(navigationRecycler)
                         UserDetailActivity.callMe(this@VotingActivity, ua.userCode)
                     }
                 }
             }
 
         })
-        navigationRecycler!!.setAdapter(drawerAdapter)
-        navigationRecycler!!.setLayoutManager(LinearLayoutManager(this))
+        navigationRecycler.adapter = drawerAdapter
+        navigationRecycler.layoutManager = LinearLayoutManager(this)
 
     }
 
