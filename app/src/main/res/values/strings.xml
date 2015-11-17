@@ -30,6 +30,7 @@
     <string name="profile">My Profile</string>
     <string name="sponsors">Sponsors</string>
     <string name="about">About</string>
+    <string name="vote">Vote</string>
 
     <!-- welcome copy-->
     <string name="welcome_0_title">Welcome to Droidcon!</string>
@@ -110,5 +111,12 @@ Wanna join a team where Android isn\'t "that other platform", where we care abou
     <string name="photoChooser">Get new image from...</string>
     <string name="gallery">Gallery</string>
     <string name="camera">Camera</string>
+    <string name="vote_prompt">Voting promt:</string>
+    <string name="vote_with">with\ </string>
+    <string name="vote_submit">SUBMIT</string>
+    <string name="vote_pass">PASS</string>
+    <string name="vote_voted">Toggle Voted</string>
+    <string name="empty_open_vote">No new talk submissions available.\nCheck back later!</string>
+    <string name="empty_close_vote">You haven\'t voted on talks yet.</string>
 
 </resources>

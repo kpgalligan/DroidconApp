@@ -17,6 +17,7 @@ public class AppPrefs
     public static final String AVATAR_KEY       = "avatar_key";
     public static final String NAME             = "name";
     public static final String EMAIL            = "email";
+    public static final String CAN_VOTE            = "can_vote";
     public static final String COVER_KEY        = "cover_key";
     public static final String CONVENTION_START = "convention_start";
     public static final String CONVENTION_END = "convention_end";
@@ -119,6 +120,16 @@ public class AppPrefs
     public String getEmail()
     {
         return getString(EMAIL, null);
+    }
+
+    public boolean canUserVote()
+    {
+        return getBoolean(CAN_VOTE, false);
+    }
+
+    public void setCanUserVote(boolean canVote)
+    {
+        setBoolean(CAN_VOTE, canVote);
     }
 
     public void setCoverKey(String key)

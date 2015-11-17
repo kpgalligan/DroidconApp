@@ -66,6 +66,12 @@ public class MyActivity : AppCompatActivity(), FilterInterface, NfcAdapter.Creat
             finish()
             return
         }
+        else if ( VotingActivity.isVotingOpen(this) )
+        {
+            VotingActivity.callMe(this@MyActivity)
+            finish()
+            return
+        }
 
         setContentView(R.layout.activity_my)
 
@@ -132,15 +138,15 @@ public class MyActivity : AppCompatActivity(), FilterInterface, NfcAdapter.Creat
 
     private fun adjustToolBarAndDrawers(tag: String) {
 
-        if (TextUtils.equals(tag, ScheduleFragment.MY_SCHEDULE)) {
-            toolbar!!.setTitle(R.string.my_schedule)
-            toolbar!!.setBackgroundColor(getResources().getColor(R.color.blue_grey))
-            drawerAdapter!!.setSelectedPosition(2)
-        } else if (TextUtils.equals(tag, ScheduleFragment.EXPLORE)) {
+//        if (TextUtils.equals(tag, ScheduleFragment.MY_SCHEDULE)) {
+//            toolbar!!.setTitle(R.string.my_schedule)
+//            toolbar!!.setBackgroundColor(getResources().getColor(R.color.blue_grey))
+//            drawerAdapter!!.setSelectedPosition(2)
+//        } else if (TextUtils.equals(tag, ScheduleFragment.EXPLORE)) {
             toolbar!!.setTitle(R.string.app_name)
             toolbar!!.setBackgroundColor(getResources().getColor(R.color.primary))
-            drawerAdapter!!.setSelectedPosition(1)
-        }
+            drawerAdapter!!.setSelectedPosition(3)
+//        }
     }
 
     public fun onEventMainThread(command: UploadAvatarCommand) {
@@ -216,8 +222,8 @@ public class MyActivity : AppCompatActivity(), FilterInterface, NfcAdapter.Creat
                     R.string.my_schedule -> {
                         fragment = ScheduleFragment.newInstance(false)
                         tag = ScheduleFragment.MY_SCHEDULE
-
                     }
+
                     R.string.social -> FindUserKot.startMe(this@MyActivity)
                     R.string.profile -> EditUserProfile.callMe(this@MyActivity)
                     R.string.sponsors -> startActivity(WelcomeActivity.getLaunchIntent(this@MyActivity, true))
