@@ -58,11 +58,9 @@ class VoteDetailFragment : DialogFragment() {
         val descrip = view.findViewById(R.id.description) as TextView
         val speaker = view.findViewById(R.id.speaker) as TextView
 
-
         val cancel = view.findViewById(R.id.cancel)
         val pass = view.findViewById(R.id.pass) as TextView
         val submit = view.findViewById(R.id.submit_vote) as TextView
-
 
         title.text = talk!!.title
         descrip.text = talk!!.description
@@ -90,7 +88,6 @@ class VoteDetailFragment : DialogFragment() {
     }
 
     private fun initRating() {
-
         rating = view.findViewById(R.id.rating) as RatingBar
         if (talk!!.vote != null)
             rating!!.rating = talk!!.vote.toFloat()
