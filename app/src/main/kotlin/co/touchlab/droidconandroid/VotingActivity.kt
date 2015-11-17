@@ -42,14 +42,16 @@ public class VotingActivity : AppCompatActivity() {
         setSupportActionBar(toolbar);
         toolbar!!.setBackgroundColor(resources.getColor(R.color.droidcon_green))
 
+        setUpDrawers()
+
         val fragment = VoteFragment.newInstance()
         supportFragmentManager
                 .beginTransaction()
                 .add(R.id.container, fragment, VoteFragment.Tag)
                 .commit()
 
+
         PersistedTaskQueueFactory.getInstance(this).execute(GetTalkSubmissionPersisted())
-        setUpDrawers()
     }
 
     private fun setUpDrawers() {
