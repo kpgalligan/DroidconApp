@@ -22,8 +22,12 @@ public class DatabaseHelper extends SqueakyOpenHelper
 
     private static final String DATABASE_FILE_NAME = "droidcon";
     public static final  int    BASELINE           = 3;
-    private static final int VERSION = BASELINE;
+    private static final int    VOTE               = 4;
+    private static final int    VERSION            = VOTE;
     private static DatabaseHelper instance;
+
+    // @reminder Ordering matters, create foreign key dependant classes later
+    private final Class[] tableClasses = new Class[] {Venue.class, Event.class, Block.class, Invite.class, UserAccount.class, EventAttendee.class, EventSpeaker.class, TalkSubmission.class};
 
     private DatabaseHelper(Context context)
     {
@@ -58,7 +62,18 @@ public class DatabaseHelper extends SqueakyOpenHelper
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion)
     {
+        if(oldVersion < VOTE)
+        {
+            try
+            {
+                TableUtils.createTables(db, TalkSubmission.class);
+            }
+            catch(SQLException e)
+            {
+                throw new RuntimeException(e);
+            }
 
+        }
     }
 
     @Override
@@ -67,9 +82,6 @@ public class DatabaseHelper extends SqueakyOpenHelper
         super.onOpen(db);
         db.execSQL("PRAGMA foreign_keys=ON;");
     }
-
-    // @reminder Ordering matters, create foreign key dependant classes later
-    private final Class[] tableClasses = new Class[] {Venue.class, Event.class, Block.class, Invite.class, UserAccount.class, EventAttendee.class, EventSpeaker.class};
 
     @NotNull
     public Dao<Venue, Long> getVenueDao()
@@ -101,6 +113,13 @@ public class DatabaseHelper extends SqueakyOpenHelper
         return (Dao<Block, Long>) getDao(Block.class);
     }
 
+    @NotNull
+    public Dao<TalkSubmission, Long> getTalkSubDao()
+    {
+        return (Dao<TalkSubmission, Long>) getDao(TalkSubmission.class);
+    }
+
+
     /**
      * @param transaction .
      * @throws RuntimeException on {@link SQLException}
@@ -114,7 +133,7 @@ public class DatabaseHelper extends SqueakyOpenHelper
             transaction.call();
             db.setTransactionSuccessful();
         }
-        catch (Exception e)
+        catch(Exception e)
         {
             Log.e(DatabaseHelper.class.getName(), e.getMessage());
             throw new RuntimeException(e);
