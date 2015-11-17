@@ -1,7 +1,6 @@
 package co.touchlab.droidconandroid.tasks;
 
 import android.content.Context;
-import android.util.Log;
 
 import com.crashlytics.android.Crashlytics;
 
@@ -19,7 +18,9 @@ public class CanUserVoteTask extends Task
     public  Boolean canVote  = false;
     private String  authCode = null;
 
-    public CanUserVoteTask(){}
+    public CanUserVoteTask()
+    {
+    }
 
     public CanUserVoteTask(String authCode)
     {
@@ -38,9 +39,6 @@ public class CanUserVoteTask extends Task
         {
             canVote = voteRequest.canUserVote();
         }
-
-        Log.d("ak-------", String.valueOf(canVote));
-
     }
 
     @Override

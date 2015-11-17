@@ -1,37 +1,22 @@
 package co.touchlab.droidconandroid
 
-import android.app.Activity
-import android.app.Dialog
-import android.content.Intent
-import android.content.SharedPreferences
-import android.graphics.Bitmap
-import android.net.Uri
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v4.widget.SwipeRefreshLayout
-import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
-import android.util.Log
-import android.view
 import android.view.*
-import android.webkit.WebView
-import android.webkit.WebViewClient
 import android.widget.TextView
-import android.widget.Toast
 import co.touchlab.android.threading.eventbus.EventBusExt
 import co.touchlab.android.threading.tasks.TaskQueue
 import co.touchlab.android.threading.tasks.utils.TaskQueueHelper
-import co.touchlab.droidconandroid.data.AppPrefs
 import co.touchlab.droidconandroid.data.TalkSubmission
-import co.touchlab.droidconandroid.network.LoginServiceGenerator
 import co.touchlab.droidconandroid.tasks.GetDbTalkSubmissionTask
 import co.touchlab.droidconandroid.tasks.persisted.GetTalkSubmissionPersisted
 import co.touchlab.droidconandroid.tasks.persisted.PersistedTaskQueueFactory
 import co.touchlab.droidconandroid.ui.RemoveTalkListener
 import co.touchlab.droidconandroid.ui.VoteAdapter
 import co.touchlab.droidconandroid.ui.VoteClickListener
-
 
 /**
  *
@@ -54,7 +39,7 @@ class VoteFragment : Fragment(), VoteClickListener {
     //endregion
 
     //region ----------------------------------------LifeCycle
-    override fun onCreateView(inflater: LayoutInflater?, container: view.ViewGroup?, savedInstanceState: Bundle?): View? {
+    override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater!!.inflate(R.layout.fragment_vote, null)
     }
 
@@ -151,8 +136,7 @@ class VoteFragment : Fragment(), VoteClickListener {
             swipeContainer!!.post {
                 swipeContainer!!.setRefreshing(true)
             }
-        }
-        else{
+        } else {
             swipeContainer!!.post {
                 swipeContainer!!.setRefreshing(false)
             }
@@ -198,5 +182,3 @@ class VoteFragment : Fragment(), VoteClickListener {
         refreshView()
     }
 }
-
-
