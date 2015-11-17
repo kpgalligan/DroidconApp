@@ -24,7 +24,6 @@ abstract public class BasePersistedTask extends PersistedTask
         }
         else
         {
-            Toaster.showMessage(context, errorString());
             Crashlytics.logException(e);
             return true;
         }
