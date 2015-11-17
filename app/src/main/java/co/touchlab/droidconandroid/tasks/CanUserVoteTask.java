@@ -6,6 +6,7 @@ import com.crashlytics.android.Crashlytics;
 
 import co.touchlab.android.threading.eventbus.EventBusExt;
 import co.touchlab.android.threading.tasks.Task;
+import co.touchlab.droidconandroid.BuildConfig;
 import co.touchlab.droidconandroid.network.DataHelper;
 import co.touchlab.droidconandroid.network.VoteRequest;
 import retrofit.RetrofitError;
@@ -33,11 +34,11 @@ public class CanUserVoteTask extends Task
         VoteRequest voteRequest = DataHelper.makeRequestAdapter(context).create(VoteRequest.class);
         if(authCode != null && ! authCode.isEmpty())
         {
-            canVote = voteRequest.canUserVote(authCode);
+            canVote = voteRequest.canEBUserVote(BuildConfig.CONVENTION_ID, authCode);
         }
         else
         {
-            canVote = voteRequest.canUserVote();
+            canVote = voteRequest.canUserVote(BuildConfig.CONVENTION_ID);
         }
     }
 

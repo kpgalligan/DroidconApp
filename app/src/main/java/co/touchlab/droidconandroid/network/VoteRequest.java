@@ -26,9 +26,9 @@ public interface VoteRequest
     @GET("/api/voter/voteSubmissions")
     List<TalkVotingWrapper> getTalkSubmission() throws NetworkErrorHandler.NetworkException;
 
-    @GET("/api/voter/canUserVote")
-    Boolean canUserVote() throws NetworkErrorHandler.NetworkException;
+    @GET("/api/voter/canUserVote/{conID}")
+    Boolean canUserVote(@Path("conID") Integer conventionID) throws NetworkErrorHandler.NetworkException;
 
-    @GET("/api/voter/canUserVote/{authCode}")
-    Boolean canUserVote(@Path("authCode") String authCode) throws NetworkErrorHandler.NetworkException;
+    @GET("/api/voter/canUserVote/{conID}/{authCode}")
+    Boolean canEBUserVote(@Path("conID") Integer conventionID, @Path("authCode") String authCode) throws NetworkErrorHandler.NetworkException;
 }
