@@ -1,61 +1,61 @@
 package co.touchlab.droidconandroid
 
 import android.os.Bundle
-import android.os.Handler
-import android.support.design.widget.TabLayout
 import android.support.v4.app.Fragment
-import android.support.v4.app.FragmentManager
-import android.support.v4.app.FragmentPagerAdapter
-import android.support.v4.view.ViewPager
-import android.text.TextUtils
-import android.text.format.DateUtils
+import android.support.v4.widget.SwipeRefreshLayout
+import android.support.v7.app.AppCompatActivity
+import android.support.v7.widget.LinearLayoutManager
+import android.support.v7.widget.RecyclerView
 import android.view
-import android.view.LayoutInflater
-import android.view.View
+import android.view.*
+import android.widget.TextView
 import co.touchlab.android.threading.eventbus.EventBusExt
-import co.touchlab.droidconandroid.data.AppPrefs
-import co.touchlab.droidconandroid.data.Track
-import co.touchlab.droidconandroid.superbus.RefreshScheduleDataKot
-import co.touchlab.droidconandroid.utils.TimeUtils
-import java.text.SimpleDateFormat
-import java.util.ArrayList
-import java.util.Date
+import co.touchlab.android.threading.tasks.TaskQueue
+import co.touchlab.android.threading.tasks.utils.TaskQueueHelper
+import co.touchlab.droidconandroid.data.TalkSubmission
+import co.touchlab.droidconandroid.tasks.GetDbTalkSubmissionTask
+import co.touchlab.droidconandroid.tasks.UpdateDbVoteTask
+import co.touchlab.droidconandroid.tasks.persisted.GetTalkSubmissionPersisted
+import co.touchlab.droidconandroid.tasks.persisted.PersistedTaskQueueFactory
+import co.touchlab.droidconandroid.ui.VoteAdapter
+import co.touchlab.droidconandroid.ui.VoteClickListener
+
 
 /**
  *
- * Created by izzyoji :) on 8/5/15.
+ * Created by toidiu on 8/5/15.
  */
-class ScheduleFragment : Fragment(), FilterableFragmentInterface
-{
+class VoteFragment : Fragment(), VoteClickListener {
 
-    companion object
-    {
-        val ALL_EVENTS = "all_events"
+    var empty: TextView? = null
+    var rv: RecyclerView? = null
+    var adapter: VoteAdapter? = null
+    var votedList: MenuItem? = null
+    var swipeContainer: SwipeRefreshLayout? = null
 
-        val EXPLORE = "EXPLORE"
-        val MY_SCHEDULE = "MY_SCHEDULE"
+    //region ---------------------------------------Companion Obj
+    companion object {
+        val Tag: String = "VoteFragment"
 
-        private var pagerAdapter: ScheduleFragmentPagerAdapter? = null
-        val tabDateFormat = SimpleDateFormat("MMM dd")
-
-        fun newInstance(all: Boolean): ScheduleFragment
-        {
-            val fragment = ScheduleFragment()
-            val args = Bundle()
-            args.putBoolean(ALL_EVENTS, all)
-            fragment.setArguments(args)
-            return fragment
-        }
+        fun newInstance(): VoteFragment = VoteFragment()
     }
+    //endregion
 
-    override fun onCreateView(inflater: LayoutInflater?, container: view.ViewGroup?, savedInstanceState: Bundle?): View?
-    {
-        return inflater!!.inflate(R.layout.fragment_schedule, null)
+    //region ----------------------------------------LifeCycle
+    override fun onCreateView(inflater: LayoutInflater?, container: view.ViewGroup?, savedInstanceState: Bundle?): View? {
+        return inflater!!.inflate(R.layout.fragment_vote, null)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super<Fragment>.onCreate(savedInstanceState)
         EventBusExt.getDefault().register(this)
+        setHasOptionsMenu(true);
+    }
+
+    override fun onResume() {
+        super<Fragment>.onResume()
+
+        refreshProgress()
     }
 
     override fun onDestroy() {
@@ -63,87 +63,128 @@ class ScheduleFragment : Fragment(), FilterableFragmentInterface
         EventBusExt.getDefault().unregister(this)
     }
 
-    public fun onEventMainThread(eventDetailTask: RefreshScheduleDataKot)
-    {
-        Handler().post(RefreshRunnable())
-    }
-
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super<Fragment>.onActivityCreated(savedInstanceState)
 
-        Handler().post(RefreshRunnable())
+        //empty view
+        empty = view.findViewById(R.id.empty_list) as TextView
+
+        //swipe to refresh
+        swipeContainer = view.findViewById(R.id.swipeContainer) as SwipeRefreshLayout
+        initSwipeToRefresh()
+
+        //recycler list
+        rv = view.findViewById(R.id.rv) as RecyclerView
+        rv!!.layoutManager = LinearLayoutManager(activity)
+
+        (activity as AppCompatActivity).supportActionBar.setTitle(R.string.vote)
+        TaskQueue.loadQueueDefault(activity).execute(GetDbTalkSubmissionTask(true))
     }
 
-    inner class RefreshRunnable(): Runnable
-    {
-        override fun run() {
-            val pager = getView().findViewById(R.id.pager)!! as ViewPager
-            val tabs = getView().findViewById(R.id.tabs)!! as TabLayout
-            val tabWrapper = getView().findViewById(R.id.tabs_wrapper)
-            if (getArguments().getBoolean(ALL_EVENTS)) {
-                tabWrapper.setBackgroundColor(getResources().getColor(R.color.primary))
-            } else {
-                tabWrapper.setBackgroundColor(getResources().getColor(R.color.blue_grey))
-            }
+    override fun onCreateOptionsMenu(menu: Menu?, inflater: MenuInflater?) {
+        inflater!!.inflate(R.menu.vote_list, menu)
+        votedList = menu!!.findItem(R.id.action_voted)
+        return super<Fragment>.onCreateOptionsMenu(menu, inflater)
+    }
 
-            val dates: ArrayList<Long> = ArrayList<Long>()
-            val startString: String? = AppPrefs.getInstance(getActivity()).getConventionStartDate()
-            val endString: String? = AppPrefs.getInstance(getActivity()).getConventionEndDate()
+    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
 
-            if (!TextUtils.isEmpty(startString) && !TextUtils.isEmpty(endString)) {
-                var start: Long = TimeUtils.sanitize(TimeUtils.DATE_FORMAT.get().parse(startString))
-                val end: Long = TimeUtils.sanitize(TimeUtils.DATE_FORMAT.get().parse(endString))
+        when {
+            item!!.itemId == R.id.action_voted -> {
 
-                while (start <= end) {
-                    dates.add(start)
-                    start += DateUtils.DAY_IN_MILLIS
+                votedList!!.setChecked(!votedList!!.isChecked)
+
+                when (votedList!!.isChecked) {
+                    true -> {
+                        votedList!!.setIcon(R.drawable.ic_voted)
+                        TaskQueue.loadQueueDefault(activity).execute(GetDbTalkSubmissionTask(true))
+                    }
+                    false -> {
+                        votedList!!.setIcon(R.drawable.ic_notvoted)
+                        TaskQueue.loadQueueDefault(activity).execute(GetDbTalkSubmissionTask(false))
+                    }
                 }
 
-                pagerAdapter = ScheduleFragmentPagerAdapter(getChildFragmentManager(), dates, getArguments().getBoolean(ALL_EVENTS))
-                pager.setAdapter(pagerAdapter);
-                pager.addOnPageChangeListener(TabLayout.TabLayoutOnPageChangeListener(tabs))
-                tabs.setTabsFromPagerAdapter(pagerAdapter)
-                tabs.setOnTabSelectedListener(TabLayout.ViewPagerOnTabSelectedListener(pager))
+            }
+        }
+        return super<Fragment>.onOptionsItemSelected(item)
+    }
+    //endregion
+
+    //region ----------------------------Init
+    private fun initSwipeToRefresh() {
+        swipeContainer!!.setOnRefreshListener(object : SwipeRefreshLayout.OnRefreshListener {
+            override fun onRefresh() {
+                PersistedTaskQueueFactory.getInstance(activity).execute(GetTalkSubmissionPersisted())
+            }
+        })
+        swipeContainer!!.setColorSchemeResources(R.color.droidcon_green);
+    }
+
+    fun initRvAdapter(data: List<TalkSubmission>, openVotes: Boolean) {
+        adapter = VoteAdapter(data, this, openVotes)
+
+        rv!!.swapAdapter(adapter!!, false)
+        refreshView()
+    }
+
+    //endregion
+
+    //region ----------------------------------Refresh View
+    private fun refreshProgress() {
+        val refreshing = TaskQueueHelper.hasTasksOfType(
+                PersistedTaskQueueFactory.getInstance(activity),
+                GetTalkSubmissionPersisted().javaClass)
+
+        if (refreshing) {
+            swipeContainer!!.post {
+                swipeContainer!!.setRefreshing(true)
+            }
+        } else {
+            swipeContainer!!.post {
+                swipeContainer!!.setRefreshing(false)
             }
         }
     }
 
-    override fun applyFilters(track: Track) {
-        pagerAdapter!!.updateFrags(track)
-    }
-}
-
-class ScheduleFragmentPagerAdapter : FragmentPagerAdapter
-{
-    private var dates: List<Long>
-    private var allEvents: Boolean
-    private var fragmentManager: FragmentManager
-
-    constructor(fm: FragmentManager, dates: List<Long>, allEvents: Boolean) : super(fm) {
-        this.dates = dates;
-        this.allEvents = allEvents
-        this.fragmentManager = fm
-    }
-
-    override fun getCount(): Int {
-        return dates.size()
-    }
-
-    override fun getItem(position: Int): ScheduleDataFragment? {
-        return ScheduleDataFragment.newInstance(allEvents, dates.get(position), position)
-    }
-
-    override fun getPageTitle(position: Int): CharSequence? {
-        return ScheduleFragment.tabDateFormat.format(Date(dates.get(position)))
-    }
-
-    fun updateFrags(track: Track) {
-
-        for (fragment in fragmentManager.getFragments()) {
-            if(fragment != null) {
-                (fragment as ScheduleDataFragment).filter(track)
+    private fun refreshView() {
+        if (adapter!!.isDataEmpty()) {
+            when (adapter!!.displayState()) {
+                true ->
+                    empty!!.setText(R.string.empty_open_vote)
+                false ->
+                    empty!!.setText(R.string.empty_close_vote)
             }
-        }
+            empty!!.visibility = View.VISIBLE
 
+        } else {
+            empty!!.visibility = View.GONE
+        }
+    }
+    //endregion
+
+    override fun onTalkItemClick(item: TalkSubmission) {
+        val fragment = VoteDetailFragment.newInstance(item)
+        fragment.show(activity.supportFragmentManager, null)
+    }
+
+    //----------EVENT------------------
+    public fun onEventMainThread(t: GetTalkSubmissionPersisted) {
+        refreshProgress()
+
+        if (adapter != null) {
+            TaskQueue.loadQueueDefault(activity).execute(GetDbTalkSubmissionTask(adapter!!.displayState()))
+        }
+    }
+
+    public fun onEventMainThread(t: GetDbTalkSubmissionTask) {
+        initRvAdapter(t.list, t.openVotes)
+    }
+
+    public fun onEventMainThread(t: UpdateDbVoteTask) {
+        adapter!!.remove(t.talk)
+        refreshView()
     }
 }
+
+

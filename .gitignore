@@ -39,3 +39,4 @@ gen/
 build
 
 release.jks
+*.hprof
