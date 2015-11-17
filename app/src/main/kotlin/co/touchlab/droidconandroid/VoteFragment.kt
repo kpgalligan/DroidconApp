@@ -9,15 +9,14 @@ import android.support.v7.widget.RecyclerView
 import android.view
 import android.view.*
 import android.widget.TextView
-import android.widget.Toast
 import co.touchlab.android.threading.eventbus.EventBusExt
 import co.touchlab.android.threading.tasks.TaskQueue
 import co.touchlab.android.threading.tasks.utils.TaskQueueHelper
 import co.touchlab.droidconandroid.data.TalkSubmission
 import co.touchlab.droidconandroid.tasks.GetDbTalkSubmissionTask
+import co.touchlab.droidconandroid.tasks.UpdateDbVoteTask
 import co.touchlab.droidconandroid.tasks.persisted.GetTalkSubmissionPersisted
 import co.touchlab.droidconandroid.tasks.persisted.PersistedTaskQueueFactory
-import co.touchlab.droidconandroid.ui.RemoveTalkListener
 import co.touchlab.droidconandroid.ui.VoteAdapter
 import co.touchlab.droidconandroid.ui.VoteClickListener
 
@@ -141,8 +140,7 @@ class VoteFragment : Fragment(), VoteClickListener {
             swipeContainer!!.post {
                 swipeContainer!!.setRefreshing(true)
             }
-        }
-        else{
+        } else {
             swipeContainer!!.post {
                 swipeContainer!!.setRefreshing(false)
             }
@@ -183,8 +181,8 @@ class VoteFragment : Fragment(), VoteClickListener {
         initRvAdapter(t.list, t.openVotes)
     }
 
-    public fun onEventMainThread(t: RemoveTalkListener) {
-        adapter!!.remove(t.item)
+    public fun onEventMainThread(t: UpdateDbVoteTask) {
+        adapter!!.remove(t.talk)
         refreshView()
     }
 }
