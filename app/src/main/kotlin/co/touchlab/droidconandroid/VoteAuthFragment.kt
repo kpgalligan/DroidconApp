@@ -14,16 +14,12 @@ import android.webkit.WebView
 import android.webkit.WebViewClient
 import android.widget.Button
 import android.widget.RelativeLayout
-import android.widget.TextView
 import android.widget.Toast
 import co.touchlab.android.threading.eventbus.EventBusExt
 import co.touchlab.android.threading.tasks.TaskQueue
 import co.touchlab.android.threading.tasks.utils.TaskQueueHelper
 import co.touchlab.droidconandroid.network.LoginServiceGenerator
 import co.touchlab.droidconandroid.tasks.CanUserVoteTask
-import de.greenrobot.event.EventBusException
-import java.io.FileDescriptor
-import java.io.PrintWriter
 
 class VoteAuthFragment : Fragment() {
     private var mListener: OnAuthListener? = null
@@ -38,7 +34,7 @@ class VoteAuthFragment : Fragment() {
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        var view =  inflater.inflate(R.layout.fragment_vote_auth, container, false)
+        var view = inflater.inflate(R.layout.fragment_vote_auth, container, false)
 
         var authButton = view.findViewById(R.id.event_auth) as Button
         authButton.setOnClickListener {
@@ -56,8 +52,7 @@ class VoteAuthFragment : Fragment() {
         return view
     }
 
-    override fun onDestroyView()
-    {
+    override fun onDestroyView() {
         super.onDestroyView()
         EventBusExt.getDefault().unregister(this)
     }
@@ -88,12 +83,11 @@ class VoteAuthFragment : Fragment() {
         web.setWebViewClient(object : WebViewClient() {
 
             var authComplete = false;
-            var resultIntent = Intent();
 
-            override public fun onPageFinished(view: WebView, url:String) {
+            override public fun onPageFinished(view: WebView, url: String) {
                 super.onPageFinished(view, url);
 
-                var authCode:String
+                var authCode: String
                 if (url.contains("?code=") && authComplete != true) {
                     var uri = Uri.parse(url);
                     authCode = uri.getQueryParameter("code");
@@ -119,15 +113,11 @@ class VoteAuthFragment : Fragment() {
         auth_dialog.setCancelable(true);
     }
 
-    private fun showHideProgress()
-    {
-        if(TaskQueueHelper.hasTasksOfType(TaskQueue.loadQueueDefault(activity.applicationContext), javaClass<CanUserVoteTask>()))
-        {
+    private fun showHideProgress() {
+        if (TaskQueueHelper.hasTasksOfType(TaskQueue.loadQueueDefault(activity.applicationContext), javaClass<CanUserVoteTask>())) {
             progressWrapper!!.setVisibility(View.VISIBLE)
             failureMessageWrapper!!.setVisibility(View.GONE)
-        }
-        else
-        {
+        } else {
             progressWrapper!!.setVisibility(View.GONE)
             failureMessageWrapper!!.setVisibility(View.VISIBLE)
         }
@@ -153,13 +143,10 @@ class VoteAuthFragment : Fragment() {
     }
 
     public fun onEventMainThread(task: CanUserVoteTask) {
-        if(task.canVote)
-        {
-            if(mListener != null)
+        if (task.canVote) {
+            if (mListener != null)
                 mListener!!.onAuthSuccessful()
-        }
-        else
-        {
+        } else {
             showHideProgress()
         }
     }

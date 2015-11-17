@@ -1,10 +1,8 @@
 package co.touchlab.droidconandroid
 
 import android.app.Activity
-import android.net.Uri
 import android.os.Bundle
 import android.support.v4.app.Fragment
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -19,12 +17,12 @@ class VoteIntroFragment : Fragment() {
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        var view =  inflater.inflate(R.layout.fragment_vote_intro, container, false)
+        var view = inflater.inflate(R.layout.fragment_vote_intro, container, false)
 
         var continueButton = view.findViewById(R.id.continueButton) as Button
 
         continueButton.setOnClickListener {
-            if(mListener != null) {
+            if (mListener != null) {
                 mListener!!.onIntroDone();
             }
         }
