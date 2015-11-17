@@ -149,5 +149,3 @@ interface VoteClickListener {
     fun onTalkItemClick(item: TalkSubmission)
 
 }
-
-data class RemoveTalkListener(val item: TalkSubmission)
