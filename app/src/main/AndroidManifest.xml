@@ -41,17 +41,7 @@
 
         <activity
             android:name=".AboutActivity"
-            android:label="@string/about">
-
-            <intent-filter>
-                <action android:name="android.intent.action.VIEW" />
-                <category android:name="android.intent.category.DEFAULT" />
-                <category android:name="android.intent.category.BROWSABLE" />
-                <data
-                    android:host="co.touchlab.redirect"
-                    android:scheme="intent"/>
-            </intent-filter>
-        </activity>
+            android:label="@string/about" />
 
         <activity
             android:name=".ScheduleDataActivity"

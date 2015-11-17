@@ -2,7 +2,6 @@ package co.touchlab.droidconandroid
 
 import android.app.Activity
 import android.app.Dialog
-import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.support.v4.app.Fragment
@@ -18,13 +17,13 @@ import android.widget.Toast
 import co.touchlab.android.threading.eventbus.EventBusExt
 import co.touchlab.android.threading.tasks.TaskQueue
 import co.touchlab.android.threading.tasks.utils.TaskQueueHelper
-import co.touchlab.droidconandroid.network.LoginServiceGenerator
 import co.touchlab.droidconandroid.tasks.CanUserVoteTask
 
 class VoteAuthFragment : Fragment() {
     private var mListener: OnAuthListener? = null
 
-    val clientId = "PZW4S6QLEXNRQJHY7Q"
+    val CLIENT_ID = "PZW4S6QLEXNRQJHY7Q"
+    val LOGIN_URL = "https://www.eventbrite.com/oauth";
 
     var progressWrapper: RelativeLayout? = null
     var failureMessageWrapper: RelativeLayout? = null
@@ -79,7 +78,7 @@ class VoteAuthFragment : Fragment() {
         auth_dialog.setContentView(R.layout.auth_dialog);
         var web = auth_dialog.findViewById(R.id.webv) as WebView;
         web.getSettings().setJavaScriptEnabled(true);
-        web.loadUrl(LoginServiceGenerator.LOGIN_URL + "/authorize" + "?client_id=" + clientId + "&response_type=code");
+        web.loadUrl(LOGIN_URL + "/authorize" + "?client_id=" + CLIENT_ID + "&response_type=code");
         web.setWebViewClient(object : WebViewClient() {
 
             var authComplete = false;
