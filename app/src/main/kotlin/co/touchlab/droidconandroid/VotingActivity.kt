@@ -17,6 +17,7 @@ import co.touchlab.droidconandroid.tasks.persisted.PersistedTaskQueueFactory
 import co.touchlab.droidconandroid.ui.DrawerAdapter
 import co.touchlab.droidconandroid.ui.DrawerClickListener
 import co.touchlab.droidconandroid.ui.NavigationItem
+import co.touchlab.droidconandroid.utils.TimeUtils
 import java.util.*
 
 /**
@@ -30,6 +31,25 @@ public class VotingActivity : AppCompatActivity(), VoteIntroFragment.OnIntroList
             val i = Intent(c, VotingActivity::class.java)
             c.startActivity(i)
         }
+
+
+        public fun isVotingOpen(ctx: Context): Boolean {
+            //FIXME need proper date here
+            val startString = AppPrefs.getInstance(ctx).conventionStartDate
+            var startDate: Date = TimeUtils.DATE_FORMAT.get().parse(startString)
+            val votingEnd: Calendar = Calendar.getInstance()
+            votingEnd.time = startDate
+            votingEnd.add(Calendar.WEEK_OF_MONTH, -2)
+
+            val now = Calendar.getInstance()
+
+            if (now.after(votingEnd))
+                //FIXME make false
+                return true
+            else
+                return true
+        }
+
     }
 
     var toolbar: Toolbar? = null
@@ -41,6 +61,8 @@ public class VotingActivity : AppCompatActivity(), VoteIntroFragment.OnIntroList
         toolbar = findViewById(R.id.toolbar) as Toolbar;
         setSupportActionBar(toolbar);
         toolbar!!.setBackgroundColor(resources.getColor(R.color.droidcon_green))
+
+        setUpDrawers()
 
         if (savedInstanceState == null) {
             if (!AppPrefs.getInstance(this).getSeenVoteIntro()) {
@@ -54,12 +76,11 @@ public class VotingActivity : AppCompatActivity(), VoteIntroFragment.OnIntroList
                         .add(R.id.container, VoteAuthFragment.newInstance(), VoteAuthFragment.Tag)
                         .commit()
             }
+
+            PersistedTaskQueueFactory.getInstance(this).execute(GetTalkSubmissionPersisted())
         }
 
-
-        PersistedTaskQueueFactory.getInstance(this).execute(GetTalkSubmissionPersisted())
     }
-
 
     private fun setUpDrawers() {
         val drawerLayout = findViewById(R.id.drawer_layout) as DrawerLayout;
