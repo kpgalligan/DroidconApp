@@ -62,7 +62,14 @@ public class VotingActivity : AppCompatActivity(), VoteIntroFragment.OnIntroList
                         .beginTransaction()
                         .add(R.id.container, VoteIntroFragment.newInstance(), VoteIntroFragment.Tag)
                         .commit()
-            } else {
+            } else if (AppPrefs.getInstance(this).canUserVote()) {
+                supportFragmentManager
+                        .beginTransaction()
+                        .add(R.id.container, VoteFragment.newInstance(), VoteFragment.Tag)
+                        .commit()
+            }
+            else
+            {
                 supportFragmentManager
                         .beginTransaction()
                         .add(R.id.container, VoteAuthFragment.newInstance(), VoteAuthFragment.Tag)
@@ -71,7 +78,6 @@ public class VotingActivity : AppCompatActivity(), VoteIntroFragment.OnIntroList
 
             PersistedTaskQueueFactory.getInstance(this).execute(GetTalkSubmissionPersisted())
         }
-
     }
 
     private fun setUpDrawers() {
@@ -137,6 +143,7 @@ public class VotingActivity : AppCompatActivity(), VoteIntroFragment.OnIntroList
 
 
     override fun onAuthSuccessful() {
+        AppPrefs.getInstance(this).setCanUserVote(true);
         supportFragmentManager
                 .beginTransaction()
                 .replace(R.id.container, VoteFragment.newInstance(), VoteFragment.Tag)
