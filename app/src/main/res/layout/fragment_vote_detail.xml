@@ -99,6 +99,7 @@
                 <co.touchlab.droidconandroid.ui.CustomRatingBar
                     android:id="@+id/rating"
                     android:layout_width="wrap_content"
+                    android:layout_alignParentLeft="true"
                     android:layout_height="wrap_content"/>
 
                     <!--android:layout_marginLeft="-5dp"-->
@@ -108,7 +109,6 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
-                    android:layout_below="@+id/rating"
                     android:layout_centerVertical="true"
                     android:text="@string/vote_submit"
                     android:textColor="@color/voting_primary"
