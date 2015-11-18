@@ -11,6 +11,7 @@ import android.widget.Toast
 import co.touchlab.android.threading.tasks.TaskQueue
 import co.touchlab.droidconandroid.data.TalkSubmission
 import co.touchlab.droidconandroid.tasks.UpdateDbVoteTask
+import co.touchlab.droidconandroid.ui.CustomRatingBar
 
 
 /**
@@ -32,7 +33,7 @@ class VoteDetailFragment : DialogFragment() {
         }
     }
 
-    var rating: RatingBar? = null
+//    var rating: CustomRatingBar? = null
     var talk: TalkSubmission? = null
 
     override fun onCreateView(inflater: LayoutInflater?, container: view.ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -87,15 +88,15 @@ class VoteDetailFragment : DialogFragment() {
     }
 
     private fun initRating() {
-        rating = view.findViewById(R.id.rating) as RatingBar
-        if (talk!!.vote != null)
-            rating!!.rating = talk!!.vote.toFloat()
-
-        rating!!.onRatingBarChangeListener = object : RatingBar.OnRatingBarChangeListener {
-            override fun onRatingChanged(ratingBar: RatingBar?, rating: Float, fromUser: Boolean) {
-                talk!!.vote = Math.round(rating)
-            }
-
-        }
+//        rating = view.findViewById(R.id.rating) as RatingBar
+//        if (talk!!.vote != null)
+//            rating!!.rating = talk!!.vote.toFloat()
+//
+//        rating!!.onRatingBarChangeListener = object : RatingBar.OnRatingBarChangeListener {
+//            override fun onRatingChanged(ratingBar: RatingBar?, rating: Float, fromUser: Boolean) {
+//                talk!!.vote = Math.round(rating)
+//            }
+//
+//        }
     }
 }
