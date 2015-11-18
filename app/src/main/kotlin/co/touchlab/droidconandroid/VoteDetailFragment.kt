@@ -1,10 +1,16 @@
 package co.touchlab.droidconandroid
 
+import android.app.Dialog
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.support.v4.app.DialogFragment
 import android.view
 import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
+import android.view.Window
+import android.widget.RelativeLayout
 import android.widget.TextView
 import android.widget.Toast
 import co.touchlab.android.threading.tasks.TaskQueue
@@ -18,7 +24,6 @@ import co.touchlab.droidconandroid.ui.CustomRatingBar
  * Created by toidiu on 8/5/15.
  */
 class VoteDetailFragment : DialogFragment() {
-
     companion object {
         val TALK = "TALK"
 
@@ -49,6 +54,20 @@ class VoteDetailFragment : DialogFragment() {
         super<DialogFragment>.onActivityCreated(savedInstanceState)
 
         initEvent()
+    }
+
+    override fun onCreateDialog(savedInstanceState: Bundle?): Dialog? {
+        // the content
+        val  root = RelativeLayout(getActivity());
+        root.setLayoutParams( ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
+
+        // creating the fullscreen dialog
+        val  dialog = Dialog(getActivity());
+        dialog.setContentView(root);
+        dialog.getWindow().setBackgroundDrawable(ColorDrawable(Color.YELLOW));
+        dialog.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
+
+        return dialog;
     }
 
     fun initEvent() {
