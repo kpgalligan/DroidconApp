@@ -24,14 +24,13 @@ import java.util.*
  *
  * Created by toidiu on 7/23/15.
  */
-public class VotingActivity : AppCompatActivity(), VoteIntroFragment.OnIntroListener, VoteAuthFragment.OnAuthListener {
+public class VotingActivity : AppCompatActivity() {
 
     public companion object {
         public fun callMe(c: Context) {
             val i = Intent(c, VotingActivity::class.java)
             c.startActivity(i)
         }
-
 
         public fun isVotingOpen(ctx: Context): Boolean {
             //FIXME need proper date here
@@ -49,7 +48,6 @@ public class VotingActivity : AppCompatActivity(), VoteIntroFragment.OnIntroList
             else
                 return true
         }
-
     }
 
     var toolbar: Toolbar? = null
@@ -65,24 +63,11 @@ public class VotingActivity : AppCompatActivity(), VoteIntroFragment.OnIntroList
         setUpDrawers()
 
         if (savedInstanceState == null) {
-            if (!AppPrefs.getInstance(this).getSeenVoteIntro()) {
-                supportFragmentManager
-                        .beginTransaction()
-                        .add(R.id.container, VoteIntroFragment.newInstance(), VoteIntroFragment.Tag)
-                        .commit()
-            } else if (AppPrefs.getInstance(this).canUserVote()) {
-                supportFragmentManager
-                        .beginTransaction()
-                        .add(R.id.container, VoteFragment.newInstance(), VoteFragment.Tag)
-                        .commit()
-            }
-            else
-            {
-                supportFragmentManager
-                        .beginTransaction()
-                        .add(R.id.container, VoteAuthFragment.newInstance(), VoteAuthFragment.Tag)
-                        .commit()
-            }
+
+            supportFragmentManager
+                    .beginTransaction()
+                    .add(R.id.container, VoteFragment.newInstance(), VoteFragment.Tag)
+                    .commit()
 
             PersistedTaskQueueFactory.getInstance(this).execute(GetTalkSubmissionPersisted())
         }
@@ -138,23 +123,5 @@ public class VotingActivity : AppCompatActivity(), VoteIntroFragment.OnIntroList
         drawerItems.add(NavigationItem(R.string.sponsors, R.drawable.ic_website))
         drawerItems.add(NavigationItem(R.string.about, R.drawable.ic_info))
         return drawerItems;
-    }
-
-
-    override fun onIntroDone() {
-        AppPrefs.getInstance(this).setSeenVoteIntro(true)
-        supportFragmentManager
-                .beginTransaction()
-                .replace(R.id.container, VoteAuthFragment.newInstance(), VoteAuthFragment.Tag)
-                .commit()
-    }
-
-
-    override fun onAuthSuccessful() {
-        AppPrefs.getInstance(this).setCanUserVote(true);
-        supportFragmentManager
-                .beginTransaction()
-                .replace(R.id.container, VoteFragment.newInstance(), VoteFragment.Tag)
-                .commit()
     }
 }
