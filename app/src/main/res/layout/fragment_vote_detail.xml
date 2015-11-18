@@ -95,15 +95,13 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/padding_large">
 
-                <RatingBar
+                <co.touchlab.droidconandroid.ui.CustomRatingBar
                     android:id="@+id/rating"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="-5dp"
-                    android:layout_marginTop="-5dp"
-                    android:numStars="5"
-                    android:stepSize="1.0"/>
+                    android:layout_height="wrap_content"/>
 
+                    <!--android:layout_marginLeft="-5dp"-->
+                    <!--android:layout_marginTop="-5dp"-->
                 <TextView
                     android:id="@+id/submit_vote"
                     android:layout_width="wrap_content"
