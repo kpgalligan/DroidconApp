@@ -5,7 +5,6 @@ import android.support.v4.app.DialogFragment
 import android.view
 import android.view.LayoutInflater
 import android.view.View
-import android.widget.RatingBar
 import android.widget.TextView
 import android.widget.Toast
 import co.touchlab.android.threading.tasks.TaskQueue
@@ -33,7 +32,7 @@ class VoteDetailFragment : DialogFragment() {
         }
     }
 
-//    var rating: CustomRatingBar? = null
+    var rating: CustomRatingBar? = null
     var talk: TalkSubmission? = null
 
     override fun onCreateView(inflater: LayoutInflater?, container: view.ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -88,15 +87,21 @@ class VoteDetailFragment : DialogFragment() {
     }
 
     private fun initRating() {
-//        rating = view.findViewById(R.id.rating) as RatingBar
-//        if (talk!!.vote != null)
-//            rating!!.rating = talk!!.vote.toFloat()
-//
-//        rating!!.onRatingBarChangeListener = object : RatingBar.OnRatingBarChangeListener {
-//            override fun onRatingChanged(ratingBar: RatingBar?, rating: Float, fromUser: Boolean) {
-//                talk!!.vote = Math.round(rating)
-//            }
-//
-//        }
+        rating = view.findViewById(R.id.rating) as CustomRatingBar
+        if (talk!!.vote != null)
+            rating!!.setRating(talk!!.vote.toFloat())
+
+        rating!!.setChangeListener(object : CustomRatingBar.RatingChangeListener {
+            override fun onChange(rate: Int) {
+                talk!!.vote = rate
+            }
+
+        })
+
+        //        = object : RatingBar.OnRatingBarChangeListener {
+        //            override fun onRatingChanged(ratingBar: RatingBar?, rating: Float, fromUser: Boolean) {
+        //            }
+        //
+        //        }
     }
 }
