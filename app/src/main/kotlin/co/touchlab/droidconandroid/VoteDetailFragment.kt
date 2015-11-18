@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.widget.RatingBar
 import android.widget.TextView
+import android.widget.Toast
 import co.touchlab.android.threading.tasks.TaskQueue
 import co.touchlab.droidconandroid.data.TalkSubmission
 import co.touchlab.droidconandroid.tasks.UpdateDbVoteTask
@@ -70,8 +71,12 @@ class VoteDetailFragment : DialogFragment() {
             dismiss()
         }
         submit.setOnClickListener {
-            updateTalk()
-            dismiss()
+            if (talk!!.vote == null) {
+                Toast.makeText(activity, "Please select a rating.", Toast.LENGTH_SHORT).show()
+            } else {
+                updateTalk()
+                dismiss()
+            }
         }
 
         initRating()
