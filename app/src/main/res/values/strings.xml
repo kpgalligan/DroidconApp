@@ -119,4 +119,6 @@ Wanna join a team where Android isn\'t "that other platform", where we care abou
     <string name="empty_open_vote">No new talk submissions available.\nCheck back later!</string>
     <string name="empty_close_vote">You haven\'t voted on talks yet.</string>
 
+    <string name="vote_intro_body">Welcome to the Droidcon talk voting tool. Here you can vote for the talks you want to see most</string>
+
 </resources>

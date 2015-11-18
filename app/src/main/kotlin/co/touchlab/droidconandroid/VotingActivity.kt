@@ -24,7 +24,7 @@ import java.util.*
  *
  * Created by toidiu on 7/23/15.
  */
-public class VotingActivity : AppCompatActivity() {
+public class VotingActivity : AppCompatActivity(), VoteIntroFragment.OnIntroListener, VoteAuthFragment.OnAuthListener {
 
     public companion object {
         public fun callMe(c: Context) {
@@ -65,16 +65,27 @@ public class VotingActivity : AppCompatActivity() {
         setUpDrawers()
 
         if (savedInstanceState == null) {
-
-            val fragment = VoteFragment.newInstance()
-            supportFragmentManager
-                    .beginTransaction()
-                    .add(R.id.container, fragment, VoteFragment.Tag)
-                    .commit()
+            if (!AppPrefs.getInstance(this).getSeenVoteIntro()) {
+                supportFragmentManager
+                        .beginTransaction()
+                        .add(R.id.container, VoteIntroFragment.newInstance(), VoteIntroFragment.Tag)
+                        .commit()
+            } else if (AppPrefs.getInstance(this).canUserVote()) {
+                supportFragmentManager
+                        .beginTransaction()
+                        .add(R.id.container, VoteFragment.newInstance(), VoteFragment.Tag)
+                        .commit()
+            }
+            else
+            {
+                supportFragmentManager
+                        .beginTransaction()
+                        .add(R.id.container, VoteAuthFragment.newInstance(), VoteAuthFragment.Tag)
+                        .commit()
+            }
 
             PersistedTaskQueueFactory.getInstance(this).execute(GetTalkSubmissionPersisted())
         }
-
     }
 
     private fun setUpDrawers() {
@@ -130,4 +141,20 @@ public class VotingActivity : AppCompatActivity() {
     }
 
 
+    override fun onIntroDone() {
+        AppPrefs.getInstance(this).setSeenVoteIntro(true)
+        supportFragmentManager
+                .beginTransaction()
+                .replace(R.id.container, VoteAuthFragment.newInstance(), VoteAuthFragment.Tag)
+                .commit()
+    }
+
+
+    override fun onAuthSuccessful() {
+        AppPrefs.getInstance(this).setCanUserVote(true);
+        supportFragmentManager
+                .beginTransaction()
+                .replace(R.id.container, VoteFragment.newInstance(), VoteFragment.Tag)
+                .commit()
+    }
 }
