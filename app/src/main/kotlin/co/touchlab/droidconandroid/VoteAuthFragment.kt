@@ -2,9 +2,14 @@ package co.touchlab.droidconandroid
 
 import android.app.Activity
 import android.app.Dialog
+import android.content.Intent
+import android.graphics.BitmapFactory
+import android.graphics.Color
 import android.net.Uri
 import android.os.Bundle
+import android.support.customtabs.*
 import android.support.v4.app.Fragment
+import android.support.v4.content.ContextCompat
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -28,6 +33,13 @@ class VoteAuthFragment : Fragment() {
     var progressWrapper: RelativeLayout? = null
     var failureMessageWrapper: RelativeLayout? = null
 
+    var getTicketButton: Button? = null
+    var shareButton: Button? = null
+
+
+    var  mCustomTabsSession :CustomTabsSession? = null;
+    var  mClient: CustomTabsClient? = null;
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
     }
@@ -43,9 +55,28 @@ class VoteAuthFragment : Fragment() {
         progressWrapper = view.findViewById(R.id.progress_wrapper) as RelativeLayout
         failureMessageWrapper = view.findViewById(R.id.auth_fail_wrapper) as RelativeLayout
 
+        getTicketButton = view.findViewById(R.id.getTicketButton) as Button
+        getTicketButton!!.setOnClickListener {
+            var builder = CustomTabsIntent.Builder(getSession());
+            builder.setToolbarColor(ContextCompat.getColor(context,R.color.primary)).setShowTitle(true);
+            builder.setStartAnimations(context, R.anim.slide_in_right, R.anim.slide_out_left);
+            builder.setExitAnimations(context, R.anim.slide_in_left, R.anim.slide_out_right);
+            var customTabsIntent = builder.build();
+            customTabsIntent.launchUrl(getActivity(), Uri.parse("http://www.eventbrite.com/e/droidcon-san-francisco-2016-tickets-18125767659"));
+        }
+
+        shareButton = view.findViewById(R.id.shareButton) as Button
+        shareButton!!.setOnClickListener {
+            var intent = Intent(Intent.ACTION_SEND);
+            intent.setType("text/plain");
+            intent.putExtra(Intent.EXTRA_TEXT, "http://www.eventbrite.com/e/droidcon-san-francisco-2016-tickets-18125767659");
+            intent.putExtra(android.content.Intent.EXTRA_SUBJECT, "Droidcon Tickets");
+            startActivity(Intent.createChooser(intent, "Share"));
+        }
+
         EventBusExt.getDefault().register(this)
 
-        TaskQueue.loadQueueDefault(activity.applicationContext).execute(CanUserVoteTask())
+        TaskQueue.loadQueueDefault(context.applicationContext).execute(CanUserVoteTask())
 
         showHideProgress()
         return view
@@ -71,6 +102,15 @@ class VoteAuthFragment : Fragment() {
     override fun onDetach() {
         super.onDetach()
         mListener = null
+    }
+
+    private fun  getSession(): CustomTabsSession? {
+        if (mClient == null) {
+            mCustomTabsSession = null;
+        } else if (mCustomTabsSession == null) {
+            mCustomTabsSession = mClient!!.newSession(null)
+        }
+        return mCustomTabsSession;
     }
 
     private fun onAuthClicked() {
