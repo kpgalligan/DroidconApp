@@ -17,7 +17,6 @@ import retrofit.http.Path;
  */
 public interface VoteRequest
 {
-
     @FormUrlEncoded
     @POST("/api/voter/updateVote/{subId}")
     Response updateVote(@Path("subId") Long talkId, @Field("vote") Integer vote) throws NetworkErrorHandler.NetworkException;
@@ -26,6 +25,9 @@ public interface VoteRequest
     @GET("/api/voter/voteSubmissions")
     List<TalkVotingWrapper> getTalkSubmission() throws NetworkErrorHandler.NetworkException;
 
-    @GET("/api/voter/canUserVote")
-    Boolean canUserVote() throws NetworkErrorHandler.NetworkException;
+    @GET("/api/voter/canUserVote/{conID}")
+    Boolean canUserVote(@Path("conID") Integer conventionID) throws NetworkErrorHandler.NetworkException;
+
+    @GET("/api/voter/canEBUserVote/{conID}/{authCode}")
+    Boolean canEBUserVote(@Path("conID") Integer conventionID, @Path("authCode") String authCode) throws NetworkErrorHandler.NetworkException;
 }

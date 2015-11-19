@@ -1,15 +1,14 @@
 package co.touchlab.droidconandroid.tasks;
 
 import android.content.Context;
-import android.util.Log;
 
 import com.crashlytics.android.Crashlytics;
 
 import co.touchlab.android.threading.eventbus.EventBusExt;
 import co.touchlab.android.threading.tasks.Task;
+import co.touchlab.droidconandroid.BuildConfig;
 import co.touchlab.droidconandroid.network.DataHelper;
 import co.touchlab.droidconandroid.network.VoteRequest;
-import co.touchlab.droidconandroid.utils.Toaster;
 import retrofit.RetrofitError;
 
 /**
@@ -17,15 +16,30 @@ import retrofit.RetrofitError;
  */
 public class CanUserVoteTask extends Task
 {
-    public Boolean canVote;
+    public  Boolean canVote  = false;
+    private String  authCode = null;
+
+    public CanUserVoteTask()
+    {
+    }
+
+    public CanUserVoteTask(String authCode)
+    {
+        this.authCode = authCode;
+    }
 
     @Override
     protected void run(Context context) throws Throwable
     {
         VoteRequest voteRequest = DataHelper.makeRequestAdapter(context).create(VoteRequest.class);
-        canVote = voteRequest.canUserVote();
-        Log.d("ak-------", String.valueOf(canVote));
-
+        if(authCode != null && ! authCode.isEmpty())
+        {
+            canVote = voteRequest.canEBUserVote(BuildConfig.CONVENTION_ID, authCode);
+        }
+        else
+        {
+            canVote = voteRequest.canUserVote(BuildConfig.CONVENTION_ID);
+        }
     }
 
     @Override
