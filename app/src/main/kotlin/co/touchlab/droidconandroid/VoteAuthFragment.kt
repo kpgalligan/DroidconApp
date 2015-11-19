@@ -25,6 +25,16 @@ import co.touchlab.android.threading.tasks.utils.TaskQueueHelper
 import co.touchlab.droidconandroid.tasks.CanUserVoteTask
 
 class VoteAuthFragment : Fragment() {
+
+    companion object {
+        val Tag: String = "VoteAuthFragment"
+
+        fun newInstance(): VoteAuthFragment {
+            val fragment = VoteAuthFragment()
+            return fragment
+        }
+    }
+
     private var mListener: OnAuthListener? = null
 
     val CLIENT_ID = "PZW4S6QLEXNRQJHY7Q"
@@ -81,8 +91,8 @@ class VoteAuthFragment : Fragment() {
             showHideProgress()
         }
 
-        EventBusExt.getDefault().register(this)
 
+        EventBusExt.getDefault().register(this)
         TaskQueue.loadQueueDefault(context.applicationContext).execute(CanUserVoteTask())
 
         showHideProgress()
@@ -97,13 +107,7 @@ class VoteAuthFragment : Fragment() {
 
     override fun onAttach(activity: Activity) {
         super.onAttach(activity)
-        try {
             mListener = activity as OnAuthListener
-        } catch (e: ClassCastException) {
-            throw ClassCastException(
-                    activity.toString() + " must implement OnAuthListener")
-        }
-
     }
 
     override fun onDetach() {
@@ -166,6 +170,17 @@ class VoteAuthFragment : Fragment() {
         }
     }
 
+    //------------------EVENTBUS
+    public fun onEventMainThread(task: CanUserVoteTask) {
+        if (task.canVote) {
+            if (mListener != null)
+                mListener!!.onAuthSuccessful()
+        } else {
+            showHideProgress()
+        }
+    }
+
+    //-------------------INTERFACE
     /**
      * This interface must be implemented by activities that contain this
      * fragment to allow an interaction in this fragment to be communicated
@@ -176,21 +191,4 @@ class VoteAuthFragment : Fragment() {
         fun onAuthSuccessful()
     }
 
-    companion object {
-        val Tag: String = "VoteAuthFragment"
-
-        fun newInstance(): VoteAuthFragment {
-            val fragment = VoteAuthFragment()
-            return fragment
-        }
-    }
-
-    public fun onEventMainThread(task: CanUserVoteTask) {
-        if (task.canVote) {
-            if (mListener != null)
-                mListener!!.onAuthSuccessful()
-        } else {
-            showHideProgress()
-        }
-    }
 }
