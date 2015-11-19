@@ -17,11 +17,13 @@
 
             <ImageButton
                 android:id="@+id/cancel"
-                android:layout_width="16dp"
-                android:layout_height="16dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
-                android:layout_marginLeft="@dimen/padding_medium"
+                android:layout_marginLeft="12dp"
+                android:adjustViewBounds="true"
                 android:background="@null"
+                android:padding="4dp"
                 android:scaleType="center"
                 android:src="@drawable/ic_action_navigation_close"/>
 
@@ -31,7 +33,7 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
-                android:layout_marginRight="@dimen/padding_medium"
+                android:layout_marginRight="12dp"
                 android:padding="4dp"
                 android:text="PASS"
                 android:textStyle="bold"/>

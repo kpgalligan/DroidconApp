@@ -10,6 +10,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.Window
+import android.widget.LinearLayout
 import android.widget.RelativeLayout
 import android.widget.TextView
 import android.widget.Toast
@@ -84,7 +85,6 @@ class VoteDetailFragment : DialogFragment() {
         descrip.text = talk!!.description
         speaker.text = talk!!.speaker
 
-        cancel.setPadding(20,20,20,20)
         cancel.setOnClickListener { dismiss() }
         pass.setOnClickListener {
             talk!!.vote = 0
@@ -119,10 +119,5 @@ class VoteDetailFragment : DialogFragment() {
 
         })
 
-        //        = object : RatingBar.OnRatingBarChangeListener {
-        //            override fun onRatingChanged(ratingBar: RatingBar?, rating: Float, fromUser: Boolean) {
-        //            }
-        //
-        //        }
     }
 }
