@@ -68,7 +68,7 @@ public class MyActivity : AppCompatActivity(), FilterInterface, NfcAdapter.Creat
         }
         else if ( VotingActivity.isVotingOpen() )
         {
-            VotingActivity.callMe(this@MyActivity)
+            VotingIntroActivity.callMe(this@MyActivity)
             finish()
             return
         }
