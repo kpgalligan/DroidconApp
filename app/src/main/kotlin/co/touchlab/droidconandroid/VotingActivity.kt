@@ -62,8 +62,6 @@ public class VotingActivity : AppCompatActivity() {
                     .beginTransaction()
                     .add(R.id.container, VoteFragment.newInstance(), VoteFragment.Tag)
                     .commit()
-
-            PersistedTaskQueueFactory.getInstance(this).execute(GetTalkSubmissionPersisted())
         }
     }
 

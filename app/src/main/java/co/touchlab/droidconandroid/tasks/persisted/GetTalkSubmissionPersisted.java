@@ -17,10 +17,15 @@ import co.touchlab.squeaky.dao.Dao;
 /**
  * Created by toidiu on 7/20/14.
  */
-public class GetTalkSubmissionPersisted extends BasePersistedTask
+public class GetTalkSubmissionPersisted extends VotePersistedTask
 {
     public List<TalkSubmission> list;
 
+    public static void startMe(Context context)
+    {
+        //should CALL ONLY FROM VoteFragment
+        PersistedTaskQueueFactory.getInstance(context).execute(new GetTalkSubmissionPersisted());
+    }
 
     public GetTalkSubmissionPersisted()
     {
@@ -97,11 +102,5 @@ public class GetTalkSubmissionPersisted extends BasePersistedTask
     {
         EventBusExt.getDefault().post(this);
     }
-
-    //CLASSES------------------------------
-    public static class UpdateProgress
-    {
-    }
-
 
 }

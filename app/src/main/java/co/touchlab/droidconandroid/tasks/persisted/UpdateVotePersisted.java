@@ -1,18 +1,20 @@
 package co.touchlab.droidconandroid.tasks.persisted;
 import android.content.Context;
 
-import com.crashlytics.android.Crashlytics;
-
 import co.touchlab.droidconandroid.network.DataHelper;
 import co.touchlab.droidconandroid.network.VoteRequest;
 
 /**
  * Created by kgalligan on 8/21/15.
  */
-public class UpdateVotePersisted extends BasePersistedTask
+public class UpdateVotePersisted extends VotePersistedTask
 {
     private Long talkId;
     private int  vote;
+
+    public static void startMe(Context context, Long talkId, int vote){
+        PersistedTaskQueueFactory.getInstance(context).execute(new UpdateVotePersisted(talkId, vote));
+    }
 
     @SuppressWarnings("unused")
     public UpdateVotePersisted()
