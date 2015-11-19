@@ -3,21 +3,19 @@ package co.touchlab.droidconandroid
 import android.app.Activity
 import android.app.Dialog
 import android.content.Intent
-import android.graphics.BitmapFactory
-import android.graphics.Color
 import android.net.Uri
 import android.os.Bundle
-import android.support.customtabs.*
+import android.support.customtabs.CustomTabsClient
+import android.support.customtabs.CustomTabsIntent
+import android.support.customtabs.CustomTabsSession
 import android.support.v4.app.Fragment
 import android.support.v4.content.ContextCompat
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.webkit.WebView
 import android.webkit.WebViewClient
 import android.widget.Button
-import android.widget.RelativeLayout
 import android.widget.Toast
 import co.touchlab.android.threading.eventbus.EventBusExt
 import co.touchlab.android.threading.tasks.TaskQueue
@@ -40,16 +38,17 @@ class VoteAuthFragment : Fragment() {
     val CLIENT_ID = "PZW4S6QLEXNRQJHY7Q"
     val LOGIN_URL = "https://www.eventbrite.com/oauth";
 
-    var progressWrapper: RelativeLayout? = null
-    var failureMessageWrapper: RelativeLayout? = null
+    var errorWrapper: View? = null
+    var progressWrapper: View? = null
+    var failureMessageWrapper: View? = null
 
     var getTicketButton: Button? = null
     var shareButton: Button? = null
     var retryButton: Button? = null
 
 
-    var  mCustomTabsSession :CustomTabsSession? = null;
-    var  mClient: CustomTabsClient? = null;
+    var mCustomTabsSession: CustomTabsSession? = null;
+    var mClient: CustomTabsClient? = null;
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -63,13 +62,14 @@ class VoteAuthFragment : Fragment() {
             onAuthClicked()
         }
 
-        progressWrapper = view.findViewById(R.id.progress_wrapper) as RelativeLayout
-        failureMessageWrapper = view.findViewById(R.id.auth_fail_wrapper) as RelativeLayout
+        errorWrapper = view.findViewById(R.id.error_wrapper)
+        progressWrapper = view.findViewById(R.id.progress_wrapper)
+        failureMessageWrapper = view.findViewById(R.id.auth_fail_wrapper)
 
         getTicketButton = view.findViewById(R.id.getTicketButton) as Button
         getTicketButton!!.setOnClickListener {
             var builder = CustomTabsIntent.Builder(getSession());
-            builder.setToolbarColor(ContextCompat.getColor(context,R.color.primary)).setShowTitle(true);
+            builder.setToolbarColor(ContextCompat.getColor(context, R.color.primary)).setShowTitle(true);
             builder.setStartAnimations(context, R.anim.slide_in_right, R.anim.slide_out_left);
             builder.setExitAnimations(context, R.anim.slide_in_left, R.anim.slide_out_right);
             var customTabsIntent = builder.build();
@@ -107,7 +107,7 @@ class VoteAuthFragment : Fragment() {
 
     override fun onAttach(activity: Activity) {
         super.onAttach(activity)
-            mListener = activity as OnAuthListener
+        mListener = activity as OnAuthListener
     }
 
     override fun onDetach() {
@@ -115,7 +115,7 @@ class VoteAuthFragment : Fragment() {
         mListener = null
     }
 
-    private fun  getSession(): CustomTabsSession? {
+    private fun getSession(): CustomTabsSession? {
         if (mClient == null) {
             mCustomTabsSession = null;
         } else if (mCustomTabsSession == null) {
@@ -160,11 +160,17 @@ class VoteAuthFragment : Fragment() {
         auth_dialog.setCancelable(true);
     }
 
-    private fun showHideProgress() {
-        if (TaskQueueHelper.hasTasksOfType(TaskQueue.loadQueueDefault(activity.applicationContext), javaClass<CanUserVoteTask>())) {
+    private fun showHideProgress(failed: Boolean = false) {
+        if (failed) {
+            errorWrapper!!.setVisibility(View.VISIBLE)
+            progressWrapper!!.setVisibility(View.GONE)
+            failureMessageWrapper!!.setVisibility(View.GONE)
+        } else if (TaskQueueHelper.hasTasksOfType(TaskQueue.loadQueueDefault(activity.applicationContext), javaClass<CanUserVoteTask>())) {
+            errorWrapper!!.setVisibility(View.GONE)
             progressWrapper!!.setVisibility(View.VISIBLE)
             failureMessageWrapper!!.setVisibility(View.GONE)
         } else {
+            errorWrapper!!.setVisibility(View.GONE)
             progressWrapper!!.setVisibility(View.GONE)
             failureMessageWrapper!!.setVisibility(View.VISIBLE)
         }
@@ -172,9 +178,8 @@ class VoteAuthFragment : Fragment() {
 
     //------------------EVENTBUS
     public fun onEventMainThread(task: CanUserVoteTask) {
-        showHideProgress()
         if (task.failed) {
-            Toast.makeText(activity, "Failed to reach server. Please check network connection.", Toast.LENGTH_SHORT).show()
+            showHideProgress(true)
         } else if (task.canVote) {
             if (mListener != null)
                 mListener!!.onAuthSuccessful()
@@ -182,7 +187,7 @@ class VoteAuthFragment : Fragment() {
             showHideProgress()
         }
     }
-    
+
     //-------------------INTERFACE
     /**
      * This interface must be implemented by activities that contain this
@@ -193,5 +198,5 @@ class VoteAuthFragment : Fragment() {
     interface OnAuthListener {
         fun onAuthSuccessful()
     }
-    
+
 }
