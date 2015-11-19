@@ -44,8 +44,7 @@ public class VotingIntroActivity : AppCompatActivity(), VoteIntroFragment.OnIntr
                         .add(R.id.fragContainer, VoteIntroFragment.newInstance(), VoteIntroFragment.Tag)
                         .commit()
             } else if (AppPrefs.getInstance(this).canUserVote()) {
-                VotingActivity.callMe(this);
-                finish();
+                startVoting()
             }
             else
             {
@@ -68,6 +67,10 @@ public class VotingIntroActivity : AppCompatActivity(), VoteIntroFragment.OnIntr
 
     override fun onAuthSuccessful() {
         AppPrefs.getInstance(this).setCanUserVote(true);
+        startVoting()
+    }
+
+    private fun startVoting() {
         VotingActivity.callMe(this);
         finish();
     }
