@@ -3,10 +3,8 @@ package co.touchlab.droidconandroid
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v4.widget.SwipeRefreshLayout
-import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
-import android.view
 import android.view.*
 import android.widget.TextView
 import co.touchlab.android.threading.eventbus.EventBusExt
@@ -19,7 +17,6 @@ import co.touchlab.droidconandroid.tasks.persisted.GetTalkSubmissionPersisted
 import co.touchlab.droidconandroid.tasks.persisted.PersistedTaskQueueFactory
 import co.touchlab.droidconandroid.ui.VoteAdapter
 import co.touchlab.droidconandroid.ui.VoteClickListener
-
 
 /**
  *
@@ -42,7 +39,7 @@ class VoteFragment : Fragment(), VoteClickListener {
     //endregion
 
     //region ----------------------------------------LifeCycle
-    override fun onCreateView(inflater: LayoutInflater?, container: view.ViewGroup?, savedInstanceState: Bundle?): View? {
+    override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater!!.inflate(R.layout.fragment_vote, null)
     }
 
@@ -77,7 +74,6 @@ class VoteFragment : Fragment(), VoteClickListener {
         rv = view.findViewById(R.id.rv) as RecyclerView
         rv!!.layoutManager = LinearLayoutManager(activity)
 
-        (activity as AppCompatActivity).supportActionBar.setTitle(R.string.vote)
         TaskQueue.loadQueueDefault(activity).execute(GetDbTalkSubmissionTask(true))
     }
 
@@ -186,5 +182,3 @@ class VoteFragment : Fragment(), VoteClickListener {
         refreshView()
     }
 }
-
-
