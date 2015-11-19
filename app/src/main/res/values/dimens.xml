@@ -2,7 +2,8 @@
     <!-- Default screen margins, per the Android Design guidelines. -->
     <dimen name="activity_horizontal_margin">16dp</dimen>
     <dimen name="activity_vertical_margin">16dp</dimen>
-    <dimen name="drawer_width">280dp</dimen>
+    <dimen name="drawer_width">320dp</dimen>
+    <dimen name="drawer_margin">56dp</dimen>
     <dimen name="drawer_header_height">172dp</dimen>
     <dimen name="status_bar_height">0dip</dimen>
     <dimen name="profile_header">41dp</dimen>
@@ -17,6 +18,9 @@
     <dimen name="padding_large">24dp</dimen>
     <dimen name="padding_xlarge">32dp</dimen>
     <dimen name="padding_xxlarge">48dp</dimen>
+    <dimen name="padding_icons">11dp</dimen>
+    <dimen name="padding_welcomeText">19dp</dimen>
+    <dimen name="padding_social_icon">44dp</dimen>
 
     <dimen name="height_xxtiny">24dp</dimen>
     <dimen name="height_xtiny">32dp</dimen>
@@ -26,6 +30,7 @@
     <dimen name="height_large">64dp</dimen>
     <dimen name="height_xlarge">72dp</dimen>
     <dimen name="height_xxlarge">80dp</dimen>
+    <dimen name="height_xxxlarge">88dp</dimen>
 
     <dimen name="text_xxtiny">8sp</dimen>
     <dimen name="text_xtiny">10sp</dimen>
@@ -40,6 +45,8 @@
     <dimen name="text_xxxxlarge">36sp</dimen>
     <dimen name="text_huge">48sp</dimen>
     <dimen name="text_xhuge">64sp</dimen>
+    <dimen name="text_filter">20sp</dimen>
+
     <dimen name="social_icon">30dp</dimen>
     <dimen name="rsvp_width">19dp</dimen>
     <dimen name="rsvp_height">16dp</dimen>
