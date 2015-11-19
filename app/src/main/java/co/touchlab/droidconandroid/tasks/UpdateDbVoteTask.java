@@ -6,7 +6,6 @@ import co.touchlab.android.threading.eventbus.EventBusExt;
 import co.touchlab.android.threading.tasks.Task;
 import co.touchlab.droidconandroid.data.DatabaseHelper;
 import co.touchlab.droidconandroid.data.TalkSubmission;
-import co.touchlab.droidconandroid.tasks.persisted.PersistedTaskQueueFactory;
 import co.touchlab.droidconandroid.tasks.persisted.UpdateVotePersisted;
 import co.touchlab.squeaky.dao.Dao;
 
@@ -25,11 +24,10 @@ public class UpdateDbVoteTask extends Task
     @Override
     protected void run(Context context) throws Throwable
     {
-        Dao<TalkSubmission, Long> dao = DatabaseHelper.getInstance(context).getTalkSubDao();
-        PersistedTaskQueueFactory.getInstance(context).execute(new UpdateVotePersisted(talk.
-                                                                                               id,
-                                                                                       talk.vote));
-        dao.update(talk);
+        throw new RuntimeException();
+//        Dao<TalkSubmission, Long> dao = DatabaseHelper.getInstance(context).getTalkSubDao();
+//        dao.update(talk);
+//        UpdateVotePersisted.startMe(context, talk.id, talk.vote);
     }
 
     @Override
