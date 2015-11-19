@@ -37,7 +37,11 @@
 
         <activity
             android:name=".VotingActivity"
-            android:label="@string/about" />
+            android:label="@string/vote"/>
+
+        <activity
+            android:name=".VotingIntroActivity"
+            android:label="@string/vote"/>
 
         <activity
             android:name=".AboutActivity"

@@ -32,7 +32,6 @@ public class VotingActivity : AppCompatActivity() {
             c.startActivity(i)
         }
 
-
         public fun isVotingOpen(ctx: Context): Boolean {
             //FIXME need proper date here
             val startString = AppPrefs.getInstance(ctx).conventionStartDate
@@ -49,7 +48,6 @@ public class VotingActivity : AppCompatActivity() {
             else
                 return true
         }
-
     }
 
     var toolbar: Toolbar? = null
@@ -66,15 +64,13 @@ public class VotingActivity : AppCompatActivity() {
 
         if (savedInstanceState == null) {
 
-            val fragment = VoteFragment.newInstance()
             supportFragmentManager
                     .beginTransaction()
-                    .add(R.id.container, fragment, VoteFragment.Tag)
+                    .add(R.id.container, VoteFragment.newInstance(), VoteFragment.Tag)
                     .commit()
 
             PersistedTaskQueueFactory.getInstance(this).execute(GetTalkSubmissionPersisted())
         }
-
     }
 
     private fun setUpDrawers() {
@@ -128,6 +124,4 @@ public class VotingActivity : AppCompatActivity() {
         drawerItems.add(NavigationItem(R.string.about, R.drawable.ic_info))
         return drawerItems;
     }
-
-
 }
