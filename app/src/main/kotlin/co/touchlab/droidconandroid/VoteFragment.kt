@@ -173,6 +173,11 @@ class VoteFragment : Fragment(), VoteClickListener {
         }
     }
 
+    public fun onEventMainThread(t: GetTalkSubmissionPersisted.UpdateProgress) {
+        refreshProgress()
+
+    }
+
     public fun onEventMainThread(t: GetDbTalkSubmissionTask) {
         initRvAdapter(t.list, t.openVotes)
     }

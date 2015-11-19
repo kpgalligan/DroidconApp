@@ -25,7 +25,7 @@ abstract public class BasePersistedTask extends PersistedTask
         else
         {
             Crashlytics.logException(e);
-            return true;
+            return false;
         }
     }
 }
