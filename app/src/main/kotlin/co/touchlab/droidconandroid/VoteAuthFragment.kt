@@ -142,7 +142,10 @@ class VoteAuthFragment : Fragment() {
     }
 
     public fun onEventMainThread(task: CanUserVoteTask) {
-        if (task.canVote) {
+        showHideProgress()
+        if (task.failed) {
+            Toast.makeText(activity, "Failed to reach server. Please check network connection.", Toast.LENGTH_SHORT).show()
+        } else if (task.canVote) {
             if (mListener != null)
                 mListener!!.onAuthSuccessful()
         } else {

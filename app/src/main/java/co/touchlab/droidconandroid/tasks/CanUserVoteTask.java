@@ -1,6 +1,7 @@
 package co.touchlab.droidconandroid.tasks;
 
 import android.content.Context;
+import android.widget.Toast;
 
 import com.crashlytics.android.Crashlytics;
 
@@ -16,6 +17,7 @@ import retrofit.RetrofitError;
  */
 public class CanUserVoteTask extends Task
 {
+    public boolean failed = false;
     public  Boolean canVote  = false;
     private String  authCode = null;
 
@@ -45,6 +47,7 @@ public class CanUserVoteTask extends Task
     @Override
     protected final boolean handleError(Context context, Throwable e)
     {
+        failed = true;
         if(e instanceof RetrofitError)
         {
             return true;
@@ -52,7 +55,7 @@ public class CanUserVoteTask extends Task
         else
         {
             Crashlytics.logException(e);
-            return true;
+            return false;
         }
     }
 

@@ -70,8 +70,7 @@ public class GetTalkSubmissionPersisted extends BasePersistedTask
             while(true)
             {
                 Integer randInt = TalkSubmission.getRandInt();
-                List<TalkSubmission> randList = dao.queryForEq("random", randInt)
-                                                   .list();
+                List<TalkSubmission> randList = dao.queryForEq("random", randInt).list();
                 if(randList.isEmpty())
                 {
                     t.random = randInt;
@@ -98,5 +97,11 @@ public class GetTalkSubmissionPersisted extends BasePersistedTask
     {
         EventBusExt.getDefault().post(this);
     }
+
+    //CLASSES------------------------------
+    public static class UpdateProgress
+    {
+    }
+
 
 }
