@@ -47,6 +47,10 @@
     <string name="choose_account">Please choose an account to use:</string>
     <string name="ok">Ok</string>
     <string name="cancel">Cancel</string>
+    <string name="proceed">Continue</string>
+
+    <string name="vote_welcome_title">Voting is open!</string>
+    <string name="vote_welcome_body">As a ticketholder for Droidcon SF 2015, you get to help decide which sessions make it into the lineup.\n\n Touch \"continue\" to see the list of submissions and start voting!</string>
 
     <!-- profile copy-->
     <string name="title_activity_edit_user_profile">Edit my profile</string>
@@ -95,16 +99,20 @@
     <string name="about_con">The Droidcon conferences around the world support the Android Platform and create a global network for developers and companies. We offer best-in-class presentations from leaders in all parts of the Android ecosystem, including core development, embedded solutions, augmented reality, business solutions and games.\n\n
     http://droidcon.com/</string>
     <string name="about_touch_header">About touchlab</string>
-    <string name="about_touch">touchlab is...\n\n
+    <string name="about_touch">touchlab is…\n\n
         Developer Founded\n\n
-touchlab is a developer founded and run development shop focused on building amazing Android experiences.\n\n
-Android Pros\n\n
-We are a group of Android experts (and experts in training) who believe that Android can and must be better.\n\n
-Overachievers\n\n
-What we built yesterday was great, what we build with you tomorrow will be even better.\n\n
-Currently Hiring\n\n
-Wanna join a team where Android isn\'t "that other platform", where we care about pushing our favorite technology forward and where you can get a ton of exposure to the community at large? Get in touch.\n\n
-    http://touchlab.co/</string>
+        touchlab is a developer founded and run development shop focused on building amazing Android
+        experiences.\n\n
+        Android Pros\n\n
+        We are a group of Android experts (and experts in training) who believe that Android can and
+        must be better.\n\n
+        Overachievers\n\n
+        What we built yesterday was great, what we build with you tomorrow will be even better.\n\n
+        Currently Hiring\n\n
+        Wanna join a team where Android isn\'t "that other platform", where we care about pushing
+        our favorite technology forward and where you can get a ton of exposure to the community at
+        large? Get in touch.\n\n
+        http://touchlab.co/</string>
     <string name="more">More</string>
     <string name="less">Less</string>
 
@@ -118,7 +126,11 @@ Wanna join a team where Android isn\'t "that other platform", where we care abou
     <string name="vote_voted">Toggle Voted</string>
     <string name="empty_open_vote">No new talk submissions available.\nCheck back later!</string>
     <string name="empty_close_vote">You haven\'t voted on talks yet.</string>
-
-    <string name="vote_intro_body">Welcome to the Droidcon talk voting tool. Here you can vote for the talks you want to see most</string>
+    <string name="get_ticket">Get ticket</string>
+    <string name="share">Share</string>
+    <string name="finding_ticket">Finding ticket information...</string>
+    <string name="no_ticket">We couldn’t find your ticket info. Touch below to get a ticket or send yourself a link.\n\nIf you purchased a ticket using a different email address, authorize with Eventbrite to get started!</string>
+    <string name="eb_sign_in">Sign in to Eventbrite</string>
+    <string name="retry">Retry</string>
 
 </resources>
