@@ -10,6 +10,16 @@ import android.widget.Button
 
 
 class VoteIntroFragment : Fragment() {
+
+    companion object {
+        val Tag: String = "VoteIntroFragment"
+
+        fun newInstance(): VoteIntroFragment {
+            val fragment = VoteIntroFragment()
+            return fragment
+        }
+    }
+
     private var mListener: OnIntroListener? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -32,13 +42,7 @@ class VoteIntroFragment : Fragment() {
 
     override fun onAttach(activity: Activity) {
         super.onAttach(activity)
-        try {
             mListener = activity as OnIntroListener
-        } catch (e: ClassCastException) {
-            throw ClassCastException(
-                    activity.toString() + " must implement OnIntroListener")
-        }
-
     }
 
     override fun onDetach() {
@@ -56,13 +60,6 @@ class VoteIntroFragment : Fragment() {
         fun onIntroDone()
     }
 
-    companion object {
-        val Tag: String = "VoteIntroFragment"
 
-        fun newInstance(): VoteIntroFragment {
-            val fragment = VoteIntroFragment()
-            return fragment
-        }
-    }
 
 }

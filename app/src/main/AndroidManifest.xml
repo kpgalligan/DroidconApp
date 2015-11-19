@@ -40,6 +40,10 @@
             android:label="@string/vote"/>
 
         <activity
+            android:name=".VotingIntroActivity"
+            android:label="@string/vote"/>
+
+        <activity
             android:name=".AboutActivity"
             android:label="@string/about" />
 
