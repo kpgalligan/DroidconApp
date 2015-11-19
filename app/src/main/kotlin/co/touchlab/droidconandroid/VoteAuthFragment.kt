@@ -35,6 +35,7 @@ class VoteAuthFragment : Fragment() {
 
     var getTicketButton: Button? = null
     var shareButton: Button? = null
+    var retryButton: Button? = null
 
 
     var  mCustomTabsSession :CustomTabsSession? = null;
@@ -72,6 +73,12 @@ class VoteAuthFragment : Fragment() {
             intent.putExtra(Intent.EXTRA_TEXT, "http://www.eventbrite.com/e/droidcon-san-francisco-2016-tickets-18125767659");
             intent.putExtra(android.content.Intent.EXTRA_SUBJECT, "Droidcon Tickets");
             startActivity(Intent.createChooser(intent, "Share"));
+        }
+
+        retryButton = view.findViewById(R.id.retryButton) as Button
+        retryButton!!.setOnClickListener {
+            TaskQueue.loadQueueDefault(context.applicationContext).execute(CanUserVoteTask())
+            showHideProgress()
         }
 
         EventBusExt.getDefault().register(this)
@@ -130,16 +137,13 @@ class VoteAuthFragment : Fragment() {
                 if (url.contains("?code=") && authComplete != true) {
                     var uri = Uri.parse(url);
                     authCode = uri.getQueryParameter("code");
-                    Log.i("", "CODE : " + authCode);
                     authComplete = true;
 
                     auth_dialog.dismiss();
 
                     TaskQueue.loadQueueDefault(activity.applicationContext).execute(CanUserVoteTask(authCode))
                     showHideProgress()
-                    Toast.makeText(activity.getApplicationContext(), "Authorization Code is: " + authCode, Toast.LENGTH_SHORT).show();
                 } else if (url.contains("error=access_denied")) {
-                    Log.i("", "ACCESS_DENIED_HERE");
                     authComplete = true;
                     Toast.makeText(activity.getApplicationContext(), "Error Occured", Toast.LENGTH_SHORT).show();
 
