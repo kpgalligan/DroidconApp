@@ -2,8 +2,8 @@
             xmlns:tool="http://schemas.android.com/tools"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:fitsSystemWindows="true"
-            android:background="@color/white">
+            android:background="@color/white"
+            android:fitsSystemWindows="true">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -21,7 +21,9 @@
                 android:layout_height="16dp"
                 android:layout_centerVertical="true"
                 android:layout_marginLeft="@dimen/padding_medium"
-                android:background="@drawable/ic_action_navigation_close"/>
+                android:background="@null"
+                android:scaleType="center"
+                android:src="@drawable/ic_action_navigation_close"/>
 
             <TextView
                 android:id="@+id/pass"
@@ -30,6 +32,7 @@
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
                 android:layout_marginRight="@dimen/padding_medium"
+                android:padding="4dp"
                 android:text="PASS"
                 android:textStyle="bold"/>
 
@@ -99,11 +102,11 @@
                 <co.touchlab.droidconandroid.ui.CustomRatingBar
                     android:id="@+id/rating"
                     android:layout_width="wrap_content"
-                    android:layout_alignParentLeft="true"
-                    android:layout_height="wrap_content"/>
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"/>
 
-                    <!--android:layout_marginLeft="-5dp"-->
-                    <!--android:layout_marginTop="-5dp"-->
+                <!--android:layout_marginLeft="-5dp"-->
+                <!--android:layout_marginTop="-5dp"-->
                 <TextView
                     android:id="@+id/submit_vote"
                     android:layout_width="wrap_content"

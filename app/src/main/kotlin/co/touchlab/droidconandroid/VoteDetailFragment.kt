@@ -58,13 +58,14 @@ class VoteDetailFragment : DialogFragment() {
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog? {
         // the content
-        val  root = RelativeLayout(getActivity());
-        root.setLayoutParams( ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
+        val root = RelativeLayout(getActivity());
+        root.setLayoutParams(ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
 
         // creating the fullscreen dialog
-        val  dialog = Dialog(getActivity());
+        val dialog = Dialog(getActivity());
+        dialog.getWindow().requestFeature(Window.FEATURE_NO_TITLE);
         dialog.setContentView(root);
-        dialog.getWindow().setBackgroundDrawable(ColorDrawable(Color.YELLOW));
+        dialog.getWindow().setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT));
         dialog.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
 
         return dialog;
@@ -83,6 +84,7 @@ class VoteDetailFragment : DialogFragment() {
         descrip.text = talk!!.description
         speaker.text = talk!!.speaker
 
+        cancel.setPadding(20,20,20,20)
         cancel.setOnClickListener { dismiss() }
         pass.setOnClickListener {
             talk!!.vote = 0
