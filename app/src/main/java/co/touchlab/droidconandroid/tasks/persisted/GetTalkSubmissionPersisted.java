@@ -24,7 +24,7 @@ public class GetTalkSubmissionPersisted extends VotePersistedTask
     public static void startMe(Context context)
     {
         //should CALL ONLY FROM VoteFragment
-        PersistedTaskQueueFactory.getInstance(context).execute(new GetTalkSubmissionPersisted());
+        getQueue(context).execute(new GetTalkSubmissionPersisted());
     }
 
     public GetTalkSubmissionPersisted()

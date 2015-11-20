@@ -24,15 +24,15 @@ public class UpdateDbVoteTask extends Task
     @Override
     protected void run(Context context) throws Throwable
     {
-        throw new RuntimeException();
-//        Dao<TalkSubmission, Long> dao = DatabaseHelper.getInstance(context).getTalkSubDao();
-//        dao.update(talk);
-//        UpdateVotePersisted.startMe(context, talk.id, talk.vote);
+        Dao<TalkSubmission, Long> dao = DatabaseHelper.getInstance(context).getTalkSubDao();
+        dao.update(talk);
+        UpdateVotePersisted.startMe(context, talk.id, talk.vote);
     }
 
     @Override
     protected boolean handleError(Context context, Throwable e)
     {
+        EventBusExt.getDefault().post(this);
         return false;
     }
 

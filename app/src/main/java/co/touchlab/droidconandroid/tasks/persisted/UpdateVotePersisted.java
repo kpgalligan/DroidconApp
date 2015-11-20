@@ -1,6 +1,7 @@
 package co.touchlab.droidconandroid.tasks.persisted;
 import android.content.Context;
 
+import co.touchlab.droidconandroid.BuildConfig;
 import co.touchlab.droidconandroid.network.DataHelper;
 import co.touchlab.droidconandroid.network.VoteRequest;
 
@@ -12,8 +13,9 @@ public class UpdateVotePersisted extends VotePersistedTask
     private Long talkId;
     private int  vote;
 
-    public static void startMe(Context context, Long talkId, int vote){
-        PersistedTaskQueueFactory.getInstance(context).execute(new UpdateVotePersisted(talkId, vote));
+    public static void startMe(Context context, Long talkId, int vote)
+    {
+        getQueue(context).execute(new UpdateVotePersisted(talkId, vote));
     }
 
     @SuppressWarnings("unused")
@@ -33,7 +35,7 @@ public class UpdateVotePersisted extends VotePersistedTask
     protected void run(Context context) throws Throwable
     {
         VoteRequest voteRequest = DataHelper.makeRequestAdapter(context).create(VoteRequest.class);
-        voteRequest.updateVote(talkId, vote);
+        voteRequest.updateVote(BuildConfig.CONVENTION_ID, talkId, vote);
     }
 
     @Override
