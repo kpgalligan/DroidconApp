@@ -23,7 +23,7 @@ abstract public class VotePersistedTask extends PersistedTask
 
     private static PersistedTaskQueue VOTE_INSTANCE;
 
-    public static synchronized PersistedTaskQueue getInstance(Context context)
+    public static synchronized PersistedTaskQueue getQueue(Context context)
     {
         if(VOTE_INSTANCE == null)
         {
