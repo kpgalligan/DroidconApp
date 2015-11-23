@@ -6,6 +6,7 @@ import retrofit.client.Response;
 import retrofit.http.Field;
 import retrofit.http.FormUrlEncoded;
 import retrofit.http.GET;
+import retrofit.http.Header;
 import retrofit.http.POST;
 import retrofit.http.Path;
 
@@ -25,5 +26,5 @@ public interface VoteRequest
     Boolean canUserVote(@Path("conID") Integer conventionID) throws NetworkErrorHandler.NetworkException;
 
     @GET("/api/voter/canEBUserVote/{conID}/{authCode}")
-    Boolean canEBUserVote(@Path("conID") Integer conventionID, @Path("authCode") String authCode) throws NetworkErrorHandler.NetworkException;
+    Response canEBUserVote(@Path("conID") Integer conventionID, @Path("authCode") String authCode) throws NetworkErrorHandler.NetworkException;
 }

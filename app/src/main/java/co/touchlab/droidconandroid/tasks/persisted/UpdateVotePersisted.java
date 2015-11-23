@@ -36,6 +36,7 @@ public class UpdateVotePersisted extends VotePersistedTask
     {
         VoteRequest voteRequest = DataHelper.makeRequestAdapter(context).create(VoteRequest.class);
         voteRequest.updateVote(BuildConfig.CONVENTION_ID, talkId, vote);
+
     }
 
     @Override
