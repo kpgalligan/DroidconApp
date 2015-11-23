@@ -59,7 +59,7 @@ class VoteAuthFragment : Fragment() {
 
         var authButton = view.findViewById(R.id.event_auth) as Button
         authButton.setOnClickListener {
-            onAuthClicked()
+            onEbAuthClicked()
         }
 
         errorWrapper = view.findViewById(R.id.error_wrapper)
@@ -124,7 +124,7 @@ class VoteAuthFragment : Fragment() {
         return mCustomTabsSession;
     }
 
-    private fun onAuthClicked() {
+    private fun onEbAuthClicked() {
         var auth_dialog = Dialog(activity);
         auth_dialog.setContentView(R.layout.auth_dialog);
         var web = auth_dialog.findViewById(R.id.webv) as WebView;
