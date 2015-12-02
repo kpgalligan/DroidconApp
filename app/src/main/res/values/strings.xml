@@ -50,7 +50,7 @@
     <string name="proceed">Continue</string>
 
     <string name="vote_welcome_title">Voting is open!</string>
-    <string name="vote_welcome_body">As a ticketholder for Droidcon SF 2015, you get to help decide which sessions make it into the lineup.\n\n Touch \"continue\" to see the list of submissions and start voting!</string>
+    <string name="vote_welcome_body">As a ticketholder for Droidcon SF 2015, you get to help decide which sessions make it into the lineup.\n\nTouch \"continue\" to see the list of submissions and start voting!</string>
 
     <!-- profile copy-->
     <string name="title_activity_edit_user_profile">Edit my profile</string>
