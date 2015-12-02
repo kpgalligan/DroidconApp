@@ -20,6 +20,7 @@ Properties properties = new Properties()
 properties.load(project.rootProject.file('local.properties').newDataInputStream())
 def conventionid = properties.getProperty('conventionid')
 def baseurl = properties.getProperty('baseurl')
+def voteends = properties.getProperty('voteends')
 def releasePassword = properties.getProperty('releasePassword')
 
 repositories {
@@ -38,11 +39,12 @@ android {
         applicationId "co.touchlab.droidconandroid"
         minSdkVersion 16
         targetSdkVersion 22
-        versionCode 902
-        versionName "0.9.2"
+        versionCode 904
+        versionName "0.9.4"
 
         buildConfigField "int", "CONVENTION_ID", "$conventionid"
         buildConfigField "String", "BASE_URL", "\"$baseurl\""
+        buildConfigField "String", "VOTE_ENDS", "\"$voteends\""
     }
 
     signingConfigs {

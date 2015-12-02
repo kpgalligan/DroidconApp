@@ -28,13 +28,13 @@
                 android:text="@string/no_ticket"/>
             <Button
                 android:id="@+id/event_auth"
+                style="@style/Base.Widget.AppCompat.Button.Borderless"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/fail_text"
                 android:layout_centerHorizontal="true"
-                style="@style/Base.Widget.AppCompat.Button.Borderless"
-                android:textColor="@color/primary_dark"
-                android:text="@string/eb_sign_in"/>
+                android:text="@string/eb_sign_in"
+                android:textColor="@color/primary_dark"/>
         </RelativeLayout>
 
         <RelativeLayout
@@ -46,13 +46,29 @@
                 android:id="@+id/progress"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_centerInParent="true"/>
+                android:layout_centerInParent="true"
+                android:layout_marginBottom="8dp"/>
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/finding_ticket"
+                android:layout_below="@+id/progress"
                 android:layout_centerHorizontal="true"
-                android:layout_below="@+id/progress"/>
+                android:text="@string/finding_ticket"/>
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/error_wrapper"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/white"
+            android:visibility="gone">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:gravity="center"
+                android:text="@string/network_msg"/>
 
         </RelativeLayout>
 
@@ -77,31 +93,31 @@
                 style="@style/Base.Widget.AppCompat.Button.Borderless"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_centerVertical="true"
                 android:padding="@dimen/padding_small"
                 android:text="@string/retry"
-                android:layout_alignParentLeft="true"
-                android:textColor="@color/sign_in_text_light"
-                android:layout_centerVertical="true"/>
+                android:textColor="@color/sign_in_text_light"/>
             <Button
                 android:id="@+id/shareButton"
                 style="@style/Base.Widget.AppCompat.Button.Borderless"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_toLeftOf="@+id/getTicketButton"
                 android:padding="@dimen/padding_small"
                 android:text="@string/share"
-                android:layout_toLeftOf="@+id/getTicketButton"
-                android:textColor="@color/sign_in_text_light"
-                android:layout_centerVertical="true"/>
+                android:textColor="@color/sign_in_text_light"/>
             <Button
                 android:id="@+id/getTicketButton"
                 style="@style/Base.Widget.AppCompat.Button.Borderless"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
                 android:padding="@dimen/padding_small"
                 android:text="@string/get_ticket"
-                android:layout_alignParentRight="true"
-                android:textColor="@color/primary_dark"
-                android:layout_centerVertical="true"/>
+                android:textColor="@color/primary_dark"/>
         </RelativeLayout>
     </LinearLayout>
 </FrameLayout>

@@ -17,10 +17,15 @@ import co.touchlab.squeaky.dao.Dao;
 /**
  * Created by toidiu on 7/20/14.
  */
-public class GetTalkSubmissionPersisted extends BasePersistedTask
+public class GetTalkSubmissionPersisted extends VotePersistedTask
 {
     public List<TalkSubmission> list;
 
+    public static void startMe(Context context)
+    {
+        //should CALL ONLY FROM VoteFragment
+        getQueue(context).execute(new GetTalkSubmissionPersisted());
+    }
 
     public GetTalkSubmissionPersisted()
     {
@@ -70,8 +75,7 @@ public class GetTalkSubmissionPersisted extends BasePersistedTask
             while(true)
             {
                 Integer randInt = TalkSubmission.getRandInt();
-                List<TalkSubmission> randList = dao.queryForEq("random", randInt)
-                                                   .list();
+                List<TalkSubmission> randList = dao.queryForEq("random", randInt).list();
                 if(randList.isEmpty())
                 {
                     t.random = randInt;

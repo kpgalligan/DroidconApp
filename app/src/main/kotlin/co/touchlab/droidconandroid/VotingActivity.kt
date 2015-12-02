@@ -32,19 +32,13 @@ public class VotingActivity : AppCompatActivity() {
             c.startActivity(i)
         }
 
-        public fun isVotingOpen(ctx: Context): Boolean {
-            //FIXME need proper date here
-            val startString = AppPrefs.getInstance(ctx).conventionStartDate
-            var startDate: Date = TimeUtils.DATE_FORMAT.get().parse(startString)
-            val votingEnd: Calendar = Calendar.getInstance()
-            votingEnd.time = startDate
-            votingEnd.add(Calendar.WEEK_OF_MONTH, -2)
 
+        public fun isVotingOpen(): Boolean {
+            var votingEnd: Date = TimeUtils.DATE_FORMAT.get().parse(BuildConfig.VOTE_ENDS)
             val now = Calendar.getInstance()
 
             if (now.after(votingEnd))
-                //FIXME make false
-                return true
+                return false
             else
                 return true
         }
@@ -68,8 +62,6 @@ public class VotingActivity : AppCompatActivity() {
                     .beginTransaction()
                     .add(R.id.container, VoteFragment.newInstance(), VoteFragment.Tag)
                     .commit()
-
-            PersistedTaskQueueFactory.getInstance(this).execute(GetTalkSubmissionPersisted())
         }
     }
 

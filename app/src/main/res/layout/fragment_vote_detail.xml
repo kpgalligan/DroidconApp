@@ -2,7 +2,8 @@
             xmlns:tool="http://schemas.android.com/tools"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@color/white">
+            android:background="@color/white"
+            android:fitsSystemWindows="true">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -16,11 +17,15 @@
 
             <ImageButton
                 android:id="@+id/cancel"
-                android:layout_width="16dp"
-                android:layout_height="16dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
-                android:layout_marginLeft="@dimen/padding_medium"
-                android:background="@drawable/ic_action_navigation_close"/>
+                android:layout_marginLeft="12dp"
+                android:adjustViewBounds="true"
+                android:background="@null"
+                android:padding="4dp"
+                android:scaleType="center"
+                android:src="@drawable/ic_action_navigation_close"/>
 
             <TextView
                 android:id="@+id/pass"
@@ -28,7 +33,8 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
-                android:layout_marginRight="@dimen/padding_medium"
+                android:layout_marginRight="12dp"
+                android:padding="4dp"
                 android:text="PASS"
                 android:textStyle="bold"/>
 
@@ -95,21 +101,19 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/padding_large">
 
-                <RatingBar
+                <co.touchlab.droidconandroid.ui.CustomRatingBar
                     android:id="@+id/rating"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="-5dp"
-                    android:layout_marginTop="-5dp"
-                    android:numStars="5"
-                    android:stepSize="1.0"/>
+                    android:layout_alignParentLeft="true"/>
 
+                <!--android:layout_marginLeft="-5dp"-->
+                <!--android:layout_marginTop="-5dp"-->
                 <TextView
                     android:id="@+id/submit_vote"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
-                    android:layout_below="@+id/rating"
                     android:layout_centerVertical="true"
                     android:text="@string/vote_submit"
                     android:textColor="@color/voting_primary"
