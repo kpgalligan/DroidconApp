@@ -1,15 +1,23 @@
 package co.touchlab.droidconandroid
 
+import android.app.Dialog
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.support.v4.app.DialogFragment
 import android.view
 import android.view.LayoutInflater
 import android.view.View
-import android.widget.RatingBar
+import android.view.ViewGroup
+import android.view.Window
+import android.widget.LinearLayout
+import android.widget.RelativeLayout
 import android.widget.TextView
+import android.widget.Toast
 import co.touchlab.android.threading.tasks.TaskQueue
 import co.touchlab.droidconandroid.data.TalkSubmission
 import co.touchlab.droidconandroid.tasks.UpdateDbVoteTask
+import co.touchlab.droidconandroid.ui.CustomRatingBar
 
 
 /**
@@ -17,7 +25,6 @@ import co.touchlab.droidconandroid.tasks.UpdateDbVoteTask
  * Created by toidiu on 8/5/15.
  */
 class VoteDetailFragment : DialogFragment() {
-
     companion object {
         val TALK = "TALK"
 
@@ -31,7 +38,7 @@ class VoteDetailFragment : DialogFragment() {
         }
     }
 
-    var rating: RatingBar? = null
+    var rating: CustomRatingBar? = null
     var talk: TalkSubmission? = null
 
     override fun onCreateView(inflater: LayoutInflater?, container: view.ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -48,6 +55,21 @@ class VoteDetailFragment : DialogFragment() {
         super<DialogFragment>.onActivityCreated(savedInstanceState)
 
         initEvent()
+    }
+
+    override fun onCreateDialog(savedInstanceState: Bundle?): Dialog? {
+        // the content
+        val root = RelativeLayout(getActivity());
+        root.setLayoutParams(ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
+
+        // creating the fullscreen dialog
+        val dialog = Dialog(getActivity());
+        dialog.getWindow().requestFeature(Window.FEATURE_NO_TITLE);
+        dialog.setContentView(root);
+        dialog.getWindow().setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT));
+        dialog.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
+
+        return dialog;
     }
 
     fun initEvent() {
@@ -70,8 +92,12 @@ class VoteDetailFragment : DialogFragment() {
             dismiss()
         }
         submit.setOnClickListener {
-            updateTalk()
-            dismiss()
+            if (talk!!.vote == null) {
+                Toast.makeText(activity, "Please select a rating.", Toast.LENGTH_SHORT).show()
+            } else {
+                updateTalk()
+                dismiss()
+            }
         }
 
         initRating()
@@ -82,15 +108,16 @@ class VoteDetailFragment : DialogFragment() {
     }
 
     private fun initRating() {
-        rating = view.findViewById(R.id.rating) as RatingBar
+        rating = view.findViewById(R.id.rating) as CustomRatingBar
         if (talk!!.vote != null)
-            rating!!.rating = talk!!.vote.toFloat()
+            rating!!.setRating(talk!!.vote.toFloat())
 
-        rating!!.onRatingBarChangeListener = object : RatingBar.OnRatingBarChangeListener {
-            override fun onRatingChanged(ratingBar: RatingBar?, rating: Float, fromUser: Boolean) {
-                talk!!.vote = Math.round(rating)
+        rating!!.setChangeListener(object : CustomRatingBar.RatingChangeListener {
+            override fun onChange(rate: Int) {
+                talk!!.vote = rate
             }
 
-        }
+        })
+
     }
 }

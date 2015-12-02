@@ -129,6 +129,7 @@
     <string name="get_ticket">Get ticket</string>
     <string name="share">Share</string>
     <string name="finding_ticket">Finding ticket information...</string>
+    <string name="network_msg">There was a network error. Please check your connection.</string>
     <string name="no_ticket">We couldn’t find your ticket info. Touch below to get a ticket or send yourself a link.\n\nIf you purchased a ticket using a different email address, authorize with Eventbrite to get started!</string>
     <string name="eb_sign_in">Sign in to Eventbrite</string>
     <string name="retry">Retry</string>
