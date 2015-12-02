@@ -28,6 +28,7 @@ class VoteFragment : Fragment(), VoteClickListener {
     var adapter: VoteAdapter? = null
     var votedList: MenuItem? = null
     var swipeContainer: SwipeRefreshLayout? = null
+    var firstStart: Boolean = true
 
     //region ---------------------------------------Companion Obj
     companion object {
@@ -46,6 +47,10 @@ class VoteFragment : Fragment(), VoteClickListener {
         super<Fragment>.onCreate(savedInstanceState)
         EventBusExt.getDefault().register(this)
         setHasOptionsMenu(true);
+
+        if (savedInstanceState != null) {
+            firstStart = false
+        }
     }
 
     override fun onResume() {
@@ -72,7 +77,8 @@ class VoteFragment : Fragment(), VoteClickListener {
         rv!!.layoutManager = LinearLayoutManager(activity)
 
         TaskQueue.loadQueueDefault(activity).execute(GetDbTalkSubmissionTask(true))
-        refreshVotesFromServer()
+        if (firstStart)
+            refreshVotesFromServer()
     }
 
     override fun onCreateOptionsMenu(menu: Menu?, inflater: MenuInflater?) {
