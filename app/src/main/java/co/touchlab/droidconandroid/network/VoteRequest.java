@@ -19,8 +19,8 @@ public interface VoteRequest
     @POST("/api/voter/updateVote/convention/{cId}")
     Response updateVote(@Path("cId") int cId, @Field("id") Long talkId, @Field("vote") Integer vote) throws NetworkErrorHandler.NetworkException;
 
-    @GET("/api/voter/voteSubmissions")
-    List<TalkVotingWrapper> getTalkSubmission() throws NetworkErrorHandler.NetworkException;
+    @GET("/api/voter/voteSubmissions/{cId}")
+    List<TalkVotingWrapper> getTalkSubmission(@Path("cId") int cId) throws NetworkErrorHandler.NetworkException;
 
     @GET("/api/voter/canUserVote/{conID}")
     Boolean canUserVote(@Path("conID") Integer conventionID) throws NetworkErrorHandler.NetworkException;
