@@ -111,6 +111,7 @@ class EventDetailFragment() : Fragment()
         val view = inflater!!.inflate(R.layout.fragment_event_detail, null)!!
 
         var toolbar = view.findViewById(R.id.toolbar) as Toolbar
+        toolbar!!.setTitle("")
         var activity = getActivity() as AppCompatActivity
         activity.setSupportActionBar(toolbar)
         activity.getSupportActionBar().setDisplayHomeAsUpEnabled(true)
@@ -250,9 +251,10 @@ class EventDetailFragment() : Fragment()
 
         //Track
         var backdropDrawable: Drawable? = null
-        if (!TextUtils.isEmpty(event.category))
-        {
-            var track = Track.findByServerName(event.category)
+//        if (!TextUtils.isEmpty(event.category))
+//        {
+            //var track = Track.findByServerName(event.category)
+            var track = Track.DESIGN
             when (track)
             {
                 Track.DEVELOPMENT ->
@@ -278,7 +280,7 @@ class EventDetailFragment() : Fragment()
                         backdropDrawable = buisnessDrawable
                 }
             }
-        }
+        //}
 
         if (backdropDrawable != null)
             updateBackdropDrawable(backdropDrawable)

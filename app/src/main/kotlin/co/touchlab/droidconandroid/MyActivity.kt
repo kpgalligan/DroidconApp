@@ -54,13 +54,14 @@ public class MyActivity : AppCompatActivity(), FilterInterface, NfcAdapter.Creat
     {
         super<AppCompatActivity>.onCreate(savedInstanceState)
 
-        if (!AppPrefs.getInstance(this).getHasSeenWelcome())
-        {
-            startActivity(WelcomeActivity.getLaunchIntent(this@MyActivity, false))
-            finish()
-            return
-        }
-        else if (!AppPrefs.getInstance(this).isLoggedIn())
+//        if (!AppPrefs.getInstance(this).getHasSeenWelcome())
+//        {
+//            startActivity(WelcomeActivity.getLaunchIntent(this@MyActivity, false))
+//            finish()
+//            return
+//        }
+//        else
+            if (!AppPrefs.getInstance(this).isLoggedIn())
         {
             startActivity(SignInActivity.getLaunchIntent(this@MyActivity))
             finish()
