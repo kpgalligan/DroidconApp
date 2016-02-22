@@ -28,15 +28,15 @@ public class GetDbTalkSubmissionTask extends Task
     @Override
     protected void run(Context context) throws Throwable
     {
-        Dao<TalkSubmission, Long> dao = DatabaseHelper.getInstance(context).getTalkSubDao();
+        Dao<TalkSubmission> dao = DatabaseHelper.getInstance(context).getTalkSubDao();
 
         if(openVotes)
         {
-            list = new Where<TalkSubmission, Long>(dao).isNull("vote").query().orderBy("random").list();
+            list = new Where<TalkSubmission>(dao).isNull("vote").query().orderBy("random").list();
         }
         else
         {
-            list = new Where<TalkSubmission, Long>(dao).isNotNull("vote").query().orderBy("random").list();
+            list = new Where<TalkSubmission>(dao).isNotNull("vote").query().orderBy("random").list();
         }
 
     }

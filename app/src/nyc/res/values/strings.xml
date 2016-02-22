@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">Droidcon NYC</string>
+    <string name="convention_id">24200</string>
+    <string name="voting_ends">08/01/2015 09:00AM</string>
+
+</resources>

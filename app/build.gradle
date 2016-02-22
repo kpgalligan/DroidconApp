@@ -42,9 +42,18 @@ android {
         versionCode 904
         versionName "0.9.4"
 
-        buildConfigField "int", "CONVENTION_ID", "$conventionid"
+//        buildConfigField "int", "CONVENTION_ID", "$conventionid"
         buildConfigField "String", "BASE_URL", "\"$baseurl\""
-        buildConfigField "String", "VOTE_ENDS", "\"$voteends\""
+//        buildConfigField "String", "VOTE_ENDS", "\"$voteends\""
+    }
+
+    productFlavors {
+        sf {
+            applicationId "co.touchlab.droidcon.sf"
+        }
+        nyc {
+            applicationId "co.touchlab.droidconandroid"
+        }
     }
 
     signingConfigs {
@@ -124,6 +133,6 @@ dependencies {
         transitive = true;
     }
 
-    compile 'co.touchlab.squeaky:squeaky-query:0.3.3.0'
-    apt 'co.touchlab.squeaky:squeaky-processor:0.3.3.0'
+    compile 'co.touchlab.squeaky:squeaky-query:0.4.0.0'
+    apt 'co.touchlab.squeaky:squeaky-processor:0.4.0.0'
 }

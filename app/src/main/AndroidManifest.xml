@@ -69,7 +69,7 @@
         </activity>
         <activity
             android:name=".EventDetailActivity"
-            android:label="Event Detail" />
+            />
         <activity
             android:name=".WelcomeActivity" />
 

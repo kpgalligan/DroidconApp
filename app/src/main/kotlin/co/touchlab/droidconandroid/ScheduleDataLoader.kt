@@ -22,7 +22,7 @@ class ScheduleDataLoader(val c: Context, val all: Boolean, val day: Long) : Abst
         val databaseHelper = DatabaseHelper.getInstance(getContext())
         val eventDao = databaseHelper.getEventDao()
         val blockDao = databaseHelper.getBlockDao()
-        val where = Where<Event, Long>(eventDao)
+        val where = Where<Event>(eventDao)
 
         val events = if(all)
         {
@@ -33,7 +33,7 @@ class ScheduleDataLoader(val c: Context, val all: Boolean, val day: Long) : Abst
             where.and().between("startDateLong", day, day + DateUtils.DAY_IN_MILLIS).isNotNull("rsvpUuid")!!.query()!!.list()!!
         }
 
-        val blocks = Where<Block, Long>(blockDao).between("startDateLong", day, day + DateUtils.DAY_IN_MILLIS).query().list()
+        val blocks = Where<Block>(blockDao).between("startDateLong", day, day + DateUtils.DAY_IN_MILLIS).query().list()
 
         val eventsAndBlocks = ArrayList<ScheduleBlock>()
 

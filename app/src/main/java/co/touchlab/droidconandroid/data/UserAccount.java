@@ -123,7 +123,7 @@ public class UserAccount
 
     public static UserAccount findByCode(DatabaseHelper databaseHelper, String code) throws SQLException
     {
-        Dao<UserAccount, Long> dao = databaseHelper.getUserAccountDao();
+        Dao<UserAccount> dao = databaseHelper.getUserAccountDao();
         List<UserAccount> list = new Where(dao).eq("userCode", code).query().list();
         return list.size() == 0 ? null : list.get(0);
     }

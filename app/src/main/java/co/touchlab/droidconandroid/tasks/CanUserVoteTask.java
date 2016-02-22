@@ -12,6 +12,8 @@ import java.util.ListIterator;
 import co.touchlab.android.threading.eventbus.EventBusExt;
 import co.touchlab.android.threading.tasks.Task;
 import co.touchlab.droidconandroid.BuildConfig;
+import co.touchlab.droidconandroid.R;
+import co.touchlab.droidconandroid.data.AppPrefs;
 import co.touchlab.droidconandroid.network.DataHelper;
 import co.touchlab.droidconandroid.network.VoteRequest;
 import retrofit.RetrofitError;
@@ -42,14 +44,14 @@ public class CanUserVoteTask extends Task
         VoteRequest voteRequest = DataHelper.makeRequestAdapter(context).create(VoteRequest.class);
         if(authCode != null && ! authCode.isEmpty())
         {
-            Response res = voteRequest.canEBUserVote(BuildConfig.CONVENTION_ID, authCode);
+            Response res = voteRequest.canEBUserVote(AppPrefs.getInstance(context).getConventionId(context), authCode);
 
             //parse the body for boolean if user can vote
             canVote = Boolean.parseBoolean(IOUtils.toString(res.getBody().in()));
         }
         else
         {
-            canVote = voteRequest.canUserVote(BuildConfig.CONVENTION_ID);
+            canVote = voteRequest.canUserVote(AppPrefs.getInstance(context).getConventionId(context));
         }
     }
 

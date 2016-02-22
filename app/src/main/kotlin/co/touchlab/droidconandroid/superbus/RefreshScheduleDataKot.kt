@@ -75,7 +75,7 @@ fun saveConventionData(context: Context?, convention: Convention) {
 
                                 userAccountDao.createOrUpdate(userAccount)
 
-                                val resultList = Where<EventSpeaker, Long>(eventSpeakerDao)!!
+                                val resultList = Where<EventSpeaker>(eventSpeakerDao)!!
                                         .and()
                                         .eq("event_id", event.id)!!
                                         .eq("userAccount_id", userAccount.id)!!
@@ -147,14 +147,14 @@ open class RefreshScheduleDataKot : RetrofitPersistedTask() {
         val request = restAdapter.create(javaClass<RefreshScheduleDataRequest>())!!
 
 
-        val convention = request.getScheduleData(BuildConfig.CONVENTION_ID)
+        val convention = request.getScheduleData(AppPrefs.getInstance(context).getConventionId(context))
         saveConventionData(context, convention)
 
         if(!AppPrefs.getInstance(context).isMyRsvpsLoaded())
         {
             try {
                 val rsvpRequest = restAdapter.create(javaClass<RsvpRequest>())!!
-                val myRsvpResponse = rsvpRequest.getMyRsvps(BuildConfig.CONVENTION_ID.toLong())
+                val myRsvpResponse = rsvpRequest.getMyRsvps(AppPrefs.getInstance(context).getConventionId(context).toLong())
                 val databaseHelper = DatabaseHelper.getInstance(context)
                 databaseHelper.performTransactionOrThrowRuntime (object : Callable<Void> {
                     //            throws(javaClass<Exception>())
