@@ -8,6 +8,7 @@ import java.util.List;
 import co.touchlab.android.threading.eventbus.EventBusExt;
 import co.touchlab.android.threading.tasks.persisted.PersistedTask;
 import co.touchlab.droidconandroid.BuildConfig;
+import co.touchlab.droidconandroid.data.AppPrefs;
 import co.touchlab.droidconandroid.data.DatabaseHelper;
 import co.touchlab.droidconandroid.data.TalkSubmission;
 import co.touchlab.droidconandroid.network.DataHelper;
@@ -36,11 +37,12 @@ public class GetTalkSubmissionPersisted extends VotePersistedTask
     protected void run(Context context) throws Throwable
     {
         VoteRequest voteRequest = DataHelper.makeRequestAdapter(context).create(VoteRequest.class);
-        List<TalkVotingWrapper> talkSubmission = voteRequest.getTalkSubmission(BuildConfig.CONVENTION_ID);
+        List<TalkVotingWrapper> talkSubmission = voteRequest.getTalkSubmission(
+                AppPrefs.getInstance(context).getConventionId(context));
         list = TalkVotingWrapper.parseResp(talkSubmission);
 
 
-        final Dao<TalkSubmission, Long> dao = DatabaseHelper.getInstance(context).getTalkSubDao();
+        final Dao<TalkSubmission> dao = DatabaseHelper.getInstance(context).getTalkSubDao();
         DatabaseHelper.getInstance(context).inTransaction(new Runnable()
         {
             @Override
@@ -64,7 +66,7 @@ public class GetTalkSubmissionPersisted extends VotePersistedTask
         });
     }
 
-    private void assignRandomInt(TalkSubmission t, Dao<TalkSubmission, Long> dao) throws SQLException
+    private void assignRandomInt(TalkSubmission t, Dao<TalkSubmission> dao) throws SQLException
     {
         TalkSubmission dbTalk = dao.queryForId(t.id);
         if(dbTalk != null)

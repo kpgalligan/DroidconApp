@@ -33,14 +33,11 @@ public class VotingActivity : AppCompatActivity() {
         }
 
 
-        public fun isVotingOpen(): Boolean {
-            var votingEnd: Date = TimeUtils.DATE_FORMAT.get().parse(BuildConfig.VOTE_ENDS)
+        public fun isVotingOpen(c: Context): Boolean {
+            var votingEnd: Date = TimeUtils.DATE_FORMAT.get().parse(c.getString(R.string.voting_ends))
             val now = Calendar.getInstance()
 
-            if (now.after(votingEnd))
-                return false
-            else
-                return true
+            return now.before(votingEnd)
         }
     }
 

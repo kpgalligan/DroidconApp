@@ -24,7 +24,7 @@ public class UpdateDbVoteTask extends Task
     @Override
     protected void run(Context context) throws Throwable
     {
-        Dao<TalkSubmission, Long> dao = DatabaseHelper.getInstance(context).getTalkSubDao();
+        Dao<TalkSubmission> dao = DatabaseHelper.getInstance(context).getTalkSubDao();
         dao.update(talk);
         UpdateVotePersisted.startMe(context, talk.id, talk.vote);
     }

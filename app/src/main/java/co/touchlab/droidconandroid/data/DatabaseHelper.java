@@ -11,7 +11,8 @@ import java.util.concurrent.Callable;
 
 import co.touchlab.droidconandroid.data.staff.EventAttendee;
 import co.touchlab.squeaky.dao.Dao;
-import co.touchlab.squeaky.dao.SqueakyOpenHelper;
+import co.touchlab.squeaky.db.sqlite.SQLiteDatabaseImpl;
+import co.touchlab.squeaky.db.sqlite.SqueakyOpenHelper;
 import co.touchlab.squeaky.table.TableUtils;
 
 /**
@@ -46,12 +47,13 @@ public class DatabaseHelper extends SqueakyOpenHelper
     }
 
 
+
     @Override
     public void onCreate(SQLiteDatabase db)
     {
         try
         {
-            TableUtils.createTables(db, tableClasses);
+            TableUtils.createTables(new SQLiteDatabaseImpl(db), tableClasses);
         }
         catch(SQLException e)
         {
@@ -66,7 +68,7 @@ public class DatabaseHelper extends SqueakyOpenHelper
         {
             try
             {
-                TableUtils.createTables(db, TalkSubmission.class);
+                TableUtils.createTables(new SQLiteDatabaseImpl(db), TalkSubmission.class);
             }
             catch(SQLException e)
             {
@@ -84,39 +86,39 @@ public class DatabaseHelper extends SqueakyOpenHelper
     }
 
     @NotNull
-    public Dao<Venue, Long> getVenueDao()
+    public Dao<Venue> getVenueDao()
     {
-        return (Dao<Venue, Long>) getDao(Venue.class);
+        return (Dao<Venue>) getDao(Venue.class);
     }
 
     @NotNull
-    public Dao<Event, Long> getEventDao()
+    public Dao<Event> getEventDao()
     {
-        return (Dao<Event, Long>) getDao(Event.class);
+        return (Dao<Event>) getDao(Event.class);
     }
 
     @NotNull
-    public Dao<UserAccount, Long> getUserAccountDao()
+    public Dao<UserAccount> getUserAccountDao()
     {
-        return (Dao<UserAccount, Long>) getDao(UserAccount.class);
+        return (Dao<UserAccount>) getDao(UserAccount.class);
     }
 
     @NotNull
-    public Dao<EventSpeaker, Long> getEventSpeakerDao()
+    public Dao<EventSpeaker> getEventSpeakerDao()
     {
-        return (Dao<EventSpeaker, Long>) getDao(EventSpeaker.class);
+        return (Dao<EventSpeaker>) getDao(EventSpeaker.class);
     }
 
     @NotNull
-    public Dao<Block, Long> getBlockDao()
+    public Dao<Block> getBlockDao()
     {
-        return (Dao<Block, Long>) getDao(Block.class);
+        return (Dao<Block>) getDao(Block.class);
     }
 
     @NotNull
-    public Dao<TalkSubmission, Long> getTalkSubDao()
+    public Dao<TalkSubmission> getTalkSubDao()
     {
-        return (Dao<TalkSubmission, Long>) getDao(TalkSubmission.class);
+        return (Dao<TalkSubmission>) getDao(TalkSubmission.class);
     }
 
 

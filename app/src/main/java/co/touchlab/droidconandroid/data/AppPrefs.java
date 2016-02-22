@@ -6,6 +6,8 @@ import android.content.SharedPreferences;
 import org.apache.commons.lang3.StringUtils;
 import org.jetbrains.annotations.NotNull;
 
+import co.touchlab.droidconandroid.R;
+
 /**
  * Created by kgalligan on 6/28/14.
  */
@@ -45,6 +47,11 @@ public class AppPrefs
         Boolean shouldOnce = getBoolean(key, true);
         setBoolean(key, false);
         return shouldOnce;
+    }
+
+    public int getConventionId(Context context)
+    {
+        return Integer.parseInt(context.getString(R.string.convention_id));
     }
 
     public boolean isMyRsvpsLoaded()
