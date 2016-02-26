@@ -40,7 +40,7 @@ public class WelcomeActivity : AppCompatActivity()
         setContentView(R.layout.activity_welcome)
 
         val short = getIntent().getBooleanExtra("SHORT", false)
-        var lastIndex = if(short){1}else{4}
+        var lastIndex = if(short){1}else{2}
         val advanceTV = findViewById(R.id.advance)!! as TextView
 
         val pager = findViewById(R.id.viewPager)!! as ViewPager
@@ -62,12 +62,14 @@ public class WelcomeActivity : AppCompatActivity()
 
             override fun onPageSelected(position: Int) {
 
-                if(position >= lastIndex-1) {
-                    advanceTV.setTextColor(getResources().getColor(R.color.orange))
-                    indicator.setFillColor(getResources().getColor(R.color.orange))
-                } else {
-                    advanceTV.setTextColor(getResources().getColor(R.color.white))
-                    indicator.setFillColor(getResources().getColor(R.color.white))
+                if(short || lastIndex > 2) {
+                    if (position >= lastIndex - 1) {
+                        advanceTV.setTextColor(getResources().getColor(R.color.orange))
+                        indicator.setFillColor(getResources().getColor(R.color.orange))
+                    } else {
+                        advanceTV.setTextColor(getResources().getColor(R.color.white))
+                        indicator.setFillColor(getResources().getColor(R.color.white))
+                    }
                 }
 
                 if(position == lastIndex) {
@@ -107,19 +109,19 @@ class WelcomePagerAdapter(fragmentManager: FragmentManager, val short: Boolean) 
         else{
             when (position)
             {
-                0 -> return WelcomeFragment.newInstance(R.color.primary, R.drawable.welcome_0, R.color.white, R.string.welcome_0_title, R.string.welcome_0_desc)
-                1 -> return WelcomeFragment.newInstance(R.color.droidcon_pink, R.drawable.welcome_1, R.color.white, R.string.welcome_1_title, R.string.welcome_1_desc)
-                2 -> return WelcomeFragment.newInstance(R.color.droidcon_blue, R.drawable.welcome_2, R.color.white, R.string.welcome_2_title, R.string.welcome_2_desc)
+                0 -> return WelcomeFragment.newInstance(R.color.welcome_background_0, R.drawable.welcome_0, R.color.white, R.string.welcome_0_title, R.string.welcome_0_desc)
+                1 -> return WelcomeFragment.newInstance(R.color.welcome_background_1, R.drawable.welcome_1, R.color.white, R.string.welcome_1_title, R.string.welcome_1_desc)
+                2 -> return WelcomeFragment.newInstance(R.color.welcome_background_2, R.drawable.welcome_2, R.color.white, R.string.welcome_2_title, R.string.welcome_2_desc)
             //3 -> return WelcomeFragment.newInstance(android.R.color.white, R.drawable.welcome_2, R.color.orange, R.string.welcome_3_title, R.string.welcome_3_desc)
-                3 -> return SponsorWelcomeFragment()
-                4 -> return Sponsor2WelcomeFragment()
+//                3 -> return SponsorWelcomeFragment()
+//                4 -> return Sponsor2WelcomeFragment()
             }
             throw IllegalStateException("Too many fragments")
         }
     }
 
     override fun getCount(): Int {
-        return if(short){2}else{5};
+        return if(short){2}else{3};
     }
 
 }
