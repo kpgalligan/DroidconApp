@@ -6,6 +6,11 @@
     <color name="primary_dark_50">#8079a428</color>
     <color name="accent">#91c33f</color>
 
+    <!--<color name="primary">#ffc92d</color>
+    <color name="primary_dark">#dda91d</color>
+    <color name="primary_dark_50">#80dda91d</color>
+    <color name="accent">#dda91d</color>-->
+
     <color name="text_gray">#666666</color>
     <color name="droidcon_green">#9ccb3f</color>
     <color name="droidcon_pink">#e63e97</color>

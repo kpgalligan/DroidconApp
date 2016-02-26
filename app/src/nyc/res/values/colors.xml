@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <color name="welcome_background_0">#99cc33</color>
+    <color name="welcome_background_1">#e63e97</color>
+    <color name="welcome_background_2">#46c8f2</color>
+
+</resources>
