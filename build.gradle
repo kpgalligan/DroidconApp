@@ -18,6 +18,9 @@ buildscript {
     }
 }
 
+task hello
+
+
 allprojects {
     repositories {
         mavenLocal()
@@ -27,3 +30,5 @@ allprojects {
 
     }
 }
+println hello.name
+println 'asdf1 '+ project.hello.name
