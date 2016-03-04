@@ -2,6 +2,7 @@ package co.touchlab.droidconandroid
 
 import android.content.Context
 import android.content.Intent
+import android.net.Uri
 import android.nfc.NdefMessage
 import android.nfc.NdefRecord
 import android.nfc.NfcAdapter
@@ -224,6 +225,12 @@ public class MyActivity : AppCompatActivity(), FilterInterface, NfcAdapter.Creat
                         fragment = ScheduleFragment.newInstance(false)
                         tag = ScheduleFragment.MY_SCHEDULE
                     }
+                    R.string.buy_tickets -> {
+                        var url = getString(R.string.buy_ticket_url);
+                        var i = Intent(Intent.ACTION_VIEW);
+                        i.setData(Uri.parse(url));
+                        startActivity(i);
+                    }
 
                     R.string.social -> FindUserKot.startMe(this@MyActivity)
                     R.string.profile -> EditUserProfile.callMe(this@MyActivity)
@@ -302,11 +309,12 @@ public class MyActivity : AppCompatActivity(), FilterInterface, NfcAdapter.Creat
         drawerItems.add("header_placeholder")
         drawerItems.add(NavigationItem(R.string.explore, R.drawable.ic_explore))
         drawerItems.add(NavigationItem(R.string.my_schedule, R.drawable.ic_myschedule))
+        drawerItems.add(NavigationItem(R.string.buy_tickets, R.drawable.ic_action_ticket))
 //        drawerItems.add(NavigationItem(R.string.map, R.drawable.ic_map))
 //        drawerItems.add(NavigationItem(R.string.social, R.drawable.ic_social))
         drawerItems.add("divider_placeholder")
         drawerItems.add(NavigationItem(R.string.profile, R.drawable.ic_settings))
-        drawerItems.add(NavigationItem(R.string.sponsors, R.drawable.ic_website))
+//        drawerItems.add(NavigationItem(R.string.sponsors, R.drawable.ic_website))
         drawerItems.add(NavigationItem(R.string.about, R.drawable.ic_info))
         return drawerItems;
     }

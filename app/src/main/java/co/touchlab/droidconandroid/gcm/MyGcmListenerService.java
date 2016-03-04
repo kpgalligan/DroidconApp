@@ -59,7 +59,7 @@ public class MyGcmListenerService extends GcmListenerService
                        intent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/apps/details?id=" + name));
                     }
 
-                    sendIntentNotification("Droidcon NYC 2015", "Please update your app", intent);
+                    sendIntentNotification(getString(R.string.app_name), "Please update your app", intent);
                 }
             }
             else if(StringUtils.equalsIgnoreCase(gcmType, "message"))
