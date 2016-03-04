@@ -39,8 +39,8 @@ android {
         applicationId "co.touchlab.droidconandroid"
         minSdkVersion 16
         targetSdkVersion 22
-        versionCode 904
-        versionName "0.9.4"
+        versionCode 906
+        versionName "0.9.6"
 
 //        buildConfigField "int", "CONVENTION_ID", "$conventionid"
         buildConfigField "String", "BASE_URL", "\"$baseurl\""

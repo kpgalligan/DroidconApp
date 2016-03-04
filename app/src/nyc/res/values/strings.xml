@@ -4,5 +4,6 @@
     <string name="app_name">Droidcon NYC</string>
     <string name="convention_id">24200</string>
     <string name="voting_ends">08/01/2015 09:00AM</string>
+    <string name="buy_ticket_url">https://www.eventbrite.com/e/droidcon-san-francisco-2016-tickets-18125767659</string>
 
 </resources>
