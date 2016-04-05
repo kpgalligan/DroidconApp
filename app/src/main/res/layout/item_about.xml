@@ -9,9 +9,15 @@
         android:text="@string/about_app_header"
         style="@style/about_header" />
 
+    <ImageView
+        android:id="@+id/logo"
+        android:layout_below="@+id/header"
+        style="@style/about_logo"
+        />
+
     <TextView
         android:id="@+id/body"
-        android:layout_below="@+id/header"
+        android:layout_below="@+id/logo"
         android:text="@string/about_app"
         android:autoLink="web"
         style="@style/about_body"

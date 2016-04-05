@@ -12,6 +12,7 @@ import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.ImageView
 import android.widget.TextView
 import java.util.ArrayList
 
@@ -47,9 +48,9 @@ class AboutActivity : AppCompatActivity()
 
         var adapter = AboutAdapter()
 
-        adapter.add(R.string.about_con_header, R.string.about_con)
-        adapter.add(R.string.about_touch_header, R.string.about_touch)
-        adapter.add(R.string.about_app_header, R.string.about_app)
+        adapter.add(R.string.about_con_header, R.drawable.aboutlogo, R.string.about_con)
+//        adapter.add(R.string.about_touch_header, 0, R.string.about_touch)
+        adapter.add(R.string.about_app_header, 0, R.string.about_app)
 
         recycler!!.setAdapter(adapter)
     }
@@ -66,9 +67,9 @@ class AboutActivity : AppCompatActivity()
     {
         private var dataset = ArrayList<AboutItem>()
 
-        public fun add(headerRes: Int, bodyRes: Int)
+        public fun add(headerRes: Int, logoRes: Int, bodyRes: Int)
         {
-            dataset.add(AboutItem(headerRes, bodyRes, false))
+            dataset.add(AboutItem(headerRes, logoRes, bodyRes, false))
             notifyDataSetChanged()
         }
 
@@ -81,6 +82,7 @@ class AboutActivity : AppCompatActivity()
             var vh = holder as AboutVH
             var data = dataset.get(position)
             vh.body!!.setText(data.bodyRes)
+            vh.logo!!.setImageResource(data.logoRes)
             vh.header!!.setText(data.headerRes)
             vh.body!!.setMaxLines(Int.MAX_VALUE)
 
@@ -115,18 +117,20 @@ class AboutActivity : AppCompatActivity()
         inner class AboutVH(val item: View): RecyclerView.ViewHolder(item)
         {
             var header: TextView? = null
+            var logo: ImageView? = null
             var body: TextView? = null
             var button: Button? = null
             var divider: View? = null
             init
             {
                 header = item.findViewById(R.id.header) as TextView
+                logo = item.findViewById(R.id.logo) as ImageView
                 body = item.findViewById(R.id.body) as TextView
                 button = item.findViewById(R.id.more) as Button
                 divider = item.findViewById(R.id.divider)
             }
         }
 
-        inner data class AboutItem(val headerRes: Int, val bodyRes: Int, var expanded: Boolean)
+        inner data class AboutItem(val headerRes: Int, val logoRes: Int, val bodyRes: Int, var expanded: Boolean)
     }
 }

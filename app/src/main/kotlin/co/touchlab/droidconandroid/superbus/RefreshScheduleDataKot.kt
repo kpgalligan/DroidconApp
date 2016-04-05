@@ -22,7 +22,7 @@ import com.google.gson.Gson
 import org.apache.commons.lang3.StringUtils
 import java.io.InputStreamReader
 import java.text.ParseException
-import java.util.UUID
+import java.util.*
 import java.util.concurrent.Callable
 
 fun saveConventionData(context: Context?, convention: Convention) {
@@ -44,10 +44,13 @@ fun saveConventionData(context: Context?, convention: Convention) {
 
             val venues = convention.venues
             val blocks = convention.blocks
+            val foundEvents = HashSet<Long>()
             try {
+
                 for (venue in venues) {
                     venueDao.createOrUpdate(venue)
                     for (event in venue.events.iterator()) {
+                        foundEvents.add(event.id)
                         val dbEvent = eventDao.queryForId(event.id)
                         event.venue = venue
                         if (StringUtils.isEmpty(event.startDate) || StringUtils.isEmpty(event.endDate))
@@ -91,13 +94,25 @@ fun saveConventionData(context: Context?, convention: Convention) {
                             }
                         }
                     }
+
                 }
 
-                for (block in blocks) {
-                    block.startDateLong = TimeUtils.DATE_FORMAT.get().parse(block.startDate)!!.getTime()
-                    block.endDateLong = TimeUtils.DATE_FORMAT.get().parse(block.endDate)!!.getTime()
+                //Just in case it was empty or whatever
+                if(foundEvents.size > 30)
+                {
+                    databaseHelper.deleteEventsNotIn(foundEvents)
+                }
 
-                    blockDao.createOrUpdate(block)
+                if(blocks.size > 0) {
+                    //Dump all of them first
+                    blockDao.delete(blockDao.queryForAll().list())
+
+                    for (block in blocks) {
+                        block.startDateLong = TimeUtils.DATE_FORMAT.get().parse(block.startDate)!!.getTime()
+                        block.endDateLong = TimeUtils.DATE_FORMAT.get().parse(block.endDate)!!.getTime()
+
+                        blockDao.createOrUpdate(block)
+                    }
                 }
 
             } catch (e: SQLException) {
