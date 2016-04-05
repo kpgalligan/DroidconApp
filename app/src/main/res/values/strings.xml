@@ -24,7 +24,7 @@
     <string name="navigation_drawer_close">Close</string>
     <string name="explore">Explore sessions</string>
     <string name="my_schedule">My schedule</string>
-    <string name="buy_tickets">Buy Tickets!</string>
+    <string name="buy_tickets">Buy Tickets (30% off)!</string>
 
     <string name="map">Map</string>
     <string name="social">Social</string>
@@ -92,13 +92,13 @@
 
     <string name="about_app_header">About the app</string>
     <string name="about_app">
-        The Droidcon app has been coded in-house by Touch Lab\'s team.  Worked on by Liam, Izzy, Sam and Kevin.\n\n
+        The Droidcon app has been coded in-house by touchlab\'s team.  Worked on by Liam, Izzy, Sam and Kevin.\n\n
+        More about touchlab: http://touchlab.co\n\n
         The code is open source, at: https://github.com/touchlab/DroidconApp\n\n
         Its a bit of an experiment, written largely in Kotlin, and including a new(ish) ORM framework. Fun stuff.
     </string>
-    <string name="about_con_header">About Droidcon</string>
-    <string name="about_con">The Droidcon conferences around the world support the Android Platform and create a global network for developers and companies. We offer best-in-class presentations from leaders in all parts of the Android ecosystem, including core development, embedded solutions, augmented reality, business solutions and games.\n\n
-    http://droidcon.com/</string>
+
+
     <string name="about_touch_header">About touchlab</string>
     <string name="about_touch">touchlab is…\n\n
         Developer Founded\n\n

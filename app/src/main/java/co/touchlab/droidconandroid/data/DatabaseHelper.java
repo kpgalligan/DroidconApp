@@ -7,12 +7,16 @@ import android.util.Log;
 import org.jetbrains.annotations.NotNull;
 
 import java.sql.SQLException;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Set;
 import java.util.concurrent.Callable;
 
 import co.touchlab.droidconandroid.data.staff.EventAttendee;
 import co.touchlab.squeaky.dao.Dao;
 import co.touchlab.squeaky.db.sqlite.SQLiteDatabaseImpl;
 import co.touchlab.squeaky.db.sqlite.SqueakyOpenHelper;
+import co.touchlab.squeaky.stmt.Where;
 import co.touchlab.squeaky.table.TableUtils;
 
 /**
@@ -121,6 +125,21 @@ public class DatabaseHelper extends SqueakyOpenHelper
         return (Dao<TalkSubmission>) getDao(TalkSubmission.class);
     }
 
+    public void deleteEventsNotIn(Set<Long> goodStuff) throws SQLException
+    {
+        final Dao<Event> eventDao = getEventDao();
+        final List<Event> allEvents = eventDao.queryForAll().list();
+        final Iterator<Event> iterator = allEvents.iterator();
+        while(iterator.hasNext())
+        {
+            Event event = iterator.next();
+            if(goodStuff.contains(event.id))
+                iterator.remove();
+        }
+
+        if(allEvents.size() > 0)
+            eventDao.delete(allEvents);
+    }
 
     /**
      * @param transaction .

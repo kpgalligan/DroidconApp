@@ -4,6 +4,11 @@
     <string name="app_name">Droidcon NYC</string>
     <string name="convention_id">24200</string>
     <string name="voting_ends">08/01/2015 09:00AM</string>
-    <string name="buy_ticket_url">https://www.eventbrite.com/e/droidcon-san-francisco-2016-tickets-18125767659</string>
+    <string name="buy_ticket_url">https://droidconsf.eventbrite.com/?discount=droidcon30</string>
 
+    <string name="about_con_header">About Droidcon</string>
+    <string name="about_con">
+
+        The Droidcon conferences around the world support the Android Platform and create a global network for developers and companies. We offer best-in-class presentations from leaders in all parts of the Android ecosystem, including core development, embedded solutions, augmented reality, business solutions and games.\n\n
+        http://droidcon.com/</string>
 </resources>
