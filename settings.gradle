@@ -1,1 +1,32 @@
-include ':app', ':profilephotoeditor'//, ':zxing'
+include ":androidbase"
+include ":dagger"
+include ":eventbus"
+include ":gson"
+include ":magicthreads"
+include ":retrofit"
+include ":rxandroid"
+include ":rxjava"
+include ":squeakycore"
+include ":squeakyquery"
+include ":truthcore"
+include ":commons-io"
+include ":commons-lang3"
+
+include ':app', ':profilephotoeditor', ':lib'
+
+String gradleBaseString = "/Users/kgalligan/devel/xp/gradletrans"//System.getenv("DOPPEL_GRADLE_PROJECT_HOME")
+//File gradleBase = new File(gradleBaseString)
+
+project(":androidbase").projectDir = new File(gradleBaseString + "/" +"androidbase/trans/lib")
+project(":dagger").projectDir = new File(gradleBaseString + "/" +"dagger/trans/core")
+project(":eventbus").projectDir = new File(gradleBaseString + "/" +"eventbus/trans/eb")
+project(":gson").projectDir = new File(gradleBaseString + "/" +"gson/trans/gson")
+project(":magicthreads").projectDir = new File(gradleBaseString + "/" +"magicthreads/trans/magicthreads")
+project(":retrofit").projectDir = new File(gradleBaseString + "/" +"retrofit/trans/retrofit")
+project(":rxandroid").projectDir = new File(gradleBaseString + "/" +"rxandroid/trans/RxAndroid")
+project(":rxjava").projectDir = new File(gradleBaseString + "/" +"rxjava/trans/rxjava")
+project(":squeakycore").projectDir = new File(gradleBaseString + "/" +"squeaky/trans/core")
+project(":squeakyquery").projectDir = new File(gradleBaseString + "/" +"squeaky/trans/query")
+project(":truthcore").projectDir = new File(gradleBaseString + "/" +"truth/trans/core")
+project(":commons-io").projectDir = new File(gradleBaseString + "/" +"commons-io/trans/commons-io")
+project(":commons-lang3").projectDir = new File(gradleBaseString + "/" +"commons-lang3/trans/commons-lang3")

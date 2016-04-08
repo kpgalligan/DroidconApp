@@ -87,13 +87,13 @@ class VoteAuthFragment : Fragment() {
 
         retryButton = view.findViewById(R.id.retryButton) as Button
         retryButton!!.setOnClickListener {
-            TaskQueue.loadQueueDefault(context.applicationContext).execute(CanUserVoteTask())
+            TaskQueue.loadQueueDefault(context.applicationContext).execute(CanUserVoteTask(platformClient))
             showHideProgress()
         }
 
 
         EventBusExt.getDefault().register(this)
-        TaskQueue.loadQueueDefault(context.applicationContext).execute(CanUserVoteTask())
+        TaskQueue.loadQueueDefault(context.applicationContext).execute(CanUserVoteTask(platformClient))
 
         showHideProgress()
         return view
@@ -145,7 +145,7 @@ class VoteAuthFragment : Fragment() {
 
                     auth_dialog.dismiss();
 
-                    TaskQueue.loadQueueDefault(activity.applicationContext).execute(CanUserVoteTask(authCode))
+                    TaskQueue.loadQueueDefault(activity.applicationContext).execute(CanUserVoteTask(authCode, platformClient))
                     showHideProgress()
                 } else if (url.contains("error=access_denied")) {
                     authComplete = true;

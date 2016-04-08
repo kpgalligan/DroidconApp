@@ -133,6 +133,5 @@ dependencies {
         transitive = true;
     }
 
-    compile 'co.touchlab.squeaky:squeaky-query:0.4.0.0'
-    apt 'co.touchlab.squeaky:squeaky-processor:0.4.0.0'
+    compile project(':lib')
 }
