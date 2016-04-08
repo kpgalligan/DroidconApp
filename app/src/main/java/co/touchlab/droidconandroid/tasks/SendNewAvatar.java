@@ -1,6 +1,5 @@
 package co.touchlab.droidconandroid.tasks;
 
-import android.app.Application;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -15,7 +14,7 @@ public class SendNewAvatar extends Task
     private String path;
     private int width;
 
-    public SendNewAvatar(Application context, String path, int width)
+    public SendNewAvatar(String path, int width)
     {
         this.path = path;
         this.width = width;

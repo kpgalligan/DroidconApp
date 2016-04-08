@@ -27,5 +27,7 @@ public class DroidconApplication extends Application
 
         if(AppPrefs.getInstance(this).isLoggedIn())
             RefreshScheduleDataKot.Companion.callMe(this);
+
+
     }
 }

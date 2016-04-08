@@ -12,12 +12,13 @@ import co.touchlab.droidconandroid.data.Block
 import co.touchlab.droidconandroid.data.Event
 import co.touchlab.droidconandroid.data.ScheduleBlock
 import co.touchlab.droidconandroid.data.Track
+import co.touchlab.droidconandroid.tasks.EventDetailLoad
 import com.wnafee.vector.compat.ResourcesCompat
 import java.text.SimpleDateFormat
 import java.util.ArrayList
 import java.util.Date
 
-fun hasConflict(event: Event, dataSet: List<ScheduleBlock>):Boolean
+/*fun hasConflict(event: Event, dataSet: List<ScheduleBlock>):Boolean
 {
     for (ce in dataSet) {
         if(ce is Event) {
@@ -27,7 +28,7 @@ fun hasConflict(event: Event, dataSet: List<ScheduleBlock>):Boolean
     }
 
     return false
-}
+}*/
 /**
  *
  * Created by izzyoji :) on 8/6/15.
@@ -93,7 +94,7 @@ class EventAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder> {
                 holder.rsvp.setVisibility(View.VISIBLE)
                 if(event.isNow())
                     holder.rsvp.setImageDrawable(ResourcesCompat.getDrawable(context, R.drawable.ic_play))
-                else if(!event.isPast() && hasConflict(event, dataSet))
+                else if(!event.isPast() && EventDetailLoad.hasConflict(event, dataSet))
                     holder.rsvp.setImageDrawable(ResourcesCompat.getDrawable(context, R.drawable.ic_check_red))
                 else if(allEvents)
                     holder.rsvp.setImageDrawable(ResourcesCompat.getDrawable(context, R.drawable.ic_check_green))
