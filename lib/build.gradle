@@ -5,23 +5,40 @@ apply plugin: 'com.github.j2objccontrib.j2objcgradle'
 sourceCompatibility = 1.7
 targetCompatibility = 1.7
 
+configurations {
+    provided
+    compile.extendsFrom provided
+}
+
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
+    provided 'com.google.android:android:4.1.1.4'
     apt 'co.touchlab.squeaky:squeaky-processor:0.5.0.0'
+    compile 'co.touchlab.squeaky:squeaky-query:0.5.0.0'
 //    compile 'com.google.android:android:4.1.1.4'
-    compile 'com.google.code.findbugs:jsr305:3.0.0'
+    testCompile 'com.google.code.findbugs:jsr305:3.0.0'
+//    compile 'com.intellij:annotations:9.0.4'
+    j2objcLinkage project(":squeakycore")
+    j2objcLinkage project(":squeakyquery")
+    j2objcLinkage project(":androidbase")
+    provided 'com.intellij:annotations:9.0.4'
 
-    compile project(":squeakycore")
-    compile project(":squeakyquery")
     compile project(":magicthreads")
+    j2objcLinkage project(":magicthreads")
     compile project(":retrofit")
+    j2objcLinkage project(":retrofit")
     compile project(":rxjava")
+    j2objcLinkage project(":rxjava")
     compile project(":eventbus")
+    j2objcLinkage project(":eventbus")
     compile project(":commons-io")
+    j2objcLinkage project(":commons-io")
     compile project(":commons-lang3")
+    j2objcLinkage project(":commons-lang3")
     compile project(":gson")
+    j2objcLinkage project(":gson")
     compile project(":dagger")
-//    compile project(":androidbase")
+    j2objcLinkage project(":dagger")
 
     apt 'com.google.dagger:dagger-compiler:2.0.2'
     compile 'javax.inject:javax.inject:1'
@@ -29,7 +46,7 @@ dependencies {
 
 j2objcConfig {
     // Sets up libraries you depend on
-    autoConfigureDeps true
+//    autoConfigureDeps true
 
     // Omit these two lines if you don't configure your Xcode project with CocoaPods
 //    xcodeProjectDir '../ios'  //  suggested directory name

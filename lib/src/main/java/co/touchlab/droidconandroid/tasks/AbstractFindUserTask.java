@@ -15,7 +15,7 @@ import co.touchlab.droidconandroid.network.dao.UserInfoResponse;
 /**
  * Created by kgalligan on 4/8/16.
  */
-abstract class AbstractFindUserTask extends Task
+public abstract class AbstractFindUserTask extends Task
 {
     public String errorStringCode;
     public UserAccount user;
@@ -68,6 +68,11 @@ abstract class AbstractFindUserTask extends Task
             }
         }
 
+    }
+
+    public boolean isError()
+    {
+        return errorStringCode != null;
     }
 
     public static UserAccount saveUserResponse(Context context, UserAccount user, UserInfoResponse response) throws SQLException

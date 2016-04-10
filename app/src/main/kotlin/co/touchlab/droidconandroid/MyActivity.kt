@@ -25,9 +25,9 @@ import co.touchlab.droidconandroid.data.AppPrefs
 import co.touchlab.droidconandroid.data.DatabaseHelper
 import co.touchlab.droidconandroid.data.Track
 import co.touchlab.droidconandroid.gcm.RegistrationIntentService
-import co.touchlab.droidconandroid.superbus.RefreshScheduleDataKot
 import co.touchlab.droidconandroid.superbus.UploadAvatarCommand
 import co.touchlab.droidconandroid.superbus.UploadCoverCommand
+import co.touchlab.droidconandroid.tasks.persisted.RefreshScheduleData
 import co.touchlab.droidconandroid.ui.*
 import com.wnafee.vector.compat.ResourcesCompat
 import java.util.ArrayList
@@ -124,7 +124,7 @@ public class MyActivity : AppCompatActivity(), FilterInterface, NfcAdapter.Creat
         if (prefs.isLoggedIn()
                 && (System.currentTimeMillis() - lastRefresh > (DateUtils.HOUR_IN_MILLIS * 6)))
         {
-            RefreshScheduleDataKot.callMe(this)
+            RefreshScheduleData.callMe(this)
         }
     }
 

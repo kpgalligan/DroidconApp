@@ -12,7 +12,7 @@ import co.touchlab.droidconandroid.data.Block
 import co.touchlab.droidconandroid.data.Event
 import co.touchlab.droidconandroid.data.ScheduleBlock
 import co.touchlab.droidconandroid.data.Track
-import co.touchlab.droidconandroid.tasks.EventDetailLoad
+import co.touchlab.droidconandroid.tasks.EventDetailLoadTask
 import com.wnafee.vector.compat.ResourcesCompat
 import java.text.SimpleDateFormat
 import java.util.ArrayList
@@ -94,7 +94,7 @@ class EventAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder> {
                 holder.rsvp.setVisibility(View.VISIBLE)
                 if(event.isNow())
                     holder.rsvp.setImageDrawable(ResourcesCompat.getDrawable(context, R.drawable.ic_play))
-                else if(!event.isPast() && EventDetailLoad.hasConflict(event, dataSet))
+                else if(!event.isPast() && EventDetailLoadTask.hasConflict(event, dataSet))
                     holder.rsvp.setImageDrawable(ResourcesCompat.getDrawable(context, R.drawable.ic_check_red))
                 else if(allEvents)
                     holder.rsvp.setImageDrawable(ResourcesCompat.getDrawable(context, R.drawable.ic_check_green))
@@ -108,7 +108,8 @@ class EventAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
             val track = Track.findByServerName(event.category)
             if(track != null && !event.isPast()) {
-                holder.track.setBackgroundColor(resources.getColor(track.getTextColorRes()))
+
+                holder.track.setBackgroundColor(resources.getColor(context.resources.getIdentifier(track.getTextColorRes(), "color", context.packageName)))
             }
             else
             {

@@ -127,11 +127,13 @@ public class EmailAccountsEditText extends AutoCompleteTextView
     @SuppressWarnings("unused")
     public void onEventMainThread(SearchUsersTask task)
     {
+        //TODO: Probably not have this be an array
         UserAccount[] results;
 
         if(task.getUserSearchResponse() != null && task.getUserSearchResponse().getResults() != null)
         {
-            results = task.getUserSearchResponse().getResults();
+            final List<UserAccount> r = task.getUserSearchResponse().getResults();
+            results = r.toArray(new UserAccount[r.size()]);
         }
         else
         {

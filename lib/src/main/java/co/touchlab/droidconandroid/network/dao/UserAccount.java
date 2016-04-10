@@ -22,4 +22,9 @@ public class UserAccount
     public String facebook;
     public Boolean emailPublic;
     public Boolean following;
+
+    public String getName()
+    {
+        return name;
+    }
 }

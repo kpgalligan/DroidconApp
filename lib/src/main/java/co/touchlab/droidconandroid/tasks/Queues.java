@@ -10,7 +10,7 @@ public class Queues
 {
     public static TaskQueue localQueue(Context context)
     {
-        return TaskQueue.loadQueueDefault(context);
+        return TaskQueue.loadQueueDefault(context.getApplicationContext());
     }
 
     public static TaskQueue networkQueue(Context context)
