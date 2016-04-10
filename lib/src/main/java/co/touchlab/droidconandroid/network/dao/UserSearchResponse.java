@@ -7,4 +7,9 @@ import java.util.List;
 public class UserSearchResponse
 {
     List<UserAccount> results;
+
+    public List<UserAccount> getResults()
+    {
+        return results;
+    }
 }

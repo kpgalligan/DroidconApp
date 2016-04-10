@@ -21,7 +21,7 @@ import co.touchlab.droidconandroid.MyActivity;
 import co.touchlab.droidconandroid.R;
 import co.touchlab.droidconandroid.data.DatabaseHelper;
 import co.touchlab.droidconandroid.data.Event;
-import co.touchlab.droidconandroid.superbus.RefreshScheduleDataKot;
+import co.touchlab.droidconandroid.tasks.persisted.RefreshScheduleData;
 
 /**
  * Created by kgalligan on 8/22/15.
@@ -72,7 +72,7 @@ public class MyGcmListenerService extends GcmListenerService
             }
             else if(StringUtils.equalsIgnoreCase(gcmType, "updateSchedule"))
             {
-                RefreshScheduleDataKot.Companion.callMe(this);
+                RefreshScheduleData.callMe(this);
             }
             else if(StringUtils.equalsIgnoreCase(gcmType, "event"))
             {

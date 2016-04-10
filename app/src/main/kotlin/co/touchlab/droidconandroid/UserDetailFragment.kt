@@ -18,7 +18,7 @@ import co.touchlab.android.threading.eventbus.EventBusExt
 import co.touchlab.droidconandroid.data.AppPrefs
 import co.touchlab.droidconandroid.data.UserAccount
 import co.touchlab.droidconandroid.tasks.AbstractFindUserTask
-import co.touchlab.droidconandroid.tasks.FindUserTaskKot
+import co.touchlab.droidconandroid.tasks.FindUserTask
 import co.touchlab.droidconandroid.tasks.Queues
 import co.touchlab.droidconandroid.utils.Toaster
 import com.squareup.picasso.Picasso
@@ -89,7 +89,7 @@ class UserDetailFragment() : Fragment()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         EventBusExt.getDefault().register(this)
-        Queues.networkQueue(getActivity()).execute(FindUserTaskKot(findUserCodeArg()))
+        Queues.networkQueue(getActivity()).execute(FindUserTask(findUserCodeArg()))
     }
 
     override fun onDestroy() {

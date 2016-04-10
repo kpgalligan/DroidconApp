@@ -9,13 +9,13 @@ import android.support.v4.app.FragmentPagerAdapter
 import android.support.v4.view.ViewPager
 import android.text.TextUtils
 import android.text.format.DateUtils
-import android.view
 import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
 import co.touchlab.android.threading.eventbus.EventBusExt
 import co.touchlab.droidconandroid.data.AppPrefs
 import co.touchlab.droidconandroid.data.Track
-import co.touchlab.droidconandroid.superbus.RefreshScheduleDataKot
+import co.touchlab.droidconandroid.tasks.persisted.RefreshScheduleData
 import co.touchlab.droidconandroid.utils.TimeUtils
 import java.text.SimpleDateFormat
 import java.util.ArrayList
@@ -48,7 +48,7 @@ class ScheduleFragment : Fragment(), FilterableFragmentInterface
         }
     }
 
-    override fun onCreateView(inflater: LayoutInflater?, container: view.ViewGroup?, savedInstanceState: Bundle?): View?
+    override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?): View?
     {
         return inflater!!.inflate(R.layout.fragment_schedule, null)
     }
@@ -63,7 +63,7 @@ class ScheduleFragment : Fragment(), FilterableFragmentInterface
         EventBusExt.getDefault().unregister(this)
     }
 
-    public fun onEventMainThread(eventDetailTask: RefreshScheduleDataKot)
+    public fun onEventMainThread(eventDetailTask: RefreshScheduleData)
     {
         Handler().post(RefreshRunnable())
     }

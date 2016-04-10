@@ -1,4 +1,5 @@
 package co.touchlab.droidconandroid.tasks.persisted;
+import android.app.Application;
 import android.content.Context;
 
 import co.touchlab.android.threading.eventbus.EventBusExt;
@@ -35,7 +36,7 @@ abstract public class VotePersistedTask extends PersistedTask
             {
                 throw new RuntimeException(e);
             }
-            VOTE_INSTANCE = new PersistedTaskQueue(context.getApplicationContext(), build);
+            VOTE_INSTANCE = new PersistedTaskQueue((Application)context.getApplicationContext(), build);
         }
 
         return VOTE_INSTANCE;

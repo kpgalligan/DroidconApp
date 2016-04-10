@@ -153,12 +153,12 @@ class EventDetailFragment() : Fragment()
         updateContent(event, eventDetailTask.speakers, eventDetailTask.conflict)
    }
 
-    public fun onEventMainThread(@suppress("UNUSED_PARAMETER") task: AddRsvpTaskKot)
+    public fun onEventMainThread(@suppress("UNUSED_PARAMETER") task: AddRsvpTask)
     {
         startDetailRefresh()
     }
 
-    public fun onEventMainThread(@suppress("UNUSED_PARAMETER") task: RemoveRsvpTaskKot)
+    public fun onEventMainThread(@suppress("UNUSED_PARAMETER") task: RemoveRsvpTask)
     {
         startDetailRefresh()
     }
@@ -209,9 +209,9 @@ class EventDetailFragment() : Fragment()
         if(!event.isPast()) {
             fab!!.setOnClickListener { v ->
                 if (event.isRsvped()) {
-                    Queues.localQueue(getActivity()).execute(RemoveRsvpTaskKot(event.id))
+                    Queues.localQueue(getActivity()).execute(RemoveRsvpTask(event.id))
                 } else {
-                    Queues.localQueue(getActivity()).execute(AddRsvpTaskKot(event.id))
+                    Queues.localQueue(getActivity()).execute(AddRsvpTask(event.id))
                 }
             }
         }
@@ -293,7 +293,7 @@ class EventDetailFragment() : Fragment()
     /**
      * Adds all the content to the recyclerView
      */
-    private fun updateContent(event: Event, speakers: ArrayList<UserAccount>?, conflict: Boolean)
+    private fun updateContent(event: Event, speakers: List<UserAccount>?, conflict: Boolean)
     {
         var adapter = EventDetailAdapter(getActivity(), trackColor)
 
@@ -332,7 +332,7 @@ class EventDetailFragment() : Fragment()
         if (!TextUtils.isEmpty(event.category))
         {
             var track = Track.findByServerName(event.category)
-            var trackName = getResources().getString(track.getDisplayNameRes())
+            var trackName = getResources().getString(context.resources.getIdentifier(track.getDisplayNameRes(), "string", context.packageName))
             val trackFormatString = getResources().getString(R.string.event_track);
             adapter.addHeader(trackFormatString.format(trackName), R.drawable.ic_track)
         }
@@ -361,8 +361,8 @@ class EventDetailFragment() : Fragment()
         if(track == null)
             track = Track.findByServerName("Design")
 
-        trackColor = getResources().getColor(track!!.getTextColorRes())
-        fabColorList = getResources().getColorStateList(track.getCheckBoxSelectorRes())
+        trackColor = getResources().getColor(context.resources.getIdentifier(track!!.getTextColorRes(), "color", context.packageName))
+        fabColorList = getResources().getColorStateList(context.resources.getIdentifier(track!!.getCheckBoxSelectorRes(), "color", context.packageName))
     }
 
     private fun updateBackdropDrawable(backdropDrawable: Drawable)

@@ -4,9 +4,9 @@ import android.content.Context
 import android.text.format.DateUtils
 import co.touchlab.android.threading.loaders.AbstractEventBusLoader
 import co.touchlab.droidconandroid.data.*
-import co.touchlab.droidconandroid.superbus.RefreshScheduleDataKot
-import co.touchlab.droidconandroid.tasks.AddRsvpTaskKot
-import co.touchlab.droidconandroid.tasks.RemoveRsvpTaskKot
+import co.touchlab.droidconandroid.tasks.AddRsvpTask
+import co.touchlab.droidconandroid.tasks.RemoveRsvpTask
+import co.touchlab.droidconandroid.tasks.persisted.RefreshScheduleData
 import co.touchlab.squeaky.stmt.Where
 import java.util.ArrayList
 import java.util.Collections
@@ -63,17 +63,17 @@ class ScheduleDataLoader(val c: Context, val all: Boolean, val day: Long) : Abst
         return false
     }
 
-    public fun onEvent(task: AddRsvpTaskKot)
+    public fun onEvent(task: AddRsvpTask)
     {
         onContentChanged()
     }
 
-    public fun onEvent(task: RemoveRsvpTaskKot)
+    public fun onEvent(task: RemoveRsvpTask)
     {
         onContentChanged()
     }
 
-    public fun onEvent(task: RefreshScheduleDataKot)
+    public fun onEvent(task: RefreshScheduleData)
     {
         onContentChanged()
     }

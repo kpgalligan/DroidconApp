@@ -53,4 +53,9 @@ public class SearchUsersTask extends Task
     {
         canceled.set(true);
     }
+
+    public UserSearchResponse getUserSearchResponse()
+    {
+        return userSearchResponse;
+    }
 }
