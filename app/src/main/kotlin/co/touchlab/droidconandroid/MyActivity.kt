@@ -25,6 +25,7 @@ import co.touchlab.droidconandroid.data.AppPrefs
 import co.touchlab.droidconandroid.data.DatabaseHelper
 import co.touchlab.droidconandroid.data.Track
 import co.touchlab.droidconandroid.gcm.RegistrationIntentService
+import co.touchlab.droidconandroid.presenter.AppManager
 import co.touchlab.droidconandroid.superbus.UploadAvatarCommand
 import co.touchlab.droidconandroid.superbus.UploadCoverCommand
 import co.touchlab.droidconandroid.tasks.persisted.RefreshScheduleData
@@ -55,20 +56,22 @@ public class MyActivity : AppCompatActivity(), FilterInterface, NfcAdapter.Creat
     {
         super<AppCompatActivity>.onCreate(savedInstanceState)
 
-        if (!AppPrefs.getInstance(this).getHasSeenWelcome())
+        val startScreen = AppManager.findStartScreen(getString(R.string.voting_ends))
+
+        if (startScreen == AppManager.AppScreens.Welcome)
         {
             startActivity(WelcomeActivity.getLaunchIntent(this@MyActivity, false))
             finish()
             return
         }
         else
-            if (!AppPrefs.getInstance(this).isLoggedIn())
+            if (startScreen == AppManager.AppScreens.Login)
         {
             startActivity(SignInActivity.getLaunchIntent(this@MyActivity))
             finish()
             return
         }
-        else if ( VotingActivity.isVotingOpen(this) )
+        else if ( startScreen == AppManager.AppScreens.Voting )
         {
             VotingIntroActivity.callMe(this@MyActivity)
             finish()

@@ -22,6 +22,7 @@ dependencies {
     j2objcLinkage project(":squeakyquery")
     j2objcLinkage project(":androidbase")
     provided 'com.intellij:annotations:9.0.4'
+    j2objcLinkage project(":intellij")
 
     compile project(":magicthreads")
     j2objcLinkage project(":magicthreads")
@@ -49,15 +50,15 @@ j2objcConfig {
 //    autoConfigureDeps true
 
     // Omit these two lines if you don't configure your Xcode project with CocoaPods
-//    xcodeProjectDir '../ios'  //  suggested directory name
-//    xcodeTargetsIos 'ios', 'iosTests'  // replace with your iOS targets
+    xcodeProjectDir '../ios'  //  suggested directory name
+    xcodeTargetsIos 'ios', 'iosTests'  // replace with your iOS targets
 
     testMinExpectedTests 0
 
-    translateArgs '--prefix', 'co.touchlab.simpledaggerapp.conference=SDAC'
-    translateArgs '--prefix', 'co.touchlab.simpledaggerapp=SDA'
+    translateArgs '--prefix', 'co.touchlab.droidconandroid.data=DCD'
+    translateArgs '--prefix', 'co.touchlab.droidconandroid.presenter=DCP'
 
-    podDependency 'J2OBJC,../../J2OBJC'
+//    podDependency 'J2OBJC,../../J2OBJC'
     extraLinkerArgs '-lsqlite3'
 
     finalConfigure()          // Must be last call to configuration

@@ -5,4 +5,10 @@ package co.touchlab.droidconandroid;
 public class PlatformClientContainer
 {
     public static PlatformClient platformClient;
+
+    public static void initPlatformClient(PlatformClient pc)
+    {
+        platformClient = pc;
+    }
+
 }
