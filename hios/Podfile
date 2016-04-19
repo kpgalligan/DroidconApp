@@ -1,0 +1,183 @@
+
+# J2ObjC Gradle Plugin - PodMethods - DO NOT MODIFY START - can be moved as a block
+def j2objc_lib
+    pod 'j2objc-lib-debug', :configuration => ['Debug'], :path => '../lib/build/j2objcOutputs'
+    pod 'j2objc-lib-release', :configuration => ['Release'], :path => '../lib/build/j2objcOutputs'
+end
+def j2objc_squeakycore
+    pod 'j2objc-squeakycore-debug', :configuration => ['Debug'], :path => '../../../gradletrans/squeaky/trans/core/build/j2objcOutputs'
+    pod 'j2objc-squeakycore-release', :configuration => ['Release'], :path => '../../../gradletrans/squeaky/trans/core/build/j2objcOutputs'
+end
+def j2objc_androidbase
+    pod 'j2objc-androidbase-debug', :configuration => ['Debug'], :path => '../../../gradletrans/androidbase/trans/lib/build/j2objcOutputs'
+    pod 'j2objc-androidbase-release', :configuration => ['Release'], :path => '../../../gradletrans/androidbase/trans/lib/build/j2objcOutputs'
+end
+def j2objc_squeakyquery
+    pod 'j2objc-squeakyquery-debug', :configuration => ['Debug'], :path => '../../../gradletrans/squeaky/trans/query/build/j2objcOutputs'
+    pod 'j2objc-squeakyquery-release', :configuration => ['Release'], :path => '../../../gradletrans/squeaky/trans/query/build/j2objcOutputs'
+end
+def j2objc_androidbase
+    pod 'j2objc-androidbase-debug', :configuration => ['Debug'], :path => '../../../gradletrans/androidbase/trans/lib/build/j2objcOutputs'
+    pod 'j2objc-androidbase-release', :configuration => ['Release'], :path => '../../../gradletrans/androidbase/trans/lib/build/j2objcOutputs'
+end
+def j2objc_squeakycore
+    pod 'j2objc-squeakycore-debug', :configuration => ['Debug'], :path => '../../../gradletrans/squeaky/trans/core/build/j2objcOutputs'
+    pod 'j2objc-squeakycore-release', :configuration => ['Release'], :path => '../../../gradletrans/squeaky/trans/core/build/j2objcOutputs'
+end
+def j2objc_androidbase
+    pod 'j2objc-androidbase-debug', :configuration => ['Debug'], :path => '../../../gradletrans/androidbase/trans/lib/build/j2objcOutputs'
+    pod 'j2objc-androidbase-release', :configuration => ['Release'], :path => '../../../gradletrans/androidbase/trans/lib/build/j2objcOutputs'
+end
+def j2objc_androidbase
+    pod 'j2objc-androidbase-debug', :configuration => ['Debug'], :path => '../../../gradletrans/androidbase/trans/lib/build/j2objcOutputs'
+    pod 'j2objc-androidbase-release', :configuration => ['Release'], :path => '../../../gradletrans/androidbase/trans/lib/build/j2objcOutputs'
+end
+def j2objc_intellij
+    pod 'j2objc-intellij-debug', :configuration => ['Debug'], :path => '../../../gradletrans/intellij/trans/intellij/build/j2objcOutputs'
+    pod 'j2objc-intellij-release', :configuration => ['Release'], :path => '../../../gradletrans/intellij/trans/intellij/build/j2objcOutputs'
+end
+def j2objc_magicthreads
+    pod 'j2objc-magicthreads-debug', :configuration => ['Debug'], :path => '../../../gradletrans/magicthreads/trans/magicthreads/build/j2objcOutputs'
+    pod 'j2objc-magicthreads-release', :configuration => ['Release'], :path => '../../../gradletrans/magicthreads/trans/magicthreads/build/j2objcOutputs'
+end
+def j2objc_androidbase
+    pod 'j2objc-androidbase-debug', :configuration => ['Debug'], :path => '../../../gradletrans/androidbase/trans/lib/build/j2objcOutputs'
+    pod 'j2objc-androidbase-release', :configuration => ['Release'], :path => '../../../gradletrans/androidbase/trans/lib/build/j2objcOutputs'
+end
+def j2objc_eventbus
+    pod 'j2objc-eventbus-debug', :configuration => ['Debug'], :path => '../../../gradletrans/eventbus/trans/eb/build/j2objcOutputs'
+    pod 'j2objc-eventbus-release', :configuration => ['Release'], :path => '../../../gradletrans/eventbus/trans/eb/build/j2objcOutputs'
+end
+def j2objc_androidbase
+    pod 'j2objc-androidbase-debug', :configuration => ['Debug'], :path => '../../../gradletrans/androidbase/trans/lib/build/j2objcOutputs'
+    pod 'j2objc-androidbase-release', :configuration => ['Release'], :path => '../../../gradletrans/androidbase/trans/lib/build/j2objcOutputs'
+end
+def j2objc_gson
+    pod 'j2objc-gson-debug', :configuration => ['Debug'], :path => '../../../gradletrans/gson/trans/gson/build/j2objcOutputs'
+    pod 'j2objc-gson-release', :configuration => ['Release'], :path => '../../../gradletrans/gson/trans/gson/build/j2objcOutputs'
+end
+def j2objc_retrofit
+    pod 'j2objc-retrofit-debug', :configuration => ['Debug'], :path => '../../../gradletrans/retrofit/trans/retrofit/build/j2objcOutputs'
+    pod 'j2objc-retrofit-release', :configuration => ['Release'], :path => '../../../gradletrans/retrofit/trans/retrofit/build/j2objcOutputs'
+end
+def j2objc_gson
+    pod 'j2objc-gson-debug', :configuration => ['Debug'], :path => '../../../gradletrans/gson/trans/gson/build/j2objcOutputs'
+    pod 'j2objc-gson-release', :configuration => ['Release'], :path => '../../../gradletrans/gson/trans/gson/build/j2objcOutputs'
+end
+def j2objc_rxjava
+    pod 'j2objc-rxjava-debug', :configuration => ['Debug'], :path => '../../../gradletrans/rxjava/trans/rxjava/build/j2objcOutputs'
+    pod 'j2objc-rxjava-release', :configuration => ['Release'], :path => '../../../gradletrans/rxjava/trans/rxjava/build/j2objcOutputs'
+end
+def j2objc_androidbase
+    pod 'j2objc-androidbase-debug', :configuration => ['Debug'], :path => '../../../gradletrans/androidbase/trans/lib/build/j2objcOutputs'
+    pod 'j2objc-androidbase-release', :configuration => ['Release'], :path => '../../../gradletrans/androidbase/trans/lib/build/j2objcOutputs'
+end
+def j2objc_gson
+    pod 'j2objc-gson-debug', :configuration => ['Debug'], :path => '../../../gradletrans/gson/trans/gson/build/j2objcOutputs'
+    pod 'j2objc-gson-release', :configuration => ['Release'], :path => '../../../gradletrans/gson/trans/gson/build/j2objcOutputs'
+end
+def j2objc_rxjava
+    pod 'j2objc-rxjava-debug', :configuration => ['Debug'], :path => '../../../gradletrans/rxjava/trans/rxjava/build/j2objcOutputs'
+    pod 'j2objc-rxjava-release', :configuration => ['Release'], :path => '../../../gradletrans/rxjava/trans/rxjava/build/j2objcOutputs'
+end
+def j2objc_rxjava
+    pod 'j2objc-rxjava-debug', :configuration => ['Debug'], :path => '../../../gradletrans/rxjava/trans/rxjava/build/j2objcOutputs'
+    pod 'j2objc-rxjava-release', :configuration => ['Release'], :path => '../../../gradletrans/rxjava/trans/rxjava/build/j2objcOutputs'
+end
+def j2objc_retrofit
+    pod 'j2objc-retrofit-debug', :configuration => ['Debug'], :path => '../../../gradletrans/retrofit/trans/retrofit/build/j2objcOutputs'
+    pod 'j2objc-retrofit-release', :configuration => ['Release'], :path => '../../../gradletrans/retrofit/trans/retrofit/build/j2objcOutputs'
+end
+def j2objc_gson
+    pod 'j2objc-gson-debug', :configuration => ['Debug'], :path => '../../../gradletrans/gson/trans/gson/build/j2objcOutputs'
+    pod 'j2objc-gson-release', :configuration => ['Release'], :path => '../../../gradletrans/gson/trans/gson/build/j2objcOutputs'
+end
+def j2objc_rxjava
+    pod 'j2objc-rxjava-debug', :configuration => ['Debug'], :path => '../../../gradletrans/rxjava/trans/rxjava/build/j2objcOutputs'
+    pod 'j2objc-rxjava-release', :configuration => ['Release'], :path => '../../../gradletrans/rxjava/trans/rxjava/build/j2objcOutputs'
+end
+def j2objc_androidbase
+    pod 'j2objc-androidbase-debug', :configuration => ['Debug'], :path => '../../../gradletrans/androidbase/trans/lib/build/j2objcOutputs'
+    pod 'j2objc-androidbase-release', :configuration => ['Release'], :path => '../../../gradletrans/androidbase/trans/lib/build/j2objcOutputs'
+end
+def j2objc_gson
+    pod 'j2objc-gson-debug', :configuration => ['Debug'], :path => '../../../gradletrans/gson/trans/gson/build/j2objcOutputs'
+    pod 'j2objc-gson-release', :configuration => ['Release'], :path => '../../../gradletrans/gson/trans/gson/build/j2objcOutputs'
+end
+def j2objc_rxjava
+    pod 'j2objc-rxjava-debug', :configuration => ['Debug'], :path => '../../../gradletrans/rxjava/trans/rxjava/build/j2objcOutputs'
+    pod 'j2objc-rxjava-release', :configuration => ['Release'], :path => '../../../gradletrans/rxjava/trans/rxjava/build/j2objcOutputs'
+end
+def j2objc_rxjava
+    pod 'j2objc-rxjava-debug', :configuration => ['Debug'], :path => '../../../gradletrans/rxjava/trans/rxjava/build/j2objcOutputs'
+    pod 'j2objc-rxjava-release', :configuration => ['Release'], :path => '../../../gradletrans/rxjava/trans/rxjava/build/j2objcOutputs'
+end
+def j2objc_eventbus
+    pod 'j2objc-eventbus-debug', :configuration => ['Debug'], :path => '../../../gradletrans/eventbus/trans/eb/build/j2objcOutputs'
+    pod 'j2objc-eventbus-release', :configuration => ['Release'], :path => '../../../gradletrans/eventbus/trans/eb/build/j2objcOutputs'
+end
+def j2objc_androidbase
+    pod 'j2objc-androidbase-debug', :configuration => ['Debug'], :path => '../../../gradletrans/androidbase/trans/lib/build/j2objcOutputs'
+    pod 'j2objc-androidbase-release', :configuration => ['Release'], :path => '../../../gradletrans/androidbase/trans/lib/build/j2objcOutputs'
+end
+def j2objc_commons_io
+    pod 'j2objc-commons-io-debug', :configuration => ['Debug'], :path => '../../../gradletrans/commons-io/trans/commons-io/build/j2objcOutputs'
+    pod 'j2objc-commons-io-release', :configuration => ['Release'], :path => '../../../gradletrans/commons-io/trans/commons-io/build/j2objcOutputs'
+end
+def j2objc_commons_lang3
+    pod 'j2objc-commons-lang3-debug', :configuration => ['Debug'], :path => '../../../gradletrans/commons-lang3/trans/commons-lang3/build/j2objcOutputs'
+    pod 'j2objc-commons-lang3-release', :configuration => ['Release'], :path => '../../../gradletrans/commons-lang3/trans/commons-lang3/build/j2objcOutputs'
+end
+def j2objc_commons_io
+    pod 'j2objc-commons-io-debug', :configuration => ['Debug'], :path => '../../../gradletrans/commons-io/trans/commons-io/build/j2objcOutputs'
+    pod 'j2objc-commons-io-release', :configuration => ['Release'], :path => '../../../gradletrans/commons-io/trans/commons-io/build/j2objcOutputs'
+end
+def j2objc_gson
+    pod 'j2objc-gson-debug', :configuration => ['Debug'], :path => '../../../gradletrans/gson/trans/gson/build/j2objcOutputs'
+    pod 'j2objc-gson-release', :configuration => ['Release'], :path => '../../../gradletrans/gson/trans/gson/build/j2objcOutputs'
+end
+def j2objc_dagger
+    pod 'j2objc-dagger-debug', :configuration => ['Debug'], :path => '../../../gradletrans/dagger/trans/core/build/j2objcOutputs'
+    pod 'j2objc-dagger-release', :configuration => ['Release'], :path => '../../../gradletrans/dagger/trans/core/build/j2objcOutputs'
+end
+# J2ObjC Gradle Plugin - PodMethods - DO NOT MODIFY END
+
+target 'hios' do
+    platform :ios, '8.3'
+    j2objc_magicthreads
+    j2objc_commons_lang3
+    j2objc_gson
+    j2objc_androidbase
+    j2objc_intellij
+    j2objc_dagger
+    j2objc_lib
+    j2objc_squeakycore
+    j2objc_rxjava
+    j2objc_squeakyquery
+    j2objc_retrofit
+    j2objc_eventbus
+    j2objc_commons_io
+    pod 'J2OBJC', :path => ENV['J2OBJC_HOME']
+
+
+
+end
+
+target 'hiosTests' do
+    platform :ios, '8.3'
+    j2objc_magicthreads
+    j2objc_commons_lang3
+    j2objc_gson
+    j2objc_androidbase
+    j2objc_intellij
+    j2objc_dagger
+    j2objc_lib
+    j2objc_squeakycore
+    j2objc_rxjava
+    j2objc_squeakyquery
+    j2objc_retrofit
+    j2objc_eventbus
+    j2objc_commons_io
+    pod 'J2OBJC', :path => ENV['J2OBJC_HOME']
+
+end

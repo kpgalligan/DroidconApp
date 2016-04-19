@@ -1,0 +1,43 @@
+package co.touchlab.droidconandroid.ios;
+import android.util.Log;
+
+import co.touchlab.droidconandroid.PlatformClient;
+import retrofit.client.Client;
+
+/**
+ * Created by kgalligan on 4/10/16.
+ */
+public class IosPlatformClient implements PlatformClient
+{
+    @Override
+    public Client makeClient()
+    {
+        return null;
+    }
+
+    @Override
+    public String baseUrl()
+    {
+        return "https://droidcon-server.herokuapp.com/";
+    }
+
+    @Override
+    public Integer getConventionId()
+    {
+        return 24200;
+    }
+
+    @Override
+    public void logException(Throwable t)
+    {
+        Log.e("IosPlatformClient", "", t);
+    }
+
+    @Override
+    public native String getString(String id)/*-[
+    return [[NSBundle mainBundle] objectForInfoDictionaryKey:id_];
+    ]-*/;
+    /*{
+        return null;
+    }*/
+}

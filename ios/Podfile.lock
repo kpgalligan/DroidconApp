@@ -1,0 +1,180 @@
+PODS:
+  - Google/Core (2.0.3):
+    - GoogleInterchangeUtilities (~> 1.0)
+    - GoogleNetworkingUtilities (~> 1.0)
+    - GoogleSymbolUtilities (~> 1.0)
+    - GoogleUtilities (~> 1.1)
+  - Google/SignIn (2.0.3):
+    - Google/Core
+    - GoogleSignIn (~> 3.0)
+  - GoogleAppUtilities (1.1.0):
+    - GoogleSymbolUtilities (~> 1.0)
+  - GoogleAuthUtilities (2.0.0):
+    - GoogleNetworkingUtilities (~> 1.0)
+    - GoogleSymbolUtilities (~> 1.0)
+  - GoogleInterchangeUtilities (1.2.0):
+    - GoogleSymbolUtilities (~> 1.0)
+  - GoogleNetworkingUtilities (1.2.0):
+    - GoogleSymbolUtilities (~> 1.0)
+  - GoogleSignIn (3.0.0):
+    - GoogleAppUtilities (~> 1.0)
+    - GoogleAuthUtilities (~> 2.0)
+    - GoogleNetworkingUtilities (~> 1.0)
+    - GoogleUtilities (~> 1.0)
+  - GoogleSymbolUtilities (1.1.0)
+  - GoogleUtilities (1.2.0):
+    - GoogleSymbolUtilities (~> 1.0)
+  - J2OBJC (1.0)
+  - j2objc-androidbase-debug (1.0)
+  - j2objc-androidbase-release (1.0)
+  - j2objc-commons-io-debug (1.0)
+  - j2objc-commons-io-release (1.0)
+  - j2objc-commons-lang3-debug (1.0)
+  - j2objc-commons-lang3-release (1.0)
+  - j2objc-dagger-debug (1.0)
+  - j2objc-dagger-release (1.0)
+  - j2objc-eventbus-debug (1.0)
+  - j2objc-eventbus-release (1.0)
+  - j2objc-gson-debug (1.0)
+  - j2objc-gson-release (1.0)
+  - j2objc-intellij-debug (1.0)
+  - j2objc-intellij-release (1.0)
+  - j2objc-lib-debug (1.0)
+  - j2objc-lib-release (1.0)
+  - j2objc-magicthreads-debug (1.0)
+  - j2objc-magicthreads-release (1.0)
+  - j2objc-retrofit-debug (1.0)
+  - j2objc-retrofit-release (1.0)
+  - j2objc-rxjava-debug (1.0)
+  - j2objc-rxjava-release (1.0)
+  - j2objc-squeakycore-debug (1.0)
+  - j2objc-squeakycore-release (1.0)
+  - j2objc-squeakyquery-debug (1.0)
+  - j2objc-squeakyquery-release (1.0)
+
+DEPENDENCIES:
+  - Google/SignIn
+  - J2OBJC (from `/Users/kgalligan/bin/j2objc-1.0.2`)
+  - j2objc-androidbase-debug (from `../../../gradletrans/androidbase/trans/lib/build/j2objcOutputs`)
+  - j2objc-androidbase-release (from `../../../gradletrans/androidbase/trans/lib/build/j2objcOutputs`)
+  - j2objc-commons-io-debug (from `../../../gradletrans/commons-io/trans/commons-io/build/j2objcOutputs`)
+  - j2objc-commons-io-release (from `../../../gradletrans/commons-io/trans/commons-io/build/j2objcOutputs`)
+  - j2objc-commons-lang3-debug (from `../../../gradletrans/commons-lang3/trans/commons-lang3/build/j2objcOutputs`)
+  - j2objc-commons-lang3-release (from `../../../gradletrans/commons-lang3/trans/commons-lang3/build/j2objcOutputs`)
+  - j2objc-dagger-debug (from `../../../gradletrans/dagger/trans/core/build/j2objcOutputs`)
+  - j2objc-dagger-release (from `../../../gradletrans/dagger/trans/core/build/j2objcOutputs`)
+  - j2objc-eventbus-debug (from `../../../gradletrans/eventbus/trans/eb/build/j2objcOutputs`)
+  - j2objc-eventbus-release (from `../../../gradletrans/eventbus/trans/eb/build/j2objcOutputs`)
+  - j2objc-gson-debug (from `../../../gradletrans/gson/trans/gson/build/j2objcOutputs`)
+  - j2objc-gson-release (from `../../../gradletrans/gson/trans/gson/build/j2objcOutputs`)
+  - j2objc-intellij-debug (from `../../../gradletrans/intellij/trans/intellij/build/j2objcOutputs`)
+  - j2objc-intellij-release (from `../../../gradletrans/intellij/trans/intellij/build/j2objcOutputs`)
+  - j2objc-lib-debug (from `../lib/build/j2objcOutputs`)
+  - j2objc-lib-release (from `../lib/build/j2objcOutputs`)
+  - j2objc-magicthreads-debug (from `../../../gradletrans/magicthreads/trans/magicthreads/build/j2objcOutputs`)
+  - j2objc-magicthreads-release (from `../../../gradletrans/magicthreads/trans/magicthreads/build/j2objcOutputs`)
+  - j2objc-retrofit-debug (from `../../../gradletrans/retrofit/trans/retrofit/build/j2objcOutputs`)
+  - j2objc-retrofit-release (from `../../../gradletrans/retrofit/trans/retrofit/build/j2objcOutputs`)
+  - j2objc-rxjava-debug (from `../../../gradletrans/rxjava/trans/rxjava/build/j2objcOutputs`)
+  - j2objc-rxjava-release (from `../../../gradletrans/rxjava/trans/rxjava/build/j2objcOutputs`)
+  - j2objc-squeakycore-debug (from `../../../gradletrans/squeaky/trans/core/build/j2objcOutputs`)
+  - j2objc-squeakycore-release (from `../../../gradletrans/squeaky/trans/core/build/j2objcOutputs`)
+  - j2objc-squeakyquery-debug (from `../../../gradletrans/squeaky/trans/query/build/j2objcOutputs`)
+  - j2objc-squeakyquery-release (from `../../../gradletrans/squeaky/trans/query/build/j2objcOutputs`)
+
+EXTERNAL SOURCES:
+  J2OBJC:
+    :path: /Users/kgalligan/bin/j2objc-1.0.2
+  j2objc-androidbase-debug:
+    :path: ../../../gradletrans/androidbase/trans/lib/build/j2objcOutputs
+  j2objc-androidbase-release:
+    :path: ../../../gradletrans/androidbase/trans/lib/build/j2objcOutputs
+  j2objc-commons-io-debug:
+    :path: ../../../gradletrans/commons-io/trans/commons-io/build/j2objcOutputs
+  j2objc-commons-io-release:
+    :path: ../../../gradletrans/commons-io/trans/commons-io/build/j2objcOutputs
+  j2objc-commons-lang3-debug:
+    :path: ../../../gradletrans/commons-lang3/trans/commons-lang3/build/j2objcOutputs
+  j2objc-commons-lang3-release:
+    :path: ../../../gradletrans/commons-lang3/trans/commons-lang3/build/j2objcOutputs
+  j2objc-dagger-debug:
+    :path: ../../../gradletrans/dagger/trans/core/build/j2objcOutputs
+  j2objc-dagger-release:
+    :path: ../../../gradletrans/dagger/trans/core/build/j2objcOutputs
+  j2objc-eventbus-debug:
+    :path: ../../../gradletrans/eventbus/trans/eb/build/j2objcOutputs
+  j2objc-eventbus-release:
+    :path: ../../../gradletrans/eventbus/trans/eb/build/j2objcOutputs
+  j2objc-gson-debug:
+    :path: ../../../gradletrans/gson/trans/gson/build/j2objcOutputs
+  j2objc-gson-release:
+    :path: ../../../gradletrans/gson/trans/gson/build/j2objcOutputs
+  j2objc-intellij-debug:
+    :path: ../../../gradletrans/intellij/trans/intellij/build/j2objcOutputs
+  j2objc-intellij-release:
+    :path: ../../../gradletrans/intellij/trans/intellij/build/j2objcOutputs
+  j2objc-lib-debug:
+    :path: ../lib/build/j2objcOutputs
+  j2objc-lib-release:
+    :path: ../lib/build/j2objcOutputs
+  j2objc-magicthreads-debug:
+    :path: ../../../gradletrans/magicthreads/trans/magicthreads/build/j2objcOutputs
+  j2objc-magicthreads-release:
+    :path: ../../../gradletrans/magicthreads/trans/magicthreads/build/j2objcOutputs
+  j2objc-retrofit-debug:
+    :path: ../../../gradletrans/retrofit/trans/retrofit/build/j2objcOutputs
+  j2objc-retrofit-release:
+    :path: ../../../gradletrans/retrofit/trans/retrofit/build/j2objcOutputs
+  j2objc-rxjava-debug:
+    :path: ../../../gradletrans/rxjava/trans/rxjava/build/j2objcOutputs
+  j2objc-rxjava-release:
+    :path: ../../../gradletrans/rxjava/trans/rxjava/build/j2objcOutputs
+  j2objc-squeakycore-debug:
+    :path: ../../../gradletrans/squeaky/trans/core/build/j2objcOutputs
+  j2objc-squeakycore-release:
+    :path: ../../../gradletrans/squeaky/trans/core/build/j2objcOutputs
+  j2objc-squeakyquery-debug:
+    :path: ../../../gradletrans/squeaky/trans/query/build/j2objcOutputs
+  j2objc-squeakyquery-release:
+    :path: ../../../gradletrans/squeaky/trans/query/build/j2objcOutputs
+
+SPEC CHECKSUMS:
+  Google: 61379f0072bc561a7e174d23a6cbe41bd6d8599c
+  GoogleAppUtilities: 974598e8ed618c74ead33541d9caffbc3d144266
+  GoogleAuthUtilities: 79e4143c77a08081a480b08df27a066cc8944f43
+  GoogleInterchangeUtilities: 427382e42d8a340038bec37c6fdfd316e14b5fa2
+  GoogleNetworkingUtilities: ec1e9911aca811eb18b7144394fee6168b607785
+  GoogleSignIn: 3d571172b8603be39dcb1705d8217146bb76fe62
+  GoogleSymbolUtilities: eb3965ea12710569c7b80db198a39e39b18613f7
+  GoogleUtilities: 85f8ad6b251544286a97163133d042ec95f889c5
+  J2OBJC: 1916b297a459b9d983b8f7a20e4683833646446a
+  j2objc-androidbase-debug: a2c3339edc421adeadb2718f4403f2f039c0b4fe
+  j2objc-androidbase-release: b3dc4624bd4085c4f5519b98093c072ad513fbbb
+  j2objc-commons-io-debug: b4c0b61ae01688ab93d9ad6d2c47dcf27589cb1f
+  j2objc-commons-io-release: 1f5e272691eb6ffe8a509eddb5e8d1dc235cde1e
+  j2objc-commons-lang3-debug: 4f0f1cf4d4509944c96d3aa177c2b82388355e6f
+  j2objc-commons-lang3-release: e0292fd272fcc928b0ed1d37782979389124e55c
+  j2objc-dagger-debug: f46e59b0f1c2800a772dac399dcb6e26bf9673db
+  j2objc-dagger-release: 2e083ae9895944a60525e06d579cd88b1508a277
+  j2objc-eventbus-debug: 014d5e464fe4ec93ce6ffb9ef5cce2cb0955ad33
+  j2objc-eventbus-release: fc194d83f91ef7e45aa4171eb5967d9d1dc1ba10
+  j2objc-gson-debug: 55da6a3d99d48431c30525ab268366885601a842
+  j2objc-gson-release: 4226435651f79e25a4e4e65ac07047efd3e5f166
+  j2objc-intellij-debug: e868847d2a0a0d2945c88dab4c503fc6f96503ed
+  j2objc-intellij-release: 67d6dbc1a9e2141ecdecdc7ab20c0cb705690cd9
+  j2objc-lib-debug: dea2cbcd6963914e04d339bad0e115d3671926c9
+  j2objc-lib-release: eae111f2c7db2f840d70e19323edfac75a197d27
+  j2objc-magicthreads-debug: 5917eaec1f13c64f33f39e784175a883b8a00971
+  j2objc-magicthreads-release: e156ea2e516ad3f8832cd47cfd6589e50f4c52b1
+  j2objc-retrofit-debug: 6984a1ec2a22ed294618c750a848d8e44e13f299
+  j2objc-retrofit-release: 68d6736dd5f6014c000b4a39677533e10795182f
+  j2objc-rxjava-debug: 3695214e67776afe7da672f66987560d5483247b
+  j2objc-rxjava-release: 04464200f92cc7b001dc7ef4ed8a1c98402fb082
+  j2objc-squeakycore-debug: 6953f3996d3e1acacea9d8ecffe8397860470bcf
+  j2objc-squeakycore-release: 8e52cfa304b8747672b0f3d5a9fba45e3f508611
+  j2objc-squeakyquery-debug: 65a251637485355017b72c2476c9fa9a6bf013f5
+  j2objc-squeakyquery-release: 96bee85988088c76344a3149ba475d4d5cd7e6f9
+
+PODFILE CHECKSUM: 6e48d4fa783a048511ccc60bd90edf90b980ab3f
+
+COCOAPODS: 1.0.0.beta.6

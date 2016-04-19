@@ -11,6 +11,7 @@ include ":squeakyquery"
 include ":truthcore"
 include ":commons-io"
 include ":commons-lang3"
+include ":intellij"
 
 include ':app', ':profilephotoeditor', ':lib'
 
@@ -30,3 +31,4 @@ project(":squeakyquery").projectDir = new File(gradleBaseString + "/" +"squeaky/
 project(":truthcore").projectDir = new File(gradleBaseString + "/" +"truth/trans/core")
 project(":commons-io").projectDir = new File(gradleBaseString + "/" +"commons-io/trans/commons-io")
 project(":commons-lang3").projectDir = new File(gradleBaseString + "/" +"commons-lang3/trans/commons-lang3")
+project(":intellij").projectDir = new File(gradleBaseString + "/" +"intellij/trans/intellij")

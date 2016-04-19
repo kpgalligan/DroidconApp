@@ -4,8 +4,10 @@ import org.apache.commons.lang3.StringUtils;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
+import co.touchlab.droidconandroid.utils.TimeUtils;
 import co.touchlab.squeaky.field.DatabaseField;
 import co.touchlab.squeaky.field.ForeignCollectionField;
 import co.touchlab.squeaky.table.DatabaseTable;
@@ -89,6 +91,16 @@ public class Event implements ScheduleBlock
     public Long getEndLong()
     {
         return endDateLong;
+    }
+
+    public String getStartFormatted()
+    {
+        return TimeUtils.DATE_FORMAT.get().format(new Date(startDateLong));
+    }
+
+    public String getEndFormatted()
+    {
+        return TimeUtils.DATE_FORMAT.get().format(new Date(endDateLong));
     }
 
     public String allSpeakersString()

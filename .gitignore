@@ -3,6 +3,7 @@
 /.idea/workspace.xml
 .DS_Store
 
+Pods
 
 # built application files
 *.apk
