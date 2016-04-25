@@ -103,6 +103,16 @@ public class Event implements ScheduleBlock
         return TimeUtils.DATE_FORMAT.get().format(new Date(endDateLong));
     }
 
+    public String getRsvpUuid()
+    {
+        return rsvpUuid;
+    }
+
+    public void setRsvpUuid(String rsvpUuid)
+    {
+        this.rsvpUuid = rsvpUuid;
+    }
+
     public String allSpeakersString()
     {
         List<String> names =new ArrayList<>();

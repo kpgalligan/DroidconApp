@@ -47,13 +47,13 @@ public class ConferenceDataPresenter
         conferenceDataHost.loadCallback(task.conferenceDayHolders);
     }
 
-    public void loginUser(String token, String name)
-    {
-        Queues.localQueue(context).execute(new IosGoogleLoginTask(token, name));
-    }
-
-    public void onEventMainThread(IosGoogleLoginTask task)
-    {
-        Log.w(ConferenceDataPresenter.class.getSimpleName(), "What?!");
-    }
+//    public void loginUser(String token, String name)
+//    {
+//        Queues.localQueue(context).execute(new IosGoogleLoginTask(token, name));
+//    }
+//
+//    public void onEventMainThread(IosGoogleLoginTask task)
+//    {
+//        Log.w(ConferenceDataPresenter.class.getSimpleName(), "What?!");
+//    }
 }

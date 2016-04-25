@@ -12,4 +12,6 @@ public class ConferenceDayHolder
         this.dayString = dayString;
         this.hourHolders = hourHolders;
     }
+
+
 }

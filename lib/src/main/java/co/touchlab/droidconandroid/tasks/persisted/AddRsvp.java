@@ -2,7 +2,6 @@ package co.touchlab.droidconandroid.tasks.persisted;
 import android.content.Context;
 import android.util.Log;
 
-
 import co.touchlab.android.threading.tasks.helper.RetrofitPersistedTask;
 import co.touchlab.droidconandroid.CrashReport;
 import co.touchlab.droidconandroid.PlatformClientContainer;

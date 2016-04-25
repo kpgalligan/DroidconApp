@@ -1,5 +1,6 @@
 package co.touchlab.droidconandroid.presenter;
 import android.content.Context;
+import android.text.format.DateUtils;
 
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
@@ -15,6 +16,7 @@ import co.touchlab.droidconandroid.data.DatabaseHelper;
 import co.touchlab.droidconandroid.data.Event;
 import co.touchlab.droidconandroid.data.ScheduleBlock;
 import co.touchlab.squeaky.dao.Dao;
+import co.touchlab.squeaky.stmt.Where;
 
 /**
  * Created by kgalligan on 4/17/16.
@@ -25,6 +27,63 @@ public class ConferenceDataHelper
     static SimpleDateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy");
     static SimpleDateFormat timeFormat = new SimpleDateFormat("hh:mma");
 
+    public static String dateToDayString(Date d)
+    {
+        return dateFormat.format(d);
+    }
+
+    private static List<ScheduleBlock> scheduleForDay(Context context, boolean all, long day)
+    {
+        try
+        {
+            DatabaseHelper databaseHelper = DatabaseHelper.getInstance(context);
+            Dao<Event> eventDao = databaseHelper.getEventDao();
+            Dao<Block> blockDao = databaseHelper.getBlockDao();
+            Where<Event> where = new Where<Event>(eventDao);
+
+            List<Event> events;
+            if(all)
+            {
+                events = where.between("startDateLong", day, day + DateUtils.DAY_IN_MILLIS).query()
+                              .list();
+            }
+            else
+            {
+                events = where.and().between("startDateLong", day, day + DateUtils.DAY_IN_MILLIS)
+                              .isNotNull("rsvpUuid").query().list();
+            }
+
+            List<Block> blocks = new Where<Block>(blockDao).between("startDateLong", day, day + DateUtils.DAY_IN_MILLIS).query().list();
+
+            List<ScheduleBlock> eventsAndBlocks = new ArrayList<ScheduleBlock>();
+
+            for(Event event : events)
+            {
+                eventDao.fillForeignCollection(event, "speakerList");
+            }
+
+            eventsAndBlocks.addAll(events);
+            eventsAndBlocks.addAll(blocks);
+
+            Collections.sort(eventsAndBlocks, new Comparator<ScheduleBlock>()
+            {
+                @Override
+                public int compare(ScheduleBlock lhs, ScheduleBlock rhs)
+                {
+                    if (lhs.getStartLong().equals(rhs.getStartLong()))
+                        return 0;
+
+                    return lhs.getStartLong().compareTo(rhs.getStartLong());
+                }
+            });
+
+            return eventsAndBlocks;
+        }
+        catch(SQLException e)
+        {
+            throw new RuntimeException(e);
+        }
+    }
     public static ConferenceDayHolder[] listDays(Context context/*, Convention convention*/) throws SQLException
     {
         final DatabaseHelper databaseHelper = DatabaseHelper.getInstance(context);
@@ -34,7 +93,14 @@ public class ConferenceDataHelper
         List<ScheduleBlock> all = new ArrayList<>();
 
         all.addAll(blockDao.queryForAll().list());
-        all.addAll(eventDao.queryForAll().list());
+        final List<Event> eventList = eventDao.queryForAll().list();
+
+        for(Event event : eventList)
+        {
+            eventDao.fillForeignCollection(event, "speakerList");
+        }
+
+        all.addAll(eventList);
 
         /*for(Venue venue : convention.venues)
         {

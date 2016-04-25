@@ -12,6 +12,7 @@ import co.touchlab.droidconandroid.data.Block
 import co.touchlab.droidconandroid.data.Event
 import co.touchlab.droidconandroid.data.ScheduleBlock
 import co.touchlab.droidconandroid.data.Track
+import co.touchlab.droidconandroid.presenter.ConferenceHourHolder
 import co.touchlab.droidconandroid.tasks.EventDetailLoadTask
 import com.wnafee.vector.compat.ResourcesCompat
 import java.text.SimpleDateFormat
@@ -39,15 +40,15 @@ class EventAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder> {
     val VIEW_TYPE_BLOCK: Int = 1
     val VIEW_TYPE_PAST_EVENT: Int = 2
 
-    private var dataSet: List<ScheduleBlock>
-    private var filteredData: ArrayList<ScheduleBlock>
+    private var dataSet: List<ConferenceHourHolder>
+    private var filteredData: ArrayList<ConferenceHourHolder>
     private val eventClickListener: EventClickListener
     private val timeFormat = SimpleDateFormat("h:mma")
     private val allEvents: Boolean
     private var currentTracks: ArrayList<String> = ArrayList()
 
 
-    constructor(events: List<ScheduleBlock>, all: Boolean, initialFilters: List<String>,  eventClickListener: EventClickListener) : super() {
+    constructor(events: List<ConferenceHourHolder>, all: Boolean, initialFilters: List<String>,  eventClickListener: EventClickListener) : super() {
         dataSet = events;
         filteredData = ArrayList(events);
         allEvents = all
@@ -219,7 +220,7 @@ class EventAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder> {
         notifyDataSetChanged()
     }
 
-    fun updateEvents(data: List<ScheduleBlock>)
+    fun updateEvents(data: List<ConferenceHourHolder>)
     {
         dataSet = data
         filteredData = ArrayList(data)

@@ -16,7 +16,6 @@ import co.touchlab.droidconandroid.data.staff.EventAttendee;
 import co.touchlab.squeaky.dao.Dao;
 import co.touchlab.squeaky.db.sqlite.SQLiteDatabaseImpl;
 import co.touchlab.squeaky.db.sqlite.SqueakyOpenHelper;
-import co.touchlab.squeaky.stmt.Where;
 import co.touchlab.squeaky.table.TableUtils;
 
 /**

@@ -9,8 +9,11 @@
 #import "AppDelegate.h"
 #import "ViewController.h"
 #import "co/touchlab/droidconandroid/presenter/AppManager.h"
+#import "co/touchlab/droidconandroid/PlatformClientContainer.h"
+#import "co/touchlab/droidconandroid/ios/IosPlatformClient.h"
 #import "android/content/IOSContext.h"
 #import "android/os/Looper.h"
+#import "UIViewController+Utils.h"
 
 @interface AppDelegate ()
 
@@ -29,6 +32,7 @@
     
     [AndroidOsLooper prepareMainLooper];
     [DCPAppManager initContextWithAndroidContentContext:[AndroidContentIOSContext new]];
+    [CoTouchlabDroidconandroidPlatformClientContainer initPlatformClientWithCoTouchlabDroidconandroidPlatformClient:[CoTouchlabDroidconandroidIosIosPlatformClient new]];
     
     return YES;
 }
@@ -62,15 +66,18 @@ didSignInForUser:(GIDGoogleUser *)user
      withError:(NSError *)error {
     // Perform any operations on signed in user here.
 //    NSString *userId = user.userID;                  // For client-side use only!
-    NSString *idToken = user.authentication.idToken; // Safe to send to the server
-    NSString *fullName = user.profile.name;
+//    NSString *idToken = user.authentication.idToken; // Safe to send to the server
+//    NSString *fullName = user.profile.name;
+    
 //    NSString *givenName = user.profile.givenName;
 //    NSString *familyName = user.profile.familyName;
 //    NSString *email = user.profile.email;
     
-    UIWindow *window = [UIApplication sharedApplication].keyWindow;
-    ViewController *rootViewController = (ViewController *)((UINavigationController *)window.rootViewController).topViewController;
-    [rootViewController loggedIn:idToken withName:fullName];
+    LoginViewController *rootViewController = (LoginViewController *)[UIViewController currentViewController];
+    [rootViewController loggedIn:user];
+//    UIWindow *window = [UIApplication sharedApplication].keyWindow;
+//    LoginViewController *rootViewController = (LoginViewController *)window.rootViewController;
+//    [rootViewController loggedIn:user];
     // ...
 }
 

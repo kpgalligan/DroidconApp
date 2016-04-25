@@ -1,5 +1,7 @@
 package co.touchlab.droidconandroid
 
+import android.R
+import android.app.Fragment
 import android.os.Bundle
 import android.os.Handler
 import android.support.design.widget.TabLayout
@@ -15,6 +17,10 @@ import android.view.ViewGroup
 import co.touchlab.android.threading.eventbus.EventBusExt
 import co.touchlab.droidconandroid.data.AppPrefs
 import co.touchlab.droidconandroid.data.Track
+import co.touchlab.droidconandroid.presenter.AppManager
+import co.touchlab.droidconandroid.presenter.ConferenceDataHost
+import co.touchlab.droidconandroid.presenter.ConferenceDataPresenter
+import co.touchlab.droidconandroid.presenter.ConferenceDayHolder
 import co.touchlab.droidconandroid.tasks.persisted.RefreshScheduleData
 import co.touchlab.droidconandroid.utils.TimeUtils
 import java.text.SimpleDateFormat
@@ -27,6 +33,8 @@ import java.util.Date
  */
 class ScheduleFragment : Fragment(), FilterableFragmentInterface
 {
+    var conferenceDays: Array<ConferenceDayHolder>? = null
+    var conferenceDataPresenter: ConferenceDataPresenter? = null
 
     companion object
     {
@@ -56,16 +64,25 @@ class ScheduleFragment : Fragment(), FilterableFragmentInterface
     override fun onCreate(savedInstanceState: Bundle?) {
         super<Fragment>.onCreate(savedInstanceState)
         EventBusExt.getDefault().register(this)
+        conferenceDataPresenter = ConferenceDataPresenter(activity, ConfHost())
+    }
+
+    class ConfHost: ConferenceDataHost
+    {
+        override fun loadCallback(conferenceDayHolders: Array<out ConferenceDayHolder>?) {
+            EventBusExt.getDefault()!!.post(conferenceDayHolders)
+        }
     }
 
     override fun onDestroy() {
         super<Fragment>.onDestroy()
         EventBusExt.getDefault().unregister(this)
+        conferenceDataPresenter!!.unregister()
     }
 
     public fun onEventMainThread(eventDetailTask: RefreshScheduleData)
     {
-        Handler().post(RefreshRunnable())
+//        Handler().post(RefreshRunnable())
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {

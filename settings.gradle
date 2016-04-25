@@ -12,6 +12,15 @@ include ":truthcore"
 include ":commons-io"
 include ":commons-lang3"
 include ":intellij"
+include ":agera"
+include ":ageradatabase"
+include ":ageranet"
+
+//RecyclerView is a UI thing
+//include ":agerarvadapter"
+
+//Broadcasts aren't yet supported
+//include ":ageracontent"
 
 include ':app', ':profilephotoeditor', ':lib'
 
@@ -32,3 +41,8 @@ project(":truthcore").projectDir = new File(gradleBaseString + "/" +"truth/trans
 project(":commons-io").projectDir = new File(gradleBaseString + "/" +"commons-io/trans/commons-io")
 project(":commons-lang3").projectDir = new File(gradleBaseString + "/" +"commons-lang3/trans/commons-lang3")
 project(":intellij").projectDir = new File(gradleBaseString + "/" +"intellij/trans/intellij")
+project(":agera").projectDir = new File(gradleBaseString + "/" +"agera/trans/agera")
+project(":ageradatabase").projectDir = new File(gradleBaseString + "/" +"agera/trans/extensions/database")
+project(":ageranet").projectDir = new File(gradleBaseString + "/" +"agera/trans/extensions/net")
+//project(":agerarvadapter").projectDir = new File(gradleBaseString + "/" +"agera/trans/extensions/rvadapter")
+//project(":ageracontent").projectDir = new File(gradleBaseString + "/" +"agera/trans/extensions/content")

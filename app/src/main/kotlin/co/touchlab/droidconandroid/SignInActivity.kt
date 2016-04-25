@@ -17,24 +17,24 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
-import co.touchlab.android.threading.eventbus.EventBusExt
-import co.touchlab.droidconandroid.tasks.GoogleLoginTask
-import co.touchlab.droidconandroid.tasks.Queues
+import co.touchlab.droidconandroid.presenter.LoginScreenPresenter
 import co.touchlab.droidconandroid.utils.Toaster
 import com.google.android.gms.common.ConnectionResult
 import com.google.android.gms.common.GoogleApiAvailability
 import com.google.android.gms.common.api.GoogleApiClient
 import com.google.android.gms.plus.Plus
+import com.google.android.gms.auth.GoogleAuthUtil
 
 /**
  *
  * Created by izzyoji :) on 7/23/15.
  */
-public class SignInActivity : AppCompatActivity() {
+public class SignInActivity : AppCompatActivity(), LoginScreenPresenter.Host {
 
     public companion object {
         val REQUEST_CODE_RESOLVE_ERR = 9000
         val DIALOG_ERROR = "dialog_error";
+        val SCOPE: String = "audience:server:client_id:654878069390-ft2vt5sp4v0pcfk4poausabjnah0aeod.apps.googleusercontent.com"
         val REQUEST_RESOLVE_ERROR = 1001;
         var googleApiClient: GoogleApiClient? = null
 
@@ -48,9 +48,13 @@ public class SignInActivity : AppCompatActivity() {
 
     private var mResolvingError = false;
 
+    private var presenter: LoginScreenPresenter? = null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_sign_in);
+
+        presenter = LoginScreenPresenter(this, host)
 
         val accounts = AccountManager.get(this).getAccountsByType("com.google")
         val listView = findViewById(R.id.list) as ListView;
@@ -85,9 +89,6 @@ public class SignInActivity : AppCompatActivity() {
         findView(R.id.cancel).setOnClickListener{
             finish()
         }
-
-        EventBusExt.getDefault()!!.register(this)
-
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -99,11 +100,12 @@ public class SignInActivity : AppCompatActivity() {
         }
     }
 
-    public fun onEventMainThread(t: GoogleLoginTask) {
-        if (!t.failed) {
+    public fun onLoginReturned(failed: Boolean, firstLogin: Boolean)
+    {
+        if (!failed) {
             finish()
             MyActivity.startMe(this)
-            if (t.firstLogin)
+            if (firstLogin)
                 EditUserProfile.callMe(this)
         }
         else
@@ -121,7 +123,7 @@ public class SignInActivity : AppCompatActivity() {
 
     override fun onDestroy() {
         super.onDestroy()
-        EventBusExt.getDefault()!!.unregister(this)
+        presenter!!.unregister()
     }
 
     fun googleClientConnect() {
@@ -161,7 +163,8 @@ public class SignInActivity : AppCompatActivity() {
                 }
             }
 
-            Queues.networkQueue(this@SignInActivity).execute(GoogleLoginTask(accountName!!, person?.getDisplayName(), imageURL, coverURL))
+            val token = GoogleAuthUtil.getToken(this@SignInActivity, accountName!!, SCOPE)
+            presenter!!.runGoogleLogin(token, person?.getDisplayName(), imageURL, coverURL)
         }
 
         override fun onConnectionSuspended(i: Int) {

@@ -55,8 +55,9 @@ public class DataHelper
         RestAdapter.Builder builder = new RestAdapter.Builder()
                 .setRequestInterceptor(requestInterceptor)
                 .setConverter(gsonConverter)
-                .setLogLevel(RestAdapter.LogLevel.FULL).setLog(new AndroidLog("DroidconApp"))
-                .setEndpoint(platformClient.baseUrl());
+                .setLogLevel(RestAdapter.LogLevel.FULL)
+                .setLog(new AndroidLog("DroidconApp"))
+                .setEndpoint("https://droidcon-server.herokuapp.com/");
 //                .setClient(new OkClient(okHttpClient));
 
         final Client client = platformClient.makeClient();
