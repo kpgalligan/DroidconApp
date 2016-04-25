@@ -96,8 +96,8 @@
 {
     NSMutableArray *speakerNames = [[NSMutableArray alloc] init];
     
-    for (DCDUserAccount *speaker in array) {
-        [speakerNames addObject:speaker->name_];
+    for (DCDEventSpeaker *speaker in array) {
+        [speakerNames addObject:speaker->userAccount_->name_];
     }
     
     return [speakerNames componentsJoinedByString:@", "];

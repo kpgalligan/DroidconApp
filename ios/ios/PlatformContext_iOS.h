@@ -11,6 +11,7 @@
 #import "co/touchlab/droidconandroid/presenter/ConferenceDataHost.h"
 #import "co/touchlab/droidconandroid/data/Event.h"
 #import "co/touchlab/droidconandroid/data/Block.h"
+#import "co/touchlab/droidconandroid/data/EventSpeaker.h"
 #import "android/content/Context.h"
 
 @protocol PlatformContext_iOSDelegate <NSObject>

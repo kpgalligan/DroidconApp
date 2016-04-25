@@ -9,15 +9,11 @@
 #import <UIKit/UIKit.h>
 #import "ios-Swift.h"
 #import "PlatformContext_iOS.h"
-#import <Google/SignIn.h>
 
-@interface ViewController : UIViewController <PlatformContext_iOSDelegate, GIDSignInUIDelegate>
+@interface ViewController : UIViewController <PlatformContext_iOSDelegate>
 
 @property (nonatomic, weak) IBOutlet UISegmentedControl *dayChooser;
 @property (nonatomic, weak) IBOutlet UITableView *tableView;
-
-- (void)loggedIn:(NSString *)token
-                withName:(NSString *)name;
 
 @end
 

@@ -1,7 +1,6 @@
 package co.touchlab.droidconandroid.network;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 
 import co.touchlab.droidconandroid.data.TalkSubmission;
 

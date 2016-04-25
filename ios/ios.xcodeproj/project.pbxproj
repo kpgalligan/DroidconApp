@@ -19,6 +19,8 @@
 		63EE30CC1CC5E1BD00B64D3D /* CheckLoginController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63EE30CB1CC5E1BD00B64D3D /* CheckLoginController.swift */; };
 		63EE30CE1CC6985800B64D3D /* StartScreenViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63EE30CD1CC6985800B64D3D /* StartScreenViewController.swift */; };
 		63EE30D01CC6AD4400B64D3D /* WelcomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63EE30CF1CC6AD4400B64D3D /* WelcomeViewController.swift */; };
+		63EE30D21CC6C76200B64D3D /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63EE30D11CC6C76200B64D3D /* LoginViewController.swift */; };
+		63EE30D41CC7DDB800B64D3D /* UIViewController+Utils.m in Sources */ = {isa = PBXBuildFile; fileRef = 63EE30D31CC7DDB800B64D3D /* UIViewController+Utils.m */; };
 		A842C04EE493F921814D210F /* libPods-iosTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 06D42FB4A8B88AE64821B7E8 /* libPods-iosTests.a */; };
 		AAF5E2779B803CA534CFC949 /* libPods-iosUITests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 3BD8F26D64159CD133170ED4 /* libPods-iosUITests.a */; };
 		E892ED366CFA70A9CEC9087C /* libPods-ios.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 96945540333DB71F61C263B6 /* libPods-ios.a */; };
@@ -77,6 +79,9 @@
 		63EE30CB1CC5E1BD00B64D3D /* CheckLoginController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CheckLoginController.swift; sourceTree = "<group>"; };
 		63EE30CD1CC6985800B64D3D /* StartScreenViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StartScreenViewController.swift; sourceTree = "<group>"; };
 		63EE30CF1CC6AD4400B64D3D /* WelcomeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WelcomeViewController.swift; sourceTree = "<group>"; };
+		63EE30D11CC6C76200B64D3D /* LoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
+		63EE30D31CC7DDB800B64D3D /* UIViewController+Utils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIViewController+Utils.m"; sourceTree = "<group>"; };
+		63EE30D51CC7DDE600B64D3D /* UIViewController+Utils.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UIViewController+Utils.h"; sourceTree = "<group>"; };
 		8AB85F4E5076A64AD1FA672C /* Pods-ios.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ios.debug.xcconfig"; path = "Pods/Target Support Files/Pods-ios/Pods-ios.debug.xcconfig"; sourceTree = "<group>"; };
 		94A921638B3412284B5796F9 /* Pods-iosUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-iosUITests.release.xcconfig"; path = "Pods/Target Support Files/Pods-iosUITests/Pods-iosUITests.release.xcconfig"; sourceTree = "<group>"; };
 		96945540333DB71F61C263B6 /* libPods-ios.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-ios.a"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -200,6 +205,9 @@
 				63EE30CB1CC5E1BD00B64D3D /* CheckLoginController.swift */,
 				63EE30CD1CC6985800B64D3D /* StartScreenViewController.swift */,
 				63EE30CF1CC6AD4400B64D3D /* WelcomeViewController.swift */,
+				63EE30D11CC6C76200B64D3D /* LoginViewController.swift */,
+				63EE30D31CC7DDB800B64D3D /* UIViewController+Utils.m */,
+				63EE30D51CC7DDE600B64D3D /* UIViewController+Utils.h */,
 			);
 			path = ios;
 			sourceTree = "<group>";
@@ -512,7 +520,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				63EE30D21CC6C76200B64D3D /* LoginViewController.swift in Sources */,
 				63EE30CC1CC5E1BD00B64D3D /* CheckLoginController.swift in Sources */,
+				63EE30D41CC7DDB800B64D3D /* UIViewController+Utils.m in Sources */,
 				FA6128C51C986E87001142E8 /* EventTableViewCell.swift in Sources */,
 				63EE30D01CC6AD4400B64D3D /* WelcomeViewController.swift in Sources */,
 				FA86A7F81C91EDDE00C09CE7 /* PlatformContext_iOS.m in Sources */,
@@ -687,6 +697,7 @@
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-lsqlite3",
+					"-ljre_emul",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = co.touchlab.ios.droidconsf;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -724,6 +735,7 @@
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-lsqlite3",
+					"-ljre_emul",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = co.touchlab.ios.droidconsf;
 				PRODUCT_NAME = "$(TARGET_NAME)";

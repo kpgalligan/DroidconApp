@@ -14,7 +14,9 @@ import UIKit
     var descriptionString: String?
     var dateTime: String?
     var trackNumString: String?
-    var speakers: [DCDUserAccount]?
+    var event: DCDEvent!
+    var speakers: [DCDEventSpeaker]?
+    var sessionDetailPresenter: DCPSessionDetailPresenter!
     
     @IBOutlet weak var tableView : UITableView!
     
@@ -34,15 +36,15 @@ import UIKit
         if indexPath.section == 0 {
             let cell:EventTableViewCell = tableView.dequeueReusableCellWithIdentifier("eventCell") as! EventTableViewCell
             
-            cell.loadInfo(titleString!, description: descriptionString!, track: trackNumString!, time: dateTime!)
+            cell.loadInfo(titleString!, description: descriptionString!, track: trackNumString!, time: dateTime!, event: event, sessionDetailPresenter: sessionDetailPresenter)
             cell.selectionStyle = UITableViewCellSelectionStyle.None
             return cell
         } else {
             let cell:SpeakerTableViewCell = tableView.dequeueReusableCellWithIdentifier("speakerCell") as! SpeakerTableViewCell
             
-            let speaker = speakers![indexPath.row] as DCDUserAccount
-            if let speakerDescription = speakers?[indexPath.row].valueForKey("profile_") {
-                cell.loadInfo(speaker.valueForKey("name_") as! String, info: speakerDescription as! String)
+            let speaker = speakers![indexPath.row] as DCDEventSpeaker
+            if let speakerDescription = speakers?[indexPath.row].valueForKey("userAccount_")!.valueForKey("profile_") {
+                cell.loadInfo(speaker.valueForKey("userAccount_")!.valueForKey("name_") as! String, info: speakerDescription as! String)
             }
             cell.selectionStyle = UITableViewCellSelectionStyle.None
             return cell
@@ -85,7 +87,7 @@ import UIKit
         }
 
         
-        if let speakerDescription = speakers?[indexPath.row].valueForKey("profile_") {
+        if let speakerDescription = speakers?[indexPath.row].valueForKey("userAccount_")!.valueForKey("profile_") {
             let attrDescription = [NSFontAttributeName: UIFont.systemFontOfSize(14.0)]
             let szDescription = CGSize(width: view.bounds.width - 16, height:500)
             let rDescription = speakerDescription.boundingRectWithSize(szDescription, options: NSStringDrawingOptions.UsesLineFragmentOrigin, attributes:attrDescription, context:nil)
@@ -112,6 +114,8 @@ import UIKit
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        sessionDetailPresenter = DCPSessionDetailPresenter(androidContentContext: DCPAppManager.getContext())
         
         let nib = UINib(nibName: "EventTableViewCell", bundle: nil)
         tableView.registerNib(nib, forCellReuseIdentifier: "eventCell")

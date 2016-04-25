@@ -10,7 +10,6 @@ import co.touchlab.android.threading.tasks.Task;
 import co.touchlab.droidconandroid.data.DatabaseHelper;
 import co.touchlab.droidconandroid.data.Event;
 import co.touchlab.droidconandroid.data.EventSpeaker;
-import co.touchlab.droidconandroid.data.ScheduleBlock;
 import co.touchlab.droidconandroid.data.UserAccount;
 import co.touchlab.squeaky.dao.Dao;
 

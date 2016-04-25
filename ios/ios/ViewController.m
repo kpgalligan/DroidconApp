@@ -31,6 +31,16 @@
 
 @implementation ViewController
 
+- (void)viewDidLoad {
+    [super viewDidLoad];
+    
+    self.tableView.tableHeaderView = [[UIView alloc] initWithFrame:CGRectMake(0.0f, 0.0f, self.tableView.bounds.size.width, 15.0f)];
+    self.tableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
+    
+    [self loadConferenceSchedule];
+    self.tableView.delegate = self.platformContext;
+    self.tableView.dataSource = self.platformContext;
+}
 
 - (void)createSDASimple
 {
@@ -61,20 +71,6 @@
     self.navigationController.navigationBar.barTintColor = [UIColor colorWithRed:(125/255.0) green:(216/255.0) blue:(20/255.0) alpha:1.0];
     self.navigationController.navigationBar.tintColor = [UIColor whiteColor];
     [self.navigationController.navigationBar setTitleTextAttributes : @{NSForegroundColorAttributeName: [UIColor whiteColor]}];
-}
-
-- (void)viewDidLoad {
-    [super viewDidLoad];
-    
-    self.tableView.tableHeaderView = [[UIView alloc] initWithFrame:CGRectMake(0.0f, 0.0f, self.tableView.bounds.size.width, 15.0f)];
-    self.tableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
-
-    [self loadConferenceSchedule];
-    self.tableView.delegate = self.platformContext;
-    self.tableView.dataSource = self.platformContext;
-    
-    [GIDSignIn sharedInstance].uiDelegate = self;
-
 }
 
 - (void)loadImageWithPath:(NSString *)imagePath
@@ -114,6 +110,7 @@
         NSArray *speakers = [self.platformContext getSpeakersArrayFromEvent:event];
         detailVC.titleString = event->name_;
         detailVC.descriptionString = event->description__;
+        detailVC.event = event;
         detailVC.speakers = speakers;
         detailVC.trackNumString = [NSString stringWithFormat:@"%ld", (self.track+1)];
         detailVC.dateTime = [self.platformContext getEventTimeFromStart:[event getStartFormatted] andEnd:[event getEndFormatted]];
@@ -123,12 +120,6 @@
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
-}
-
-- (void)loggedIn:(NSString *)token
-        withName:(NSString *)name
-{
-    [self.dataPresenter loginUserWithNSString:token withNSString:name];
 }
 
 - (void)loadConferenceSchedule

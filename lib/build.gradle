@@ -41,6 +41,8 @@ dependencies {
     compile project(":dagger")
     j2objcLinkage project(":dagger")
 
+    j2objcLinkage project(":agera")
+
     apt 'com.google.dagger:dagger-compiler:2.0.2'
     compile 'javax.inject:javax.inject:1'
 }
@@ -48,6 +50,8 @@ dependencies {
 j2objcConfig {
     // Sets up libraries you depend on
 //    autoConfigureDeps true
+
+//    podRetainSource true
 
     // Omit these two lines if you don't configure your Xcode project with CocoaPods
     xcodeProjectDir '../ios'  //  suggested directory name
