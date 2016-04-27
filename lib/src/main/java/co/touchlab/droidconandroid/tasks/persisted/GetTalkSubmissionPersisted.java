@@ -7,12 +7,12 @@ import java.util.List;
 
 import co.touchlab.android.threading.eventbus.EventBusExt;
 import co.touchlab.android.threading.tasks.persisted.PersistedTask;
-import co.touchlab.droidconandroid.PlatformClientContainer;
 import co.touchlab.droidconandroid.data.DatabaseHelper;
 import co.touchlab.droidconandroid.data.TalkSubmission;
 import co.touchlab.droidconandroid.network.DataHelper;
 import co.touchlab.droidconandroid.network.TalkVotingWrapper;
 import co.touchlab.droidconandroid.network.VoteRequest;
+import co.touchlab.droidconandroid.presenter.AppManager;
 import co.touchlab.squeaky.dao.Dao;
 
 /**
@@ -35,9 +35,10 @@ public class GetTalkSubmissionPersisted extends VotePersistedTask
     @Override
     protected void run(Context context) throws Throwable
     {
-        VoteRequest voteRequest = DataHelper.makeRequestAdapter(context, PlatformClientContainer.platformClient).create(VoteRequest.class);
+        VoteRequest voteRequest = DataHelper.makeRequestAdapter(context, AppManager
+                .getPlatformClient()).create(VoteRequest.class);
         List<TalkVotingWrapper> talkSubmission = voteRequest.getTalkSubmission(
-                PlatformClientContainer.platformClient.getConventionId());
+                AppManager.getPlatformClient().getConventionId());
         list = TalkVotingWrapper.parseResp(talkSubmission);
 
 

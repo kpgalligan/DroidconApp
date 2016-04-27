@@ -67,8 +67,8 @@ public class VotingActivity : AppCompatActivity() {
                 R.string.navigation_drawer_open, R.string.navigation_drawer_close
         );
         drawerLayout.setDrawerListener(drawerToggle);
-        supportActionBar.setDisplayHomeAsUpEnabled(true);
-        supportActionBar.setHomeButtonEnabled(true);
+        supportActionBar?.setDisplayHomeAsUpEnabled(true);
+        supportActionBar?.setHomeButtonEnabled(true);
         drawerToggle.syncState();
         //
         val navigationRecycler = findView(R.id.drawer_list) as RecyclerView

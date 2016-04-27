@@ -8,7 +8,7 @@ import co.touchlab.android.threading.tasks.persisted.PersistedTask;
 import co.touchlab.android.threading.tasks.persisted.PersistedTaskQueue;
 import co.touchlab.android.threading.tasks.persisted.PersistedTaskQueueConfig;
 import co.touchlab.droidconandroid.CrashReport;
-import co.touchlab.droidconandroid.PlatformClientContainer;
+import co.touchlab.droidconandroid.presenter.AppManager;
 import retrofit.RetrofitError;
 
 /**
@@ -54,7 +54,7 @@ abstract public class VotePersistedTask extends PersistedTask
         if(e instanceof RetrofitError)
         {
             EventBusExt.getDefault().post(new VoteError(
-                    PlatformClientContainer.platformClient.getString("network_msg")));
+                    AppManager.getPlatformClient().getString("network_msg")));
             return true;
         }
         else

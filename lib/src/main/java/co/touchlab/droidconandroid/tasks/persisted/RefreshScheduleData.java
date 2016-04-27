@@ -17,8 +17,6 @@ import co.touchlab.android.threading.eventbus.EventBusExt;
 import co.touchlab.android.threading.tasks.helper.RetrofitPersistedTask;
 import co.touchlab.android.threading.tasks.persisted.PersistedTask;
 import co.touchlab.droidconandroid.CrashReport;
-import co.touchlab.droidconandroid.PlatformClient;
-import co.touchlab.droidconandroid.PlatformClientContainer;
 import co.touchlab.droidconandroid.data.AppPrefs;
 import co.touchlab.droidconandroid.data.Block;
 import co.touchlab.droidconandroid.data.DatabaseHelper;
@@ -32,6 +30,8 @@ import co.touchlab.droidconandroid.network.RefreshScheduleDataRequest;
 import co.touchlab.droidconandroid.network.RsvpRequest;
 import co.touchlab.droidconandroid.network.dao.Convention;
 import co.touchlab.droidconandroid.network.dao.MyRsvpResponse;
+import co.touchlab.droidconandroid.presenter.AppManager;
+import co.touchlab.droidconandroid.presenter.PlatformClient;
 import co.touchlab.droidconandroid.utils.TimeUtils;
 import co.touchlab.squeaky.dao.Dao;
 import co.touchlab.squeaky.stmt.Where;
@@ -50,7 +50,7 @@ public class RefreshScheduleData extends RetrofitPersistedTask
     @Override
     protected void runNetwork(Context context)
     {
-        final PlatformClient platformClient = PlatformClientContainer.platformClient;
+        final PlatformClient platformClient = AppManager.getPlatformClient();
         RestAdapter restAdapter = DataHelper.makeRequestAdapter(context, platformClient);
 
         RefreshScheduleDataRequest request = restAdapter.create(RefreshScheduleDataRequest.class);

@@ -1,10 +1,7 @@
 package co.touchlab.droidconandroid
 
-import android.app.LoaderManager
 import android.os.Bundle
 import android.support.v4.app.Fragment
-import android.support.v4.app.LoaderManager
-import android.support.v4.content.Loader
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
@@ -12,15 +9,12 @@ import android.view.View
 import android.view.ViewGroup
 import co.touchlab.android.threading.eventbus.EventBusExt
 import co.touchlab.droidconandroid.data.Event
-import co.touchlab.droidconandroid.data.ScheduleBlock
 import co.touchlab.droidconandroid.data.Track
 import co.touchlab.droidconandroid.presenter.ConferenceDataHelper
 import co.touchlab.droidconandroid.presenter.ConferenceDayHolder
-import co.touchlab.droidconandroid.presenter.ConferenceHourHolder
-import co.touchlab.droidconandroid.tasks.persisted.RefreshScheduleData
+import co.touchlab.droidconandroid.presenter.ScheduleBlockHour
 import co.touchlab.droidconandroid.ui.EventAdapter
 import co.touchlab.droidconandroid.ui.EventClickListener
-import co.touchlab.droidconandroid.utils.Toaster
 import java.util.*
 
 class ScheduleDataFragment() : Fragment()
@@ -61,7 +55,7 @@ class ScheduleDataFragment() : Fragment()
         day = getArguments()!!.getLong(DAY)
         position = getArguments()!!.getInt(POSITION)
 
-        eventList = getView().findViewById(R.id.eventList) as RecyclerView
+        eventList = view?.findViewById(R.id.eventList) as RecyclerView
         eventList!!.setLayoutManager(LinearLayoutManager(getActivity()))
 
         EventBusExt.getDefault()!!.register(this)
@@ -69,6 +63,7 @@ class ScheduleDataFragment() : Fragment()
 
     override fun onDestroy()
     {
+        super.onDestroy()
         EventBusExt.getDefault()!!.unregister(this)
     }
 
@@ -85,10 +80,10 @@ class ScheduleDataFragment() : Fragment()
 
     }
 
-    private fun updateAdapter(data: Array<out ConferenceHourHolder>?) {
+    private fun updateAdapter(data: Array<out ScheduleBlockHour>?) {
         if (eventList!!.getAdapter() == null)
         {
-            adapter = EventAdapter(data.asList(), allEvents, (getActivity() as FilterInterface).getCurrentFilters(), object : EventClickListener {
+            adapter = EventAdapter(data!!.asList(), allEvents, (getActivity() as FilterInterface).getCurrentFilters(), object : EventClickListener {
                 override fun onEventClick(event: Event) {
                     EventDetailActivity.callMe(getActivity()!!, event.id, event.category)
                 }
@@ -97,7 +92,7 @@ class ScheduleDataFragment() : Fragment()
         }
         else
         {
-            (eventList!!.getAdapter() as EventAdapter).updateEvents(data.asList())
+            (eventList!!.getAdapter() as EventAdapter).updateEvents(data!!.asList())
         }
     }
 

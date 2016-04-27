@@ -58,6 +58,66 @@ public class Event implements ScheduleBlock
     @DatabaseField
     public Integer vote;
 
+    public long getId()
+    {
+        return id;
+    }
+
+    public String getName()
+    {
+        return name;
+    }
+
+    public String getDescription()
+    {
+        return description;
+    }
+
+    public String getCategory()
+    {
+        return category;
+    }
+
+    @NotNull
+    public Venue getVenue()
+    {
+        return venue;
+    }
+
+    public Long getStartDateLong()
+    {
+        return startDateLong;
+    }
+
+    public Long getEndDateLong()
+    {
+        return endDateLong;
+    }
+
+    public boolean isPublicEvent()
+    {
+        return publicEvent;
+    }
+
+    public Integer getRsvpLimit()
+    {
+        return rsvpLimit;
+    }
+
+    public Integer getRsvpCount()
+    {
+        return rsvpCount;
+    }
+
+    public List<EventSpeaker> getSpeakerList()
+    {
+        return speakerList;
+    }
+
+    public Integer getVote()
+    {
+        return vote;
+    }
 
     public boolean isRsvped()
     {

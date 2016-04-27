@@ -2,33 +2,26 @@ package co.touchlab.droidconandroid.presenter;
 import android.content.Context;
 import android.util.Log;
 
-import co.touchlab.android.threading.eventbus.EventBusExt;
+import com.google.j2objc.annotations.AutoreleasePool;
+
 import co.touchlab.droidconandroid.tasks.Queues;
 import co.touchlab.droidconandroid.tasks.SeedScheduleDataTask;
+import co.touchlab.droidconandroid.tasks.persisted.RefreshScheduleData;
 
 /**
  * Created by kgalligan on 4/15/16.
  */
-public class ConferenceDataPresenter
+public class ConferenceDataPresenter extends AbstractEventBusPresenter
 {
-    private final Context context;
     private final ConferenceDataHost conferenceDataHost;
+    private final boolean allEvents;
 
-    public ConferenceDataPresenter(Context context, ConferenceDataHost conferenceDataHost)
+    public ConferenceDataPresenter(Context context, ConferenceDataHost conferenceDataHost, boolean allEvents)
     {
-        this.context = context;
+        super(context);
         this.conferenceDataHost = conferenceDataHost;
-        EventBusExt.getDefault().register(this);
-    }
-
-    public void unregister()
-    {
-        EventBusExt.getDefault().unregister(this);
-    }
-
-    public void seedData(String seed)
-    {
-        Queues.localQueue(context).execute(new SeedScheduleDataTask(seed));
+        this.allEvents = allEvents;
+        refreshConferenceData();
     }
 
     public void onEventMainThread(SeedScheduleDataTask task)
@@ -36,9 +29,10 @@ public class ConferenceDataPresenter
         refreshConferenceData();
     }
 
+    @AutoreleasePool
     public void refreshConferenceData()
     {
-        Queues.localQueue(context).execute(new LoadConferenceDataTask());
+        Queues.localQueue(getContext()).execute(new LoadConferenceDataTask(allEvents));
     }
 
     public void onEventMainThread(LoadConferenceDataTask task)
@@ -47,13 +41,8 @@ public class ConferenceDataPresenter
         conferenceDataHost.loadCallback(task.conferenceDayHolders);
     }
 
-//    public void loginUser(String token, String name)
-//    {
-//        Queues.localQueue(context).execute(new IosGoogleLoginTask(token, name));
-//    }
-//
-//    public void onEventMainThread(IosGoogleLoginTask task)
-//    {
-//        Log.w(ConferenceDataPresenter.class.getSimpleName(), "What?!");
-//    }
+    public void onEventMainThread(RefreshScheduleData task)
+    {
+        refreshConferenceData();
+    }
 }

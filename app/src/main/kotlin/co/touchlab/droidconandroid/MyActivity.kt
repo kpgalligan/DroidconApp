@@ -39,7 +39,7 @@ public class MyActivity : AppCompatActivity(), FilterInterface, NfcAdapter.Creat
     {
         public fun startMe(c : Context)
         {
-            val i = Intent(c, javaClass<MyActivity>())
+            val i = Intent(c, MyActivity::class.java)
             c.startActivity(i)
         }
     }
@@ -115,7 +115,7 @@ public class MyActivity : AppCompatActivity(), FilterInterface, NfcAdapter.Creat
         EventBusExt.getDefault().register(this)
 
         // Start IntentService to register this application with GCM.
-        val intent = Intent(this, javaClass<RegistrationIntentService>())
+        val intent = Intent(this, RegistrationIntentService::class.java)
         startService(intent)
     }
 
@@ -207,8 +207,8 @@ public class MyActivity : AppCompatActivity(), FilterInterface, NfcAdapter.Creat
                 R.string.navigation_drawer_open, R.string.navigation_drawer_close
         );
         drawerLayout!!.setDrawerListener(drawerToggle);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setHomeButtonEnabled(true);
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        supportActionBar?.setHomeButtonEnabled(true)
         drawerToggle.syncState();
 
         navigationRecycler = findView(R.id.drawer_list) as RecyclerView

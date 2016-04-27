@@ -9,12 +9,18 @@ import co.touchlab.android.threading.tasks.Task;
  */
 public class LoadConferenceDataTask extends Task
 {
+    private final boolean allEvents;
     public ConferenceDayHolder[] conferenceDayHolders;
+
+    public LoadConferenceDataTask(boolean allEvents)
+    {
+        this.allEvents = allEvents;
+    }
 
     @Override
     protected void run(Context context) throws Throwable
     {
-        conferenceDayHolders = ConferenceDataHelper.listDays(context);
+        conferenceDayHolders = ConferenceDataHelper.listDays(context, allEvents);
     }
 
     @Override

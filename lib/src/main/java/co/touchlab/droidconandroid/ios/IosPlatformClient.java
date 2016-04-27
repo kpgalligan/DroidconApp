@@ -1,7 +1,7 @@
 package co.touchlab.droidconandroid.ios;
 import android.util.Log;
 
-import co.touchlab.droidconandroid.PlatformClient;
+import co.touchlab.droidconandroid.presenter.PlatformClient;
 import retrofit.client.Client;
 
 /**

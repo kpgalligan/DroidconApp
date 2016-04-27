@@ -1,9 +1,9 @@
 package co.touchlab.droidconandroid.tasks.persisted;
 import android.content.Context;
 
-import co.touchlab.droidconandroid.PlatformClientContainer;
 import co.touchlab.droidconandroid.network.DataHelper;
 import co.touchlab.droidconandroid.network.VoteRequest;
+import co.touchlab.droidconandroid.presenter.AppManager;
 
 /**
  * Created by kgalligan on 8/21/15.
@@ -34,8 +34,8 @@ public class UpdateVotePersisted extends VotePersistedTask
     @Override
     protected void run(Context context) throws Throwable
     {
-        VoteRequest voteRequest = DataHelper.makeRequestAdapter(context, PlatformClientContainer.platformClient).create(VoteRequest.class);
-        voteRequest.updateVote(PlatformClientContainer.platformClient.getConventionId(), talkId, vote);
+        VoteRequest voteRequest = DataHelper.makeRequestAdapter(context, AppManager.getPlatformClient()).create(VoteRequest.class);
+        voteRequest.updateVote(AppManager.getPlatformClient().getConventionId(), talkId, vote);
 
     }
 

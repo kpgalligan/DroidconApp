@@ -6,9 +6,9 @@ import org.apache.commons.io.IOUtils;
 
 import co.touchlab.android.threading.eventbus.EventBusExt;
 import co.touchlab.android.threading.tasks.Task;
-import co.touchlab.droidconandroid.PlatformClient;
 import co.touchlab.droidconandroid.network.DataHelper;
 import co.touchlab.droidconandroid.network.VoteRequest;
+import co.touchlab.droidconandroid.presenter.PlatformClient;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
 

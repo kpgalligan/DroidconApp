@@ -16,7 +16,7 @@ class ScheduleDataActivity : FragmentActivity()
 
         fun callMe(a: Activity)
         {
-            val i = Intent(a, javaClass <ScheduleDataActivity> ())
+            val i = Intent(a, ScheduleDataActivity::class.java)
             a.startActivity(i)
         }
 

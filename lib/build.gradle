@@ -61,6 +61,7 @@ j2objcConfig {
 
     translateArgs '--prefix', 'co.touchlab.droidconandroid.data=DCD'
     translateArgs '--prefix', 'co.touchlab.droidconandroid.presenter=DCP'
+    translateArgs '--prefix', 'co.touchlab.droidconandroid.tasks=DCT'
 
 //    podDependency 'J2OBJC,../../J2OBJC'
     extraLinkerArgs '-lsqlite3'

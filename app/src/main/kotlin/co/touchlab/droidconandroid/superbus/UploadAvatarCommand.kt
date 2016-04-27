@@ -51,7 +51,7 @@ open class UploadAvatarCommand(val imageURL: String? = null) : RetrofitPersisted
 
         val userResponseString = uploadResponse?.getBodyAsString() ?: throw RuntimeException("No user response")
         val gson = Gson()
-        val userInfoResponse = gson.fromJson(userResponseString, javaClass<UserInfoResponse>())
+        val userInfoResponse = gson.fromJson(userResponseString, UserInfoResponse::class.java)
         AbstractFindUserTask.saveUserResponse(context!!, null, userInfoResponse!!)
     }
 

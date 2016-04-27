@@ -1,4 +1,4 @@
-package co.touchlab.droidconandroid;
+package co.touchlab.droidconandroid.presenter;
 import retrofit.client.Client;
 
 /**

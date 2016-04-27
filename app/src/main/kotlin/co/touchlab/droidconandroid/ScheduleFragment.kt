@@ -1,7 +1,5 @@
 package co.touchlab.droidconandroid
 
-import android.R
-import android.app.Fragment
 import android.os.Bundle
 import android.os.Handler
 import android.support.design.widget.TabLayout
@@ -64,7 +62,7 @@ class ScheduleFragment : Fragment(), FilterableFragmentInterface
     override fun onCreate(savedInstanceState: Bundle?) {
         super<Fragment>.onCreate(savedInstanceState)
         EventBusExt.getDefault().register(this)
-        conferenceDataPresenter = ConferenceDataPresenter(activity, ConfHost())
+        conferenceDataPresenter = ConferenceDataPresenter(activity, ConfHost(), getArguments().getBoolean(ALL_EVENTS))
     }
 
     class ConfHost: ConferenceDataHost
@@ -94,13 +92,16 @@ class ScheduleFragment : Fragment(), FilterableFragmentInterface
     inner class RefreshRunnable(): Runnable
     {
         override fun run() {
-            val pager = getView().findViewById(R.id.pager)!! as ViewPager
-            val tabs = getView().findViewById(R.id.tabs)!! as TabLayout
-            val tabWrapper = getView().findViewById(R.id.tabs_wrapper)
-            if (getArguments().getBoolean(ALL_EVENTS)) {
-                tabWrapper.setBackgroundColor(getResources().getColor(R.color.primary))
+            val allEvents = getArguments().getBoolean(ALL_EVENTS)
+            conferenceDataPresenter!!.refreshConferenceData()
+            val pager = view?.findViewById(R.id.pager)!! as ViewPager
+            val tabs = view?.findViewById(R.id.tabs)!! as TabLayout
+            val tabWrapper = view?.findViewById(R.id.tabs_wrapper)
+
+            if (allEvents) {
+                tabWrapper?.setBackgroundColor(getResources().getColor(R.color.primary))
             } else {
-                tabWrapper.setBackgroundColor(getResources().getColor(R.color.blue_grey))
+                tabWrapper?.setBackgroundColor(getResources().getColor(R.color.blue_grey))
             }
 
             val dates: ArrayList<Long> = ArrayList<Long>()
@@ -116,10 +117,10 @@ class ScheduleFragment : Fragment(), FilterableFragmentInterface
                     start += DateUtils.DAY_IN_MILLIS
                 }
 
-                pagerAdapter = ScheduleFragmentPagerAdapter(getChildFragmentManager(), dates, getArguments().getBoolean(ALL_EVENTS))
+                pagerAdapter = ScheduleFragmentPagerAdapter(getChildFragmentManager(), dates, allEvents)
                 pager.setAdapter(pagerAdapter);
                 pager.addOnPageChangeListener(TabLayout.TabLayoutOnPageChangeListener(tabs))
-                tabs.setTabsFromPagerAdapter(pagerAdapter)
+                tabs.setTabsFromPagerAdapter(pagerAdapter!!)
                 tabs.setOnTabSelectedListener(TabLayout.ViewPagerOnTabSelectedListener(pager))
             }
         }
@@ -143,7 +144,7 @@ class ScheduleFragmentPagerAdapter : FragmentPagerAdapter
     }
 
     override fun getCount(): Int {
-        return dates.size()
+        return dates.size
     }
 
     override fun getItem(position: Int): ScheduleDataFragment? {

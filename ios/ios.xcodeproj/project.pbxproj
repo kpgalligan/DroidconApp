@@ -21,6 +21,7 @@
 		63EE30D01CC6AD4400B64D3D /* WelcomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63EE30CF1CC6AD4400B64D3D /* WelcomeViewController.swift */; };
 		63EE30D21CC6C76200B64D3D /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63EE30D11CC6C76200B64D3D /* LoginViewController.swift */; };
 		63EE30D41CC7DDB800B64D3D /* UIViewController+Utils.m in Sources */ = {isa = PBXBuildFile; fileRef = 63EE30D31CC7DDB800B64D3D /* UIViewController+Utils.m */; };
+		63EE30DF1CD025AC00B64D3D /* EventListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63EE30DE1CD025AC00B64D3D /* EventListCell.swift */; };
 		A842C04EE493F921814D210F /* libPods-iosTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 06D42FB4A8B88AE64821B7E8 /* libPods-iosTests.a */; };
 		AAF5E2779B803CA534CFC949 /* libPods-iosUITests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 3BD8F26D64159CD133170ED4 /* libPods-iosUITests.a */; };
 		E892ED366CFA70A9CEC9087C /* libPods-ios.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 96945540333DB71F61C263B6 /* libPods-ios.a */; };
@@ -82,6 +83,7 @@
 		63EE30D11CC6C76200B64D3D /* LoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		63EE30D31CC7DDB800B64D3D /* UIViewController+Utils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIViewController+Utils.m"; sourceTree = "<group>"; };
 		63EE30D51CC7DDE600B64D3D /* UIViewController+Utils.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UIViewController+Utils.h"; sourceTree = "<group>"; };
+		63EE30DE1CD025AC00B64D3D /* EventListCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventListCell.swift; sourceTree = "<group>"; };
 		8AB85F4E5076A64AD1FA672C /* Pods-ios.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ios.debug.xcconfig"; path = "Pods/Target Support Files/Pods-ios/Pods-ios.debug.xcconfig"; sourceTree = "<group>"; };
 		94A921638B3412284B5796F9 /* Pods-iosUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-iosUITests.release.xcconfig"; path = "Pods/Target Support Files/Pods-iosUITests/Pods-iosUITests.release.xcconfig"; sourceTree = "<group>"; };
 		96945540333DB71F61C263B6 /* libPods-ios.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-ios.a"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -208,6 +210,7 @@
 				63EE30D11CC6C76200B64D3D /* LoginViewController.swift */,
 				63EE30D31CC7DDB800B64D3D /* UIViewController+Utils.m */,
 				63EE30D51CC7DDE600B64D3D /* UIViewController+Utils.h */,
+				63EE30DE1CD025AC00B64D3D /* EventListCell.swift */,
 			);
 			path = ios;
 			sourceTree = "<group>";
@@ -265,6 +268,7 @@
 				631B98E91C7D6533008AA20D /* Resources */,
 				6DD8DA101221ACE133AD02E0 /* 📦 Embed Pods Frameworks */,
 				EA05F18FF894EE320A2E9E52 /* 📦 Copy Pods Resources */,
+				63EE30E01CD0626900B64D3D /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -423,6 +427,19 @@
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-iosTests/Pods-iosTests-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
+		63EE30E01CD0626900B64D3D /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Fabric/run\" 90b5b9675372e1f2aff36d43ea5d6869040d37f3 a70308da17e66d33b166e029eabb96754f40e2dd2ec0fefd2a48e1c89e76f7a6";
+		};
 		682279DBCF54752B8CF6D0E1 /* 📦 Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -520,6 +537,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				63EE30DF1CD025AC00B64D3D /* EventListCell.swift in Sources */,
 				63EE30D21CC6C76200B64D3D /* LoginViewController.swift in Sources */,
 				63EE30CC1CC5E1BD00B64D3D /* CheckLoginController.swift in Sources */,
 				63EE30D41CC7DDB800B64D3D /* UIViewController+Utils.m in Sources */,
@@ -677,8 +695,10 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEFINES_MODULE = YES;
 				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
+				ENABLE_BITCODE = NO;
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"${PODS_ROOT}/Headers/Public\"",
@@ -717,6 +737,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				DEFINES_MODULE = YES;
 				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
+				ENABLE_BITCODE = NO;
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"${PODS_ROOT}/Headers/Public\"",

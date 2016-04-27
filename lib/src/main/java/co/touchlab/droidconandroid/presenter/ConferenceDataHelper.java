@@ -1,6 +1,5 @@
 package co.touchlab.droidconandroid.presenter;
 import android.content.Context;
-import android.text.format.DateUtils;
 
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
@@ -9,6 +8,7 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 import java.util.TreeMap;
 
 import co.touchlab.droidconandroid.data.Block;
@@ -23,68 +23,16 @@ import co.touchlab.squeaky.stmt.Where;
  */
 public class ConferenceDataHelper
 {
-    static SimpleDateFormat df         = new SimpleDateFormat("MM/dd/yyyy hh:mma");
-    static SimpleDateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy");
-    static SimpleDateFormat timeFormat = new SimpleDateFormat("hh:mma");
+    static SimpleDateFormat df         = new SimpleDateFormat("MM/dd/yyyy hh:mma", Locale.US);
+    static SimpleDateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy", Locale.US);
+    static SimpleDateFormat timeFormat = new SimpleDateFormat("h:mma", Locale.US);
 
     public static String dateToDayString(Date d)
     {
         return dateFormat.format(d);
     }
 
-    private static List<ScheduleBlock> scheduleForDay(Context context, boolean all, long day)
-    {
-        try
-        {
-            DatabaseHelper databaseHelper = DatabaseHelper.getInstance(context);
-            Dao<Event> eventDao = databaseHelper.getEventDao();
-            Dao<Block> blockDao = databaseHelper.getBlockDao();
-            Where<Event> where = new Where<Event>(eventDao);
-
-            List<Event> events;
-            if(all)
-            {
-                events = where.between("startDateLong", day, day + DateUtils.DAY_IN_MILLIS).query()
-                              .list();
-            }
-            else
-            {
-                events = where.and().between("startDateLong", day, day + DateUtils.DAY_IN_MILLIS)
-                              .isNotNull("rsvpUuid").query().list();
-            }
-
-            List<Block> blocks = new Where<Block>(blockDao).between("startDateLong", day, day + DateUtils.DAY_IN_MILLIS).query().list();
-
-            List<ScheduleBlock> eventsAndBlocks = new ArrayList<ScheduleBlock>();
-
-            for(Event event : events)
-            {
-                eventDao.fillForeignCollection(event, "speakerList");
-            }
-
-            eventsAndBlocks.addAll(events);
-            eventsAndBlocks.addAll(blocks);
-
-            Collections.sort(eventsAndBlocks, new Comparator<ScheduleBlock>()
-            {
-                @Override
-                public int compare(ScheduleBlock lhs, ScheduleBlock rhs)
-                {
-                    if (lhs.getStartLong().equals(rhs.getStartLong()))
-                        return 0;
-
-                    return lhs.getStartLong().compareTo(rhs.getStartLong());
-                }
-            });
-
-            return eventsAndBlocks;
-        }
-        catch(SQLException e)
-        {
-            throw new RuntimeException(e);
-        }
-    }
-    public static ConferenceDayHolder[] listDays(Context context/*, Convention convention*/) throws SQLException
+    public static ConferenceDayHolder[] listDays(Context context, boolean allEvents) throws SQLException
     {
         final DatabaseHelper databaseHelper = DatabaseHelper.getInstance(context);
         final Dao<Event> eventDao = databaseHelper.getEventDao();
@@ -93,7 +41,17 @@ public class ConferenceDataHelper
         List<ScheduleBlock> all = new ArrayList<>();
 
         all.addAll(blockDao.queryForAll().list());
-        final List<Event> eventList = eventDao.queryForAll().list();
+        List<Event> eventList = null;
+
+        if(allEvents)
+        {
+            eventList = eventDao.queryForAll().list();
+        }
+        else
+        {
+            Where<Event> where = new Where<Event>(eventDao);
+            eventList = where.isNotNull("rsvpUuid").query().list();
+        }
 
         for(Event event : eventList)
         {
@@ -101,15 +59,6 @@ public class ConferenceDataHelper
         }
 
         all.addAll(eventList);
-
-        /*for(Venue venue : convention.venues)
-        {
-            all.addAll(venue.events);
-            for(Event event : venue.events)
-            {
-                event.venue = venue;
-            }
-        }*/
 
         Collections.sort(all, new Comparator<ScheduleBlock>()
         {
@@ -130,48 +79,36 @@ public class ConferenceDataHelper
             }
         });
 
-        TreeMap<String, TreeMap<String, List<ScheduleBlock>>> allTheData = new TreeMap<>();
+        TreeMap<String, List<ScheduleBlockHour>> allTheData = new TreeMap<>();
+        String lastHourDisplay = "";
+        List<ScheduleBlockHour> blockHours = new ArrayList<>();
 
         for(ScheduleBlock scheduleBlock : all)
         {
             final Date startDateObj = new Date(scheduleBlock.getStartLong());
             final String startDate = dateFormat.format(startDateObj);
-            TreeMap<String, List<ScheduleBlock>> stringListTreeMap = allTheData
+            List<ScheduleBlockHour> blockHourList = allTheData
                     .get(startDate);
-            if(stringListTreeMap == null)
+            if(blockHourList == null)
             {
-                stringListTreeMap = new TreeMap<>();
-                allTheData.put(startDate, stringListTreeMap);
+                blockHourList = new ArrayList<>();
+                allTheData.put(startDate, blockHourList);
             }
 
             final String startTime = timeFormat.format(startDateObj);
-            List<ScheduleBlock> timeBlocks = stringListTreeMap.get(startTime);
-            if(timeBlocks == null)
-            {
-                timeBlocks = new ArrayList<>();
-                stringListTreeMap.put(startTime, timeBlocks);
-            }
-
-            timeBlocks.add(scheduleBlock);
+            final boolean newHourDisplay = ! lastHourDisplay.equals(startTime);
+            blockHourList.add(new ScheduleBlockHour(newHourDisplay ? startTime : "", scheduleBlock));
+            lastHourDisplay = startTime;
         }
 
         List<ConferenceDayHolder> dayHolders = new ArrayList<>();
 
         for(String dateString : allTheData.keySet())
         {
-            final TreeMap<String, List<ScheduleBlock>> hourBlocksMap = allTheData
+            final List<ScheduleBlockHour> hourBlocksMap = allTheData
                     .get(dateString);
 
-            List<ConferenceHourHolder> hoursList = new ArrayList<>();
-            for(String hourString : hourBlocksMap.keySet())
-            {
-                final ConferenceHourHolder conferenceHourHolder = new ConferenceHourHolder(
-                        hourString, hourBlocksMap.get(hourString).toArray(
-                        new ScheduleBlock[hourBlocksMap.get(hourString).size()]));
-                hoursList.add(conferenceHourHolder);
-            }
-
-            final ConferenceDayHolder conferenceDayHolder = new ConferenceDayHolder(dateString, hoursList.toArray(new ConferenceHourHolder[hoursList.size()]));
+            final ConferenceDayHolder conferenceDayHolder = new ConferenceDayHolder(dateString, hourBlocksMap.toArray(new ScheduleBlockHour[hourBlocksMap.size()]));
             dayHolders.add(conferenceDayHolder);
         }
 
