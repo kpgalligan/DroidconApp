@@ -12,7 +12,13 @@ work with local data and seed it with json.  If you'd like to use the server, ge
 
 ## New Stuff
 
+### Doppel/iOS
+
+If you try to build this thing you'll pretty quickly find a few problems.  One of them is that there are ton of projects referenced in the settings.gradle that you can't access.  The other is that there are dependencies you can't find.  You'll also notice 'ios' in the folders.  This is sort of secret, but we're working on an extension of j2objc that will include better tooling and popular android libraries.  There's an ios version of this app now.  That's what this branch is.  You can't build it, though.  Sorry.
+
 ### Kotlin
+
+Kotlin has been updated to v1!
 
 A large portion of the app is written in [Kotlin](http://kotlinlang.org/).  Android Studio support is pretty good at this point,
 although some parts need to be Java.  Specifically anything that runs through annotation processing.
