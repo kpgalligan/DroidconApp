@@ -42,7 +42,7 @@ open class UploadCoverCommand(val coverURL: String? = null) : RetrofitPersistedT
 
         val userResponseString = uploadResponse?.getBodyAsString() ?: throw RuntimeException("No user response")
         val gson = Gson()
-        val userInfoResponse = gson.fromJson(userResponseString, javaClass<UserInfoResponse>())
+        val userInfoResponse = gson.fromJson(userResponseString, UserInfoResponse::class.java)
         AbstractFindUserTask.saveUserResponse(context!!, null, userInfoResponse!!)
     }
 

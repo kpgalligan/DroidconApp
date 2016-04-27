@@ -61,7 +61,7 @@ class UserDetailFragment() : Fragment()
 
     companion object
     {
-        val TAG: String = UserDetailFragment.javaClass.getSimpleName()
+        val TAG: String = UserDetailFragment::class.java.getSimpleName()
         val HTTPS_S3_AMAZONAWS_COM_DROIDCONIMAGES: String = "https://s3.amazonaws.com/droidconimages/"
         val TWITTER_PREFIX: String = "http://www.twitter.com/"
         val GPLUS_PREFIX: String = "http://www.google.com/+"
@@ -285,7 +285,7 @@ class UserDetailFragment() : Fragment()
         val appPrefs = AppPrefs.getInstance(getActivity())
         if (!userAccount.id.equals(appPrefs.getUserId()))
         {
-            val addContact = getView().findView(R.id.addContact) as ImageView
+            val addContact = view?.findView(R.id.addContact) as ImageView
             addContact.setOnClickListener{
                 // Creates a new Intent to insert a contact
                 val intent = Intent(ContactsContract.Intents.Insert.ACTION);

@@ -19,6 +19,7 @@ class LoginViewController: UIViewController, DCPLoginScreenPresenter_Host, GIDSi
         NSLog("heyo")
         NSLog((viewController?.title)!)
     }
+    
     func loggedIn(user: GIDGoogleUser)
     {
         presenter?.runGoogleLoginWithNSString(user.authentication.idToken, withNSString: user.profile.name, withNSString: nil, withNSString: nil)

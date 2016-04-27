@@ -4,12 +4,12 @@ import android.content.Context;
 import java.net.HttpURLConnection;
 import java.sql.SQLException;
 
-import co.touchlab.droidconandroid.PlatformClientContainer;
 import co.touchlab.droidconandroid.data.DatabaseHelper;
 import co.touchlab.droidconandroid.data.UserAccount;
 import co.touchlab.droidconandroid.network.DataHelper;
 import co.touchlab.droidconandroid.network.FindUserRequest;
 import co.touchlab.droidconandroid.network.dao.UserInfoResponse;
+import co.touchlab.droidconandroid.presenter.AppManager;
 import retrofit.RestAdapter;
 import retrofit.RetrofitError;
 
@@ -42,7 +42,7 @@ public class FindUserTask extends AbstractFindUserTask
                        public UserInfoResponse load()
                        {
                            RestAdapter restAdapter = DataHelper.makeRequestAdapter(context,
-                                                                                   PlatformClientContainer.platformClient);
+                                                                                   AppManager.getPlatformClient());
                            FindUserRequest findUserRequest = restAdapter
                                    .create(FindUserRequest.class);
                            try

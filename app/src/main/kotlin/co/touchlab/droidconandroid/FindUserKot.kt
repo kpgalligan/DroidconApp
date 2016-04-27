@@ -21,7 +21,7 @@ public class FindUserKot : AppCompatActivity(), UserDetailFragment.Companion.Fin
     {
         public fun startMe(c: Context)
         {
-            val i = Intent(c, javaClass<FindUserKot>())
+            val i = Intent(c, FindUserKot::class.java)
             c.startActivity(i)
         }
     }
@@ -31,7 +31,7 @@ public class FindUserKot : AppCompatActivity(), UserDetailFragment.Companion.Fin
 
     public fun callMe(c: Context)
     {
-        val i = Intent(c, javaClass<FindUserKot>())
+        val i = Intent(c, FindUserKot::class.java)
         c.startActivity(i)
     }
 

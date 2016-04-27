@@ -1,10 +1,12 @@
 //
 //  Use this file to import your target's public headers that you would like to expose to Swift.
 //
-#import "co/touchlab/droidconandroid/presenter/ConferenceDataPresenter.h"
+//#import "co/touchlab/droidconandroid/presenter/ConferenceDataPresenter.h"
 #import "co/touchlab/droidconandroid/presenter/LoginScreenPresenter.h"
 #import "co/touchlab/droidconandroid/presenter/AppManager.h"
-#import "co/touchlab/droidconandroid/presenter/SessionDetailPresenter.h"
+#import "co/touchlab/droidconandroid/presenter/EventDetailPresenter.h"
+#import "co/touchlab/droidconandroid/presenter/EventDetailHost.h"
+#import "co/touchlab/droidconandroid/tasks/EventDetailLoadTask.h"
 #import "co/touchlab/droidconandroid/data/AppPrefs.h"
 #import "android/content/Context.h"
 #import "android/content/IOSContext.h"

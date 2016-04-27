@@ -39,7 +39,7 @@ public class SignInActivity : AppCompatActivity(), LoginScreenPresenter.Host {
         var googleApiClient: GoogleApiClient? = null
 
         public fun getLaunchIntent(c: Context): Intent {
-            return Intent(c, javaClass<SignInActivity>())
+            return Intent(c, SignInActivity::class.java)
         }
     }
 
@@ -54,7 +54,7 @@ public class SignInActivity : AppCompatActivity(), LoginScreenPresenter.Host {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_sign_in);
 
-        presenter = LoginScreenPresenter(this, host)
+        presenter = LoginScreenPresenter(this, this)
 
         val accounts = AccountManager.get(this).getAccountsByType("com.google")
         val listView = findViewById(R.id.list) as ListView;
@@ -100,7 +100,7 @@ public class SignInActivity : AppCompatActivity(), LoginScreenPresenter.Host {
         }
     }
 
-    public fun onLoginReturned(failed: Boolean, firstLogin: Boolean)
+    override fun onLoginReturned(failed: Boolean, firstLogin: Boolean)
     {
         if (!failed) {
             finish()
@@ -153,7 +153,7 @@ public class SignInActivity : AppCompatActivity(), LoginScreenPresenter.Host {
 
                 if (image != null && image.hasUrl()) {
                     val url = image.getUrl()
-                    imageURL = url.substring(0, url.length() - 2) + PROFILE_PIC_SIZE;
+                    imageURL = url.substring(0, url.length - 2) + PROFILE_PIC_SIZE;
                 }
 
                 val cover = person.getCover()

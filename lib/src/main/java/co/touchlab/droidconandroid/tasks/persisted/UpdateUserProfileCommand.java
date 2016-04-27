@@ -7,12 +7,12 @@ import java.sql.SQLException;
 import co.touchlab.android.threading.tasks.helper.RetrofitPersistedTask;
 import co.touchlab.android.threading.tasks.persisted.PersistedTask;
 import co.touchlab.droidconandroid.CrashReport;
-import co.touchlab.droidconandroid.PlatformClientContainer;
 import co.touchlab.droidconandroid.data.AppPrefs;
 import co.touchlab.droidconandroid.data.DatabaseHelper;
 import co.touchlab.droidconandroid.data.UserAccount;
 import co.touchlab.droidconandroid.network.DataHelper;
 import co.touchlab.droidconandroid.network.UpdateUserProfile;
+import co.touchlab.droidconandroid.presenter.AppManager;
 import retrofit.RestAdapter;
 
 /**
@@ -37,7 +37,7 @@ public class UpdateUserProfileCommand extends RetrofitPersistedTask
             }
 
             RestAdapter restAdapter = DataHelper.makeRequestAdapter(context,
-                                                                    PlatformClientContainer.platformClient);
+                                                                    AppManager.getPlatformClient());
             UpdateUserProfile updateUserProfile = restAdapter.create(UpdateUserProfile.class);
 
             if (userAccount != null)

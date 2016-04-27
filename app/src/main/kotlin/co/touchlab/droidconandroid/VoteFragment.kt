@@ -66,14 +66,14 @@ class VoteFragment : Fragment(), VoteClickListener {
         super<Fragment>.onStart()
 
         //empty view
-        empty = view.findViewById(R.id.empty_list) as TextView
+        empty = view?.findViewById(R.id.empty_list) as TextView
 
         //swipe to refresh
-        swipeContainer = view.findViewById(R.id.swipeContainer) as SwipeRefreshLayout
+        swipeContainer = view?.findViewById(R.id.swipeContainer) as SwipeRefreshLayout
         initSwipeToRefresh()
 
         //recycler list
-        rv = view.findViewById(R.id.rv) as RecyclerView
+        rv = view?.findViewById(R.id.rv) as RecyclerView
         rv!!.layoutManager = LinearLayoutManager(activity)
 
         TaskQueue.loadQueueDefault(activity).execute(GetDbTalkSubmissionTask(true))

@@ -53,6 +53,26 @@ public class EventDetailLoadTask extends Task
         event.speakerList = results;
     }
 
+    public long getEventId()
+    {
+        return eventId;
+    }
+
+    public Event getEvent()
+    {
+        return event;
+    }
+
+    public boolean isConflict()
+    {
+        return conflict;
+    }
+
+    public List<UserAccount> getSpeakers()
+    {
+        return speakers;
+    }
+
     @Override
     protected boolean handleError(Context context, Throwable e)
     {

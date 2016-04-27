@@ -5,9 +5,9 @@ package co.touchlab.droidconandroid.presenter;
 public class ConferenceDayHolder
 {
     public final String dayString;
-    public final ConferenceHourHolder[] hourHolders;
+    public final ScheduleBlockHour[] hourHolders;
 
-    public ConferenceDayHolder(String dayString, ConferenceHourHolder[] hourHolders)
+    public ConferenceDayHolder(String dayString, ScheduleBlockHour[] hourHolders)
     {
         this.dayString = dayString;
         this.hourHolders = hourHolders;

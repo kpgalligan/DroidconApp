@@ -4,10 +4,10 @@ import android.util.Log;
 
 import co.touchlab.android.threading.tasks.helper.RetrofitPersistedTask;
 import co.touchlab.droidconandroid.CrashReport;
-import co.touchlab.droidconandroid.PlatformClientContainer;
 import co.touchlab.droidconandroid.data.AppPrefs;
 import co.touchlab.droidconandroid.network.DataHelper;
 import co.touchlab.droidconandroid.network.RsvpRequest;
+import co.touchlab.droidconandroid.presenter.AppManager;
 
 /**
  * Created by kgalligan on 8/21/15.
@@ -26,7 +26,8 @@ public class RemoveRsvp extends RetrofitPersistedTask
     @Override
     protected void runNetwork(Context context)
     {
-        RsvpRequest rsvpRequest = DataHelper.makeRequestAdapter(context, PlatformClientContainer.platformClient).create(RsvpRequest.class);
+        RsvpRequest rsvpRequest = DataHelper.makeRequestAdapter(context, AppManager
+                .getPlatformClient()).create(RsvpRequest.class);
         String userUuid = AppPrefs.getInstance(context).getUserUuid();
 
         if (eventId != null && userUuid != null) {

@@ -50,19 +50,19 @@ class WelcomeFragment : Fragment() {
         super.onActivityCreated(savedInstanceState)
 
         val bundle = getArguments()
-        getView().setBackgroundColor(getResources().getColor(bundle.getInt(BACKGROUND_COLOR_RES)))
+        view?.setBackgroundColor(getResources().getColor(bundle.getInt(BACKGROUND_COLOR_RES)))
 
         val root = getView()
-        val image = root.findViewById(R.id.image)!! as ImageView
+        val image = root?.findViewById(R.id.image)!! as ImageView
         val imageRes = bundle.getInt(IMAGE_RES)
         image.setImageDrawable(ResourcesCompat.getDrawable(getActivity(), imageRes))
 
 
-        val titleTV = root.findViewById(R.id.title)!! as TextView
+        val titleTV = root?.findViewById(R.id.title)!! as TextView
         titleTV.setText(bundle.getInt(TITLE_RES))
         titleTV.setTextColor(getResources().getColor(bundle.getInt(TEXT_COLOR_RES)))
 
-        val descTV = root.findViewById(R.id.description)!! as TextView
+        val descTV = root?.findViewById(R.id.description)!! as TextView
         descTV.setText(bundle.getInt(DESC_RES))
         descTV.setTextColor(getResources().getColor(bundle.getInt(TEXT_COLOR_RES)))
 
@@ -101,7 +101,7 @@ class SponsorWelcomeFragment : BaseSponsorWelcomeFragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
-        val root = getView()
+        val root = view!!
 
         root.setBackgroundColor(getResources().getColor(android.R.color.white))
 
@@ -137,7 +137,7 @@ class Sponsor2WelcomeFragment : BaseSponsorWelcomeFragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
-        val root = getView()
+        val root = view!!
 
         root.setBackgroundColor(getResources().getColor(android.R.color.white))
 

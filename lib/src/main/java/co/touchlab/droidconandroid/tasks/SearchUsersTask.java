@@ -5,10 +5,10 @@ import java.util.concurrent.atomic.AtomicBoolean;
 
 import co.touchlab.android.threading.tasks.Task;
 import co.touchlab.droidconandroid.CrashReport;
-import co.touchlab.droidconandroid.PlatformClientContainer;
 import co.touchlab.droidconandroid.network.DataHelper;
 import co.touchlab.droidconandroid.network.FindUserRequest;
 import co.touchlab.droidconandroid.network.dao.UserSearchResponse;
+import co.touchlab.droidconandroid.presenter.AppManager;
 import retrofit.RestAdapter;
 
 /**
@@ -31,7 +31,8 @@ public class SearchUsersTask extends Task
         if(canceled.get())
             return;
 
-        RestAdapter restAdapter = DataHelper.makeRequestAdapter(context, PlatformClientContainer.platformClient);
+        RestAdapter restAdapter = DataHelper.makeRequestAdapter(context, AppManager
+                .getPlatformClient());
         FindUserRequest findUserRequest = restAdapter.create(FindUserRequest.class);
         userSearchResponse = findUserRequest.searchUsers(search);
     }

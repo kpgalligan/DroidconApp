@@ -8,7 +8,7 @@
 
 import UIKit
 
-@objc class ShowEventDetailViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
+@objc class ShowEventDetailViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, DCPEventDetailHost {
     
     var titleString: String?
     var descriptionString: String?
@@ -16,7 +16,7 @@ import UIKit
     var trackNumString: String?
     var event: DCDEvent!
     var speakers: [DCDEventSpeaker]?
-    var sessionDetailPresenter: DCPSessionDetailPresenter!
+    var eventDetailPresenter: DCPEventDetailPresenter!
     
     @IBOutlet weak var tableView : UITableView!
     
@@ -36,7 +36,7 @@ import UIKit
         if indexPath.section == 0 {
             let cell:EventTableViewCell = tableView.dequeueReusableCellWithIdentifier("eventCell") as! EventTableViewCell
             
-            cell.loadInfo(titleString!, description: descriptionString!, track: trackNumString!, time: dateTime!, event: event, sessionDetailPresenter: sessionDetailPresenter)
+            cell.loadInfo(titleString!, description: descriptionString!, track: trackNumString!, time: dateTime!, event: event, eventDetailPresenter: eventDetailPresenter)
             cell.selectionStyle = UITableViewCellSelectionStyle.None
             return cell
         } else {
@@ -111,11 +111,10 @@ import UIKit
         UINavigationBar.appearance().tintColor = UIColor.whiteColor()
     }
     
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        sessionDetailPresenter = DCPSessionDetailPresenter(androidContentContext: DCPAppManager.getContext())
+        eventDetailPresenter = DCPEventDetailPresenter(androidContentContext: DCPAppManager.getContext(), withLong: event.getId(), withDCPEventDetailHost: self)
         
         let nib = UINib(nibName: "EventTableViewCell", bundle: nil)
         tableView.registerNib(nib, forCellReuseIdentifier: "eventCell")
@@ -135,5 +134,11 @@ import UIKit
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
+    }
+    
+    func dataRefresh() {
+        event = eventDetailPresenter.getEventDetailLoadTask().getEvent();
+        speakers = PlatformContext_iOS.javaListToNSArray(eventDetailPresenter.getEventDetailLoadTask().getEvent().getSpeakerList()) as! [DCDEventSpeaker];
+        tableView.reloadData();
     }
 }

@@ -16,11 +16,11 @@ class EventTableViewCell: UITableViewCell {
     @IBOutlet weak var rsvpButton : UIButton!
     
     var event: DCDEvent!
-    var sessionDetailPresenter: DCPSessionDetailPresenter!
+    var eventDetailPresenter: DCPEventDetailPresenter!
     
-    func loadInfo(title: String, description: String, track: String, time: String, event: DCDEvent, sessionDetailPresenter: DCPSessionDetailPresenter) {
+    func loadInfo(title: String, description: String, track: String, time: String, event: DCDEvent, eventDetailPresenter: DCPEventDetailPresenter) {
         self.event = event
-        self.sessionDetailPresenter = sessionDetailPresenter
+        self.eventDetailPresenter = eventDetailPresenter
         titleLabel.text = title
         descriptionLabel.text = description
         timeInfoLabel.text = "Track " + track + ", " + time
@@ -28,7 +28,7 @@ class EventTableViewCell: UITableViewCell {
         titleLabel.sizeToFit()
         descriptionLabel.sizeToFit()
         
-        rsvpButton.setTitle(event.isRsvped() ? "Rsvp": "Rsvp", forState: .Normal)
+        updateUi()
         rsvpButton.sizeToFit()
     }
     
@@ -37,14 +37,14 @@ class EventTableViewCell: UITableViewCell {
     }
     
     @IBAction func toggleRsvp(sender: AnyObject){
-        self.sessionDetailPresenter.rsvpEventWithDCDEvent(event)
-        if event.isRsvped() {
-            event.setRsvpUuidWithNSString(nil)
-        }
-        else {
-            event.setRsvpUuidWithNSString("asdf")
-        }
-        updateUi()
+        self.eventDetailPresenter.toggleRsvp()
+//        if event.isRsvped() {
+//            event.setRsvpUuidWithNSString(nil)
+//        }
+//        else {
+//            event.setRsvpUuidWithNSString("asdf")
+//        }
+//        updateUi()
     }
     
     override func awakeFromNib() {

@@ -94,7 +94,7 @@ class EventDetailAdapter(val context: Context, val trackColor: Int) : RecyclerVi
 
     override fun getItemCount(): Int
     {
-        return data.size()
+        return data.size
     }
 
     override  fun getItemViewType (position: Int): Int
@@ -174,11 +174,11 @@ class EventDetailAdapter(val context: Context, val trackColor: Int) : RecyclerVi
         }
     }
 
-    inner data class TextDetail(type: Int, val text: String, val icon: Int): Detail(type)
+    inner class TextDetail(type: Int, val text: String, val icon: Int): Detail(type)
 
-    inner data class SpeakerDetail(type: Int, val avatar: String?, val name: String, val bio: String?, val userCode: String): Detail(type)
+    inner class SpeakerDetail(type: Int, val avatar: String?, val name: String, val bio: String?, val userCode: String): Detail(type)
 
-    inner data class SpaceDetail(type: Int, val size: Int): Detail(type)
+    inner class SpaceDetail(type: Int, val size: Int): Detail(type)
 
     //=================== Type ViewHolders ===================
     inner class TextVH(val item: View) : RecyclerView.ViewHolder(item)
@@ -193,7 +193,7 @@ class EventDetailAdapter(val context: Context, val trackColor: Int) : RecyclerVi
         }
     }
 
-    inner data class DividerVH(val item: View) : RecyclerView.ViewHolder(item)
+    inner class DividerVH(val item: View) : RecyclerView.ViewHolder(item)
 
     inner class SpeakerVH(val item: View): RecyclerView.ViewHolder(item)
     {

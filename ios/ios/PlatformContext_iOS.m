@@ -8,10 +8,10 @@
 
 #import "PlatformContext_iOS.h"
 #import "co/touchlab/droidconandroid/presenter/ConferenceDayHolder.h"
-#import "co/touchlab/droidconandroid/presenter/ConferenceHourHolder.h"
+#import "co/touchlab/droidconandroid/presenter/ScheduleBlockHour.h"
 #import "co/touchlab/droidconandroid/data/UserAccount.h"
 #import "co/touchlab/droidconandroid/presenter/AppManager.h"
-#import "java/util/ArrayList.h"
+#import "ios-Swift.h"
 
 @implementation PlatformContext_iOS
 
@@ -40,18 +40,17 @@
     NSMutableArray *array = [[NSMutableArray alloc] init];
     
     for (int i = 0; i < objArray.length; i++) {
-        DCPConferenceHourHolder *holder = [objArray objectAtIndex:i];
+        DCPScheduleBlockHour *holder = [objArray objectAtIndex:i];
         [array addObject:holder];
     }
 
     return array;
 }
 
-- (NSArray *)getHourBlocksArray
+- (NSMutableArray *)getHourBlocksArray
 {
     IOSObjectArray *objArray;
     NSMutableArray *array = [[NSMutableArray alloc] init];
-    NSArray *sortedArray;
     
     if (!self.isDayTwo) {
         DCPConferenceDayHolder *daySchedule = [self.conferenceDays objectAtIndex:0];
@@ -67,26 +66,20 @@
         [self.dateFormatter setDateFormat:@"hh:mma"];
     }
     
-    sortedArray = [array sortedArrayUsingComparator:^NSComparisonResult(id a, id b) {
-        DCPConferenceHourHolder *holderA = (DCPConferenceHourHolder *)a;
-        DCPConferenceHourHolder *holderB = (DCPConferenceHourHolder *)b;
-        NSString *first = holderA->hourString_;
-        NSString *second = holderB->hourString_;
-        NSDate *date1 = [self.dateFormatter dateFromString:first];
-        NSDate *date2 = [self.dateFormatter dateFromString:second];
-        return [date1 compare:date2];
-    }];
-    
-    return sortedArray;
+    return array;
 }
 
 - (NSArray *)getSpeakersArrayFromEvent:(DCDEvent *)event
 {
-    JavaUtilArrayList *speakersList = (JavaUtilArrayList *)event->speakerList_;
+    return [PlatformContext_iOS javaListToNSArray:event->speakerList_];
+}
+
++ (NSArray *)javaListToNSArray:(id<JavaUtilList>)list
+{
     NSMutableArray *array = [[NSMutableArray alloc] init];
     
-    for (int i = 0; i < speakersList.size; i++) {
-        [array addObject:[speakersList getWithInt:(jint)i]];
+    for (int i = 0; i < [list size]; i++) {
+        [array addObject:[list getWithInt:(jint)i]];
     }
     
     return [array copy];
@@ -169,49 +162,60 @@
 
 #pragma Table View - Delegate
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
-    if(self.hourBlocks == nil)
-        return 0;
-    else
-        return [self.hourBlocks count];
+//    if(self.hourBlocks == nil)
+//        return 0;
+//    else
+//        return [self.hourBlocks count];
+    return 1;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
-    DCPConferenceHourHolder *hourHolder = [self.hourBlocks objectAtIndex:section];
-    NSArray *scheduleBlocks = (NSArray *)hourHolder->scheduleBlocks_;
-    return [scheduleBlocks count];
+    
+    if(self.conferenceDays == nil)
+        return 0;
+    
+    if (!self.isDayTwo) {
+        DCPConferenceDayHolder *daySchedule = [self.conferenceDays objectAtIndex:0];
+        return daySchedule->hourHolders_->size_;
+    } else {
+        DCPConferenceDayHolder *daySchedule = [self.conferenceDays objectAtIndex:1];
+        return daySchedule->hourHolders_->size_;
+    }
+
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     static NSString *cellIdentifier = @"cellIdentifier";
     
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
-    if (cell == nil) {
-        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:cellIdentifier];
-    }
+    EventListCell *cell = (EventListCell*)[tableView dequeueReusableCellWithIdentifier:cellIdentifier];
     
-    DCPConferenceHourHolder *hourHolder = [self.hourBlocks objectAtIndex:[indexPath section]];
-    NSArray *scheduleBlocks = (NSArray *)hourHolder->scheduleBlocks_;
+    DCPScheduleBlockHour *hourHolder = [self.hourBlocks objectAtIndex:[indexPath row]];
+//    NSArray *scheduleBlocks = (NSArray *)hourHolder->scheduleBlocks_;
     
-    NSObject *eventObj = [scheduleBlocks objectAtIndex:[indexPath row]];
+    NSObject *eventObj = hourHolder->scheduleBlock_;
     if ([eventObj isKindOfClass:[DCDEvent class]]) {
         DCDEvent *event = (DCDEvent *)eventObj;
-        [cell.textLabel setText:event->name_];
         NSArray *speakers = [self getSpeakersArrayFromEvent:event];
-        [cell.detailTextLabel setText:[self formatSpeakerStringFromArray:speakers]];
         
-        [cell.textLabel setTextColor:[UIColor blackColor]];
-        [cell.detailTextLabel setTextColor:[UIColor colorWithRed:(151/255.0) green:(151/255.0) blue:(151/255.0) alpha:1.0]];
-        [cell setBackgroundColor:[UIColor whiteColor]];
-        [cell setUserInteractionEnabled:YES];
+        [cell.titleLabel setText:event->name_];
+        [cell.speakerNamesLabel setText:[self formatSpeakerStringFromArray:speakers]];
+        [cell.timeLabel setText:hourHolder->hourStringDisplay_];
+        
+//        [cell.textLabel setTextColor:[UIColor blackColor]];
+//        [cell.detailTextLabel setTextColor:[UIColor colorWithRed:(151/255.0) green:(151/255.0) blue:(151/255.0) alpha:1.0]];
+//        [cell setBackgroundColor:[UIColor whiteColor]];
+//        [cell setUserInteractionEnabled:YES];
     } else {
         DCDBlock *event = (DCDBlock *)eventObj;
-        [cell.textLabel setText:event->name_];
-        [cell.detailTextLabel setText:[self getEventTimeFromStart:[event getStartFormatted] andEnd:[event getEndFormatted]]];
         
-        [cell.textLabel setTextColor:[UIColor colorWithRed:(87/255.0) green:(125/255.0) blue:(140/255.0) alpha:1.0]];
-        [cell.detailTextLabel setTextColor:[UIColor colorWithRed:(87/255.0) green:(125/255.0) blue:(140/255.0) alpha:1.0]];
-        [cell setBackgroundColor:[UIColor lightGrayColor]];
-        [cell setUserInteractionEnabled:NO];
+        [cell.titleLabel setText:event->name_];
+        [cell.speakerNamesLabel setText:[self getEventTimeFromStart:[event getStartFormatted] andEnd:[event getEndFormatted]]];
+        [cell.timeLabel setText:@" "];
+                
+//        [cell.textLabel setTextColor:[UIColor colorWithRed:(87/255.0) green:(125/255.0) blue:(140/255.0) alpha:1.0]];
+//        [cell.detailTextLabel setTextColor:[UIColor colorWithRed:(87/255.0) green:(125/255.0) blue:(140/255.0) alpha:1.0]];
+//        [cell setBackgroundColor:[UIColor lightGrayColor]];
+//        [cell setUserInteractionEnabled:NO];
     }
     
     cell.layer.opaque = YES;
@@ -222,10 +226,10 @@
 {
     [tableView deselectRowAtIndexPath:indexPath animated:NO];
     
-    DCPConferenceHourHolder *hourHolder = [self.hourBlocks objectAtIndex:[indexPath section]];
-    NSArray *scheduleBlocks = (NSArray *)hourHolder->scheduleBlocks_;
+//    DCPConferenceHourHolder *hourHolder = [self.hourBlocks objectAtIndex:[indexPath section]];
+//    NSArray *scheduleBlocks = (NSArray *)hourHolder->scheduleBlocks_;
     
-    NSObject *eventObj = [scheduleBlocks objectAtIndex:[indexPath row]];
+    NSObject *eventObj = ((DCPScheduleBlockHour*)[self.hourBlocks objectAtIndex:[indexPath row]])->scheduleBlock_;
     if ([eventObj isKindOfClass:[DCDEvent class]]) {
         DCDEvent *event = (DCDEvent *)eventObj;
         [self.reloadDelegate showEventDetailViewWithEvent:event andIndex:[indexPath row]];
@@ -240,8 +244,8 @@
     [label setFont:[UIFont systemFontOfSize:12.0]];
     [label setTextColor:[UIColor colorWithRed:(87/255.0) green:(125/255.0) blue:(140/255.0) alpha:1.0]];
     [label setTextAlignment:NSTextAlignmentCenter];
-    DCPConferenceHourHolder *hourHolder = [self.hourBlocks objectAtIndex:section];
-    NSString *sectionName = hourHolder->hourString_;
+//    DCPConferenceHourHolder *hourHolder = [self.hourBlocks objectAtIndex:section];
+    NSString *sectionName = @"Heyo";
     [label setText:sectionName];
     [headerView addSubview:label];
     [headerView setBackgroundColor:[UIColor clearColor]];

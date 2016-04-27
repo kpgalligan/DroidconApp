@@ -8,8 +8,9 @@
 
 #import <UIKit/UIKit.h>
 #import <Google/SignIn.h>
+#import "co/touchlab/droidconandroid/presenter/AppManager.h"
 
-@interface AppDelegate : UIResponder <UIApplicationDelegate, GIDSignInDelegate>
+@interface AppDelegate : UIResponder <UIApplicationDelegate, DCPAppManager_LoadDataSeed, GIDSignInDelegate>
 
 @property (strong, nonatomic) UIWindow *window;
 

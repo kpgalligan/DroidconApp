@@ -17,7 +17,7 @@ class UserDetailActivity : AppCompatActivity(), UserDetailFragment.Companion.Fin
         val USER_CODE = "USER_CODE"
         fun callMe(a: Activity, userCode: String)
         {
-            val i = Intent(a, javaClass<UserDetailActivity>())
+            val i = Intent(a, UserDetailActivity::class.java)
             i.putExtra(USER_CODE, userCode)
             a.startActivity(i)
         }

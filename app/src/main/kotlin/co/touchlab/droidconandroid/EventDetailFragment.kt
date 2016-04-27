@@ -24,6 +24,8 @@ import co.touchlab.android.threading.tasks.TaskQueue
 import co.touchlab.droidconandroid.data.Event
 import co.touchlab.droidconandroid.data.Track
 import co.touchlab.droidconandroid.data.UserAccount
+import co.touchlab.droidconandroid.presenter.EventDetailHost
+import co.touchlab.droidconandroid.presenter.EventDetailPresenter
 import co.touchlab.droidconandroid.tasks.*
 import com.wnafee.vector.compat.ResourcesCompat
 import java.text.SimpleDateFormat
@@ -46,6 +48,7 @@ class EventDetailFragment() : Fragment()
 
     private var trackColor: Int = 0
     private var fabColorList: ColorStateList? = null
+    private var presenter: EventDetailPresenter? = null
 
     companion object
     {
@@ -114,8 +117,8 @@ class EventDetailFragment() : Fragment()
         toolbar!!.setTitle("")
         var activity = getActivity() as AppCompatActivity
         activity.setSupportActionBar(toolbar)
-        activity.getSupportActionBar().setDisplayHomeAsUpEnabled(true)
-        activity.getSupportActionBar().setDisplayShowHomeEnabled(true)
+        activity.getSupportActionBar()?.setDisplayHomeAsUpEnabled(true)
+        activity.getSupportActionBar()?.setDisplayShowHomeEnabled(true)
 
         //collect the views
         name = view.findViewById(R.id.name) as TextView
@@ -129,39 +132,26 @@ class EventDetailFragment() : Fragment()
         updateTrackColor(findTrackIdArg())
         backdrop!!.setBackgroundColor(trackColor)
 
-        startDetailRefresh()
+        presenter = EventDetailPresenter(getContext(), findEventIdArg(), EventDetailHost {
+            dataRefresh()
+        })
 
         return view
     }
 
-    private fun startDetailRefresh()
+    fun dataRefresh()
     {
-        Queues.localQueue(getActivity()).execute(EventDetailLoadTask(findEventIdArg()))
-    }
-
-    public fun onEventMainThread(eventDetailTask: EventDetailLoadTask)
-    {
-        if (!eventDetailTask.eventId.equals(findEventIdArg()))
+        if (!presenter!!.getEventDetailLoadTask().eventId.equals(findEventIdArg()))
             return
 
-        val event = eventDetailTask.event!!
+        val event = presenter!!.getEventDetailLoadTask().event!!
 
         updateTrackColor(event.category)
         updateToolbar(event)
         updateFAB(event)
 
-        updateContent(event, eventDetailTask.speakers, eventDetailTask.conflict)
+        updateContent(event, presenter!!.getEventDetailLoadTask().speakers, presenter!!.getEventDetailLoadTask().conflict)
    }
-
-    public fun onEventMainThread(@suppress("UNUSED_PARAMETER") task: AddRsvpTask)
-    {
-        startDetailRefresh()
-    }
-
-    public fun onEventMainThread(@suppress("UNUSED_PARAMETER") task: RemoveRsvpTask)
-    {
-        startDetailRefresh()
-    }
 
     public fun onEventMainThread(task: TrackDrawableTask)
     {
@@ -308,11 +298,11 @@ class EventDetailFragment() : Fragment()
         var formattedStart = timeFormat.format(startDateVal)
         var formattedEnd =  timeFormat.format(endDateVal)
 
-        val startMarker = formattedStart.substring(Math.max(formattedStart.length() - 3, 0))
-        val endMarker = formattedEnd.substring(Math.max(formattedEnd.length() - 3, 0))
+        val startMarker = formattedStart.substring(Math.max(formattedStart.length - 3, 0))
+        val endMarker = formattedEnd.substring(Math.max(formattedEnd.length - 3, 0))
 
         if (TextUtils.equals(startMarker, endMarker)) {
-            formattedStart = formattedStart.substring(0, Math.max(formattedStart.length() - 3, 0))
+            formattedStart = formattedStart.substring(0, Math.max(formattedStart.length - 3, 0))
         }
 
         adapter.addHeader(venueFormatString.format(event.venue.name, formattedStart, formattedEnd), R.drawable.ic_map)

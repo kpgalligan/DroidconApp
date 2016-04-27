@@ -8,8 +8,8 @@ import com.google.gson.GsonBuilder;
 
 import org.jetbrains.annotations.NotNull;
 
-import co.touchlab.droidconandroid.PlatformClient;
 import co.touchlab.droidconandroid.data.AppPrefs;
+import co.touchlab.droidconandroid.presenter.PlatformClient;
 import retrofit.ErrorHandler;
 import retrofit.RequestInterceptor;
 import retrofit.RestAdapter;

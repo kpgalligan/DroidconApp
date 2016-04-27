@@ -23,7 +23,7 @@ class EventDetailActivity : AppCompatActivity()
         }
 
         fun createIntent(a: Context?, category: String?, id: Long): Intent {
-            val i = Intent(a, javaClass<EventDetailActivity>())
+            val i = Intent(a, EventDetailActivity::class.java)
             i.putExtra(EVENT_ID, id)
             i.putExtra(TRACK_ID, category)
             return i

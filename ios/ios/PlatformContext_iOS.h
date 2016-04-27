@@ -13,6 +13,8 @@
 #import "co/touchlab/droidconandroid/data/Block.h"
 #import "co/touchlab/droidconandroid/data/EventSpeaker.h"
 #import "android/content/Context.h"
+#import "java/util/List.h"
+#import "java/util/ArrayList.h"
 
 @protocol PlatformContext_iOSDelegate <NSObject>
 
@@ -36,5 +38,6 @@
 - (NSArray *)getSpeakersArrayFromEvent:(DCDEvent *)event;
 - (NSString *)getEventTimeFromStart:(NSString *)startTime andEnd:(NSString *)endTime;
 - (NSString *)getFullEventTime:(DCDEvent *)event;
++ (NSArray *)javaListToNSArray:(id<JavaUtilList>)list;
 
 @end

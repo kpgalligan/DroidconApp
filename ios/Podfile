@@ -172,6 +172,8 @@ target 'ios' do
     j2objc_eventbus
     j2objc_commons_io
     pod 'J2OBJC', :path => ENV['J2OBJC_HOME']
+pod 'Fabric'
+pod 'Crashlytics'
 pod 'Google/SignIn'
 end
 
@@ -192,6 +194,8 @@ target 'iosTests' do
     j2objc_eventbus
     j2objc_commons_io
     pod 'J2OBJC', :path => ENV['J2OBJC_HOME']
+pod 'Fabric'
+pod 'Crashlytics'
 pod 'Google/SignIn'
 end
 

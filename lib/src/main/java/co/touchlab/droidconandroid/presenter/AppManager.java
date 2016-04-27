@@ -8,6 +8,9 @@ import java.util.Calendar;
 import java.util.Date;
 
 import co.touchlab.droidconandroid.data.AppPrefs;
+import co.touchlab.droidconandroid.tasks.Queues;
+import co.touchlab.droidconandroid.tasks.SeedScheduleDataTask;
+import co.touchlab.droidconandroid.tasks.persisted.RefreshScheduleData;
 import co.touchlab.droidconandroid.utils.TimeUtils;
 
 /**
@@ -15,16 +18,40 @@ import co.touchlab.droidconandroid.utils.TimeUtils;
  */
 public class AppManager
 {
-    private static Context context;
+    public static final String FIRST_SEED = "FIRST_SEED";
 
-    public static void initContext(Context context)
+    private static Context context;
+    private static PlatformClient platformClient;
+
+    public interface LoadDataSeed
+    {
+        String dataSeed();
+    }
+
+    public static void initContext(Context context, PlatformClient platformClient, LoadDataSeed loadDataSeed)
     {
         AppManager.context = context;
+        AppManager.platformClient = platformClient;
+
+        if(AppPrefs.getInstance(context).once(FIRST_SEED))
+        {
+            //            getAssets().open("dataseed.json")
+            final String seed = loadDataSeed.dataSeed();
+            Queues.localQueue(context).execute(new SeedScheduleDataTask(seed));
+        }
+
+//        if(AppPrefs.getInstance(context).isLoggedIn())
+//            RefreshScheduleData.callMe(context);
     }
 
     public static Context getContext()
     {
         return context;
+    }
+
+    public static PlatformClient getPlatformClient()
+    {
+        return platformClient;
     }
 
     public enum AppScreens
