@@ -294,12 +294,21 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="jgK-ET-Vgx" customClass="GIDSignInButton">
-                                <rect key="frame" x="180" y="54" width="240" height="128"/>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="jgK-ET-Vgx" customClass="GIDSignInButton">
+                                <rect key="frame" x="250" y="50" width="100" height="100"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="100" id="Dib-Zc-G0H"/>
+                                    <constraint firstAttribute="width" constant="100" id="Q4d-ML-5P4"/>
+                                    <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="100" id="Ydw-Bt-iLf"/>
+                                </constraints>
                             </view>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="jgK-ET-Vgx" firstAttribute="top" secondItem="Dk3-nq-cPB" secondAttribute="bottom" constant="30" id="85e-M4-669"/>
+                            <constraint firstItem="jgK-ET-Vgx" firstAttribute="centerX" secondItem="eUg-4X-rId" secondAttribute="centerX" id="9xu-Dd-uVu"/>
+                        </constraints>
                     </view>
                     <connections>
                         <segue destination="34T-rw-TB2" kind="show" identifier="Schedule" id="Mmg-41-vsk"/>
@@ -311,8 +320,8 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="Dx9-m1-3fh"/>
-        <segue reference="KfB-yP-8Oj"/>
+        <segue reference="Mmg-41-vsk"/>
+        <segue reference="2Jb-Ru-pe7"/>
         <segue reference="6Qh-G4-O2e"/>
     </inferredMetricsTieBreakers>
 </document>
