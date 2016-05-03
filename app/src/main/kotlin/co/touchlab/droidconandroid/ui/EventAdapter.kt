@@ -12,6 +12,7 @@ import co.touchlab.droidconandroid.data.Block
 import co.touchlab.droidconandroid.data.Event
 import co.touchlab.droidconandroid.data.ScheduleBlock
 import co.touchlab.droidconandroid.data.Track
+import co.touchlab.droidconandroid.presenter.ConferenceDataPresenter
 import co.touchlab.droidconandroid.presenter.ScheduleBlockHour
 import co.touchlab.droidconandroid.tasks.EventDetailLoadTask
 import com.wnafee.vector.compat.ResourcesCompat
@@ -81,7 +82,15 @@ class EventAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder> {
         holder as ScheduleBlockViewHolder
         val scheduleBlockHour = filteredData.get(position)
 
-        if(getItemViewType(position) == VIEW_TYPE_EVENT || getItemViewType(position) == VIEW_TYPE_PAST_EVENT){
+        ConferenceDataPresenter.styleEventRow(scheduleBlockHour, holder, allEvents);
+
+        if(!scheduleBlockHour.scheduleBlock.isBlock)
+        {
+            holder.card.setOnClickListener{
+                eventClickListener.onEventClick(scheduleBlockHour.scheduleBlock as Event);
+            }
+        }
+        /*if(getItemViewType(position) == VIEW_TYPE_EVENT || getItemViewType(position) == VIEW_TYPE_PAST_EVENT){
 
             val event = scheduleBlockHour.scheduleBlock as Event
 
@@ -126,7 +135,7 @@ class EventAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder> {
             holder.locationTime.setText(getDetailedTime(block))
             holder.rsvp.setVisibility(View.GONE)
 
-        }
+        }*/
     }
 
     private fun getDetailedTime(scheduleBlock: ScheduleBlock): String? {
@@ -207,7 +216,31 @@ class EventAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder> {
         update(null)
     }
 
-    public class ScheduleBlockViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+    public class ScheduleBlockViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView), ConferenceDataPresenter.EventRow {
+        override fun setTitleText(s: String?) {
+            title.text = s;
+        }
+
+        override fun setTimeText(s: String?) {
+            time.text = s;
+        }
+
+        override fun setDetailText(s: String?) {
+            locationTime.text = s;
+        }
+
+        override fun setRsvpVisible(b: Boolean) {
+            rsvp.visibility = if(b) View.VISIBLE else View.GONE;
+        }
+
+        override fun setRsvpChecked() {
+            rsvp.setImageDrawable(ResourcesCompat.getDrawable(itemView.context, R.drawable.ic_check_green));
+        }
+
+        override fun setRsvpConflict() {
+            rsvp.setImageDrawable(ResourcesCompat.getDrawable(itemView.context, R.drawable.ic_check_red));
+        }
+
         public val title: TextView
         public val time: TextView
         public val locationTime: TextView

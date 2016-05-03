@@ -82,7 +82,7 @@ didSignInForUser:(GIDGoogleUser *)user
 //    NSString *familyName = user.profile.familyName;
 //    NSString *email = user.profile.email;
     
-    LoginViewController *rootViewController = (LoginViewController *)[UIViewController currentViewController];
+    LoginViewController *rootViewController = (LoginViewController *)[UIViewController currentViewController:[LoginViewController class]];
     [rootViewController loggedIn:user];
 //    UIWindow *window = [UIApplication sharedApplication].keyWindow;
 //    LoginViewController *rootViewController = (LoginViewController *)window.rootViewController;

@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		2819198B2F050949FAC259B2 /* libPods-ios.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E1B4D9AF4F93DD2CC7D9561E /* libPods-ios.a */; };
 		631B98F01C7D6533008AA20D /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 631B98EF1C7D6533008AA20D /* main.m */; };
 		631B98F31C7D6533008AA20D /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 631B98F21C7D6533008AA20D /* AppDelegate.m */; };
 		631B98F61C7D6533008AA20D /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 631B98F51C7D6533008AA20D /* ViewController.m */; };
@@ -22,9 +23,8 @@
 		63EE30D21CC6C76200B64D3D /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63EE30D11CC6C76200B64D3D /* LoginViewController.swift */; };
 		63EE30D41CC7DDB800B64D3D /* UIViewController+Utils.m in Sources */ = {isa = PBXBuildFile; fileRef = 63EE30D31CC7DDB800B64D3D /* UIViewController+Utils.m */; };
 		63EE30DF1CD025AC00B64D3D /* EventListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63EE30DE1CD025AC00B64D3D /* EventListCell.swift */; };
-		A842C04EE493F921814D210F /* libPods-iosTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 06D42FB4A8B88AE64821B7E8 /* libPods-iosTests.a */; };
+		693190073F6763BB30DA189E /* libPods-iosTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 118F77AB4DD15E9EDAE1869C /* libPods-iosTests.a */; };
 		AAF5E2779B803CA534CFC949 /* libPods-iosUITests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 3BD8F26D64159CD133170ED4 /* libPods-iosUITests.a */; };
-		E892ED366CFA70A9CEC9087C /* libPods-ios.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 96945540333DB71F61C263B6 /* libPods-ios.a */; };
 		FA258F5E1C934BA200986E0D /* dataseed.json in Resources */ = {isa = PBXBuildFile; fileRef = FA258F5D1C934BA200986E0D /* dataseed.json */; };
 		FA258F611C937F5900986E0D /* NoteTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = FA258F601C937F5900986E0D /* NoteTableViewCell.xib */; };
 		FA258F641C9381C600986E0D /* NoteTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = FA258F631C9381C600986E0D /* NoteTableViewCell.m */; };
@@ -55,7 +55,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		06D42FB4A8B88AE64821B7E8 /* libPods-iosTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-iosTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		118F77AB4DD15E9EDAE1869C /* libPods-iosTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-iosTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		23914ED05B4C391D7B642F70 /* Pods-iosUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-iosUITests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-iosUITests/Pods-iosUITests.debug.xcconfig"; sourceTree = "<group>"; };
 		25FA9E7B87726CEEE6EFAE7F /* Pods-ios.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ios.release.xcconfig"; path = "Pods/Target Support Files/Pods-ios/Pods-ios.release.xcconfig"; sourceTree = "<group>"; };
 		281DA7F1FC55C7B93154D081 /* Pods-iosTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-iosTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-iosTests/Pods-iosTests.debug.xcconfig"; sourceTree = "<group>"; };
@@ -86,8 +86,8 @@
 		63EE30DE1CD025AC00B64D3D /* EventListCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventListCell.swift; sourceTree = "<group>"; };
 		8AB85F4E5076A64AD1FA672C /* Pods-ios.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ios.debug.xcconfig"; path = "Pods/Target Support Files/Pods-ios/Pods-ios.debug.xcconfig"; sourceTree = "<group>"; };
 		94A921638B3412284B5796F9 /* Pods-iosUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-iosUITests.release.xcconfig"; path = "Pods/Target Support Files/Pods-iosUITests/Pods-iosUITests.release.xcconfig"; sourceTree = "<group>"; };
-		96945540333DB71F61C263B6 /* libPods-ios.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-ios.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		C82EA0FD61D649A5A084911A /* Pods-iosTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-iosTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-iosTests/Pods-iosTests.release.xcconfig"; sourceTree = "<group>"; };
+		E1B4D9AF4F93DD2CC7D9561E /* libPods-ios.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-ios.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		FA258F5D1C934BA200986E0D /* dataseed.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = dataseed.json; sourceTree = "<group>"; };
 		FA258F601C937F5900986E0D /* NoteTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = NoteTableViewCell.xib; sourceTree = "<group>"; };
 		FA258F621C9381C600986E0D /* NoteTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NoteTableViewCell.h; sourceTree = "<group>"; };
@@ -112,7 +112,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E892ED366CFA70A9CEC9087C /* libPods-ios.a in Frameworks */,
+				2819198B2F050949FAC259B2 /* libPods-ios.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -120,7 +120,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				A842C04EE493F921814D210F /* libPods-iosTests.a in Frameworks */,
+				693190073F6763BB30DA189E /* libPods-iosTests.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -155,9 +155,9 @@
 				FA86A7EA1C91D95400C09CE7 /* libGson.a */,
 				FA86A7E51C91D92200C09CE7 /* libj2objc-shared-debug.a */,
 				FA86A7E61C91D92200C09CE7 /* libj2objc-shared-release.a */,
-				96945540333DB71F61C263B6 /* libPods-ios.a */,
-				06D42FB4A8B88AE64821B7E8 /* libPods-iosTests.a */,
 				3BD8F26D64159CD133170ED4 /* libPods-iosUITests.a */,
+				E1B4D9AF4F93DD2CC7D9561E /* libPods-ios.a */,
+				118F77AB4DD15E9EDAE1869C /* libPods-iosTests.a */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";

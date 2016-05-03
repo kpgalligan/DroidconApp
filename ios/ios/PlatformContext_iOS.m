@@ -201,6 +201,13 @@
         [cell.speakerNamesLabel setText:[self formatSpeakerStringFromArray:speakers]];
         [cell.timeLabel setText:hourHolder->hourStringDisplay_];
         
+        if([event isRsvped] && ![event isPast])
+        {
+            cell.rsvpView.hidden = true;
+        }
+        else{
+            cell.rsvpView.hidden = false;
+        }
 //        [cell.textLabel setTextColor:[UIColor blackColor]];
 //        [cell.detailTextLabel setTextColor:[UIColor colorWithRed:(151/255.0) green:(151/255.0) blue:(151/255.0) alpha:1.0]];
 //        [cell setBackgroundColor:[UIColor whiteColor]];
@@ -211,6 +218,7 @@
         [cell.titleLabel setText:event->name_];
         [cell.speakerNamesLabel setText:[self getEventTimeFromStart:[event getStartFormatted] andEnd:[event getEndFormatted]]];
         [cell.timeLabel setText:@" "];
+        cell.rsvpView.hidden = true;
                 
 //        [cell.textLabel setTextColor:[UIColor colorWithRed:(87/255.0) green:(125/255.0) blue:(140/255.0) alpha:1.0]];
 //        [cell.detailTextLabel setTextColor:[UIColor colorWithRed:(87/255.0) green:(125/255.0) blue:(140/255.0) alpha:1.0]];
