@@ -53,6 +53,8 @@ j2objcConfig {
 
 //    podRetainSource true
 
+//    j2objcCycleFinder { enabled = true }
+
     // Omit these two lines if you don't configure your Xcode project with CocoaPods
     xcodeProjectDir '../ios'  //  suggested directory name
     xcodeTargetsIos 'ios', 'iosTests'  // replace with your iOS targets

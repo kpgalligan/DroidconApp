@@ -2,6 +2,6 @@
 
 @interface UIViewController (Utils)
 
-+(UIViewController*) currentViewController;
++(UIViewController*) currentViewController:(Class)vcType;
 
 @end

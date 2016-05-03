@@ -2,19 +2,23 @@
 
 @implementation UIViewController (Utils)
 
-+(UIViewController*) findBestViewController:(UIViewController*)vc {
-    
++(UIViewController*) findBestViewController:(UIViewController*)vc
+                                           forType:(Class)vcType
+{
+    if([vc isKindOfClass:vcType]){
+        return vc;
+    }
     if (vc.presentedViewController) {
         
         // Return presented view controller
-        return [UIViewController findBestViewController:vc.presentedViewController];
+        return [UIViewController findBestViewController:vc.presentedViewController forType:vcType];
         
     } else if ([vc isKindOfClass:[UISplitViewController class]]) {
         
         // Return right hand side
         UISplitViewController* svc = (UISplitViewController*) vc;
         if (svc.viewControllers.count > 0)
-            return [UIViewController findBestViewController:svc.viewControllers.lastObject];
+            return [UIViewController findBestViewController:svc.viewControllers.lastObject forType:vcType];
         else
             return vc;
         
@@ -23,7 +27,7 @@
         // Return top view
         UINavigationController* svc = (UINavigationController*) vc;
         if (svc.viewControllers.count > 0)
-            return [UIViewController findBestViewController:svc.topViewController];
+            return [UIViewController findBestViewController:svc.topViewController forType:vcType];
         else
             return vc;
         
@@ -32,7 +36,7 @@
         // Return visible view
         UITabBarController* svc = (UITabBarController*) vc;
         if (svc.viewControllers.count > 0)
-            return [UIViewController findBestViewController:svc.selectedViewController];
+            return [UIViewController findBestViewController:svc.selectedViewController forType:vcType];
         else
             return vc;
         
@@ -45,11 +49,11 @@
     
 }
 
-+(UIViewController*) currentViewController {
++(UIViewController*) currentViewController:(Class)vcType {
     
     // Find best view controller
     UIViewController* viewController = [UIApplication sharedApplication].keyWindow.rootViewController;
-    return [UIViewController findBestViewController:viewController];
+    return [UIViewController findBestViewController:viewController forType:vcType];
     
 }
 

@@ -20,4 +20,19 @@ public class EventSpeaker
 
     @DatabaseField
     public int displayOrder;
+
+    public Event getEvent()
+    {
+        return event;
+    }
+
+    public UserAccount getUserAccount()
+    {
+        return userAccount;
+    }
+
+    public int getDisplayOrder()
+    {
+        return displayOrder;
+    }
 }

@@ -41,19 +41,7 @@
     [self loadConferenceSchedule];
     self.tableView.delegate = self.platformContext;
     self.tableView.dataSource = self.platformContext;
-    
-    UIButton* button = [UIButton buttonWithType:UIButtonTypeRoundedRect];
-    button.frame = CGRectMake(20, 50, 100, 30);
-    [button setTitle:@"Crash" forState:UIControlStateNormal];
-    [button addTarget:self action:@selector(crashButtonTapped:) forControlEvents:UIControlEventTouchUpInside];
-    [self.view addSubview:button];
-
 }
-
-- (IBAction)crashButtonTapped:(id)sender {
-    [[Crashlytics sharedInstance] crash];
-}
-
 
 - (void)createSDASimple
 {

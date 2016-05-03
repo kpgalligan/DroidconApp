@@ -10,6 +10,7 @@ import android.content.Intent
 import android.content.IntentSender
 import android.graphics.Color
 import android.graphics.PorterDuff
+import android.os.AsyncTask
 import android.os.Bundle
 import android.support.v4.app.DialogFragment
 import android.support.v7.app.AppCompatActivity
@@ -18,12 +19,16 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.*
 import co.touchlab.droidconandroid.presenter.LoginScreenPresenter
+import co.touchlab.droidconandroid.tasks.Queues
+import co.touchlab.droidconandroid.tasks.RunGoogleLoginTask
+import co.touchlab.droidconandroid.tasks.UpdatedGoogleLoginTask
 import co.touchlab.droidconandroid.utils.Toaster
 import com.google.android.gms.common.ConnectionResult
 import com.google.android.gms.common.GoogleApiAvailability
 import com.google.android.gms.common.api.GoogleApiClient
 import com.google.android.gms.plus.Plus
 import com.google.android.gms.auth.GoogleAuthUtil
+import com.google.android.gms.plus.model.people.Person
 
 /**
  *
@@ -124,6 +129,7 @@ public class SignInActivity : AppCompatActivity(), LoginScreenPresenter.Host {
     override fun onDestroy() {
         super.onDestroy()
         presenter!!.unregister()
+        presenter = null
     }
 
     fun googleClientConnect() {
@@ -163,8 +169,8 @@ public class SignInActivity : AppCompatActivity(), LoginScreenPresenter.Host {
                 }
             }
 
-            val token = GoogleAuthUtil.getToken(this@SignInActivity, accountName!!, SCOPE)
-            presenter!!.runGoogleLogin(token, person?.getDisplayName(), imageURL, coverURL)
+            val runGoogle = RunGoogleLoginTask(accountName, presenter, person.displayName, imageURL, coverURL)
+            Queues.networkQueue(this@SignInActivity).execute(runGoogle)
         }
 
         override fun onConnectionSuspended(i: Int) {

@@ -19,3 +19,4 @@
 #import "co/touchlab/droidconandroid/data/UserAccount.h"
 #import "co/touchlab/droidconandroid/data/EventSpeaker.h"
 #import <Google/SignIn.h>
+#import <Crashlytics/Crashlytics.h>

@@ -50,6 +50,9 @@ android {
     }
 
     productFlavors {
+        albany {
+            applicationId "co.touchlab.droidcon.albany"
+        }
         sf {
             applicationId "co.touchlab.droidcon.sf"
         }

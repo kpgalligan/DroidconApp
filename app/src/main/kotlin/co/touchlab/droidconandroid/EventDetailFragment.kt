@@ -85,6 +85,9 @@ class EventDetailFragment() : Fragment()
         var eventId = getArguments()?.getLong(EVENT_ID, -1)
         if (eventId == null || eventId == -1L)
         {
+            if(activity == null)
+                return -1L;
+
             eventId = getActivity()!!.getIntent()!!.getLongExtra(EVENT_ID, -1)
         }
 
