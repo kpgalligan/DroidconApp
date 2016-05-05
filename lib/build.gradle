@@ -5,9 +5,29 @@ apply plugin: 'com.github.j2objccontrib.j2objcgradle'
 sourceCompatibility = 1.7
 targetCompatibility = 1.7
 
+name
 configurations {
     provided
     compile.extendsFrom provided
+}
+
+model {
+    components {
+        eventbuslibspec(NativeLibrarySpec) {
+            sources {
+                objc {
+//                    source {
+//                        srcDir "src/source"
+//                        include "**/*.c"
+//                    }
+                    exportedHeaders {
+                        srcDir "/Users/kgalligan/devel/xp/gradletrans/eventbus/trans/eb/build/j2objcOutputs/src/main/objc"
+                        include "**/*.h"
+                    }
+                }
+            }
+        }
+    }
 }
 
 dependencies {
@@ -16,32 +36,40 @@ dependencies {
     apt 'co.touchlab.squeaky:squeaky-processor:0.5.0.0'
     compile 'co.touchlab.squeaky:squeaky-query:0.5.0.0'
 //    compile 'com.google.android:android:4.1.1.4'
+    //    compile 'com.intellij:annotations:9.0.4'
     testCompile 'com.google.code.findbugs:jsr305:3.0.0'
-//    compile 'com.intellij:annotations:9.0.4'
-    j2objcLinkage project(":squeakycore")
-    j2objcLinkage project(":squeakyquery")
-    j2objcLinkage project(":androidbase")
+
+    compile 'com.google.j2objc:j2objc-annotations:0.1'
     provided 'com.intellij:annotations:9.0.4'
-    j2objcLinkage project(":intellij")
 
-    compile project(":magicthreads")
-    j2objcLinkage project(":magicthreads")
-    compile project(":retrofit")
-    j2objcLinkage project(":retrofit")
-    compile project(":rxjava")
-    j2objcLinkage project(":rxjava")
-    compile project(":eventbus")
-    j2objcLinkage project(":eventbus")
-    compile project(":commons-io")
-    j2objcLinkage project(":commons-io")
-    compile project(":commons-lang3")
-    j2objcLinkage project(":commons-lang3")
-    compile project(":gson")
-    j2objcLinkage project(":gson")
-    compile project(":dagger")
-    j2objcLinkage project(":dagger")
+//    j2objcLinkage project(":squeakycore")
+//    j2objcLinkage project(":squeakyquery")
+//    j2objcLinkage project(":androidbase")
+//    j2objcLinkage project(":intellij")
+//    j2objcLinkage project(":magicthreads")
+//    j2objcLinkage project(":retrofit")
+//    j2objcLinkage project(":rxjava")
+//    j2objcLinkage project(":rxandroid")
+//    j2objcLinkage project(":commons-io")
+//    j2objcLinkage project(":commons-lang3")
+//    j2objcLinkage project(":gson")
+//    j2objcLinkage project(":dagger")
+//    j2objcLinkage project(":agera")
+//    j2objcLinkage project(":eventbus")
 
-    j2objcLinkage project(":agera")
+//    compile project(":magicthreads")
+//    compile project(":retrofit")
+    compile 'com.squareup.retrofit:retrofit:1.9.0'
+    compile 'de.greenrobot:eventbus:2.4.0'
+//    compile project(":rxjava")
+//    compile project(":rxandroid")
+//    compile project(":eventbus")
+    compile 'commons-io:commons-io:2.4'
+    compile 'com.google.code.gson:gson:2.3.1'
+    compile 'org.apache.commons:commons-lang3:3.3.2'
+//    compile project(":commons-lang3")
+//    compile project(":gson")
+//    compile project(":dagger")
 
     apt 'com.google.dagger:dagger-compiler:2.0.2'
     compile 'javax.inject:javax.inject:1'
@@ -55,9 +83,13 @@ j2objcConfig {
 
 //    j2objcCycleFinder { enabled = true }
 
+    translateDoppelLibs 'eventbus', 'squeakycore', 'squeakyquery', 'androidbase', 'intellij', 'magicthreads', 'retrofit', 'rxjava', 'rxandroid', 'commons-io', 'commons-lang3', 'gson', 'dagger', 'agera'
+
     // Omit these two lines if you don't configure your Xcode project with CocoaPods
     xcodeProjectDir '../ios'  //  suggested directory name
     xcodeTargetsIos 'ios', 'iosTests'  // replace with your iOS targets
+
+//    doppelDeployDir = '/Users/kgalligan/devel/xp/gradletrans/out'
 
     testMinExpectedTests 0
 
@@ -67,6 +99,16 @@ j2objcConfig {
 
 //    podDependency 'J2OBJC,../../J2OBJC'
     extraLinkerArgs '-lsqlite3'
+
+//    extraNativeLib library:'eventbuslibspec', linkage:'static'
+
+    extraObjcCompilerArgs '-I/Users/kgalligan/devel/xp/gradletrans/eventbus/trans/eb/build/j2objcOutputs/src/main/objc'
+//    translateClasspaths '/Users/kgalligan/devel/xp/gradletrans/eventbus/trans/eb/build/classes/main'
+
+//    extraLinkerArgs '-L/Users/kgalligan/devel/xp/gradletrans/eventbus/trans/eb/build/j2objcOutputs/lib/x86_64Debug'
+//    extraLinkerArgs '-leventbus-j2objc'
+
+
 
     finalConfigure()          // Must be last call to configuration
 }
