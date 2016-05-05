@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">Droidcon ALB</string>
+    <string name="convention_id">60600</string>
+    <string name="voting_ends">02/01/2016 09:00AM</string>
+    <string name="buy_ticket_url">https://droidconsf.eventbrite.com/?discount=droidcon30</string>
+
+    <string name="about_con_header">About Droidcon Albany</string>
+    <string name="about_con">
+
+        The Droidcon conferences around the world support the Android Platform and create a global network for developers and companies. San Francisco\'s first Droidcon is brought to you by Apps4All http://apps4all.agency/, and touchlab http://touchlab.co. \n\n
+    http://sf.droidcon.com/</string>
+</resources>
