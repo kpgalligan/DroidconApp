@@ -13,12 +13,9 @@ import android.text.TextUtils
 import co.touchlab.droidconandroid.data.AppPrefs
 import co.touchlab.droidconandroid.data.DatabaseHelper
 import co.touchlab.droidconandroid.presenter.AppManager
-import co.touchlab.droidconandroid.tasks.persisted.GetTalkSubmissionPersisted
-import co.touchlab.droidconandroid.tasks.persisted.PersistedTaskQueueFactory
 import co.touchlab.droidconandroid.ui.DrawerAdapter
 import co.touchlab.droidconandroid.ui.DrawerClickListener
 import co.touchlab.droidconandroid.ui.NavigationItem
-import co.touchlab.droidconandroid.utils.TimeUtils
 import java.util.*
 
 /**

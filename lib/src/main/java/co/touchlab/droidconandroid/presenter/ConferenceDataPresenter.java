@@ -3,6 +3,7 @@ import android.content.Context;
 import android.util.Log;
 
 import com.google.j2objc.annotations.AutoreleasePool;
+import com.google.j2objc.annotations.Weak;
 
 import co.touchlab.droidconandroid.data.Block;
 import co.touchlab.droidconandroid.data.Event;

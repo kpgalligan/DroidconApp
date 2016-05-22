@@ -45,7 +45,7 @@ import UIKit
             let speaker = speakers![indexPath.row] as DCDEventSpeaker
             if let speakerDescription = speakers?[indexPath.row].valueForKey("userAccount_")!.valueForKey("profile_") {
                 let userAccount = speaker.getUserAccount()
-                cell.loadInfo(userAccount!.valueForKey("name_") as! String, info: speakerDescription as! String, imageUrlString: userAccount.avatarImageUrl())
+                cell.loadInfo(userAccount!.valueForKey("name_") as! String, info: speakerDescription as! String)
             }
             cell.selectionStyle = UITableViewCellSelectionStyle.None
             return cell
@@ -115,6 +115,10 @@ import UIKit
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        if eventDetailPresenter != nil {
+            eventDetailPresenter.unregister()
+        }
+        
         eventDetailPresenter = DCPEventDetailPresenter(androidContentContext: DCPAppManager.getContext(), withLong: event.getId(), withDCPEventDetailHost: self)
         
         let nib = UINib(nibName: "EventTableViewCell", bundle: nil)
@@ -131,6 +135,11 @@ import UIKit
         
         self.tableView.reloadData()
     }
+    
+    override func viewDidDisappear(animated: Bool) {
+        eventDetailPresenter.unregister()
+//        eventDetailPresenter = nil
+    }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
@@ -139,7 +148,7 @@ import UIKit
     
     func dataRefresh() {
         event = eventDetailPresenter.getEventDetailLoadTask().getEvent();
-        speakers = PlatformContext_iOS.javaListToNSArray(eventDetailPresenter.getEventDetailLoadTask().getEvent().getSpeakerList()) as! [DCDEventSpeaker];
+        speakers = PlatformContext_iOS.javaListToNSArray(eventDetailPresenter.getEventDetailLoadTask().getEvent().getSpeakerList()) as? [DCDEventSpeaker];
         tableView.reloadData();
     }
 }

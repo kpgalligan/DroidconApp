@@ -9,7 +9,7 @@ import android.view.ViewGroup
 import android.widget.TextView
 import co.touchlab.droidconandroid.R
 import co.touchlab.droidconandroid.data.Track
-import java.util.ArrayList
+import java.util.*
 
 /**
  *

@@ -14,11 +14,9 @@ import co.touchlab.droidconandroid.data.ScheduleBlock
 import co.touchlab.droidconandroid.data.Track
 import co.touchlab.droidconandroid.presenter.ConferenceDataPresenter
 import co.touchlab.droidconandroid.presenter.ScheduleBlockHour
-import co.touchlab.droidconandroid.tasks.EventDetailLoadTask
 import com.wnafee.vector.compat.ResourcesCompat
 import java.text.SimpleDateFormat
-import java.util.ArrayList
-import java.util.Date
+import java.util.*
 
 /*fun hasConflict(event: Event, dataSet: List<ScheduleBlock>):Boolean
 {

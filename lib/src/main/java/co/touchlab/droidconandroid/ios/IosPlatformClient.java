@@ -28,6 +28,12 @@ public class IosPlatformClient implements PlatformClient
     }
 
     @Override
+    public void log(String s)
+    {
+        Log.e("IosPlatformClient", s);
+    }
+
+    @Override
     public void logException(Throwable t)
     {
         Log.e("IosPlatformClient", "", t);

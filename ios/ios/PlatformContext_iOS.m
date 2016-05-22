@@ -82,7 +82,7 @@
         [array addObject:[list getWithInt:(jint)i]];
     }
     
-    return [array copy];
+    return array;
 }
 
 - (NSString *)formatSpeakerStringFromArray:(NSArray *)array

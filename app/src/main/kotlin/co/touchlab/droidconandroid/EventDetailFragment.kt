@@ -26,11 +26,13 @@ import co.touchlab.droidconandroid.data.Track
 import co.touchlab.droidconandroid.data.UserAccount
 import co.touchlab.droidconandroid.presenter.EventDetailHost
 import co.touchlab.droidconandroid.presenter.EventDetailPresenter
-import co.touchlab.droidconandroid.tasks.*
+import co.touchlab.droidconandroid.tasks.AddRsvpTask
+import co.touchlab.droidconandroid.tasks.Queues
+import co.touchlab.droidconandroid.tasks.RemoveRsvpTask
+import co.touchlab.droidconandroid.tasks.TrackDrawableTask
 import com.wnafee.vector.compat.ResourcesCompat
 import java.text.SimpleDateFormat
-import java.util.ArrayList
-import java.util.Date
+import java.util.*
 
 /**
  * Created by kgalligan on 7/27/14.

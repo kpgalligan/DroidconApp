@@ -9,6 +9,7 @@ public interface PlatformClient
     Client makeClient();
     String baseUrl();
     Integer getConventionId();
+    void log(String s);
     void logException(Throwable t);
     String getString(String id);
 }

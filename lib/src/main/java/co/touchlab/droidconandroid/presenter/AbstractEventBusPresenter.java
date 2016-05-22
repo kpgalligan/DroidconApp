@@ -16,9 +16,9 @@ public abstract class AbstractEventBusPresenter
         EventBusExt.getDefault().register(this);
     }
 
-    public final void unregister()
+    public void unregister()
     {
-        EventBusExt.getDefault().register(this);
+        EventBusExt.getDefault().unregister(this);
     }
 
     public Context getContext()
