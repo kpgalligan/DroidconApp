@@ -31,7 +31,7 @@ import co.touchlab.droidconandroid.superbus.UploadCoverCommand
 import co.touchlab.droidconandroid.tasks.persisted.RefreshScheduleData
 import co.touchlab.droidconandroid.ui.*
 import com.wnafee.vector.compat.ResourcesCompat
-import java.util.ArrayList
+import java.util.*
 
 public class MyActivity : AppCompatActivity(), FilterInterface, NfcAdapter.CreateNdefMessageCallback
 {
@@ -55,6 +55,12 @@ public class MyActivity : AppCompatActivity(), FilterInterface, NfcAdapter.Creat
     override fun onCreate(savedInstanceState: Bundle?)
     {
         super<AppCompatActivity>.onCreate(savedInstanceState)
+
+        val platformClient = AppManager.getPlatformClient()
+
+        platformClient.log("Another log 3")
+
+        platformClient.logException(NullPointerException("Testing"))
 
         val startScreen = AppManager.findStartScreen(getString(R.string.voting_ends))
 

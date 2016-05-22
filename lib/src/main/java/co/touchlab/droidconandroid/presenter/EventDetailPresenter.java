@@ -1,5 +1,8 @@
 package co.touchlab.droidconandroid.presenter;
 import android.content.Context;
+import android.util.Log;
+
+import com.google.j2objc.annotations.Weak;
 
 import co.touchlab.droidconandroid.tasks.AddRsvpTask;
 import co.touchlab.droidconandroid.tasks.EventDetailLoadTask;
@@ -11,8 +14,10 @@ import co.touchlab.droidconandroid.tasks.RemoveRsvpTask;
  */
 public class EventDetailPresenter extends AbstractEventBusPresenter
 {
-    private final long eventId;
-    private final EventDetailHost host;
+    private final long                eventId;
+
+    @Weak
+    private       EventDetailHost     host;
     private       EventDetailLoadTask eventDetailLoadTask;
 
     public EventDetailPresenter(Context context, long eventId, EventDetailHost host)
@@ -30,6 +35,7 @@ public class EventDetailPresenter extends AbstractEventBusPresenter
 
     public void onEventMainThread(EventDetailLoadTask task)
     {
+        Log.w("asdf", "EventDetailLoadTask "+ eventId);
         eventDetailLoadTask = task;
         host.dataRefresh();
     }
@@ -54,14 +60,24 @@ public class EventDetailPresenter extends AbstractEventBusPresenter
         return eventDetailLoadTask;
     }
 
+    @Override
+    public void unregister()
+    {
+        super.unregister();
+        host = null;
+    }
+
     public void toggleRsvp()
     {
-        if(!ready())
+        if(! ready())
+        {
             return;
+        }
 
         if(eventDetailLoadTask.event.isRsvped())
         {
-            Queues.localQueue(getContext()).execute(new RemoveRsvpTask(eventDetailLoadTask.event.id));
+            Queues.localQueue(getContext())
+                  .execute(new RemoveRsvpTask(eventDetailLoadTask.event.id));
         }
         else
         {

@@ -17,7 +17,7 @@ import co.touchlab.droidconandroid.data.UserAccount
 import com.squareup.picasso.Picasso
 import com.wnafee.vector.compat.ResourcesCompat
 import org.apache.commons.lang3.StringUtils
-import java.util.ArrayList
+import java.util.*
 
 /**
  * Created by samuelhill on 8/7/15.

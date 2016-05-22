@@ -10,7 +10,6 @@ import android.content.Intent
 import android.content.IntentSender
 import android.graphics.Color
 import android.graphics.PorterDuff
-import android.os.AsyncTask
 import android.os.Bundle
 import android.support.v4.app.DialogFragment
 import android.support.v7.app.AppCompatActivity
@@ -21,14 +20,11 @@ import android.widget.*
 import co.touchlab.droidconandroid.presenter.LoginScreenPresenter
 import co.touchlab.droidconandroid.tasks.Queues
 import co.touchlab.droidconandroid.tasks.RunGoogleLoginTask
-import co.touchlab.droidconandroid.tasks.UpdatedGoogleLoginTask
 import co.touchlab.droidconandroid.utils.Toaster
 import com.google.android.gms.common.ConnectionResult
 import com.google.android.gms.common.GoogleApiAvailability
 import com.google.android.gms.common.api.GoogleApiClient
 import com.google.android.gms.plus.Plus
-import com.google.android.gms.auth.GoogleAuthUtil
-import com.google.android.gms.plus.model.people.Person
 
 /**
  *
@@ -50,6 +46,8 @@ public class SignInActivity : AppCompatActivity(), LoginScreenPresenter.Host {
 
     private var okButton: Button? = null
     private var progressBar: View? = null
+    private var accountAdapter: AccountAdapter? = null
+    private var listView: ListView? = null
 
     private var mResolvingError = false;
 
@@ -60,14 +58,11 @@ public class SignInActivity : AppCompatActivity(), LoginScreenPresenter.Host {
         setContentView(R.layout.activity_sign_in);
 
         presenter = LoginScreenPresenter(this, this)
+        listView = findViewById(R.id.list) as ListView;
 
-        val accounts = AccountManager.get(this).getAccountsByType("com.google")
-        val listView = findViewById(R.id.list) as ListView;
-        val accountAdapter = AccountAdapter(this, accounts, R.layout.item_account)
 
-        listView.setAdapter(accountAdapter)
-        listView.setOnItemClickListener { adapterView: AdapterView<*>, view1: View, i: Int, l: Long ->
-            accountAdapter.setSelectedAccount(i)
+        listView!!.setOnItemClickListener { adapterView: AdapterView<*>, view1: View, i: Int, l: Long ->
+            accountAdapter!!.setSelectedAccount(i)
             okButton!!.setEnabled(true);
         }
 
@@ -81,7 +76,7 @@ public class SignInActivity : AppCompatActivity(), LoginScreenPresenter.Host {
                         .addConnectionCallbacks(ConnectionCallbacksImpl())
                         .addOnConnectionFailedListener(OnConnectionFailedListenerImpl())
                         .addApi(Plus.API)
-                        .setAccountName(accountAdapter.getSelectedAccount())
+                        .setAccountName(accountAdapter!!.getSelectedAccount())
                         .addScope(Plus.SCOPE_PLUS_LOGIN)
                         .build()!!
                 forceGoogleConnect()
@@ -94,6 +89,15 @@ public class SignInActivity : AppCompatActivity(), LoginScreenPresenter.Host {
         findView(R.id.cancel).setOnClickListener{
             finish()
         }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        val accounts = AccountManager.get(this).getAccountsByType("com.google")
+
+        accountAdapter = AccountAdapter(this, accounts, R.layout.item_account)
+
+        listView!!.setAdapter(accountAdapter)
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -178,7 +182,7 @@ public class SignInActivity : AppCompatActivity(), LoginScreenPresenter.Host {
     }
 
     public inner class OnConnectionFailedListenerImpl() : GoogleApiClient.OnConnectionFailedListener {
-        override fun onConnectionFailed(result: ConnectionResult?) {
+        override fun onConnectionFailed(result: ConnectionResult) {
             if(mResolvingError)
             {
                 return

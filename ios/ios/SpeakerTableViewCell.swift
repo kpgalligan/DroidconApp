@@ -14,19 +14,14 @@ class SpeakerTableViewCell: UITableViewCell {
     @IBOutlet weak var infoLabel : UILabel!
     @IBOutlet weak var imgButton : UIButton!
     
-    func loadInfo(name: String, info: String, imageUrlString: String) {
+    func loadInfo(name: String, info: String) {
         nameLabel.text = name
         infoLabel.text = info
-        if let url = NSURL(string: imageUrlString) {
-            if let data = NSData(contentsOfURL: url) {
-                imgButton.setImage(UIImage(data: data), forState: .Normal)
-            }        
-        }
     }
     
     override func awakeFromNib() {
         super.awakeFromNib()
-        imgButton.layer.cornerRadius = 40.0
+
     }
 
     override func setSelected(selected: Bool, animated: Bool) {

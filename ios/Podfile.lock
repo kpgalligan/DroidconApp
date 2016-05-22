@@ -46,8 +46,8 @@ PODS:
   - j2objc-intellij-release (1.0)
   - j2objc-lib-debug (1.0)
   - j2objc-lib-release (1.0)
-  - j2objc-magicthreads-debug (1.0)
-  - j2objc-magicthreads-release (1.0)
+  - j2objc-magicthreads-0.9.0-debug (1.0)
+  - j2objc-magicthreads-0.9.0-release (1.0)
   - j2objc-retrofit-debug (1.0)
   - j2objc-retrofit-release (1.0)
   - j2objc-rxandroid-debug (1.0)
@@ -63,7 +63,7 @@ DEPENDENCIES:
   - Crashlytics
   - Fabric
   - Google/SignIn
-  - J2OBJC (from `/Users/kgalligan/bin/j2objc-1.0.2`)
+  - J2OBJC (from `/Users/kgalligan/devel/j2objc/dist`)
   - j2objc-agera-debug (from `/Users/kgalligan/devel/xp/gradletrans/out/agera`)
   - j2objc-agera-release (from `/Users/kgalligan/devel/xp/gradletrans/out/agera`)
   - j2objc-androidbase-debug (from `/Users/kgalligan/devel/xp/gradletrans/out/androidbase`)
@@ -82,8 +82,8 @@ DEPENDENCIES:
   - j2objc-intellij-release (from `/Users/kgalligan/devel/xp/gradletrans/out/intellij`)
   - j2objc-lib-debug (from `../lib/build/j2objcOutputs`)
   - j2objc-lib-release (from `../lib/build/j2objcOutputs`)
-  - j2objc-magicthreads-debug (from `/Users/kgalligan/devel/xp/gradletrans/out/magicthreads`)
-  - j2objc-magicthreads-release (from `/Users/kgalligan/devel/xp/gradletrans/out/magicthreads`)
+  - j2objc-magicthreads-0.9.0-debug (from `/Users/kgalligan/devel/xp/gradletrans/out/magicthreads-0.9.0`)
+  - j2objc-magicthreads-0.9.0-release (from `/Users/kgalligan/devel/xp/gradletrans/out/magicthreads-0.9.0`)
   - j2objc-retrofit-debug (from `/Users/kgalligan/devel/xp/gradletrans/out/retrofit`)
   - j2objc-retrofit-release (from `/Users/kgalligan/devel/xp/gradletrans/out/retrofit`)
   - j2objc-rxandroid-debug (from `/Users/kgalligan/devel/xp/gradletrans/out/rxandroid`)
@@ -97,7 +97,7 @@ DEPENDENCIES:
 
 EXTERNAL SOURCES:
   J2OBJC:
-    :path: /Users/kgalligan/bin/j2objc-1.0.2
+    :path: /Users/kgalligan/devel/j2objc/dist
   j2objc-agera-debug:
     :path: /Users/kgalligan/devel/xp/gradletrans/out/agera
   j2objc-agera-release:
@@ -134,10 +134,10 @@ EXTERNAL SOURCES:
     :path: ../lib/build/j2objcOutputs
   j2objc-lib-release:
     :path: ../lib/build/j2objcOutputs
-  j2objc-magicthreads-debug:
-    :path: /Users/kgalligan/devel/xp/gradletrans/out/magicthreads
-  j2objc-magicthreads-release:
-    :path: /Users/kgalligan/devel/xp/gradletrans/out/magicthreads
+  j2objc-magicthreads-0.9.0-debug:
+    :path: /Users/kgalligan/devel/xp/gradletrans/out/magicthreads-0.9.0
+  j2objc-magicthreads-0.9.0-release:
+    :path: /Users/kgalligan/devel/xp/gradletrans/out/magicthreads-0.9.0
   j2objc-retrofit-debug:
     :path: /Users/kgalligan/devel/xp/gradletrans/out/retrofit
   j2objc-retrofit-release:
@@ -171,37 +171,37 @@ SPEC CHECKSUMS:
   GoogleSymbolUtilities: eb3965ea12710569c7b80db198a39e39b18613f7
   GoogleUtilities: 5c653f7df2eedf0ce0efdfe5afe4f831f375fd7a
   J2OBJC: 1916b297a459b9d983b8f7a20e4683833646446a
-  j2objc-agera-debug: 9472fe569706fa2e72ed10e8c83c1a18d751d269
-  j2objc-agera-release: b5143088deb610d3a306af0d1c84a623af641fcd
-  j2objc-androidbase-debug: b4a2347bff63587e7d55c27f927352986b2e268e
-  j2objc-androidbase-release: 43c3906542093c35009436fc092902da7d0f10d3
-  j2objc-commons-io-debug: 5ed4ad4f01860d15cc1f98075feb52c0e47ac1ad
-  j2objc-commons-io-release: 03b71ac4fa5d888ba2fc5ba80ab8a6247e9c7bbe
-  j2objc-commons-lang3-debug: a5a00e64bdc5131751ac13635a1a701be426f7ce
-  j2objc-commons-lang3-release: d730704044cfa6bf1895190787588f7a3ae9982b
-  j2objc-dagger-debug: 881fc8cbf666125366e5541534bb15e005a58071
-  j2objc-dagger-release: d51e6c30ce96d2e409f07572ea301f0f7283ac55
-  j2objc-eventbus-debug: d0479c75da9923ef901266c0322deff8fdd8d887
-  j2objc-eventbus-release: 177b8dd147d726a4c235f08d05cade9644c8038a
-  j2objc-gson-debug: 0b8b88485dbe8c1df5f547e643c42625b5e54c8a
-  j2objc-gson-release: b936be18bd627cba6ee1290f1e1050998b7b6676
-  j2objc-intellij-debug: a085750959a15d7db3aa6a9955ca8be3c73e689c
-  j2objc-intellij-release: 34bfee6d41f964432c8598202ca36876556e8839
-  j2objc-lib-debug: 29201151e17ffc57d00028bb0ed6309e82201ef4
-  j2objc-lib-release: 7822ac1c4a9c6cb7b51ccb62245751a2cb680834
-  j2objc-magicthreads-debug: 429e2d9e7220d32d071eed3658dfe22cdafa7590
-  j2objc-magicthreads-release: 4502952fdf57eb0812631dc3897b1303ba9a7955
-  j2objc-retrofit-debug: 341d267a3c285a97516716ac191281d2137262a4
-  j2objc-retrofit-release: 693907bff7df01169a498491ffe28ecf58f511fb
-  j2objc-rxandroid-debug: 7b111532ef436f3f8b5e2251024f6872b9e27aee
-  j2objc-rxandroid-release: ef0f561ccf1265567985d718e48a5d7a36d05664
-  j2objc-rxjava-debug: b5276ed22bde2970db497d121b0fa824cebc03c4
-  j2objc-rxjava-release: 7daabd5c9e667a66751f7bb4e1e625e8fa74beed
-  j2objc-squeakycore-debug: b115ebca24ea5bfd7c670adffd8a4ca24e3705d7
-  j2objc-squeakycore-release: be6705eaa67a8554dedd33b7e0eb052285450bd7
-  j2objc-squeakyquery-debug: 0bb0eb2574c851d6ff28b2f91af1a6b4692c6118
-  j2objc-squeakyquery-release: 6573cb4ffd4837a1607450c305be430c615404fc
+  j2objc-agera-debug: dca1a6dfc156e45dd9c9d5a910e14e0247d86118
+  j2objc-agera-release: ec0eb63e8e4d5f538f24133de791c22854a61a1a
+  j2objc-androidbase-debug: b5877f3ab9a4e6f01350793adc21054d81104c29
+  j2objc-androidbase-release: 67ff08d9b38635f4fc2abf6028d3b14f47b5433d
+  j2objc-commons-io-debug: bbde42c207bf182df436d3bda4f7c79512109c0d
+  j2objc-commons-io-release: c0572229e36e684dc4caf42fb5b5f98ffd95edca
+  j2objc-commons-lang3-debug: ead4aa4096e840e948781c75fdf91172ec135445
+  j2objc-commons-lang3-release: 235d00875220838e664c1849f5a10d4dbf317943
+  j2objc-dagger-debug: 72def4d9b8c27cc2e244688f8b77a48ea7fc97a6
+  j2objc-dagger-release: 4ec2e9866524dd6cd5fddef29f03833a60c1ebd8
+  j2objc-eventbus-debug: 735aa269219a165eabc525cc2595c718a6e40522
+  j2objc-eventbus-release: 478e513da60e723cee46a89143b2b4c8d633984a
+  j2objc-gson-debug: 18dba4c8edf9ae97a2ed750448ac27200ebb95cb
+  j2objc-gson-release: 9a97c3ddbd57767be87cf48eb9374ff153350cc3
+  j2objc-intellij-debug: d889a88e55bf40ca7c1f2cb36cdc05c632be055e
+  j2objc-intellij-release: 4060a8810dbe57a991a1c969808df73b1a148dba
+  j2objc-lib-debug: 3fa6b7b353ae8820552d936031cc7989daed8dc9
+  j2objc-lib-release: 273eefb697c3e8294a876cad52515fc0b6e158c9
+  j2objc-magicthreads-0.9.0-debug: ec68f96f18db52fe055b3a326a1920466fd27a3e
+  j2objc-magicthreads-0.9.0-release: efd2e807d25cce664a25bc7c27fb7a8781594913
+  j2objc-retrofit-debug: d4b2f34655a512b43f79837caf04bc2750a48e84
+  j2objc-retrofit-release: dc77d50a00da9495342ecc26dfad289f7e71a0f4
+  j2objc-rxandroid-debug: 553d0bc734297dd3f542c5ea704691c72da60e91
+  j2objc-rxandroid-release: 7644fca2051df69b13184a5a3b2f6058a5b03e4d
+  j2objc-rxjava-debug: 3d3456b1888b9321da5066ba5ad75dbb5eb54bfc
+  j2objc-rxjava-release: 00eda94358026f7eae5d5a52a4f94cd66adb3984
+  j2objc-squeakycore-debug: b838f1f048c3f817e71b5b6fe67f55cca923204e
+  j2objc-squeakycore-release: b4aa28e864239febece5864edf5af07c9e7c12fd
+  j2objc-squeakyquery-debug: 664bcede7bc279aeb80c2b7ad33442ac9cd3d04e
+  j2objc-squeakyquery-release: 340f5a03dd6c8bf12cc3c0483025a41d58a96415
 
-PODFILE CHECKSUM: 6d2e410468a0a776c2df4b20a9c1d00a95a79249
+PODFILE CHECKSUM: f4c79bae727cfbf7a941cadd223c156f4876ca74
 
 COCOAPODS: 1.0.0.beta.6

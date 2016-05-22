@@ -14,7 +14,7 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
-import java.util.ArrayList
+import java.util.*
 
 class AboutActivity : AppCompatActivity()
 {
@@ -26,6 +26,7 @@ class AboutActivity : AppCompatActivity()
             a.startActivity(i)
         }
     }
+
 
     final var COLLAPSED_LINE_COUNT = 3
 
