@@ -22,7 +22,7 @@ class EventTableViewCell: UITableViewCell {
         self.event = event
         self.eventDetailPresenter = eventDetailPresenter
         titleLabel.text = title
-        descriptionLabel.text = description
+        descriptionLabel.attributedText = formatHTMLString(description)
         timeInfoLabel.text = "Track " + track + ", " + time
         
         titleLabel.sizeToFit()
@@ -56,6 +56,10 @@ class EventTableViewCell: UITableViewCell {
         super.setSelected(selected, animated: animated)
 
         // Configure the view for the selected state
+    }
+
+    func formatHTMLString(htmlString: String) -> NSAttributedString {
+        return try! NSAttributedString(data: htmlString.dataUsingEncoding(NSUTF8StringEncoding, allowLossyConversion: true)!, options: [NSDocumentTypeDocumentAttribute: NSHTMLTextDocumentType], documentAttributes: nil);
     }
 
 }
