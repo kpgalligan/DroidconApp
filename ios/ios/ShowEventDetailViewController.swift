@@ -45,7 +45,7 @@ import UIKit
             let speaker = speakers![indexPath.row] as DCDEventSpeaker
             if let speakerDescription = speakers?[indexPath.row].valueForKey("userAccount_")!.valueForKey("profile_") {
                 let userAccount = speaker.getUserAccount()
-                cell.loadInfo(userAccount!.valueForKey("name_") as! String, info: speakerDescription as! String)
+                cell.loadInfo(userAccount!.valueForKey("name_") as! String, info: speakerDescription as! String, imgUrl: userAccount.avatarImageUrl())
             }
             cell.selectionStyle = UITableViewCellSelectionStyle.None
             return cell
