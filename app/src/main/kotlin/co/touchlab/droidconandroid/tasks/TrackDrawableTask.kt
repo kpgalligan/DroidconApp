@@ -9,7 +9,7 @@ import android.util.Log
 import co.touchlab.android.threading.eventbus.EventBusExt
 import co.touchlab.android.threading.tasks.Task
 import co.touchlab.droidconandroid.R
-import com.crashlytics.android.Crashlytics
+import co.touchlab.droidconandroid.presenter.AppManager
 import com.wnafee.vector.compat.ResourcesCompat
 
 /**
@@ -25,7 +25,7 @@ class TrackDrawableTask(val context: Context, val drawableRes: Int): Task()
 
     override fun handleError(context: Context?, e: Throwable?): Boolean {
         Log.e("EventDetails", "Error loading track drawables", e)
-        Crashlytics.logException(e)
+        AppManager.getPlatformClient().logException(e)
         return true
     }
 

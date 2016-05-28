@@ -12,12 +12,10 @@ import android.support.v7.widget.Toolbar
 import android.text.TextUtils
 import co.touchlab.droidconandroid.data.AppPrefs
 import co.touchlab.droidconandroid.data.DatabaseHelper
-import co.touchlab.droidconandroid.tasks.persisted.GetTalkSubmissionPersisted
-import co.touchlab.droidconandroid.tasks.persisted.PersistedTaskQueueFactory
+import co.touchlab.droidconandroid.presenter.AppManager
 import co.touchlab.droidconandroid.ui.DrawerAdapter
 import co.touchlab.droidconandroid.ui.DrawerClickListener
 import co.touchlab.droidconandroid.ui.NavigationItem
-import co.touchlab.droidconandroid.utils.TimeUtils
 import java.util.*
 
 /**
@@ -34,10 +32,7 @@ public class VotingActivity : AppCompatActivity() {
 
 
         public fun isVotingOpen(c: Context): Boolean {
-            var votingEnd: Date = TimeUtils.DATE_FORMAT.get().parse(c.getString(R.string.voting_ends))
-            val now = Calendar.getInstance()
-
-            return now.before(votingEnd)
+            return AppManager.isVotingOpen(c.getString(R.string.voting_ends))
         }
     }
 
@@ -69,8 +64,8 @@ public class VotingActivity : AppCompatActivity() {
                 R.string.navigation_drawer_open, R.string.navigation_drawer_close
         );
         drawerLayout.setDrawerListener(drawerToggle);
-        supportActionBar.setDisplayHomeAsUpEnabled(true);
-        supportActionBar.setHomeButtonEnabled(true);
+        supportActionBar?.setDisplayHomeAsUpEnabled(true);
+        supportActionBar?.setHomeButtonEnabled(true);
         drawerToggle.syncState();
         //
         val navigationRecycler = findView(R.id.drawer_list) as RecyclerView

@@ -9,17 +9,19 @@ import android.support.v4.app.FragmentPagerAdapter
 import android.support.v4.view.ViewPager
 import android.text.TextUtils
 import android.text.format.DateUtils
-import android.view
 import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
 import co.touchlab.android.threading.eventbus.EventBusExt
 import co.touchlab.droidconandroid.data.AppPrefs
 import co.touchlab.droidconandroid.data.Track
-import co.touchlab.droidconandroid.superbus.RefreshScheduleDataKot
+import co.touchlab.droidconandroid.presenter.ConferenceDataHost
+import co.touchlab.droidconandroid.presenter.ConferenceDataPresenter
+import co.touchlab.droidconandroid.presenter.ConferenceDayHolder
+import co.touchlab.droidconandroid.tasks.persisted.RefreshScheduleData
 import co.touchlab.droidconandroid.utils.TimeUtils
 import java.text.SimpleDateFormat
-import java.util.ArrayList
-import java.util.Date
+import java.util.*
 
 /**
  *
@@ -27,6 +29,8 @@ import java.util.Date
  */
 class ScheduleFragment : Fragment(), FilterableFragmentInterface
 {
+    var conferenceDays: Array<ConferenceDayHolder>? = null
+    var conferenceDataPresenter: ConferenceDataPresenter? = null
 
     companion object
     {
@@ -48,7 +52,7 @@ class ScheduleFragment : Fragment(), FilterableFragmentInterface
         }
     }
 
-    override fun onCreateView(inflater: LayoutInflater?, container: view.ViewGroup?, savedInstanceState: Bundle?): View?
+    override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?): View?
     {
         return inflater!!.inflate(R.layout.fragment_schedule, null)
     }
@@ -56,16 +60,25 @@ class ScheduleFragment : Fragment(), FilterableFragmentInterface
     override fun onCreate(savedInstanceState: Bundle?) {
         super<Fragment>.onCreate(savedInstanceState)
         EventBusExt.getDefault().register(this)
+        conferenceDataPresenter = ConferenceDataPresenter(activity, ConfHost(), getArguments().getBoolean(ALL_EVENTS))
+    }
+
+    class ConfHost: ConferenceDataHost
+    {
+        override fun loadCallback(conferenceDayHolders: Array<out ConferenceDayHolder>?) {
+            EventBusExt.getDefault()!!.post(conferenceDayHolders)
+        }
     }
 
     override fun onDestroy() {
         super<Fragment>.onDestroy()
         EventBusExt.getDefault().unregister(this)
+        conferenceDataPresenter!!.unregister()
     }
 
-    public fun onEventMainThread(eventDetailTask: RefreshScheduleDataKot)
+    public fun onEventMainThread(eventDetailTask: RefreshScheduleData)
     {
-        Handler().post(RefreshRunnable())
+//        Handler().post(RefreshRunnable())
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
@@ -77,13 +90,16 @@ class ScheduleFragment : Fragment(), FilterableFragmentInterface
     inner class RefreshRunnable(): Runnable
     {
         override fun run() {
-            val pager = getView().findViewById(R.id.pager)!! as ViewPager
-            val tabs = getView().findViewById(R.id.tabs)!! as TabLayout
-            val tabWrapper = getView().findViewById(R.id.tabs_wrapper)
-            if (getArguments().getBoolean(ALL_EVENTS)) {
-                tabWrapper.setBackgroundColor(getResources().getColor(R.color.primary))
+            val allEvents = getArguments().getBoolean(ALL_EVENTS)
+            conferenceDataPresenter!!.refreshConferenceData()
+            val pager = view?.findViewById(R.id.pager)!! as ViewPager
+            val tabs = view?.findViewById(R.id.tabs)!! as TabLayout
+            val tabWrapper = view?.findViewById(R.id.tabs_wrapper)
+
+            if (allEvents) {
+                tabWrapper?.setBackgroundColor(getResources().getColor(R.color.primary))
             } else {
-                tabWrapper.setBackgroundColor(getResources().getColor(R.color.blue_grey))
+                tabWrapper?.setBackgroundColor(getResources().getColor(R.color.blue_grey))
             }
 
             val dates: ArrayList<Long> = ArrayList<Long>()
@@ -99,10 +115,10 @@ class ScheduleFragment : Fragment(), FilterableFragmentInterface
                     start += DateUtils.DAY_IN_MILLIS
                 }
 
-                pagerAdapter = ScheduleFragmentPagerAdapter(getChildFragmentManager(), dates, getArguments().getBoolean(ALL_EVENTS))
+                pagerAdapter = ScheduleFragmentPagerAdapter(getChildFragmentManager(), dates, allEvents)
                 pager.setAdapter(pagerAdapter);
                 pager.addOnPageChangeListener(TabLayout.TabLayoutOnPageChangeListener(tabs))
-                tabs.setTabsFromPagerAdapter(pagerAdapter)
+                tabs.setTabsFromPagerAdapter(pagerAdapter!!)
                 tabs.setOnTabSelectedListener(TabLayout.ViewPagerOnTabSelectedListener(pager))
             }
         }
@@ -126,7 +142,7 @@ class ScheduleFragmentPagerAdapter : FragmentPagerAdapter
     }
 
     override fun getCount(): Int {
-        return dates.size()
+        return dates.size
     }
 
     override fun getItem(position: Int): ScheduleDataFragment? {

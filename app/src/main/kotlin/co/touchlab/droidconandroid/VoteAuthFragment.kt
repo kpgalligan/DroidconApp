@@ -20,6 +20,7 @@ import android.widget.Toast
 import co.touchlab.android.threading.eventbus.EventBusExt
 import co.touchlab.android.threading.tasks.TaskQueue
 import co.touchlab.android.threading.tasks.utils.TaskQueueHelper
+import co.touchlab.droidconandroid.presenter.AppManager
 import co.touchlab.droidconandroid.tasks.CanUserVoteTask
 
 class VoteAuthFragment : Fragment() {
@@ -87,13 +88,13 @@ class VoteAuthFragment : Fragment() {
 
         retryButton = view.findViewById(R.id.retryButton) as Button
         retryButton!!.setOnClickListener {
-            TaskQueue.loadQueueDefault(context.applicationContext).execute(CanUserVoteTask())
+            TaskQueue.loadQueueDefault(context.applicationContext).execute(CanUserVoteTask(AppManager.getPlatformClient()))
             showHideProgress()
         }
 
 
         EventBusExt.getDefault().register(this)
-        TaskQueue.loadQueueDefault(context.applicationContext).execute(CanUserVoteTask())
+        TaskQueue.loadQueueDefault(context.applicationContext).execute(CanUserVoteTask(AppManager.getPlatformClient()))
 
         showHideProgress()
         return view
@@ -145,7 +146,7 @@ class VoteAuthFragment : Fragment() {
 
                     auth_dialog.dismiss();
 
-                    TaskQueue.loadQueueDefault(activity.applicationContext).execute(CanUserVoteTask(authCode))
+                    TaskQueue.loadQueueDefault(activity.applicationContext).execute(CanUserVoteTask(authCode, AppManager.getPlatformClient()))
                     showHideProgress()
                 } else if (url.contains("error=access_denied")) {
                     authComplete = true;
@@ -165,7 +166,7 @@ class VoteAuthFragment : Fragment() {
             errorWrapper!!.setVisibility(View.VISIBLE)
             progressWrapper!!.setVisibility(View.GONE)
             failureMessageWrapper!!.setVisibility(View.GONE)
-        } else if (TaskQueueHelper.hasTasksOfType(TaskQueue.loadQueueDefault(activity.applicationContext), javaClass<CanUserVoteTask>())) {
+        } else if (TaskQueueHelper.hasTasksOfType(TaskQueue.loadQueueDefault(activity.applicationContext), CanUserVoteTask::class.java)) {
             errorWrapper!!.setVisibility(View.GONE)
             progressWrapper!!.setVisibility(View.VISIBLE)
             failureMessageWrapper!!.setVisibility(View.GONE)

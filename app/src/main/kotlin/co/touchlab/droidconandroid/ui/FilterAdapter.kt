@@ -9,7 +9,7 @@ import android.view.ViewGroup
 import android.widget.TextView
 import co.touchlab.droidconandroid.R
 import co.touchlab.droidconandroid.data.Track
-import java.util.ArrayList
+import java.util.*
 
 /**
  *
@@ -31,7 +31,7 @@ class FilterAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder> {
     }
 
     override fun getItemCount(): Int {
-        return dataSet.size()
+        return dataSet.size
     }
 
     override fun onCreateViewHolder(parent: ViewGroup?, viewType: Int): RecyclerView.ViewHolder? {
@@ -64,7 +64,7 @@ class FilterAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder> {
             val checked = selectedTracks.contains(track)
             holder.checkBox.setChecked(checked)
             if (checked) {
-                holder.track.setTextColor(resources.getColor(track.getTextColorRes()))
+                holder.track.setTextColor(resources.getColor(context.resources.getIdentifier(track.getTextColorRes(), "color", context.packageName)))
             } else {
                 holder.track.setTextColor(resources.getColor(R.color.text_gray))
             }
@@ -73,8 +73,8 @@ class FilterAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder> {
             //earlier devices without rolling out own assets
             if (Build.VERSION.SDK_INT >= 21)
             {
-                holder.checkBox.setButtonTintList(resources.getColorStateList(track.getCheckBoxSelectorRes()));
-                holder.checkBox.setBackgroundTintList(resources.getColorStateList(track.getTextColorRes()));
+//                holder.checkBox.setButtonTintList(resources.getColorStateList(context.resources.getIdentifier(track.getCheckBoxSelectorRes(), "color", context.packageName)));
+//                holder.checkBox.setBackgroundTintList(resources.getColorStateList(track.getTextColorRes()));
             }
 
             holder.itemView.setOnClickListener{

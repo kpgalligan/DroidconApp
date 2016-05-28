@@ -24,11 +24,15 @@ import co.touchlab.android.threading.tasks.TaskQueue
 import co.touchlab.droidconandroid.data.Event
 import co.touchlab.droidconandroid.data.Track
 import co.touchlab.droidconandroid.data.UserAccount
-import co.touchlab.droidconandroid.tasks.*
+import co.touchlab.droidconandroid.presenter.EventDetailHost
+import co.touchlab.droidconandroid.presenter.EventDetailPresenter
+import co.touchlab.droidconandroid.tasks.AddRsvpTask
+import co.touchlab.droidconandroid.tasks.Queues
+import co.touchlab.droidconandroid.tasks.RemoveRsvpTask
+import co.touchlab.droidconandroid.tasks.TrackDrawableTask
 import com.wnafee.vector.compat.ResourcesCompat
 import java.text.SimpleDateFormat
-import java.util.ArrayList
-import java.util.Date
+import java.util.*
 
 /**
  * Created by kgalligan on 7/27/14.
@@ -46,6 +50,7 @@ class EventDetailFragment() : Fragment()
 
     private var trackColor: Int = 0
     private var fabColorList: ColorStateList? = null
+    private var presenter: EventDetailPresenter? = null
 
     companion object
     {
@@ -82,6 +87,9 @@ class EventDetailFragment() : Fragment()
         var eventId = getArguments()?.getLong(EVENT_ID, -1)
         if (eventId == null || eventId == -1L)
         {
+            if(activity == null)
+                return -1L;
+
             eventId = getActivity()!!.getIntent()!!.getLongExtra(EVENT_ID, -1)
         }
 
@@ -114,8 +122,8 @@ class EventDetailFragment() : Fragment()
         toolbar!!.setTitle("")
         var activity = getActivity() as AppCompatActivity
         activity.setSupportActionBar(toolbar)
-        activity.getSupportActionBar().setDisplayHomeAsUpEnabled(true)
-        activity.getSupportActionBar().setDisplayShowHomeEnabled(true)
+        activity.getSupportActionBar()?.setDisplayHomeAsUpEnabled(true)
+        activity.getSupportActionBar()?.setDisplayShowHomeEnabled(true)
 
         //collect the views
         name = view.findViewById(R.id.name) as TextView
@@ -129,39 +137,26 @@ class EventDetailFragment() : Fragment()
         updateTrackColor(findTrackIdArg())
         backdrop!!.setBackgroundColor(trackColor)
 
-        startDetailRefresh()
+        presenter = EventDetailPresenter(getContext(), findEventIdArg(), EventDetailHost {
+            dataRefresh()
+        })
 
         return view
     }
 
-    private fun startDetailRefresh()
+    fun dataRefresh()
     {
-        Queues.localQueue(getActivity()).execute(EventDetailLoadTask(findEventIdArg()))
-    }
-
-    public fun onEventMainThread(eventDetailTask: EventDetailLoadTask)
-    {
-        if (!eventDetailTask.eventId.equals(findEventIdArg()))
+        if (!presenter!!.getEventDetailLoadTask().eventId.equals(findEventIdArg()))
             return
 
-        val event = eventDetailTask.event!!
+        val event = presenter!!.getEventDetailLoadTask().event!!
 
         updateTrackColor(event.category)
         updateToolbar(event)
         updateFAB(event)
 
-        updateContent(event, eventDetailTask.speakers, eventDetailTask.conflict)
+        updateContent(event, presenter!!.getEventDetailLoadTask().speakers, presenter!!.getEventDetailLoadTask().conflict)
    }
-
-    public fun onEventMainThread(@suppress("UNUSED_PARAMETER") task: AddRsvpTaskKot)
-    {
-        startDetailRefresh()
-    }
-
-    public fun onEventMainThread(@suppress("UNUSED_PARAMETER") task: RemoveRsvpTaskKot)
-    {
-        startDetailRefresh()
-    }
 
     public fun onEventMainThread(task: TrackDrawableTask)
     {
@@ -209,9 +204,9 @@ class EventDetailFragment() : Fragment()
         if(!event.isPast()) {
             fab!!.setOnClickListener { v ->
                 if (event.isRsvped()) {
-                    Queues.localQueue(getActivity()).execute(RemoveRsvpTaskKot(event.id))
+                    Queues.localQueue(getActivity()).execute(RemoveRsvpTask(event.id))
                 } else {
-                    Queues.localQueue(getActivity()).execute(AddRsvpTaskKot(event.id))
+                    Queues.localQueue(getActivity()).execute(AddRsvpTask(event.id))
                 }
             }
         }
@@ -293,7 +288,7 @@ class EventDetailFragment() : Fragment()
     /**
      * Adds all the content to the recyclerView
      */
-    private fun updateContent(event: Event, speakers: ArrayList<UserAccount>?, conflict: Boolean)
+    private fun updateContent(event: Event, speakers: List<UserAccount>?, conflict: Boolean)
     {
         var adapter = EventDetailAdapter(getActivity(), trackColor)
 
@@ -308,11 +303,11 @@ class EventDetailFragment() : Fragment()
         var formattedStart = timeFormat.format(startDateVal)
         var formattedEnd =  timeFormat.format(endDateVal)
 
-        val startMarker = formattedStart.substring(Math.max(formattedStart.length() - 3, 0))
-        val endMarker = formattedEnd.substring(Math.max(formattedEnd.length() - 3, 0))
+        val startMarker = formattedStart.substring(Math.max(formattedStart.length - 3, 0))
+        val endMarker = formattedEnd.substring(Math.max(formattedEnd.length - 3, 0))
 
         if (TextUtils.equals(startMarker, endMarker)) {
-            formattedStart = formattedStart.substring(0, Math.max(formattedStart.length() - 3, 0))
+            formattedStart = formattedStart.substring(0, Math.max(formattedStart.length - 3, 0))
         }
 
         adapter.addHeader(venueFormatString.format(event.venue.name, formattedStart, formattedEnd), R.drawable.ic_map)
@@ -332,7 +327,7 @@ class EventDetailFragment() : Fragment()
         if (!TextUtils.isEmpty(event.category))
         {
             var track = Track.findByServerName(event.category)
-            var trackName = getResources().getString(track.getDisplayNameRes())
+            var trackName = getResources().getString(context.resources.getIdentifier(track.getDisplayNameRes(), "string", context.packageName))
             val trackFormatString = getResources().getString(R.string.event_track);
             adapter.addHeader(trackFormatString.format(trackName), R.drawable.ic_track)
         }
@@ -361,8 +356,8 @@ class EventDetailFragment() : Fragment()
         if(track == null)
             track = Track.findByServerName("Design")
 
-        trackColor = getResources().getColor(track!!.getTextColorRes())
-        fabColorList = getResources().getColorStateList(track.getCheckBoxSelectorRes())
+        trackColor = getResources().getColor(context.resources.getIdentifier(track!!.getTextColorRes(), "color", context.packageName))
+        fabColorList = getResources().getColorStateList(context.resources.getIdentifier(track!!.getCheckBoxSelectorRes(), "color", context.packageName))
     }
 
     private fun updateBackdropDrawable(backdropDrawable: Drawable)

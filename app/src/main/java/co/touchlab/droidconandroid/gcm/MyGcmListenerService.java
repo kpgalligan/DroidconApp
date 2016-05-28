@@ -11,7 +11,6 @@ import android.os.Bundle;
 import android.support.v4.app.NotificationCompat;
 import android.util.Log;
 
-import com.crashlytics.android.Crashlytics;
 import com.google.android.gms.gcm.GcmListenerService;
 
 import org.apache.commons.lang3.StringUtils;
@@ -21,7 +20,8 @@ import co.touchlab.droidconandroid.MyActivity;
 import co.touchlab.droidconandroid.R;
 import co.touchlab.droidconandroid.data.DatabaseHelper;
 import co.touchlab.droidconandroid.data.Event;
-import co.touchlab.droidconandroid.superbus.RefreshScheduleDataKot;
+import co.touchlab.droidconandroid.presenter.AppManager;
+import co.touchlab.droidconandroid.tasks.persisted.RefreshScheduleData;
 
 /**
  * Created by kgalligan on 8/22/15.
@@ -72,7 +72,7 @@ public class MyGcmListenerService extends GcmListenerService
             }
             else if(StringUtils.equalsIgnoreCase(gcmType, "updateSchedule"))
             {
-                RefreshScheduleDataKot.Companion.callMe(this);
+                RefreshScheduleData.callMe(this);
             }
             else if(StringUtils.equalsIgnoreCase(gcmType, "event"))
             {
@@ -84,7 +84,7 @@ public class MyGcmListenerService extends GcmListenerService
         }
         catch(Exception e)
         {
-            Crashlytics.logException(e);
+            AppManager.getPlatformClient().logException(e);
         }
     }
 

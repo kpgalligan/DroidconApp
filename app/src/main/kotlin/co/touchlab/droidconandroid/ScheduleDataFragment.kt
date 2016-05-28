@@ -2,19 +2,20 @@ package co.touchlab.droidconandroid
 
 import android.os.Bundle
 import android.support.v4.app.Fragment
-import android.support.v4.app.LoaderManager
-import android.support.v4.content.Loader
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import co.touchlab.android.threading.eventbus.EventBusExt
 import co.touchlab.droidconandroid.data.Event
-import co.touchlab.droidconandroid.data.ScheduleBlock
 import co.touchlab.droidconandroid.data.Track
+import co.touchlab.droidconandroid.presenter.ConferenceDataHelper
+import co.touchlab.droidconandroid.presenter.ConferenceDayHolder
+import co.touchlab.droidconandroid.presenter.ScheduleBlockHour
 import co.touchlab.droidconandroid.ui.EventAdapter
 import co.touchlab.droidconandroid.ui.EventClickListener
-import co.touchlab.droidconandroid.utils.Toaster
+import java.util.*
 
 class ScheduleDataFragment() : Fragment()
 {
@@ -54,48 +55,44 @@ class ScheduleDataFragment() : Fragment()
         day = getArguments()!!.getLong(DAY)
         position = getArguments()!!.getInt(POSITION)
 
-        eventList = getView().findViewById(R.id.eventList) as RecyclerView
+        eventList = view?.findViewById(R.id.eventList) as RecyclerView
         eventList!!.setLayoutManager(LinearLayoutManager(getActivity()))
 
-        //http://stackoverflow.com/a/28884330
-        getParentFragment().getLoaderManager()!!.initLoader(position!!, null, this.ScheduleDataLoaderCallbacks())
+        EventBusExt.getDefault()!!.register(this)
+    }
+
+    override fun onDestroy()
+    {
+        super.onDestroy()
+        EventBusExt.getDefault()!!.unregister(this)
+    }
+
+    public fun onEventMainThread(dayHolders: Array<ConferenceDayHolder>?)
+    {
+        val dayString = ConferenceDataHelper.dateToDayString(Date(day!!))
+        for (holder in dayHolders!!) {
+            if(holder.dayString!!.equals(dayString))
+            {
+                updateAdapter(holder.hourHolders)
+                break
+            }
+        }
 
     }
 
-    inner class ScheduleDataLoaderCallbacks() : LoaderManager.LoaderCallbacks<List<ScheduleBlock>>
-    {
-        override fun onCreateLoader(id: Int, args: Bundle?): Loader<List<ScheduleBlock>>?
+    private fun updateAdapter(data: Array<out ScheduleBlockHour>?) {
+        if (eventList!!.getAdapter() == null)
         {
-            return ScheduleDataLoader(getActivity()!!, allEvents, day!!)
-        }
-
-        override fun onLoadFinished(loader: Loader<List<ScheduleBlock>>?, data: List<ScheduleBlock>?)
-        {
-            if (data == null)
-            {
-                Toaster.showMessage(getActivity(), "NoData")
-            }
-            else
-            {
-                if (eventList!!.getAdapter() == null)
-                {
-                    adapter = EventAdapter(data, allEvents, (getActivity() as FilterInterface).getCurrentFilters(), object : EventClickListener {
-                        override fun onEventClick(event: Event) {
-                            EventDetailActivity.callMe(getActivity()!!, event.id, event.category)
-                        }
-                    })
-                    eventList!!.setAdapter(adapter!!)
+            adapter = EventAdapter(data!!.asList(), allEvents, (getActivity() as FilterInterface).getCurrentFilters(), object : EventClickListener {
+                override fun onEventClick(event: Event) {
+                    EventDetailActivity.callMe(getActivity()!!, event.id, event.category)
                 }
-                else
-                {
-                    (eventList!!.getAdapter() as EventAdapter).updateEvents(data)
-                }
-            }
-
+            })
+            eventList!!.setAdapter(adapter!!)
         }
-        override fun onLoaderReset(loader: Loader<List<ScheduleBlock>>?)
+        else
         {
-
+            (eventList!!.getAdapter() as EventAdapter).updateEvents(data!!.asList())
         }
     }
 

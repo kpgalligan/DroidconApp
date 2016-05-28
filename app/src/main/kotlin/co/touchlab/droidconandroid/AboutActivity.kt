@@ -14,7 +14,7 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
-import java.util.ArrayList
+import java.util.*
 
 class AboutActivity : AppCompatActivity()
 {
@@ -22,10 +22,11 @@ class AboutActivity : AppCompatActivity()
     {
         fun callMe(a: Activity)
         {
-            val i = Intent(a, javaClass<AboutActivity>())
+            val i = Intent(a, AboutActivity::class.java)
             a.startActivity(i)
         }
     }
+
 
     final var COLLAPSED_LINE_COUNT = 3
 
@@ -39,8 +40,8 @@ class AboutActivity : AppCompatActivity()
         val toolbar = findViewById(R.id.toolbar) as Toolbar
         toolbar.setTitle(R.string.about)
         setSupportActionBar(toolbar)
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true)
-        getSupportActionBar().setDisplayShowHomeEnabled(true)
+        getSupportActionBar()?.setDisplayHomeAsUpEnabled(true)
+        getSupportActionBar()?.setDisplayShowHomeEnabled(true)
 
         recycler = findViewById(R.id.about_list) as RecyclerView
 
@@ -106,12 +107,12 @@ class AboutActivity : AppCompatActivity()
                 }
             }
 
-            if (position == dataset.size()-1)
+            if (position == dataset.size - 1)
                 vh.divider!!.setVisibility(View.GONE)
         }
 
         override fun getItemCount(): Int {
-            return dataset.size()
+            return dataset.size
         }
 
         inner class AboutVH(val item: View): RecyclerView.ViewHolder(item)
@@ -131,6 +132,6 @@ class AboutActivity : AppCompatActivity()
             }
         }
 
-        inner data class AboutItem(val headerRes: Int, val logoRes: Int, val bodyRes: Int, var expanded: Boolean)
+        inner class AboutItem(val headerRes: Int, val logoRes: Int, val bodyRes: Int, var expanded: Boolean)
     }
 }

@@ -25,12 +25,13 @@ import co.touchlab.droidconandroid.data.AppPrefs
 import co.touchlab.droidconandroid.data.DatabaseHelper
 import co.touchlab.droidconandroid.data.Track
 import co.touchlab.droidconandroid.gcm.RegistrationIntentService
-import co.touchlab.droidconandroid.superbus.RefreshScheduleDataKot
+import co.touchlab.droidconandroid.presenter.AppManager
 import co.touchlab.droidconandroid.superbus.UploadAvatarCommand
 import co.touchlab.droidconandroid.superbus.UploadCoverCommand
+import co.touchlab.droidconandroid.tasks.persisted.RefreshScheduleData
 import co.touchlab.droidconandroid.ui.*
 import com.wnafee.vector.compat.ResourcesCompat
-import java.util.ArrayList
+import java.util.*
 
 public class MyActivity : AppCompatActivity(), FilterInterface, NfcAdapter.CreateNdefMessageCallback
 {
@@ -38,7 +39,7 @@ public class MyActivity : AppCompatActivity(), FilterInterface, NfcAdapter.Creat
     {
         public fun startMe(c : Context)
         {
-            val i = Intent(c, javaClass<MyActivity>())
+            val i = Intent(c, MyActivity::class.java)
             c.startActivity(i)
         }
     }
@@ -55,20 +56,28 @@ public class MyActivity : AppCompatActivity(), FilterInterface, NfcAdapter.Creat
     {
         super<AppCompatActivity>.onCreate(savedInstanceState)
 
-        if (!AppPrefs.getInstance(this).getHasSeenWelcome())
+        val platformClient = AppManager.getPlatformClient()
+
+        platformClient.log("Another log 3")
+
+        platformClient.logException(NullPointerException("Testing"))
+
+        val startScreen = AppManager.findStartScreen(getString(R.string.voting_ends))
+
+        if (startScreen == AppManager.AppScreens.Welcome)
         {
             startActivity(WelcomeActivity.getLaunchIntent(this@MyActivity, false))
             finish()
             return
         }
         else
-            if (!AppPrefs.getInstance(this).isLoggedIn())
+            if (startScreen == AppManager.AppScreens.Login)
         {
             startActivity(SignInActivity.getLaunchIntent(this@MyActivity))
             finish()
             return
         }
-        else if ( VotingActivity.isVotingOpen(this) )
+        else if ( startScreen == AppManager.AppScreens.Voting )
         {
             VotingIntroActivity.callMe(this@MyActivity)
             finish()
@@ -112,7 +121,7 @@ public class MyActivity : AppCompatActivity(), FilterInterface, NfcAdapter.Creat
         EventBusExt.getDefault().register(this)
 
         // Start IntentService to register this application with GCM.
-        val intent = Intent(this, javaClass<RegistrationIntentService>())
+        val intent = Intent(this, RegistrationIntentService::class.java)
         startService(intent)
     }
 
@@ -124,7 +133,7 @@ public class MyActivity : AppCompatActivity(), FilterInterface, NfcAdapter.Creat
         if (prefs.isLoggedIn()
                 && (System.currentTimeMillis() - lastRefresh > (DateUtils.HOUR_IN_MILLIS * 6)))
         {
-            RefreshScheduleDataKot.callMe(this)
+            RefreshScheduleData.callMe(this)
         }
     }
 
@@ -204,8 +213,8 @@ public class MyActivity : AppCompatActivity(), FilterInterface, NfcAdapter.Creat
                 R.string.navigation_drawer_open, R.string.navigation_drawer_close
         );
         drawerLayout!!.setDrawerListener(drawerToggle);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setHomeButtonEnabled(true);
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        supportActionBar?.setHomeButtonEnabled(true)
         drawerToggle.syncState();
 
         navigationRecycler = findView(R.id.drawer_list) as RecyclerView
