@@ -8,8 +8,8 @@ import co.touchlab.android.threading.tasks.persisted.PersistedTask
 import co.touchlab.droidconandroid.BuildConfig
 import co.touchlab.droidconandroid.data.AppPrefs
 import co.touchlab.droidconandroid.network.dao.UserInfoResponse
+import co.touchlab.droidconandroid.presenter.AppManager
 import co.touchlab.droidconandroid.tasks.AbstractFindUserTask
-import com.crashlytics.android.Crashlytics
 import com.google.gson.Gson
 import com.turbomanage.httpclient.BasicHttpClient
 
@@ -42,7 +42,7 @@ open class UploadCoverCommand(val coverURL: String? = null) : RetrofitPersistedT
 
         val userResponseString = uploadResponse?.getBodyAsString() ?: throw RuntimeException("No user response")
         val gson = Gson()
-        val userInfoResponse = gson.fromJson(userResponseString, javaClass<UserInfoResponse>())
+        val userInfoResponse = gson.fromJson(userResponseString, UserInfoResponse::class.java)
         AbstractFindUserTask.saveUserResponse(context!!, null, userInfoResponse!!)
     }
 
@@ -52,7 +52,7 @@ open class UploadCoverCommand(val coverURL: String? = null) : RetrofitPersistedT
 
     override fun handleError(context: Context?, e: Throwable?): Boolean {
         Log.w("asdf", "Whoops", e);
-        Crashlytics.logException(e);
+        AppManager.getPlatformClient().logException(e)
         return true;
     }
 }

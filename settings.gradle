@@ -1,1 +1,1 @@
-include ':app', ':profilephotoeditor'//, ':zxing'
+include ':app', ':profilephotoeditor', ':lib'

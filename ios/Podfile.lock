@@ -1,0 +1,207 @@
+PODS:
+  - Crashlytics (3.7.0):
+    - Fabric (~> 1.6.3)
+  - Fabric (1.6.7)
+  - Google/Core (2.0.4):
+    - GoogleInterchangeUtilities (~> 1.0)
+    - GoogleNetworkingUtilities (~> 1.0)
+    - GoogleSymbolUtilities (~> 1.0)
+    - GoogleUtilities (~> 1.1)
+  - Google/SignIn (2.0.4):
+    - Google/Core
+    - GoogleSignIn (~> 3.0)
+  - GoogleAppUtilities (1.1.0):
+    - GoogleSymbolUtilities (~> 1.0)
+  - GoogleAuthUtilities (2.0.0):
+    - GoogleNetworkingUtilities (~> 1.0)
+    - GoogleSymbolUtilities (~> 1.0)
+  - GoogleInterchangeUtilities (1.2.0):
+    - GoogleSymbolUtilities (~> 1.0)
+  - GoogleNetworkingUtilities (1.2.0):
+    - GoogleSymbolUtilities (~> 1.0)
+  - GoogleSignIn (3.0.0):
+    - GoogleAppUtilities (~> 1.0)
+    - GoogleAuthUtilities (~> 2.0)
+    - GoogleNetworkingUtilities (~> 1.0)
+    - GoogleUtilities (~> 1.0)
+  - GoogleSymbolUtilities (1.1.0)
+  - GoogleUtilities (1.3.0):
+    - GoogleSymbolUtilities (~> 1.0)
+  - J2OBJC (1.0)
+  - j2objc-agera-debug (1.0)
+  - j2objc-agera-release (1.0)
+  - j2objc-androidbase-debug (1.0)
+  - j2objc-androidbase-release (1.0)
+  - j2objc-commons-io-debug (1.0)
+  - j2objc-commons-io-release (1.0)
+  - j2objc-commons-lang3-debug (1.0)
+  - j2objc-commons-lang3-release (1.0)
+  - j2objc-dagger-debug (1.0)
+  - j2objc-dagger-release (1.0)
+  - j2objc-eventbus-debug (1.0)
+  - j2objc-eventbus-release (1.0)
+  - j2objc-gson-debug (1.0)
+  - j2objc-gson-release (1.0)
+  - j2objc-intellij-debug (1.0)
+  - j2objc-intellij-release (1.0)
+  - j2objc-lib-debug (1.0)
+  - j2objc-lib-release (1.0)
+  - j2objc-magicthreads-0.9.0-debug (1.0)
+  - j2objc-magicthreads-0.9.0-release (1.0)
+  - j2objc-retrofit-debug (1.0)
+  - j2objc-retrofit-release (1.0)
+  - j2objc-rxandroid-debug (1.0)
+  - j2objc-rxandroid-release (1.0)
+  - j2objc-rxjava-debug (1.0)
+  - j2objc-rxjava-release (1.0)
+  - j2objc-squeakycore-debug (1.0)
+  - j2objc-squeakycore-release (1.0)
+  - j2objc-squeakyquery-debug (1.0)
+  - j2objc-squeakyquery-release (1.0)
+
+DEPENDENCIES:
+  - Crashlytics
+  - Fabric
+  - Google/SignIn
+  - J2OBJC (from `/Users/kgalligan/devel/j2objc/dist`)
+  - j2objc-agera-debug (from `/Users/kgalligan/devel/xp/gradletrans/out/agera`)
+  - j2objc-agera-release (from `/Users/kgalligan/devel/xp/gradletrans/out/agera`)
+  - j2objc-androidbase-debug (from `/Users/kgalligan/devel/xp/gradletrans/out/androidbase`)
+  - j2objc-androidbase-release (from `/Users/kgalligan/devel/xp/gradletrans/out/androidbase`)
+  - j2objc-commons-io-debug (from `/Users/kgalligan/devel/xp/gradletrans/out/commons-io`)
+  - j2objc-commons-io-release (from `/Users/kgalligan/devel/xp/gradletrans/out/commons-io`)
+  - j2objc-commons-lang3-debug (from `/Users/kgalligan/devel/xp/gradletrans/out/commons-lang3`)
+  - j2objc-commons-lang3-release (from `/Users/kgalligan/devel/xp/gradletrans/out/commons-lang3`)
+  - j2objc-dagger-debug (from `/Users/kgalligan/devel/xp/gradletrans/out/dagger`)
+  - j2objc-dagger-release (from `/Users/kgalligan/devel/xp/gradletrans/out/dagger`)
+  - j2objc-eventbus-debug (from `/Users/kgalligan/devel/xp/gradletrans/out/eventbus`)
+  - j2objc-eventbus-release (from `/Users/kgalligan/devel/xp/gradletrans/out/eventbus`)
+  - j2objc-gson-debug (from `/Users/kgalligan/devel/xp/gradletrans/out/gson`)
+  - j2objc-gson-release (from `/Users/kgalligan/devel/xp/gradletrans/out/gson`)
+  - j2objc-intellij-debug (from `/Users/kgalligan/devel/xp/gradletrans/out/intellij`)
+  - j2objc-intellij-release (from `/Users/kgalligan/devel/xp/gradletrans/out/intellij`)
+  - j2objc-lib-debug (from `../lib/build/j2objcOutputs`)
+  - j2objc-lib-release (from `../lib/build/j2objcOutputs`)
+  - j2objc-magicthreads-0.9.0-debug (from `/Users/kgalligan/devel/xp/gradletrans/out/magicthreads-0.9.0`)
+  - j2objc-magicthreads-0.9.0-release (from `/Users/kgalligan/devel/xp/gradletrans/out/magicthreads-0.9.0`)
+  - j2objc-retrofit-debug (from `/Users/kgalligan/devel/xp/gradletrans/out/retrofit`)
+  - j2objc-retrofit-release (from `/Users/kgalligan/devel/xp/gradletrans/out/retrofit`)
+  - j2objc-rxandroid-debug (from `/Users/kgalligan/devel/xp/gradletrans/out/rxandroid`)
+  - j2objc-rxandroid-release (from `/Users/kgalligan/devel/xp/gradletrans/out/rxandroid`)
+  - j2objc-rxjava-debug (from `/Users/kgalligan/devel/xp/gradletrans/out/rxjava`)
+  - j2objc-rxjava-release (from `/Users/kgalligan/devel/xp/gradletrans/out/rxjava`)
+  - j2objc-squeakycore-debug (from `/Users/kgalligan/devel/xp/gradletrans/out/squeakycore`)
+  - j2objc-squeakycore-release (from `/Users/kgalligan/devel/xp/gradletrans/out/squeakycore`)
+  - j2objc-squeakyquery-debug (from `/Users/kgalligan/devel/xp/gradletrans/out/squeakyquery`)
+  - j2objc-squeakyquery-release (from `/Users/kgalligan/devel/xp/gradletrans/out/squeakyquery`)
+
+EXTERNAL SOURCES:
+  J2OBJC:
+    :path: /Users/kgalligan/devel/j2objc/dist
+  j2objc-agera-debug:
+    :path: /Users/kgalligan/devel/xp/gradletrans/out/agera
+  j2objc-agera-release:
+    :path: /Users/kgalligan/devel/xp/gradletrans/out/agera
+  j2objc-androidbase-debug:
+    :path: /Users/kgalligan/devel/xp/gradletrans/out/androidbase
+  j2objc-androidbase-release:
+    :path: /Users/kgalligan/devel/xp/gradletrans/out/androidbase
+  j2objc-commons-io-debug:
+    :path: /Users/kgalligan/devel/xp/gradletrans/out/commons-io
+  j2objc-commons-io-release:
+    :path: /Users/kgalligan/devel/xp/gradletrans/out/commons-io
+  j2objc-commons-lang3-debug:
+    :path: /Users/kgalligan/devel/xp/gradletrans/out/commons-lang3
+  j2objc-commons-lang3-release:
+    :path: /Users/kgalligan/devel/xp/gradletrans/out/commons-lang3
+  j2objc-dagger-debug:
+    :path: /Users/kgalligan/devel/xp/gradletrans/out/dagger
+  j2objc-dagger-release:
+    :path: /Users/kgalligan/devel/xp/gradletrans/out/dagger
+  j2objc-eventbus-debug:
+    :path: /Users/kgalligan/devel/xp/gradletrans/out/eventbus
+  j2objc-eventbus-release:
+    :path: /Users/kgalligan/devel/xp/gradletrans/out/eventbus
+  j2objc-gson-debug:
+    :path: /Users/kgalligan/devel/xp/gradletrans/out/gson
+  j2objc-gson-release:
+    :path: /Users/kgalligan/devel/xp/gradletrans/out/gson
+  j2objc-intellij-debug:
+    :path: /Users/kgalligan/devel/xp/gradletrans/out/intellij
+  j2objc-intellij-release:
+    :path: /Users/kgalligan/devel/xp/gradletrans/out/intellij
+  j2objc-lib-debug:
+    :path: ../lib/build/j2objcOutputs
+  j2objc-lib-release:
+    :path: ../lib/build/j2objcOutputs
+  j2objc-magicthreads-0.9.0-debug:
+    :path: /Users/kgalligan/devel/xp/gradletrans/out/magicthreads-0.9.0
+  j2objc-magicthreads-0.9.0-release:
+    :path: /Users/kgalligan/devel/xp/gradletrans/out/magicthreads-0.9.0
+  j2objc-retrofit-debug:
+    :path: /Users/kgalligan/devel/xp/gradletrans/out/retrofit
+  j2objc-retrofit-release:
+    :path: /Users/kgalligan/devel/xp/gradletrans/out/retrofit
+  j2objc-rxandroid-debug:
+    :path: /Users/kgalligan/devel/xp/gradletrans/out/rxandroid
+  j2objc-rxandroid-release:
+    :path: /Users/kgalligan/devel/xp/gradletrans/out/rxandroid
+  j2objc-rxjava-debug:
+    :path: /Users/kgalligan/devel/xp/gradletrans/out/rxjava
+  j2objc-rxjava-release:
+    :path: /Users/kgalligan/devel/xp/gradletrans/out/rxjava
+  j2objc-squeakycore-debug:
+    :path: /Users/kgalligan/devel/xp/gradletrans/out/squeakycore
+  j2objc-squeakycore-release:
+    :path: /Users/kgalligan/devel/xp/gradletrans/out/squeakycore
+  j2objc-squeakyquery-debug:
+    :path: /Users/kgalligan/devel/xp/gradletrans/out/squeakyquery
+  j2objc-squeakyquery-release:
+    :path: /Users/kgalligan/devel/xp/gradletrans/out/squeakyquery
+
+SPEC CHECKSUMS:
+  Crashlytics: c3a2333dea9e2733d2777f730910321fc9e25c0d
+  Fabric: caf7580c725e64db144f610ac65cd60956911dc7
+  Google: d0932824c5b97c96be489aa6f4e8cd6c294d637d
+  GoogleAppUtilities: 974598e8ed618c74ead33541d9caffbc3d144266
+  GoogleAuthUtilities: 79e4143c77a08081a480b08df27a066cc8944f43
+  GoogleInterchangeUtilities: 427382e42d8a340038bec37c6fdfd316e14b5fa2
+  GoogleNetworkingUtilities: ec1e9911aca811eb18b7144394fee6168b607785
+  GoogleSignIn: 3d571172b8603be39dcb1705d8217146bb76fe62
+  GoogleSymbolUtilities: eb3965ea12710569c7b80db198a39e39b18613f7
+  GoogleUtilities: 5c653f7df2eedf0ce0efdfe5afe4f831f375fd7a
+  J2OBJC: 1916b297a459b9d983b8f7a20e4683833646446a
+  j2objc-agera-debug: dca1a6dfc156e45dd9c9d5a910e14e0247d86118
+  j2objc-agera-release: ec0eb63e8e4d5f538f24133de791c22854a61a1a
+  j2objc-androidbase-debug: b5877f3ab9a4e6f01350793adc21054d81104c29
+  j2objc-androidbase-release: 67ff08d9b38635f4fc2abf6028d3b14f47b5433d
+  j2objc-commons-io-debug: bbde42c207bf182df436d3bda4f7c79512109c0d
+  j2objc-commons-io-release: c0572229e36e684dc4caf42fb5b5f98ffd95edca
+  j2objc-commons-lang3-debug: ead4aa4096e840e948781c75fdf91172ec135445
+  j2objc-commons-lang3-release: 235d00875220838e664c1849f5a10d4dbf317943
+  j2objc-dagger-debug: 72def4d9b8c27cc2e244688f8b77a48ea7fc97a6
+  j2objc-dagger-release: 4ec2e9866524dd6cd5fddef29f03833a60c1ebd8
+  j2objc-eventbus-debug: 735aa269219a165eabc525cc2595c718a6e40522
+  j2objc-eventbus-release: 478e513da60e723cee46a89143b2b4c8d633984a
+  j2objc-gson-debug: 18dba4c8edf9ae97a2ed750448ac27200ebb95cb
+  j2objc-gson-release: 9a97c3ddbd57767be87cf48eb9374ff153350cc3
+  j2objc-intellij-debug: d889a88e55bf40ca7c1f2cb36cdc05c632be055e
+  j2objc-intellij-release: 4060a8810dbe57a991a1c969808df73b1a148dba
+  j2objc-lib-debug: 3fa6b7b353ae8820552d936031cc7989daed8dc9
+  j2objc-lib-release: 273eefb697c3e8294a876cad52515fc0b6e158c9
+  j2objc-magicthreads-0.9.0-debug: ec68f96f18db52fe055b3a326a1920466fd27a3e
+  j2objc-magicthreads-0.9.0-release: efd2e807d25cce664a25bc7c27fb7a8781594913
+  j2objc-retrofit-debug: d4b2f34655a512b43f79837caf04bc2750a48e84
+  j2objc-retrofit-release: dc77d50a00da9495342ecc26dfad289f7e71a0f4
+  j2objc-rxandroid-debug: 553d0bc734297dd3f542c5ea704691c72da60e91
+  j2objc-rxandroid-release: 7644fca2051df69b13184a5a3b2f6058a5b03e4d
+  j2objc-rxjava-debug: 3d3456b1888b9321da5066ba5ad75dbb5eb54bfc
+  j2objc-rxjava-release: 00eda94358026f7eae5d5a52a4f94cd66adb3984
+  j2objc-squeakycore-debug: b838f1f048c3f817e71b5b6fe67f55cca923204e
+  j2objc-squeakycore-release: b4aa28e864239febece5864edf5af07c9e7c12fd
+  j2objc-squeakyquery-debug: 664bcede7bc279aeb80c2b7ad33442ac9cd3d04e
+  j2objc-squeakyquery-release: 340f5a03dd6c8bf12cc3c0483025a41d58a96415
+
+PODFILE CHECKSUM: f4c79bae727cfbf7a941cadd223c156f4876ca74
+
+COCOAPODS: 1.0.0.beta.6

@@ -28,7 +28,7 @@ public class WelcomeActivity : AppCompatActivity()
     {
         public fun getLaunchIntent(c : Context, short: Boolean) : Intent
         {
-            val intent = Intent(c, javaClass<WelcomeActivity>())
+            val intent = Intent(c, WelcomeActivity::class.java)
             intent.putExtra("SHORT", short)
             return intent
         }

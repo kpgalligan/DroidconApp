@@ -40,7 +40,7 @@ class VoteAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder> {
     }
 
     override fun getItemCount(): Int {
-        return dataSet.size()
+        return dataSet.size
     }
 
     override fun onCreateViewHolder(parent: ViewGroup?, viewType: Int): RecyclerView.ViewHolder? {
@@ -95,7 +95,7 @@ class VoteAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder> {
     }
 
     fun isDataEmpty(): Boolean {
-        return dataSet.size() <= 1
+        return dataSet.size <= 1
     }
 
     fun remove(item: TalkSubmission) {

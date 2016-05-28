@@ -12,12 +12,13 @@ import co.touchlab.droidconandroid.data.Block
 import co.touchlab.droidconandroid.data.Event
 import co.touchlab.droidconandroid.data.ScheduleBlock
 import co.touchlab.droidconandroid.data.Track
+import co.touchlab.droidconandroid.presenter.ConferenceDataPresenter
+import co.touchlab.droidconandroid.presenter.ScheduleBlockHour
 import com.wnafee.vector.compat.ResourcesCompat
 import java.text.SimpleDateFormat
-import java.util.ArrayList
-import java.util.Date
+import java.util.*
 
-fun hasConflict(event: Event, dataSet: List<ScheduleBlock>):Boolean
+/*fun hasConflict(event: Event, dataSet: List<ScheduleBlock>):Boolean
 {
     for (ce in dataSet) {
         if(ce is Event) {
@@ -27,7 +28,7 @@ fun hasConflict(event: Event, dataSet: List<ScheduleBlock>):Boolean
     }
 
     return false
-}
+}*/
 /**
  *
  * Created by izzyoji :) on 8/6/15.
@@ -38,15 +39,15 @@ class EventAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder> {
     val VIEW_TYPE_BLOCK: Int = 1
     val VIEW_TYPE_PAST_EVENT: Int = 2
 
-    private var dataSet: List<ScheduleBlock>
-    private var filteredData: ArrayList<ScheduleBlock>
+    private var dataSet: List<ScheduleBlockHour>
+    private var filteredData: ArrayList<ScheduleBlockHour>
     private val eventClickListener: EventClickListener
     private val timeFormat = SimpleDateFormat("h:mma")
     private val allEvents: Boolean
     private var currentTracks: ArrayList<String> = ArrayList()
 
 
-    constructor(events: List<ScheduleBlock>, all: Boolean, initialFilters: List<String>,  eventClickListener: EventClickListener) : super() {
+    constructor(events: List<ScheduleBlockHour>, all: Boolean, initialFilters: List<String>,  eventClickListener: EventClickListener) : super() {
         dataSet = events;
         filteredData = ArrayList(events);
         allEvents = all
@@ -56,7 +57,7 @@ class EventAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder> {
     }
 
     override fun getItemCount(): Int {
-        return filteredData.size()
+        return filteredData.size
     }
 
     override fun onCreateViewHolder(parent: ViewGroup?, viewType: Int): RecyclerView.ViewHolder? {
@@ -77,13 +78,23 @@ class EventAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder> {
         val context = holder!!.itemView.getContext()
         val resources = context.getResources()
         holder as ScheduleBlockViewHolder
-        if(getItemViewType(position) == VIEW_TYPE_EVENT || getItemViewType(position) == VIEW_TYPE_PAST_EVENT){
+        val scheduleBlockHour = filteredData.get(position)
 
-            val event = filteredData.get(position) as Event
+        ConferenceDataPresenter.styleEventRow(scheduleBlockHour, holder, allEvents);
+
+        if(!scheduleBlockHour.scheduleBlock.isBlock)
+        {
+            holder.card.setOnClickListener{
+                eventClickListener.onEventClick(scheduleBlockHour.scheduleBlock as Event);
+            }
+        }
+        /*if(getItemViewType(position) == VIEW_TYPE_EVENT || getItemViewType(position) == VIEW_TYPE_PAST_EVENT){
+
+            val event = scheduleBlockHour.scheduleBlock as Event
 
             holder.title.setText(event.name)
 
-            holder.time.setText(getTimeBlock(event, position))
+            holder.time.setText(scheduleBlockHour.hourStringDisplay)
 
             holder.card.setOnClickListener{
                 eventClickListener.onEventClick(event)
@@ -93,7 +104,7 @@ class EventAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder> {
                 holder.rsvp.setVisibility(View.VISIBLE)
                 if(event.isNow())
                     holder.rsvp.setImageDrawable(ResourcesCompat.getDrawable(context, R.drawable.ic_play))
-                else if(!event.isPast() && hasConflict(event, dataSet))
+                else if(!event.isPast() && EventDetailLoadTask.hasConflict(event, dataSet))
                     holder.rsvp.setImageDrawable(ResourcesCompat.getDrawable(context, R.drawable.ic_check_red))
                 else if(allEvents)
                     holder.rsvp.setImageDrawable(ResourcesCompat.getDrawable(context, R.drawable.ic_check_green))
@@ -107,30 +118,22 @@ class EventAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
             val track = Track.findByServerName(event.category)
             if(track != null && !event.isPast()) {
-                holder.track.setBackgroundColor(resources.getColor(track.getTextColorRes()))
+
+                holder.track.setBackgroundColor(resources.getColor(context.resources.getIdentifier(track.getTextColorRes(), "color", context.packageName)))
             }
             else
             {
                 holder.track.setBackgroundColor(resources.getColor(android.R.color.transparent))
             }
         } else if (getItemViewType(position) == VIEW_TYPE_BLOCK) {
-            val block = filteredData.get(position) as Block
+            val block = scheduleBlockHour.scheduleBlock as Block
 
             holder.title.setText(block.name)
-            holder.time.setText(getTimeBlock(block, position))
+            holder.time.setText(scheduleBlockHour.hourStringDisplay)
             holder.locationTime.setText(getDetailedTime(block))
             holder.rsvp.setVisibility(View.GONE)
 
-        }
-    }
-
-    private fun getTimeBlock(scheduleBlock: ScheduleBlock, position: Int): String {
-        var timeBlock = ""
-        if (scheduleBlock.getStartLong() != null && isFirstForTime(position)) {
-            val startDate = Date(scheduleBlock.getStartLong())
-            timeBlock = timeFormat.format(startDate).toLowerCase()
-        }
-        return timeBlock
+        }*/
     }
 
     private fun getDetailedTime(scheduleBlock: ScheduleBlock): String? {
@@ -143,11 +146,11 @@ class EventAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder> {
             var formattedStart = timeFormat.format(startDate).toLowerCase()
             val formattedEnd = timeFormat.format(endDate).toLowerCase()
 
-            val startMarker = formattedStart.substring(Math.max(formattedStart.length() - 2, 0))
-            val endMarker = formattedEnd.substring(Math.max(formattedEnd.length() - 2, 0))
+            val startMarker = formattedStart.substring(Math.max(formattedStart.length - 2, 0))
+            val endMarker = formattedEnd.substring(Math.max(formattedEnd.length - 2, 0))
 
             if (TextUtils.equals(startMarker, endMarker)) {
-                formattedStart = formattedStart.substring(0, Math.max(formattedStart.length() - 2, 0))
+                formattedStart = formattedStart.substring(0, Math.max(formattedStart.length - 2, 0))
             }
 
             time = formattedStart + " - " + formattedEnd
@@ -155,22 +158,8 @@ class EventAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder> {
         return time
     }
 
-    private fun isFirstForTime(position: Int): Boolean {
-        if (position == 0) {
-            return true
-        } else {
-            val prevEvent = filteredData.get(position - 1)
-            val event = filteredData.get(position)
-            val prevEventStart = prevEvent.getStartLong()
-            if(prevEventStart != null && (event.getStartLong() != prevEventStart)) {
-                return true
-            }
-        }
-        return false
-    }
-
     override fun getItemViewType(position: Int): Int {
-        val item = filteredData.get(position)
+        val item = filteredData.get(position).scheduleBlock
         if (item is Event) {
             if (item.isPast()) {
                 return VIEW_TYPE_PAST_EVENT
@@ -201,7 +190,8 @@ class EventAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder> {
         {
             filteredData = ArrayList(dataSet)
         } else {
-            for (item in dataSet) {
+            //TODO: Filter
+            /*for (item in dataSet) {
                 if(item is Block) {
                     filteredData.add(item)
                 } else {
@@ -211,20 +201,44 @@ class EventAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder> {
                         filteredData.add(item)
                     }
                 }
-            }
+            }*/
         }
 
         notifyDataSetChanged()
     }
 
-    fun updateEvents(data: List<ScheduleBlock>)
+    fun updateEvents(data: List<ScheduleBlockHour>)
     {
         dataSet = data
         filteredData = ArrayList(data)
         update(null)
     }
 
-    public class ScheduleBlockViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+    public class ScheduleBlockViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView), ConferenceDataPresenter.EventRow {
+        override fun setTitleText(s: String?) {
+            title.text = s;
+        }
+
+        override fun setTimeText(s: String?) {
+            time.text = s;
+        }
+
+        override fun setDetailText(s: String?) {
+            locationTime.text = s;
+        }
+
+        override fun setRsvpVisible(b: Boolean) {
+            rsvp.visibility = if(b) View.VISIBLE else View.GONE;
+        }
+
+        override fun setRsvpChecked() {
+            rsvp.setImageDrawable(ResourcesCompat.getDrawable(itemView.context, R.drawable.ic_check_green));
+        }
+
+        override fun setRsvpConflict() {
+            rsvp.setImageDrawable(ResourcesCompat.getDrawable(itemView.context, R.drawable.ic_check_red));
+        }
+
         public val title: TextView
         public val time: TextView
         public val locationTime: TextView

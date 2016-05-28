@@ -10,8 +10,8 @@ import co.touchlab.droidconandroid.BuildConfig
 import co.touchlab.droidconandroid.data.AppPrefs
 import co.touchlab.droidconandroid.data.DatabaseHelper
 import co.touchlab.droidconandroid.network.dao.UserInfoResponse
+import co.touchlab.droidconandroid.presenter.AppManager
 import co.touchlab.droidconandroid.tasks.AbstractFindUserTask
-import com.crashlytics.android.Crashlytics
 import com.google.gson.Gson
 import com.turbomanage.httpclient.BasicHttpClient
 import org.apache.commons.io.IOUtils
@@ -51,7 +51,7 @@ open class UploadAvatarCommand(val imageURL: String? = null) : RetrofitPersisted
 
         val userResponseString = uploadResponse?.getBodyAsString() ?: throw RuntimeException("No user response")
         val gson = Gson()
-        val userInfoResponse = gson.fromJson(userResponseString, javaClass<UserInfoResponse>())
+        val userInfoResponse = gson.fromJson(userResponseString, UserInfoResponse::class.java)
         AbstractFindUserTask.saveUserResponse(context!!, null, userInfoResponse!!)
     }
 
@@ -61,7 +61,8 @@ open class UploadAvatarCommand(val imageURL: String? = null) : RetrofitPersisted
 
     override fun handleError(context: Context?, e: Throwable?): Boolean {
         Log.w("asdf", "Whoops", e);
-        Crashlytics.logException(e);
+
+        AppManager.getPlatformClient().logException(e)
         return true;
     }
 }

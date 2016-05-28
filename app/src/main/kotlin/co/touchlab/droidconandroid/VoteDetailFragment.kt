@@ -5,12 +5,10 @@ import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.support.v4.app.DialogFragment
-import android.view
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.Window
-import android.widget.LinearLayout
 import android.widget.RelativeLayout
 import android.widget.TextView
 import android.widget.Toast
@@ -41,7 +39,7 @@ class VoteDetailFragment : DialogFragment() {
     var rating: CustomRatingBar? = null
     var talk: TalkSubmission? = null
 
-    override fun onCreateView(inflater: LayoutInflater?, container: view.ViewGroup?, savedInstanceState: Bundle?): View? {
+    override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater!!.inflate(R.layout.fragment_vote_detail, null)
     }
 
@@ -57,7 +55,7 @@ class VoteDetailFragment : DialogFragment() {
         initEvent()
     }
 
-    override fun onCreateDialog(savedInstanceState: Bundle?): Dialog? {
+    override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         // the content
         val root = RelativeLayout(getActivity());
         root.setLayoutParams(ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
@@ -73,19 +71,19 @@ class VoteDetailFragment : DialogFragment() {
     }
 
     fun initEvent() {
-        val title = view.findViewById(R.id.title) as TextView
-        val descrip = view.findViewById(R.id.description) as TextView
-        val speaker = view.findViewById(R.id.speaker) as TextView
+        val title = view?.findViewById(R.id.title) as TextView
+        val descrip = view?.findViewById(R.id.description) as TextView
+        val speaker = view?.findViewById(R.id.speaker) as TextView
 
-        val cancel = view.findViewById(R.id.cancel)
-        val pass = view.findViewById(R.id.pass) as TextView
-        val submit = view.findViewById(R.id.submit_vote) as TextView
+        val cancel = view?.findViewById(R.id.cancel)
+        val pass = view?.findViewById(R.id.pass) as TextView
+        val submit = view?.findViewById(R.id.submit_vote) as TextView
 
         title.text = talk!!.title
         descrip.text = talk!!.description
         speaker.text = talk!!.speaker
 
-        cancel.setOnClickListener { dismiss() }
+        cancel?.setOnClickListener { dismiss() }
         pass.setOnClickListener {
             talk!!.vote = 0
             updateTalk()
@@ -108,7 +106,7 @@ class VoteDetailFragment : DialogFragment() {
     }
 
     private fun initRating() {
-        rating = view.findViewById(R.id.rating) as CustomRatingBar
+        rating = view?.findViewById(R.id.rating) as CustomRatingBar
         if (talk!!.vote != null)
             rating!!.setRating(talk!!.vote.toFloat())
 
