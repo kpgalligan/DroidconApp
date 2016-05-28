@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9531" systemVersion="14F1509" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="QQp-Hh-HEz">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10117" systemVersion="15D21" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="QQp-Hh-HEz">
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9529"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <scenes>
@@ -47,7 +47,7 @@
                                         <rect key="frame" x="0.0" y="50" width="600" height="54"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="gju-G3-1je" id="gPi-ye-4bF">
-                                            <rect key="frame" x="0.0" y="0.0" width="600" height="53.5"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="600" height="53"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Time" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9oQ-BT-1py">
@@ -59,20 +59,23 @@
                                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="751" misplaced="YES" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gK9-5e-vYz">
-                                                    <rect key="frame" x="76" y="10" width="478" height="17"/>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="751" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gK9-5e-vYz">
+                                                    <rect key="frame" x="76" y="10" width="470" height="17"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="SubLabel" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7Vh-d9-kGB">
-                                                    <rect key="frame" x="76" y="28" width="60.5" height="17"/>
+                                                    <rect key="frame" x="76" y="28" width="470" height="17"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                     <color key="textColor" red="0.40000000000000002" green="0.40000000000000002" blue="0.40000000000000002" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="749" text="RSVP" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="F6u-Ss-WQG">
                                                     <rect key="frame" x="554" y="10" width="36" height="17"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" constant="36" id="gMO-vk-xA5"/>
+                                                    </constraints>
                                                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
@@ -80,9 +83,12 @@
                                             </subviews>
                                             <constraints>
                                                 <constraint firstItem="gK9-5e-vYz" firstAttribute="top" secondItem="gPi-ye-4bF" secondAttribute="topMargin" constant="2" id="3ea-D7-d7I"/>
+                                                <constraint firstItem="F6u-Ss-WQG" firstAttribute="leading" secondItem="gK9-5e-vYz" secondAttribute="trailing" constant="8" id="65f-QY-nVx"/>
                                                 <constraint firstItem="gK9-5e-vYz" firstAttribute="leading" secondItem="9oQ-BT-1py" secondAttribute="trailing" constant="6" id="Ew5-ee-mVC"/>
+                                                <constraint firstItem="7Vh-d9-kGB" firstAttribute="trailing" secondItem="gK9-5e-vYz" secondAttribute="trailing" id="S2r-bm-RU9"/>
                                                 <constraint firstItem="9oQ-BT-1py" firstAttribute="leading" secondItem="gPi-ye-4bF" secondAttribute="leadingMargin" constant="2" id="TmS-v8-ggB"/>
                                                 <constraint firstItem="F6u-Ss-WQG" firstAttribute="top" secondItem="gPi-ye-4bF" secondAttribute="topMargin" constant="2" id="gNy-06-2aL"/>
+                                                <constraint firstItem="gK9-5e-vYz" firstAttribute="leading" secondItem="9oQ-BT-1py" secondAttribute="trailing" constant="6" id="lfJ-Oe-ity"/>
                                                 <constraint firstItem="7Vh-d9-kGB" firstAttribute="top" secondItem="gPi-ye-4bF" secondAttribute="topMargin" constant="20" id="lgM-C6-AT7"/>
                                                 <constraint firstAttribute="trailingMargin" secondItem="F6u-Ss-WQG" secondAttribute="trailing" constant="2" id="uZP-rA-iCj"/>
                                                 <constraint firstItem="9oQ-BT-1py" firstAttribute="top" secondItem="gPi-ye-4bF" secondAttribute="topMargin" constant="2" id="vql-Xz-8xm"/>
@@ -171,7 +177,7 @@
                                         <rect key="frame" x="0.0" y="94" width="600" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Txp-Dm-ZXs" id="cbK-4e-e7e">
-                                            <rect key="frame" x="0.0" y="0.0" width="600" height="44"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="600" height="43"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                         </tableViewCellContentView>
                                     </tableViewCell>
@@ -229,7 +235,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Welcome!" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="nI2-q2-Xky">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Welcome!" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="nI2-q2-Xky">
                                 <rect key="frame" x="213" y="30" width="176" height="48"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="40"/>
                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
