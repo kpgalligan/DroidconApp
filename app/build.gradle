@@ -112,7 +112,7 @@ android {
 
 configurations {
 //    compile.exclude module: 'magicthreads'
-    compile.exclude module: 'annotations'
+    compile.exclude module: 'intellijannotations'
     compile.exclude module: 'android'
     compile.exclude module: 'androidbase'
 }

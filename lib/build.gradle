@@ -5,23 +5,12 @@ apply plugin: 'com.touchlab.doppel.doppelgradle'
 sourceCompatibility = 1.7
 targetCompatibility = 1.7
 
-name
-configurations {
-    provided
-    compile.extendsFrom provided
-}
-
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
-    provided 'com.google.android:android:4.1.1.4'
 
     apt 'co.touchlab.squeaky:squeaky-processor:0.5.0.0'
     compile 'co.touchlab.squeaky:squeaky-query:0.5.0.0'
     compile 'co.touchlab:magicthreads:0.9.0'
-    testCompile 'com.google.code.findbugs:jsr305:3.0.0'
-
-    compile 'com.google.j2objc:j2objc-annotations:0.1'
-    provided 'com.intellij:annotations:9.0.4'
 
     compile 'com.squareup.retrofit:retrofit:1.9.0'
     compile 'de.greenrobot:eventbus:2.4.0'
@@ -29,15 +18,27 @@ dependencies {
     compile 'com.google.code.gson:gson:2.3.1'
     compile 'org.apache.commons:commons-lang3:3.3.2'
 
-    apt 'com.google.dagger:dagger-compiler:2.0.2'
-    compile 'javax.inject:javax.inject:1'
+    testApt 'co.touchlab.doppel:testapt:0.1.0-SNAPSHOT'
+
+    doppel 'com.squareup.retrofit:retrofit:1.9.1-SNAPSHOT@dop'
+    doppel 'com.google.code.gson:gson:2.6.2-SNAPSHOT@dop'
+    doppel 'de.greenrobot:eventbus:2.2.1-SNAPSHOT@dop'
+    doppel 'co.touchlab.squeaky:squeakycore:0.5.0.0-SNAPSHOT@dop'
+    doppel 'co.touchlab.squeaky:squeakyquery:0.5.0.0-SNAPSHOT@dop'
+    doppel 'co.touchlab:magicthreads:0.9.0-SNAPSHOT@dop'
+    doppel 'org.apache.commons:commons-lang3:3.3.2-SNAPSHOT@dop'
+    doppel 'commons-io:commons-io:1.4-SNAPSHOT@dop'
+    doppel 'rxjava:rxjava:1.1.0-SNAPSHOT@dop'
+
+    provided 'com.intellij:intellijannotations:9.0.4'
+    doppel 'com.intellij:intellijannotations:9.0.4@dop'
 }
 
 j2objcConfig {
 
 //    j2objcCycleFinder { enabled = true }
 
-    translateDoppelLibs 'eventbus', 'squeakycore', 'squeakyquery', 'androidbase', 'intellij', 'magicthreads-0.9.0', 'retrofit', 'rxjava', 'rxandroid', 'commons-io', 'commons-lang3', 'gson', 'dagger', 'agera'
+//    translateDoppelLibs 'eventbus', 'squeakycore', 'squeakyquery', 'androidbase', 'intellij', 'magicthreads-0.9.0', 'retrofit', 'rxjava', 'rxandroid', 'commons-io', 'commons-lang3', 'gson', 'dagger', 'agera'
 
     // Omit these two lines if you don't configure your Xcode project with CocoaPods
     xcodeProjectDir '../ios'  //  suggested directory name
