@@ -31,7 +31,7 @@ dependencies {
     doppel 'rxjava:rxjava:1.1.0-SNAPSHOT@dop'
 
     provided 'com.intellij:intellijannotations:9.0.4'
-    doppel 'com.intellij:intellijannotations:9.0.4@dop'
+    doppel 'com.intellij:intellijannotations:9.0.4-SNAPSHOT@dop'
 }
 
 j2objcConfig {
