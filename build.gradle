@@ -6,6 +6,9 @@ buildscript {
         mavenCentral()
         maven { url "https://plugins.gradle.org/m2/" }
         maven { url "http://dl.bintray.com/populov/maven" }
+        flatDir {
+            dirs "/Users/kgalligan/temp/flatdirtest"
+        }
 //        maven { url 'http://oss.jfrog.org/artifactory/oss-snapshot-local' }
     }
     dependencies {
@@ -27,7 +30,9 @@ allprojects {
         maven { url "http://dl.bintray.com/populov/maven" }
         jcenter()
         mavenCentral()
-
+        flatDir {
+            dirs "/Users/kgalligan/temp/flatdirtest"
+        }
     }
 }
 
