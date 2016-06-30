@@ -17,89 +17,63 @@ import co.touchlab.droidconandroid.ui.EventAdapter
 import co.touchlab.droidconandroid.ui.EventClickListener
 import java.util.*
 
-class ScheduleDataFragment() : Fragment()
-{
-    var eventList: RecyclerView? = null
-    var adapter: EventAdapter? = null
-    private var allEvents = true
-    private var day: Long? = null
-    private var position: Int? = null
+private const val ALL_EVENTS = "ALL_EVENTS"
+private const val DAY = "DAY"
+private const val POSITION = "POSITION"
 
-    companion object
-    {
-        val ALL_EVENTS = "ALL_EVENTS"
-        val DAY = "DAY"
-        val POSITION = "POSITION"
+fun createScheduleDataFragment(all: Boolean, day: Long, position: Int): ScheduleDataFragment {
+    val scheduleDataFragment = ScheduleDataFragment()
+    val args = Bundle()
+    args.putBoolean(ALL_EVENTS, all)
+    args.putLong(DAY, day)
+    args.putInt(POSITION, position)
+    scheduleDataFragment.arguments = args
+    return scheduleDataFragment
+}
 
-        fun newInstance(all: Boolean, day: Long, position: Int): ScheduleDataFragment
-        {
-            val scheduleDataFragment = ScheduleDataFragment()
-            val args = Bundle()
-            args.putBoolean(ALL_EVENTS, all)
-            args.putLong(DAY, day)
-            args.putInt(POSITION, position)
-            scheduleDataFragment.setArguments(args)
-            return scheduleDataFragment
-        }
-    }
+class ScheduleDataFragment() : Fragment() {
+    val eventList: RecyclerView by bindView(R.id.eventList)
 
-    override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?): View?
-    {
-        return inflater!!.inflate(R.layout.fragment_schedule_data, null)!!
+    override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+        return inflater?.inflate(R.layout.fragment_schedule_data, container, false)
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
-        allEvents = getArguments()!!.getBoolean(ALL_EVENTS)
-        day = getArguments()!!.getLong(DAY)
-        position = getArguments()!!.getInt(POSITION)
+        eventList.layoutManager = LinearLayoutManager(activity)
+        eventList.adapter = EventAdapter(emptyList(), arguments.getBoolean(ALL_EVENTS,true)
+                ,(activity as FilterInterface).getCurrentFilters(), ScheduleEventClickListener())
 
-        eventList = view?.findViewById(R.id.eventList) as RecyclerView
-        eventList!!.setLayoutManager(LinearLayoutManager(getActivity()))
-
-        EventBusExt.getDefault()!!.register(this)
+        EventBusExt.getDefault().register(this)
     }
 
-    override fun onDestroy()
-    {
+    override fun onDestroy() {
         super.onDestroy()
-        EventBusExt.getDefault()!!.unregister(this)
+        EventBusExt.getDefault().unregister(this)
     }
 
-    public fun onEventMainThread(dayHolders: Array<ConferenceDayHolder>?)
-    {
-        val dayString = ConferenceDataHelper.dateToDayString(Date(day!!))
-        for (holder in dayHolders!!) {
-            if(holder.dayString!!.equals(dayString))
-            {
+    private fun updateAdapter(data: Array<out ScheduleBlockHour>?) {
+        (eventList.adapter as EventAdapter).updateEvents(data!!.asList())
+    }
+
+    fun filter(track: Track) {
+        (eventList.adapter as EventAdapter).update(track)
+    }
+
+    fun onEventMainThread(dayHolders: Array<ConferenceDayHolder>) {
+        val dayString = ConferenceDataHelper.dateToDayString(Date(arguments.getLong(DAY)))
+        for (holder in dayHolders) {
+            if (holder.dayString?.equals(dayString) ?: false) {
                 updateAdapter(holder.hourHolders)
                 break
             }
         }
-
     }
 
-    private fun updateAdapter(data: Array<out ScheduleBlockHour>?) {
-        if (eventList!!.getAdapter() == null)
-        {
-            adapter = EventAdapter(data!!.asList(), allEvents, (getActivity() as FilterInterface).getCurrentFilters(), object : EventClickListener {
-                override fun onEventClick(event: Event) {
-                    EventDetailActivity.callMe(getActivity()!!, event.id, event.category)
-                }
-            })
-            eventList!!.setAdapter(adapter!!)
-        }
-        else
-        {
-            (eventList!!.getAdapter() as EventAdapter).updateEvents(data!!.asList())
+    private inner class ScheduleEventClickListener : EventClickListener {
+        override fun onEventClick(event: Event) {
+            EventDetailActivity.callMe(activity, event.id, event.category)
         }
     }
-
-    fun filter(track: Track) {
-        if(adapter != null) {
-            adapter!!.update(track)
-        }
-    }
-
 }

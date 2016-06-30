@@ -146,7 +146,7 @@ class ScheduleFragmentPagerAdapter : FragmentPagerAdapter
     }
 
     override fun getItem(position: Int): ScheduleDataFragment? {
-        return ScheduleDataFragment.newInstance(allEvents, dates.get(position), position)
+        return createScheduleDataFragment(allEvents, dates[position], position)
     }
 
     override fun getPageTitle(position: Int): CharSequence? {
