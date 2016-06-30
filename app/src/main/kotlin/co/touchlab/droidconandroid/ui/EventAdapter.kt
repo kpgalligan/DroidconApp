@@ -1,193 +1,91 @@
 package co.touchlab.droidconandroid.ui
 
 import android.support.v7.widget.RecyclerView
-import android.text.TextUtils
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import co.touchlab.droidconandroid.R
+import co.touchlab.droidconandroid.bindView
 import co.touchlab.droidconandroid.data.Block
 import co.touchlab.droidconandroid.data.Event
-import co.touchlab.droidconandroid.data.ScheduleBlock
 import co.touchlab.droidconandroid.data.Track
 import co.touchlab.droidconandroid.presenter.ConferenceDataPresenter
 import co.touchlab.droidconandroid.presenter.ScheduleBlockHour
 import com.wnafee.vector.compat.ResourcesCompat
-import java.text.SimpleDateFormat
 import java.util.*
 
-/*fun hasConflict(event: Event, dataSet: List<ScheduleBlock>):Boolean
-{
-    for (ce in dataSet) {
-        if(ce is Event) {
-            if (event.id != ce.id && !TextUtils.isEmpty(ce.rsvpUuid) && event.startDateLong < ce.endDateLong && event.endDateLong > ce.startDateLong)
-                return true
-        }
-    }
-
-    return false
-}*/
 /**
  *
  * Created by izzyoji :) on 8/6/15.
  */
+
+private const val VIEW_TYPE_EVENT = 0
+private const val VIEW_TYPE_BLOCK = 1
+private const val VIEW_TYPE_PAST_EVENT = 2
+
 class EventAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder> {
-
-    val VIEW_TYPE_EVENT: Int = 0
-    val VIEW_TYPE_BLOCK: Int = 1
-    val VIEW_TYPE_PAST_EVENT: Int = 2
-
-    private var dataSet: List<ScheduleBlockHour>
-    private var filteredData: ArrayList<ScheduleBlockHour>
+    private var dataSet: List<ScheduleBlockHour> = emptyList()
+    private var filteredData: ArrayList<ScheduleBlockHour> = ArrayList()
     private val eventClickListener: EventClickListener
-    private val timeFormat = SimpleDateFormat("h:mma")
     private val allEvents: Boolean
     private var currentTracks: ArrayList<String> = ArrayList()
 
-
-    constructor(events: List<ScheduleBlockHour>, all: Boolean, initialFilters: List<String>,  eventClickListener: EventClickListener) : super() {
-        dataSet = events;
-        filteredData = ArrayList(events);
+    constructor( all: Boolean, initialFilters: List<String>, eventClickListener: EventClickListener) : super() {
         allEvents = all
         this.eventClickListener = eventClickListener
-        this.currentTracks = ArrayList(initialFilters);
-        update(null)
+        currentTracks = ArrayList(initialFilters)
+        updateData()
     }
 
     override fun getItemCount(): Int {
         return filteredData.size
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup?, viewType: Int): RecyclerView.ViewHolder? {
-        val v: View
-        if (viewType == VIEW_TYPE_EVENT) {
-            v = LayoutInflater.from(parent!!.getContext()).inflate(R.layout.item_event, parent, false)
-            return ScheduleBlockViewHolder(v)
-        } else if (viewType == VIEW_TYPE_BLOCK || viewType == VIEW_TYPE_PAST_EVENT) {
-            v = LayoutInflater.from(parent!!.getContext()).inflate(R.layout.item_block, parent, false)
-            return ScheduleBlockViewHolder(v)
-        }
-        throw UnsupportedOperationException()
-    }
-
-
-
-    override fun onBindViewHolder(holder: RecyclerView.ViewHolder?, position: Int) {
-        val context = holder!!.itemView.getContext()
-        val resources = context.getResources()
-        holder as ScheduleBlockViewHolder
-        val scheduleBlockHour = filteredData.get(position)
-
-        ConferenceDataPresenter.styleEventRow(scheduleBlockHour, holder, allEvents);
-
-        if(!scheduleBlockHour.scheduleBlock.isBlock)
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
+        val v = when (viewType)
         {
-            holder.card.setOnClickListener{
-                eventClickListener.onEventClick(scheduleBlockHour.scheduleBlock as Event);
-            }
+            VIEW_TYPE_EVENT -> LayoutInflater.from(parent.context).inflate(R.layout.item_event, parent, false)
+            VIEW_TYPE_PAST_EVENT, VIEW_TYPE_BLOCK -> LayoutInflater.from(parent.context).inflate(R.layout.item_block, parent, false)
+            else -> throw UnsupportedOperationException()
         }
-        /*if(getItemViewType(position) == VIEW_TYPE_EVENT || getItemViewType(position) == VIEW_TYPE_PAST_EVENT){
-
-            val event = scheduleBlockHour.scheduleBlock as Event
-
-            holder.title.setText(event.name)
-
-            holder.time.setText(scheduleBlockHour.hourStringDisplay)
-
-            holder.card.setOnClickListener{
-                eventClickListener.onEventClick(event)
-            }
-
-            if (!TextUtils.isEmpty(event.rsvpUuid)) {
-                holder.rsvp.setVisibility(View.VISIBLE)
-                if(event.isNow())
-                    holder.rsvp.setImageDrawable(ResourcesCompat.getDrawable(context, R.drawable.ic_play))
-                else if(!event.isPast() && EventDetailLoadTask.hasConflict(event, dataSet))
-                    holder.rsvp.setImageDrawable(ResourcesCompat.getDrawable(context, R.drawable.ic_check_red))
-                else if(allEvents)
-                    holder.rsvp.setImageDrawable(ResourcesCompat.getDrawable(context, R.drawable.ic_check_green))
-                else
-                    holder.rsvp.setVisibility(View.GONE)
-            } else {
-                holder.rsvp.setVisibility(View.GONE)
-            }
-
-            holder.locationTime.setText("${event.allSpeakersString()}")
-
-            val track = Track.findByServerName(event.category)
-            if(track != null && !event.isPast()) {
-
-                holder.track.setBackgroundColor(resources.getColor(context.resources.getIdentifier(track.getTextColorRes(), "color", context.packageName)))
-            }
-            else
-            {
-                holder.track.setBackgroundColor(resources.getColor(android.R.color.transparent))
-            }
-        } else if (getItemViewType(position) == VIEW_TYPE_BLOCK) {
-            val block = scheduleBlockHour.scheduleBlock as Block
-
-            holder.title.setText(block.name)
-            holder.time.setText(scheduleBlockHour.hourStringDisplay)
-            holder.locationTime.setText(getDetailedTime(block))
-            holder.rsvp.setVisibility(View.GONE)
-
-        }*/
+        return ScheduleBlockViewHolder(v)
     }
 
-    private fun getDetailedTime(scheduleBlock: ScheduleBlock): String? {
-        var time = ""
+    override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
+        holder as ScheduleBlockViewHolder
+        val scheduleBlockHour = filteredData[position]
 
-        if (scheduleBlock.getStartLong() != null && scheduleBlock.getEndLong() != null) {
-            val startDate = Date(scheduleBlock.getStartLong()!!)
-            val endDate = Date(scheduleBlock.getEndLong()!!)
+        ConferenceDataPresenter.styleEventRow(scheduleBlockHour, holder, allEvents)
 
-            var formattedStart = timeFormat.format(startDate).toLowerCase()
-            val formattedEnd = timeFormat.format(endDate).toLowerCase()
-
-            val startMarker = formattedStart.substring(Math.max(formattedStart.length - 2, 0))
-            val endMarker = formattedEnd.substring(Math.max(formattedEnd.length - 2, 0))
-
-            if (TextUtils.equals(startMarker, endMarker)) {
-                formattedStart = formattedStart.substring(0, Math.max(formattedStart.length - 2, 0))
-            }
-
-            time = formattedStart + " - " + formattedEnd
+        if (!scheduleBlockHour.scheduleBlock.isBlock) {
+            holder.setOnClickListener { eventClickListener.onEventClick(scheduleBlockHour.scheduleBlock as Event) }
         }
-        return time
     }
 
     override fun getItemViewType(position: Int): Int {
-        val item = filteredData.get(position).scheduleBlock
-        if (item is Event) {
-            if (item.isPast()) {
-                return VIEW_TYPE_PAST_EVENT
-            }
-            return VIEW_TYPE_EVENT
-        } else if (item is Block ) {
-            return VIEW_TYPE_BLOCK
+        val item = filteredData[position].scheduleBlock
+        when (item) {
+            is Event -> return if (item.isPast) VIEW_TYPE_PAST_EVENT else VIEW_TYPE_EVENT
+            is Block -> return VIEW_TYPE_BLOCK
+            else -> throw UnsupportedOperationException()
         }
-        throw UnsupportedOperationException()
     }
 
-    fun update(track: Track?) {
-        if(track != null)
-        {
-            val trackServerName = track.getServerName()
-            if(!currentTracks.contains(trackServerName))
-            {
-                currentTracks.add(trackServerName)
-            }
-            else
-            {
-                currentTracks.remove(trackServerName)
-            }
+    fun toggleTrackFilter(track: Track) {
+        val trackServerName = track.serverName
+        if (!currentTracks.contains(trackServerName)) {
+            currentTracks.add(trackServerName)
+        } else {
+            currentTracks.remove(trackServerName)
         }
+        updateData()
+    }
 
+    private fun updateData() {
         filteredData.clear()
-        if(currentTracks.isEmpty())
-        {
+        if (currentTracks.isEmpty()) {
             filteredData = ArrayList(dataSet)
         } else {
             //TODO: Filter
@@ -207,55 +105,46 @@ class EventAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder> {
         notifyDataSetChanged()
     }
 
-    fun updateEvents(data: List<ScheduleBlockHour>)
-    {
+    fun updateEvents(data: List<ScheduleBlockHour>) {
         dataSet = data
-        filteredData = ArrayList(data)
-        update(null)
+        updateData()
     }
 
-    public class ScheduleBlockViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView), ConferenceDataPresenter.EventRow {
+    inner class ScheduleBlockViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView), ConferenceDataPresenter.EventRow {
+        private val title: TextView by bindView(R.id.title)
+        private val time: TextView by bindView(R.id.time)
+        private val locationTime: TextView by bindView(R.id.location_time)
+        private val card: View by bindView(R.id.card)
+        private val rsvp: ImageView by bindView(R.id.rsvp)
+
         override fun setTitleText(s: String?) {
-            title.text = s;
+            title.text = s
         }
 
         override fun setTimeText(s: String?) {
-            time.text = s;
+            time.text = s
         }
 
         override fun setDetailText(s: String?) {
-            locationTime.text = s;
+            locationTime.text = s
         }
 
         override fun setRsvpVisible(b: Boolean) {
-            rsvp.visibility = if(b) View.VISIBLE else View.GONE;
+            rsvp.visibility = if (b) View.VISIBLE else View.GONE
         }
 
         override fun setRsvpChecked() {
-            rsvp.setImageDrawable(ResourcesCompat.getDrawable(itemView.context, R.drawable.ic_check_green));
+            rsvp.setImageDrawable(ResourcesCompat.getDrawable(itemView.context, R.drawable.ic_check_green))
         }
 
         override fun setRsvpConflict() {
-            rsvp.setImageDrawable(ResourcesCompat.getDrawable(itemView.context, R.drawable.ic_check_red));
+            rsvp.setImageDrawable(ResourcesCompat.getDrawable(itemView.context, R.drawable.ic_check_red))
         }
 
-        public val title: TextView
-        public val time: TextView
-        public val locationTime: TextView
-        public val track: View
-        public val card: View
-        public val rsvp: ImageView
-
-        init {
-            title = itemView.findViewById(R.id.title) as TextView
-            time = itemView.findViewById(R.id.time) as TextView
-            locationTime = itemView.findViewById(R.id.location_time) as TextView
-            track = itemView.findViewById(R.id.track)
-            card = itemView.findViewById(R.id.card)
-            rsvp = itemView.findViewById(R.id.rsvp) as ImageView
+        fun setOnClickListener(listener: () -> Unit) {
+            card.setOnClickListener({ listener() })
         }
     }
-
 }
 
 interface EventClickListener {

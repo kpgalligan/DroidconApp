@@ -42,7 +42,7 @@ class ScheduleDataFragment() : Fragment() {
         super.onActivityCreated(savedInstanceState)
 
         eventList.layoutManager = LinearLayoutManager(activity)
-        eventList.adapter = EventAdapter(emptyList(), arguments.getBoolean(ALL_EVENTS,true)
+        eventList.adapter = EventAdapter(arguments.getBoolean(ALL_EVENTS,true)
                 ,(activity as FilterInterface).getCurrentFilters(), ScheduleEventClickListener())
 
         EventBusExt.getDefault().register(this)
@@ -53,12 +53,12 @@ class ScheduleDataFragment() : Fragment() {
         EventBusExt.getDefault().unregister(this)
     }
 
-    private fun updateAdapter(data: Array<out ScheduleBlockHour>?) {
-        (eventList.adapter as EventAdapter).updateEvents(data!!.asList())
+    private fun updateAdapter(data: Array<out ScheduleBlockHour>) {
+        (eventList.adapter as EventAdapter).updateEvents(data.asList())
     }
 
     fun filter(track: Track) {
-        (eventList.adapter as EventAdapter).update(track)
+        (eventList.adapter as EventAdapter).toggleTrackFilter(track)
     }
 
     fun onEventMainThread(dayHolders: Array<ConferenceDayHolder>) {
