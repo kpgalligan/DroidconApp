@@ -1,36 +1,12 @@
-<android.support.v4.widget.DrawerLayout
-    android:id="@+id/drawer_layout"
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v4.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="match_parent"
+    android:id="@+id/drawer_layout"
     android:layout_height="match_parent"
-    android:fitsSystemWindows="false"
-    tools:context=".MyActivity">
+    android:layout_width="match_parent"
+    android:fitsSystemWindows="true">
 
-    <!-- Your normal content view -->
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
-
-        <!-- We use a Toolbar so that our drawer can be displayed
-             in front of the action bar -->
-        <android.support.v7.widget.Toolbar
-            android:id="@+id/toolbar"
-            style="@style/ActionBar"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:minHeight="?attr/actionBarSize"
-            android:paddingTop="@dimen/status_bar_height"/>
-
-        <!-- The rest of your content view -->
-        <FrameLayout
-            android:id="@+id/container"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"/>
-
-    </LinearLayout>
+    <include layout="@layout/include_schedule_viewpager"/>
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/drawer_list"
@@ -76,6 +52,5 @@
             android:layout_width="@dimen/drawer_width"
             android:layout_height="match_parent"/>
     </RelativeLayout>
-
 
 </android.support.v4.widget.DrawerLayout>
