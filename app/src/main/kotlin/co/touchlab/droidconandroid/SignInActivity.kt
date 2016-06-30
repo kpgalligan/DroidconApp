@@ -113,7 +113,7 @@ public class SignInActivity : AppCompatActivity(), LoginScreenPresenter.Host {
     {
         if (!failed) {
             finish()
-            MyActivity.startMe(this)
+            ScheduleActivity.startMe(this)
             if (firstLogin)
                 EditUserProfile.callMe(this)
         }

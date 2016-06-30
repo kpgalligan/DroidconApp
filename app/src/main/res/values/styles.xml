@@ -56,7 +56,7 @@
     </style>
 
     <style name="TabLayout" parent="Widget.Design.TabLayout">
-        <item name="tabIndicatorColor">@color/white</item>
+        <item name="tabIndicatorColor">@color/accent</item>
         <item name="tabSelectedTextColor">@color/white</item>
     </style>
 

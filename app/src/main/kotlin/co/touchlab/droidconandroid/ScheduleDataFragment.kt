@@ -57,17 +57,21 @@ class ScheduleDataFragment() : Fragment()
 
         eventList = view?.findViewById(R.id.eventList) as RecyclerView
         eventList!!.setLayoutManager(LinearLayoutManager(getActivity()))
+    }
 
+    override fun onResume()
+    {
+        super.onResume()
         EventBusExt.getDefault()!!.register(this)
     }
 
-    override fun onDestroy()
+    override fun onPause()
     {
-        super.onDestroy()
+        super.onPause()
         EventBusExt.getDefault()!!.unregister(this)
     }
 
-    public fun onEventMainThread(dayHolders: Array<ConferenceDayHolder>?)
+    fun onEventMainThread(dayHolders: Array<ConferenceDayHolder>?)
     {
         val dayString = ConferenceDataHelper.dateToDayString(Date(day!!))
         for (holder in dayHolders!!) {
