@@ -19,6 +19,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:fitsSystemWindows="true"
+            app:statusBarScrim="@android:color/transparent"
             app:titleEnabled="false"
             app:layout_scrollFlags="scroll|exitUntilCollapsed|snap">
 
@@ -28,6 +29,8 @@
                 android:layout_height="136dp"
                 android:fitsSystemWindows="true"
                 android:scaleType="centerCrop"
+                android:background="@color/glyph_background"
+                android:tint="@color/glyph_foreground"
                 app:layout_collapseMode="pin"
                 app:layout_scrollFlags="scroll|enterAlways|enterAlwaysCollapsed"/>
 
@@ -36,15 +39,23 @@
                 android:layout_width="match_parent"
                 android:layout_height="?attr/actionBarSize"
                 android:gravity="top"
-                app:titleMarginTop="13dp"
                 app:layout_collapseMode="pin"
                 app:layout_scrollFlags="scroll|enterAlways"/>
+
+            <co.touchlab.droidconandroid.ui.SabotaToolbarTitle
+                android:id="@+id/schedule_toolbar_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="top"
+                app:layout_collapseMode="pin"
+                app:layout_scrollFlags="scroll|enterAlways"
+                style="@style/sabota_toolbar_title"/>
 
             <android.support.design.widget.TabLayout
                 android:id="@+id/tabs"
                 android:layout_width="match_parent"
                 android:layout_height="?attr/actionBarSize"
-                android:layout_marginLeft="56dp"
+                android:layout_marginLeft="@dimen/toolbar_title_margin_left"
                 android:layout_gravity="bottom"
                 android:fitsSystemWindows="true"/>
 

@@ -23,10 +23,9 @@ import android.support.v7.widget.RecyclerView
 import android.support.v7.widget.Toolbar
 import android.text.TextUtils
 import android.text.format.DateUtils
-import android.view.Menu
-import android.view.MenuItem
 import android.view.View
 import android.widget.ImageView
+import android.widget.TextView
 import butterknife.BindView
 import butterknife.ButterKnife
 import co.touchlab.android.threading.eventbus.EventBusExt
@@ -57,6 +56,9 @@ class ScheduleActivity : AppCompatActivity(), FilterInterface, NfcAdapter.Create
 
     @BindView(R.id.toolbar)
     lateinit var toolbar: Toolbar
+
+    @BindView(R.id.schedule_toolbar_title)
+    lateinit var toolbarTitle: TextView
 
     @BindView(R.id.schedule_backdrop)
     lateinit var backdrop: ImageView
@@ -127,8 +129,8 @@ class ScheduleActivity : AppCompatActivity(), FilterInterface, NfcAdapter.Create
         setContentView(R.layout.activity_schedule)
         ButterKnife.bind(this)
 
-        setSupportActionBar(toolbar)
-        setUpNavigationDrawer()
+        setupToolbar()
+        setupNavigationDrawer()
         setupFilterDrawer()
         initNfc()
 
@@ -142,8 +144,8 @@ class ScheduleActivity : AppCompatActivity(), FilterInterface, NfcAdapter.Create
             }
             allEvents = savedInstanceState.getBoolean(ALL_EVENTS)
             filterAdapter !!.setSelectedTracks(tracks)
-            adjustToolBarAndDrawers()
         }
+        adjustToolBarAndDrawers()
 
         EventBusExt.getDefault().register(this)
 
@@ -213,16 +215,28 @@ class ScheduleActivity : AppCompatActivity(), FilterInterface, NfcAdapter.Create
         EventBusExt.getDefault().unregister(this)
     }
 
-    private fun setUpNavigationDrawer()
+    private fun setupToolbar()
+    {
+        setSupportActionBar(toolbar)
+        supportActionBar?.setDisplayShowTitleEnabled(false)
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        supportActionBar?.setHomeButtonEnabled(true)
+
+        backdrop.setImageDrawable(ResourcesCompat.getDrawable(this, R.drawable.superglyph_outline360x114dp))
+        appBarLayout.addOnOffsetChangedListener { appBarLayout, verticalOffset ->
+            val percentage : Float = 1 - (Math.abs(verticalOffset).toFloat() / appBarLayout.totalScrollRange)
+            toolbarTitle?.alpha = percentage;
+        };
+    }
+
+    private fun setupNavigationDrawer()
     {
         var drawerToggle = ActionBarDrawerToggle(
                 this, drawerLayout, toolbar,
                 R.string.navigation_drawer_open, R.string.navigation_drawer_close
         );
         drawerLayout.setDrawerListener(drawerToggle)
-        supportActionBar?.setDisplayShowTitleEnabled(false)
-        supportActionBar?.setDisplayHomeAsUpEnabled(true)
-        supportActionBar?.setHomeButtonEnabled(true)
+
         drawerToggle.syncState();
 
         drawerAdapter = DrawerAdapter(getDrawerItems(), object : DrawerClickListener
@@ -335,42 +349,47 @@ class ScheduleActivity : AppCompatActivity(), FilterInterface, NfcAdapter.Create
 
     private fun adjustToolBarAndDrawers()
     {
-        //TODO toggle theme and toolbar title
+        //TODO toggle theme/colors
         if (allEvents)
         {
+            toolbarTitle.setText(R.string.app_name)
             drawerAdapter !!.setSelectedPosition(POSITION_EXPLORE)
         }
         else
         {
+            toolbarTitle.setText(R.string.my_schedule)
             drawerAdapter !!.setSelectedPosition(POSITION_MY_SCHEDULE)
         }
     }
 
-    override fun onCreateOptionsMenu(menu: Menu?): Boolean
-    {
-        menuInflater.inflate(R.menu.home, menu)
-        val filter = menu !!.findItem(R.id.action_filter)
-        filter.icon = ResourcesCompat.getDrawable(this, R.drawable.ic_filter)
-        val search = menu.findItem(R.id.action_search)
-        search.icon = ResourcesCompat.getDrawable(this, R.drawable.ic_search)
-        return super.onCreateOptionsMenu(menu)
-    }
+// TODO determine if we're just changing how filter drawer is accessed or disabling it
+// Uncomment to reimplement filter and search UI
 
-    override fun onOptionsItemSelected(item: MenuItem?): Boolean
-    {
-        when
-        {
-            item !!.itemId == R.id.action_filter ->
-            {
-                drawerLayout.openDrawer(findViewById(R.id.filter_wrapper))
-            }
-            item.itemId == R.id.action_search ->
-            {
-                FindUserKot.startMe(this@ScheduleActivity)
-            }
-        }
-        return super.onOptionsItemSelected(item)
-    }
+//    override fun onCreateOptionsMenu(menu: Menu?): Boolean
+//    {
+//        menuInflater.inflate(R.menu.home, menu)
+//        val filter = menu !!.findItem(R.id.action_filter)
+//        filter.icon = ResourcesCompat.getDrawable(this, R.drawable.ic_filter)
+//        val search = menu.findItem(R.id.action_search)
+//        search.icon = ResourcesCompat.getDrawable(this, R.drawable.ic_search)
+//        return super.onCreateOptionsMenu(menu)
+//    }
+//
+//    override fun onOptionsItemSelected(item: MenuItem?): Boolean
+//    {
+//        when
+//        {
+//            item !!.itemId == R.id.action_filter ->
+//            {
+//                drawerLayout.openDrawer(findViewById(R.id.filter_wrapper))
+//            }
+//            item.itemId == R.id.action_search ->
+//            {
+//                FindUserKot.startMe(this@ScheduleActivity)
+//            }
+//        }
+//        return super.onOptionsItemSelected(item)
+//    }
 
     private fun initNfc()
     {
