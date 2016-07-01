@@ -38,17 +38,25 @@ class ScheduleDataFragment() : Fragment() {
     val RecyclerView.eventAdapter: EventAdapter
         get() = adapter as EventAdapter
 
+    val shouldShowNotif: Boolean
+    get() {
+        return AppPrefs.getInstance(context).showNotifCard
+                && !arguments.getBoolean(ALL_EVENTS, true)
+                && arguments.getInt(POSITION,0) == 0
+    }
+
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater?.inflate(R.layout.fragment_schedule_data, container, false)
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
+
         eventList.layoutManager = LinearLayoutManager(activity)
-        eventList.adapter = EventAdapter(arguments.getBoolean(ALL_EVENTS, true)
+        eventList.adapter = EventAdapter( arguments.getBoolean(ALL_EVENTS, true)
                 , (activity as FilterInterface).getCurrentFilters()
                 , ScheduleEventClickListener()
-                , AppPrefs.getInstance(context).showNotifCard)
+                , shouldShowNotif)
 
         EventBusExt.getDefault().register(this)
     }
@@ -66,8 +74,8 @@ class ScheduleDataFragment() : Fragment() {
         eventList.eventAdapter.toggleTrackFilter(track)
     }
 
-    fun  updateNotifCard(show: Boolean) {
-        eventList.eventAdapter.updateNotificationCard(show)
+    fun  updateNotifCard() {
+        eventList.eventAdapter.updateNotificationCard(shouldShowNotif)
     }
 
     fun onEventMainThread(dayHolders: Array<ConferenceDayHolder>) {
