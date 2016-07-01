@@ -9,6 +9,7 @@ import android.nfc.NfcAdapter
 import android.nfc.NfcEvent
 import android.os.Bundle
 import android.os.Handler
+import android.support.design.widget.AppBarLayout
 import android.support.design.widget.CollapsingToolbarLayout
 import android.support.design.widget.TabLayout
 import android.support.v4.app.FragmentManager
@@ -48,6 +49,9 @@ import java.util.*
 
 class ScheduleActivity : AppCompatActivity(), FilterInterface, NfcAdapter.CreateNdefMessageCallback
 {
+    @BindView(R.id.appbar)
+    lateinit var appBarLayout: AppBarLayout
+
     @BindView(R.id.collapsing_toolbar)
     lateinit var collapsingToolbarLayout: CollapsingToolbarLayout
 
@@ -141,8 +145,6 @@ class ScheduleActivity : AppCompatActivity(), FilterInterface, NfcAdapter.Create
             adjustToolBarAndDrawers()
         }
 
-        Handler().post(RefreshRunnable())
-
         EventBusExt.getDefault().register(this)
 
         // Start IntentService to register this application with GCM.
@@ -153,6 +155,9 @@ class ScheduleActivity : AppCompatActivity(), FilterInterface, NfcAdapter.Create
     override fun onResume()
     {
         super.onResume()
+
+        Handler().post(RefreshRunnable())
+
         val prefs = AppPrefs.getInstance(this)
         val lastRefresh = prefs.getRefreshTime()
 
@@ -161,6 +166,11 @@ class ScheduleActivity : AppCompatActivity(), FilterInterface, NfcAdapter.Create
         {
             RefreshScheduleData.callMe(this)
         }
+    }
+
+    fun onEventMainThread(eventDetailTask: RefreshScheduleData)
+    {
+        Handler().post(RefreshRunnable())
     }
 
     fun onEventMainThread(command: UploadAvatarCommand)
@@ -226,10 +236,12 @@ class ScheduleActivity : AppCompatActivity(), FilterInterface, NfcAdapter.Create
                     R.string.explore ->
                     {
                         allEvents = true;
+                        appBarLayout.setExpanded(true)
                     }
                     R.string.my_schedule ->
                     {
                         allEvents = false;
+                        appBarLayout.setExpanded(true)
                     }
                     R.string.buy_tickets ->
                     {
@@ -399,10 +411,10 @@ class ScheduleActivity : AppCompatActivity(), FilterInterface, NfcAdapter.Create
     {
         override fun run()
         {
+            conferenceDataPresenter?.unregister()
             conferenceDataPresenter = ConferenceDataPresenter(this@ScheduleActivity,
                     ConfHost(),
                     allEvents)
-            conferenceDataPresenter !!.refreshConferenceData()
 
             val dates: ArrayList<Long> = ArrayList<Long>()
             val startString: String? = AppPrefs.getInstance(this@ScheduleActivity).getConventionStartDate()
