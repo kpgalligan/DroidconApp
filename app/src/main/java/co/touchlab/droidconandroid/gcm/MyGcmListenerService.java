@@ -18,6 +18,7 @@ import org.apache.commons.lang3.StringUtils;
 import co.touchlab.droidconandroid.EventDetailActivity;
 import co.touchlab.droidconandroid.MyActivity;
 import co.touchlab.droidconandroid.R;
+import co.touchlab.droidconandroid.data.AppPrefs;
 import co.touchlab.droidconandroid.data.DatabaseHelper;
 import co.touchlab.droidconandroid.data.Event;
 import co.touchlab.droidconandroid.presenter.AppManager;
@@ -100,8 +101,11 @@ public class MyGcmListenerService extends GcmListenerService
 
     private void sendEventNotification(String title, String message, long eventId, String category)
     {
-        Intent intent = EventDetailActivity.Companion.createIntent(this, category, eventId);
-        sendIntentNotification(title, message, intent);
+        if(AppPrefs.getInstance(this).getAllowNotifications())
+        {
+            Intent intent = EventDetailActivity.Companion.createIntent(this, category, eventId);
+            sendIntentNotification(title, message, intent);
+        }
     }
 
     private void sendIntentNotification(String title, String message, Intent intent)

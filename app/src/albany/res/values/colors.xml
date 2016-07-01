@@ -5,4 +5,6 @@
     <color name="welcome_background_1">#689f38</color>
     <color name="welcome_background_2">#4fc3f7</color>
 
+    <color name="event_text_highlight">#0041a3</color>
+    <color name="text_gray">#777777</color>
 </resources>
