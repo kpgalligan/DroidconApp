@@ -135,4 +135,8 @@
     <string name="eb_sign_in">Sign in to Eventbrite</string>
     <string name="retry">Retry</string>
 
+    <string name="notif_title">Session notification</string>
+    <string name="notif_body">Turn on notifications for sessions in your schedule?</string>
+    <string name="notif_accept">sure</string>
+    <string name="notif_decline">no thanks</string>
 </resources>

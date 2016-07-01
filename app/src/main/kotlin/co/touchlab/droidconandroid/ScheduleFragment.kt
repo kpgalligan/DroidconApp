@@ -19,6 +19,7 @@ import co.touchlab.droidconandroid.presenter.ConferenceDataHost
 import co.touchlab.droidconandroid.presenter.ConferenceDataPresenter
 import co.touchlab.droidconandroid.presenter.ConferenceDayHolder
 import co.touchlab.droidconandroid.tasks.persisted.RefreshScheduleData
+import co.touchlab.droidconandroid.ui.UpdateAllowNotificationEvent
 import co.touchlab.droidconandroid.utils.TimeUtils
 import java.text.SimpleDateFormat
 import java.util.*
@@ -79,6 +80,15 @@ class ScheduleFragment : Fragment(), FilterableFragmentInterface
     public fun onEventMainThread(eventDetailTask: RefreshScheduleData)
     {
 //        Handler().post(RefreshRunnable())
+    }
+
+    fun onEventMainThread(notificationEvent: UpdateAllowNotificationEvent) {
+        //Have to handle the notification card way out here so it can update both fragments.
+        //Set the app prefs and bounce it back down to the adapter
+        val prefs = AppPrefs.getInstance(context)
+        prefs.allowNotifications = notificationEvent.allow
+        prefs.showNotifCard = false
+        pagerAdapter!!.updateNotifCard(false)
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
@@ -160,6 +170,11 @@ class ScheduleFragmentPagerAdapter : FragmentPagerAdapter
                 (fragment as ScheduleDataFragment).filter(track)
             }
         }
+    }
 
+    fun  updateNotifCard(show: Boolean) {
+        for (fragment in fragmentManager.fragments) {
+                (fragment as ScheduleDataFragment).updateNotifCard(show)
+        }
     }
 }

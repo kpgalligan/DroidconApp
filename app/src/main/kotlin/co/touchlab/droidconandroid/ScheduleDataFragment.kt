@@ -8,6 +8,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import co.touchlab.android.threading.eventbus.EventBusExt
+import co.touchlab.droidconandroid.data.AppPrefs
 import co.touchlab.droidconandroid.data.Event
 import co.touchlab.droidconandroid.data.Track
 import co.touchlab.droidconandroid.presenter.ConferenceDataHelper
@@ -33,6 +34,9 @@ fun createScheduleDataFragment(all: Boolean, day: Long, position: Int): Schedule
 
 class ScheduleDataFragment() : Fragment() {
     val eventList: RecyclerView by bindView(R.id.eventList)
+    //Extension property for casting adapter
+    val RecyclerView.eventAdapter: EventAdapter
+        get() = adapter as EventAdapter
 
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater?.inflate(R.layout.fragment_schedule_data, container, false)
@@ -40,10 +44,11 @@ class ScheduleDataFragment() : Fragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-
         eventList.layoutManager = LinearLayoutManager(activity)
-        eventList.adapter = EventAdapter(arguments.getBoolean(ALL_EVENTS,true)
-                ,(activity as FilterInterface).getCurrentFilters(), ScheduleEventClickListener())
+        eventList.adapter = EventAdapter(arguments.getBoolean(ALL_EVENTS, true)
+                , (activity as FilterInterface).getCurrentFilters()
+                , ScheduleEventClickListener()
+                , AppPrefs.getInstance(context).showNotifCard)
 
         EventBusExt.getDefault().register(this)
     }
@@ -54,11 +59,15 @@ class ScheduleDataFragment() : Fragment() {
     }
 
     private fun updateAdapter(data: Array<out ScheduleBlockHour>) {
-        (eventList.adapter as EventAdapter).updateEvents(data.asList())
+        eventList.eventAdapter.updateEvents(data.asList())
     }
 
     fun filter(track: Track) {
-        (eventList.adapter as EventAdapter).toggleTrackFilter(track)
+        eventList.eventAdapter.toggleTrackFilter(track)
+    }
+
+    fun  updateNotifCard(show: Boolean) {
+        eventList.eventAdapter.updateNotificationCard(show)
     }
 
     fun onEventMainThread(dayHolders: Array<ConferenceDayHolder>) {
