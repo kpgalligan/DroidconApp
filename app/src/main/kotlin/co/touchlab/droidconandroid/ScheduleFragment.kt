@@ -88,7 +88,7 @@ class ScheduleFragment : Fragment(), FilterableFragmentInterface
         val prefs = AppPrefs.getInstance(context)
         prefs.allowNotifications = notificationEvent.allow
         prefs.showNotifCard = false
-        pagerAdapter!!.updateNotifCard(false)
+        pagerAdapter!!.updateNotifCard()
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
@@ -172,9 +172,9 @@ class ScheduleFragmentPagerAdapter : FragmentPagerAdapter
         }
     }
 
-    fun  updateNotifCard(show: Boolean) {
+    fun  updateNotifCard() {
         for (fragment in fragmentManager.fragments) {
-                (fragment as ScheduleDataFragment).updateNotifCard(show)
+                (fragment as ScheduleDataFragment).updateNotifCard()
         }
     }
 }
