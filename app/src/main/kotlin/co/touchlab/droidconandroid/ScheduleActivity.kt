@@ -9,25 +9,14 @@ import android.nfc.NfcAdapter
 import android.nfc.NfcEvent
 import android.os.Bundle
 import android.os.Handler
-import android.support.design.widget.AppBarLayout
-import android.support.design.widget.CollapsingToolbarLayout
 import android.support.design.widget.TabLayout
 import android.support.v4.app.FragmentManager
 import android.support.v4.app.FragmentPagerAdapter
-import android.support.v4.view.ViewPager
-import android.support.v4.widget.DrawerLayout
 import android.support.v7.app.ActionBarDrawerToggle
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
-import android.support.v7.widget.RecyclerView
-import android.support.v7.widget.Toolbar
 import android.text.TextUtils
 import android.text.format.DateUtils
-import android.view.View
-import android.widget.ImageView
-import android.widget.TextView
-import butterknife.BindView
-import butterknife.ButterKnife
 import co.touchlab.android.threading.eventbus.EventBusExt
 import co.touchlab.droidconandroid.data.AppPrefs
 import co.touchlab.droidconandroid.data.DatabaseHelper
@@ -43,49 +32,18 @@ import co.touchlab.droidconandroid.tasks.persisted.RefreshScheduleData
 import co.touchlab.droidconandroid.ui.*
 import co.touchlab.droidconandroid.utils.TimeUtils
 import com.wnafee.vector.compat.ResourcesCompat
+import kotlinx.android.synthetic.main.activity_schedule.*
+import kotlinx.android.synthetic.main.include_schedule_viewpager.*
 import java.text.SimpleDateFormat
 import java.util.*
 
+private const val POSITION_EXPLORE = 1
+private const val POSITION_MY_SCHEDULE = 2
+private const val SELECTED_TRACKS = "tracks"
+private const val ALL_EVENTS = "all_events"
+
 class ScheduleActivity : AppCompatActivity(), FilterInterface, NfcAdapter.CreateNdefMessageCallback
 {
-    @BindView(R.id.appbar)
-    lateinit var appBarLayout: AppBarLayout
-
-    @BindView(R.id.collapsing_toolbar)
-    lateinit var collapsingToolbarLayout: CollapsingToolbarLayout
-
-    @BindView(R.id.toolbar)
-    lateinit var toolbar: Toolbar
-
-    @BindView(R.id.schedule_toolbar_title)
-    lateinit var toolbarTitle: TextView
-
-    @BindView(R.id.schedule_backdrop)
-    lateinit var backdrop: ImageView
-
-    @BindView(R.id.tabs)
-    lateinit var tabLayout: TabLayout
-
-    @BindView(R.id.drawer_layout)
-    lateinit var drawerLayout: DrawerLayout
-
-    @BindView(R.id.drawer_list)
-    lateinit var navigationRecycler: RecyclerView
-
-    @BindView(R.id.filter_wrapper)
-    lateinit var filterDrawer: View
-
-    @BindView(R.id.filter)
-    lateinit var filterRecycler: RecyclerView
-
-    @BindView(R.id.viewpager)
-    lateinit var viewPager: ViewPager
-
-    private val POSITION_EXPLORE = 1
-    private val POSITION_MY_SCHEDULE = 2
-    private val SELECTED_TRACKS = "tracks"
-    private val ALL_EVENTS = "all_events"
-
     private var conferenceDataPresenter: ConferenceDataPresenter? = null
     private var drawerAdapter: DrawerAdapter? = null
     private var filterAdapter: FilterAdapter? = null
@@ -106,28 +64,29 @@ class ScheduleActivity : AppCompatActivity(), FilterInterface, NfcAdapter.Create
     {
         super.onCreate(savedInstanceState)
 
-        val startScreen = AppManager.findStartScreen(getString(R.string.voting_ends))
-        if (startScreen == AppManager.AppScreens.Welcome)
+        when (AppManager.findStartScreen(getString(R.string.voting_ends)))
         {
-            startActivity(WelcomeActivity.getLaunchIntent(this@ScheduleActivity, false))
-            finish()
-            return
-        }
-        else if (startScreen == AppManager.AppScreens.Login)
-        {
-            startActivity(SignInActivity.getLaunchIntent(this@ScheduleActivity))
-            finish()
-            return
-        }
-        else if (startScreen == AppManager.AppScreens.Voting)
-        {
-            VotingIntroActivity.callMe(this@ScheduleActivity)
-            finish()
-            return
+            AppManager.AppScreens.Welcome ->
+            {
+                startActivity(WelcomeActivity.getLaunchIntent(this@ScheduleActivity, false))
+                finish()
+                return
+            }
+            AppManager.AppScreens.Login ->
+            {
+                startActivity(SignInActivity.getLaunchIntent(this@ScheduleActivity))
+                finish()
+                return
+            }
+            AppManager.AppScreens.Voting ->
+            {
+                VotingIntroActivity.callMe(this@ScheduleActivity)
+                finish()
+                return
+            }
         }
 
         setContentView(R.layout.activity_schedule)
-        ButterKnife.bind(this)
 
         setupToolbar()
         setupNavigationDrawer()
@@ -187,17 +146,10 @@ class ScheduleActivity : AppCompatActivity(), FilterInterface, NfcAdapter.Create
 
     override fun onBackPressed()
     {
-        if (drawerLayout.isDrawerOpen(filterDrawer))
-        {
-            drawerLayout.closeDrawer(filterDrawer)
-        }
-        else if (drawerLayout.isDrawerOpen(navigationRecycler))
-        {
-            drawerLayout.closeDrawer(navigationRecycler)
-        }
-        else
-        {
-            super.onBackPressed()
+        when {
+            drawer_layout.isDrawerOpen(filter_wrapper) -> drawer_layout.closeDrawer(filter_wrapper)
+            drawer_layout.isDrawerOpen(drawer_recycler) -> drawer_layout.closeDrawer(drawer_recycler)
+            else -> super.onBackPressed()
         }
     }
 
@@ -222,20 +174,20 @@ class ScheduleActivity : AppCompatActivity(), FilterInterface, NfcAdapter.Create
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.setHomeButtonEnabled(true)
 
-        backdrop.setImageDrawable(ResourcesCompat.getDrawable(this, R.drawable.superglyph_outline360x114dp))
-        appBarLayout.addOnOffsetChangedListener { appBarLayout, verticalOffset ->
+        schedule_backdrop.setImageDrawable(ResourcesCompat.getDrawable(this, R.drawable.superglyph_outline360x114dp))
+        appbar.addOnOffsetChangedListener { appBarLayout, verticalOffset ->
             val percentage : Float = 1 - (Math.abs(verticalOffset).toFloat() / appBarLayout.totalScrollRange)
-            toolbarTitle?.alpha = percentage;
+            schedule_toolbar_title?.alpha = percentage;
         };
     }
 
     private fun setupNavigationDrawer()
     {
         var drawerToggle = ActionBarDrawerToggle(
-                this, drawerLayout, toolbar,
+                this, drawer_layout, toolbar,
                 R.string.navigation_drawer_open, R.string.navigation_drawer_close
         );
-        drawerLayout.setDrawerListener(drawerToggle)
+        drawer_layout.setDrawerListener(drawerToggle)
 
         drawerToggle.syncState();
 
@@ -243,19 +195,19 @@ class ScheduleActivity : AppCompatActivity(), FilterInterface, NfcAdapter.Create
         {
             override fun onNavigationItemClick(position: Int, titleRes: Int)
             {
-                drawerLayout.closeDrawer(navigationRecycler)
+                drawer_layout.closeDrawer(drawer_recycler)
 
                 when (titleRes)
                 {
                     R.string.explore ->
                     {
                         allEvents = true;
-                        appBarLayout.setExpanded(true)
+                        appbar.setExpanded(true)
                     }
                     R.string.my_schedule ->
                     {
                         allEvents = false;
-                        appBarLayout.setExpanded(true)
+                        appbar.setExpanded(true)
                     }
                     R.string.buy_tickets ->
                     {
@@ -286,14 +238,14 @@ class ScheduleActivity : AppCompatActivity(), FilterInterface, NfcAdapter.Create
                             userId)
                     if (ua != null && ua.userCode != null && ! TextUtils.isEmpty(ua.userCode))
                     {
-                        drawerLayout.closeDrawer(navigationRecycler)
+                        drawer_layout.closeDrawer(drawer_recycler)
                         UserDetailActivity.callMe(this@ScheduleActivity, ua.userCode)
                     }
                 }
             }
         })
-        navigationRecycler.adapter = drawerAdapter
-        navigationRecycler.layoutManager = LinearLayoutManager(this)
+        drawer_recycler.adapter = drawerAdapter
+        drawer_recycler.layoutManager = LinearLayoutManager(this)
     }
 
     private fun getDrawerItems(): List<Any>
@@ -312,7 +264,7 @@ class ScheduleActivity : AppCompatActivity(), FilterInterface, NfcAdapter.Create
 
     private fun setupFilterDrawer()
     {
-        filterRecycler.layoutManager = LinearLayoutManager(this)
+        filter_recycler.layoutManager = LinearLayoutManager(this)
         filterAdapter = FilterAdapter(getFilterItems(), object : FilterClickListener
         {
             override fun onFilterClick(track: Track)
@@ -320,10 +272,10 @@ class ScheduleActivity : AppCompatActivity(), FilterInterface, NfcAdapter.Create
                 pagerAdapter !!.updateFrags(track)
             }
         })
-        filterRecycler.adapter = filterAdapter
+        filter_recycler.adapter = filterAdapter
 
-        findViewById(R.id.back).setOnClickListener {
-            drawerLayout.closeDrawer(filterDrawer)
+        back.setOnClickListener {
+            drawer_layout.closeDrawer(filter_wrapper)
         }
     }
 
@@ -352,12 +304,12 @@ class ScheduleActivity : AppCompatActivity(), FilterInterface, NfcAdapter.Create
         //TODO toggle theme/colors
         if (allEvents)
         {
-            toolbarTitle.setText(R.string.app_name)
+            schedule_toolbar_title.setText(R.string.app_name)
             drawerAdapter !!.setSelectedPosition(POSITION_EXPLORE)
         }
         else
         {
-            toolbarTitle.setText(R.string.my_schedule)
+            schedule_toolbar_title.setText(R.string.my_schedule)
             drawerAdapter !!.setSelectedPosition(POSITION_MY_SCHEDULE)
         }
     }
@@ -454,9 +406,9 @@ class ScheduleActivity : AppCompatActivity(), FilterInterface, NfcAdapter.Create
                         supportFragmentManager,
                         dates,
                         allEvents)
-                viewPager.adapter = pagerAdapter;
-                viewPager.addOnPageChangeListener(TabLayout.TabLayoutOnPageChangeListener(tabLayout))
-                tabLayout.setupWithViewPager(viewPager)
+                view_pager.adapter = pagerAdapter;
+                view_pager.addOnPageChangeListener(TabLayout.TabLayoutOnPageChangeListener(tabs))
+                tabs.setupWithViewPager(view_pager)
             }
         }
     }
