@@ -31,6 +31,7 @@ import co.touchlab.droidconandroid.superbus.UploadCoverCommand
 import co.touchlab.droidconandroid.tasks.persisted.RefreshScheduleData
 import co.touchlab.droidconandroid.ui.*
 import co.touchlab.droidconandroid.utils.TimeUtils
+import com.squareup.picasso.Picasso
 import com.wnafee.vector.compat.ResourcesCompat
 import kotlinx.android.synthetic.main.activity_schedule.*
 import kotlinx.android.synthetic.main.include_schedule_viewpager.*
@@ -137,6 +138,7 @@ class ScheduleActivity : AppCompatActivity(), FilterInterface, NfcAdapter.Create
     fun onEventMainThread(command: UploadAvatarCommand)
     {
         drawerAdapter !!.notifyDataSetChanged()
+        setupToolbar()
     }
 
     fun onEventMainThread(command: UploadCoverCommand)
@@ -174,11 +176,26 @@ class ScheduleActivity : AppCompatActivity(), FilterInterface, NfcAdapter.Create
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.setHomeButtonEnabled(true)
 
-        schedule_backdrop.setImageDrawable(ResourcesCompat.getDrawable(this, R.drawable.superglyph_outline360x114dp))
+        schedule_backdrop.setImageDrawable(ResourcesCompat.getDrawable(this,
+                R.drawable.superglyph_outline360x114dp))
+
+        val avatarKey = AppPrefs.getInstance(this).getAvatarKey()
+        if (! TextUtils.isEmpty(avatarKey))
+        {
+            Picasso.with(this)
+                    .load(UserDetailFragment.HTTPS_S3_AMAZONAWS_COM_DROIDCONIMAGES + avatarKey)
+                    .into(schedule_toolbar_profile)
+        }
+
         appbar.addOnOffsetChangedListener { appBarLayout, verticalOffset ->
-            val percentage : Float = 1 - (Math.abs(verticalOffset).toFloat() / appBarLayout.totalScrollRange)
+            val percentage: Float = 1 - (Math.abs(verticalOffset).toFloat() / appBarLayout.totalScrollRange)
             schedule_toolbar_title?.alpha = percentage;
+            schedule_toolbar_profile?.alpha = percentage;
         };
+
+        schedule_toolbar_profile.setOnClickListener {
+            launchUserDetail()
+        }
     }
 
     private fun setupNavigationDrawer()
@@ -231,17 +248,7 @@ class ScheduleActivity : AppCompatActivity(), FilterInterface, NfcAdapter.Create
 
             override fun onHeaderItemClick()
             {
-                val userId = AppPrefs.getInstance(this@ScheduleActivity).getUserId()
-                if (userId != null)
-                {
-                    val ua = DatabaseHelper.getInstance(this@ScheduleActivity).getUserAccountDao().queryForId(
-                            userId)
-                    if (ua != null && ua.userCode != null && ! TextUtils.isEmpty(ua.userCode))
-                    {
-                        drawer_layout.closeDrawer(drawer_recycler)
-                        UserDetailActivity.callMe(this@ScheduleActivity, ua.userCode)
-                    }
-                }
+                launchUserDetail()
             }
         })
         drawer_recycler.adapter = drawerAdapter
@@ -311,6 +318,20 @@ class ScheduleActivity : AppCompatActivity(), FilterInterface, NfcAdapter.Create
         {
             schedule_toolbar_title.setText(R.string.my_schedule)
             drawerAdapter !!.setSelectedPosition(POSITION_MY_SCHEDULE)
+        }
+    }
+
+    private fun launchUserDetail() {
+        val userId = AppPrefs.getInstance(this@ScheduleActivity).getUserId()
+        if (userId != null)
+        {
+            val ua = DatabaseHelper.getInstance(this@ScheduleActivity).getUserAccountDao().queryForId(
+                    userId)
+            if (ua != null && ua.userCode != null && ! TextUtils.isEmpty(ua.userCode))
+            {
+                drawer_layout.closeDrawer(drawer_recycler)
+                UserDetailActivity.callMe(this@ScheduleActivity, ua.userCode)
+            }
         }
     }
 

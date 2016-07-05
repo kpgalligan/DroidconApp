@@ -3,6 +3,7 @@
     android:id="@+id/main_content"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true">
@@ -50,6 +51,17 @@
                 app:layout_collapseMode="pin"
                 app:layout_scrollFlags="scroll|enterAlways"
                 style="@style/sabota_toolbar_title"/>
+
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/schedule_toolbar_profile"
+                android:layout_width="@dimen/height_xxtiny"
+                android:layout_height="@dimen/height_xxtiny"
+                android:layout_marginTop="@dimen/toolbar_title_margin_top"
+                android:layout_marginRight="@dimen/padding_medium"
+                android:layout_gravity="top|right"
+                app:layout_collapseMode="pin"
+                app:layout_scrollFlags="scroll|enterAlways"
+                tools:src="@drawable/profile_placeholder"/>
 
             <android.support.design.widget.TabLayout
                 android:id="@+id/tabs"
