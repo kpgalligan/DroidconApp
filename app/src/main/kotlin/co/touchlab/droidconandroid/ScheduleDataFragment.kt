@@ -18,6 +18,8 @@ import co.touchlab.droidconandroid.ui.EventAdapter
 import co.touchlab.droidconandroid.ui.EventClickListener
 import java.util.*
 
+import kotlinx.android.synthetic.main.fragment_schedule_data.*
+
 private const val ALL_EVENTS = "ALL_EVENTS"
 private const val DAY = "DAY"
 private const val POSITION = "POSITION"
@@ -33,7 +35,6 @@ fun createScheduleDataFragment(all: Boolean, day: Long, position: Int): Schedule
 }
 
 class ScheduleDataFragment() : Fragment() {
-    val eventList: RecyclerView by bindView(R.id.eventList)
     //Extension property for casting adapter
     val RecyclerView.eventAdapter: EventAdapter
         get() = adapter as EventAdapter
@@ -78,6 +79,7 @@ class ScheduleDataFragment() : Fragment() {
         eventList.eventAdapter.updateNotificationCard(shouldShowNotif)
     }
 
+    @Suppress("unused")
     fun onEventMainThread(dayHolders: Array<ConferenceDayHolder>) {
         val dayString = ConferenceDataHelper.dateToDayString(Date(arguments.getLong(DAY)))
         for (holder in dayHolders) {

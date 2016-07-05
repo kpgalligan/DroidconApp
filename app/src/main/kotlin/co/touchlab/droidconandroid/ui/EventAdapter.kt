@@ -4,19 +4,16 @@ import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
-import android.widget.ImageView
-import android.widget.TextView
 import co.touchlab.android.threading.eventbus.EventBusExt
 import co.touchlab.droidconandroid.R
-import co.touchlab.droidconandroid.bindView
-import co.touchlab.droidconandroid.data.AppPrefs
 import co.touchlab.droidconandroid.data.Block
 import co.touchlab.droidconandroid.data.Event
 import co.touchlab.droidconandroid.data.Track
 import co.touchlab.droidconandroid.presenter.ConferenceDataPresenter
 import co.touchlab.droidconandroid.presenter.ScheduleBlockHour
 import com.wnafee.vector.compat.ResourcesCompat
+import kotlinx.android.synthetic.main.item_event.view.*
+import kotlinx.android.synthetic.main.item_notification.view.*
 import java.util.*
 
 /**
@@ -73,8 +70,6 @@ class EventAdapter(private val allEvents: Boolean
             if (!scheduleBlockHour.scheduleBlock.isBlock) {
                 holder.setOnClickListener { eventClickListener.onEventClick(scheduleBlockHour.scheduleBlock as Event) }
             }
-        } else if (holder is NotificationViewHolder) {
-            AppPrefs.getInstance(holder.acceptButton.context)
         }
     }
 
@@ -130,75 +125,63 @@ class EventAdapter(private val allEvents: Boolean
     }
 
     fun updateNotificationCard(show: Boolean) {
-        if(show == showNotificationCard)
+        if (show == showNotificationCard)
             return
 
         showNotificationCard = show
         if (show)
             notifyItemInserted(0)
-        else if(itemCount > 0)
+        else if (itemCount > 0)
             notifyItemRemoved(0)
     }
 
     inner abstract class ScheduleCardViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {}
 
     inner class ScheduleBlockViewHolder(itemView: View) : ScheduleCardViewHolder(itemView), ConferenceDataPresenter.EventRow {
-        private val title: TextView by bindView(R.id.title)
-        private val time: TextView by bindView(R.id.time)
-        private val locationTime: TextView by bindView(R.id.location_time)
-        private val card: View by bindView(R.id.card)
-        private val rsvp: ImageView by bindView(R.id.rsvp)
 
         override fun setTitleText(s: String?) {
-            title.text = s
+            itemView.title.text = s
         }
 
         override fun setTimeText(s: String?) {
-            time.text = s
+            itemView.time.text = s
         }
 
         override fun setDetailText(s: String?) {
-            locationTime.text = s
+            itemView.location_time.text = s
         }
 
         override fun setRsvpVisible(b: Boolean) {
-            rsvp.visibility = if (b) View.VISIBLE else View.GONE
+            itemView.rsvp.visibility = if (b) View.VISIBLE else View.GONE
         }
 
         override fun setRsvpChecked() {
-            rsvp.setImageDrawable(ResourcesCompat.getDrawable(itemView.context, R.drawable.ic_check_green))
+            itemView.rsvp.setImageDrawable(ResourcesCompat.getDrawable(itemView.context, R.drawable.ic_check_green))
         }
 
         override fun setRsvpConflict() {
-            rsvp.setImageDrawable(ResourcesCompat.getDrawable(itemView.context, R.drawable.ic_check_red))
+            itemView.rsvp.setImageDrawable(ResourcesCompat.getDrawable(itemView.context, R.drawable.ic_check_red))
         }
 
         fun setOnClickListener(listener: () -> Unit) {
-            card.setOnClickListener { listener() }
+            itemView.card.setOnClickListener { listener() }
         }
     }
 
     inner class NotificationViewHolder(itemView: View) : ScheduleCardViewHolder(itemView) {
-        val acceptButton: Button by bindView(R.id.notify_accept)
-        val declineButton: Button by bindView(R.id.notify_decline)
-
         init {
-            acceptButton.setOnClickListener {
+            itemView.notify_accept.setOnClickListener {
                 EventBusExt.getDefault().post(UpdateAllowNotificationEvent(true))
             }
-            declineButton.setOnClickListener {
+            itemView.notify_decline.setOnClickListener {
                 EventBusExt.getDefault().post(UpdateAllowNotificationEvent(false))
             }
         }
-
-
     }
 }
 
 interface EventClickListener {
-
     fun onEventClick(event: Event)
-
 }
 
 data class UpdateAllowNotificationEvent(val allow: Boolean)
