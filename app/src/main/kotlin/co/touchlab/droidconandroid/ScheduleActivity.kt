@@ -14,6 +14,7 @@ import android.support.design.widget.TabLayout
 import android.support.v4.app.FragmentManager
 import android.support.v4.app.FragmentPagerAdapter
 import android.support.v4.content.ContextCompat
+import android.support.v4.widget.DrawerLayout
 import android.support.v7.app.ActionBarDrawerToggle
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
@@ -31,7 +32,9 @@ import co.touchlab.droidconandroid.presenter.ConferenceDayHolder
 import co.touchlab.droidconandroid.superbus.UploadAvatarCommand
 import co.touchlab.droidconandroid.superbus.UploadCoverCommand
 import co.touchlab.droidconandroid.tasks.persisted.RefreshScheduleData
-import co.touchlab.droidconandroid.ui.*
+import co.touchlab.droidconandroid.ui.DrawerAdapter
+import co.touchlab.droidconandroid.ui.DrawerClickListener
+import co.touchlab.droidconandroid.ui.NavigationItem
 import co.touchlab.droidconandroid.utils.TimeUtils
 import com.squareup.picasso.Picasso
 import com.wnafee.vector.compat.ResourcesCompat
@@ -42,15 +45,13 @@ import java.util.*
 
 private const val POSITION_EXPLORE = 1
 private const val POSITION_MY_SCHEDULE = 2
-private const val SELECTED_TRACKS = "tracks"
 private const val ALL_EVENTS = "all_events"
 
-class ScheduleActivity : AppCompatActivity(), FilterInterface, NfcAdapter.CreateNdefMessageCallback
+open class ScheduleActivity : AppCompatActivity(), NfcAdapter.CreateNdefMessageCallback
 {
     private var conferenceDataPresenter: ConferenceDataPresenter? = null
     private var drawerAdapter: DrawerAdapter? = null
-    private var filterAdapter: FilterAdapter? = null
-    private var pagerAdapter: ScheduleFragmentPagerAdapter? = null
+    protected var pagerAdapter: ScheduleFragmentPagerAdapter? = null
 
     private var allEvents = true
 
@@ -89,24 +90,15 @@ class ScheduleActivity : AppCompatActivity(), FilterInterface, NfcAdapter.Create
             }
         }
 
-        setContentView(R.layout.activity_schedule)
-
-        setupToolbar()
-        setupNavigationDrawer()
-        setupFilterDrawer()
-        initNfc()
-
         if (savedInstanceState != null)
         {
-            val filters = savedInstanceState.getStringArrayList(SELECTED_TRACKS)
-            val tracks = ArrayList<Track>()
-            for (trackServerName in filters)
-            {
-                tracks.add(Track.findByServerName(trackServerName))
-            }
             allEvents = savedInstanceState.getBoolean(ALL_EVENTS)
-            filterAdapter !!.setSelectedTracks(tracks)
         }
+
+        setContentView(R.layout.activity_schedule)
+        setupToolbar()
+        setupNavigationDrawer()
+        initNfc()
         adjustToolBarAndDrawers()
 
         EventBusExt.getDefault().register(this)
@@ -151,7 +143,6 @@ class ScheduleActivity : AppCompatActivity(), FilterInterface, NfcAdapter.Create
     override fun onBackPressed()
     {
         when {
-            drawer_layout.isDrawerOpen(filter_wrapper) -> drawer_layout.closeDrawer(filter_wrapper)
             drawer_layout.isDrawerOpen(drawer_recycler) -> drawer_layout.closeDrawer(drawer_recycler)
             else -> super.onBackPressed()
         }
@@ -160,7 +151,6 @@ class ScheduleActivity : AppCompatActivity(), FilterInterface, NfcAdapter.Create
     override fun onSaveInstanceState(outState: Bundle)
     {
         super.onSaveInstanceState(outState)
-        outState.putStringArrayList(SELECTED_TRACKS, getCurrentFilters())
         outState.putBoolean(ALL_EVENTS, allEvents);
     }
 
@@ -245,7 +235,6 @@ class ScheduleActivity : AppCompatActivity(), FilterInterface, NfcAdapter.Create
                 Handler().post(RefreshRunnable())
                 drawerAdapter !!.setSelectedPosition(position)
                 adjustToolBarAndDrawers()
-                filterAdapter !!.clearSelectedTracks()
             }
 
             override fun onHeaderItemClick()
@@ -255,6 +244,7 @@ class ScheduleActivity : AppCompatActivity(), FilterInterface, NfcAdapter.Create
         })
         drawer_recycler.adapter = drawerAdapter
         drawer_recycler.layoutManager = LinearLayoutManager(this)
+        drawer_layout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED, filter_wrapper);
     }
 
     private fun getDrawerItems(): List<Any>
@@ -269,43 +259,6 @@ class ScheduleActivity : AppCompatActivity(), FilterInterface, NfcAdapter.Create
         drawerItems.add(NavigationItem(R.string.profile, R.drawable.ic_settings))
         drawerItems.add(NavigationItem(R.string.about, R.drawable.ic_info))
         return drawerItems;
-    }
-
-    private fun setupFilterDrawer()
-    {
-        filter_recycler.layoutManager = LinearLayoutManager(this)
-        filterAdapter = FilterAdapter(getFilterItems(), object : FilterClickListener
-        {
-            override fun onFilterClick(track: Track)
-            {
-                pagerAdapter !!.updateFrags(track)
-            }
-        })
-        filter_recycler.adapter = filterAdapter
-
-        back.setOnClickListener {
-            drawer_layout.closeDrawer(filter_wrapper)
-        }
-    }
-
-    private fun getFilterItems(): List<Any>
-    {
-        var filterItems = ArrayList<Any>()
-        filterItems.add(getString(R.string.tracks))
-        filterItems.add(Track.DEVELOPMENT)
-        filterItems.add(Track.DESIGN)
-        filterItems.add(Track.BUSINESS)
-        return filterItems
-    }
-
-    override fun getCurrentFilters(): ArrayList<String>
-    {
-        val filters = ArrayList<String>()
-        for (track in filterAdapter !!.getSelectedTracks())
-        {
-            filters.add(track.getServerName())
-        }
-        return filters
     }
 
     private fun adjustToolBarAndDrawers()
@@ -353,35 +306,6 @@ class ScheduleActivity : AppCompatActivity(), FilterInterface, NfcAdapter.Create
             }
         }
     }
-
-// TODO determine if we're just changing how filter drawer is accessed or disabling it
-// Uncomment to reimplement filter and search UI
-
-//    override fun onCreateOptionsMenu(menu: Menu?): Boolean
-//    {
-//        menuInflater.inflate(R.menu.home, menu)
-//        val filter = menu !!.findItem(R.id.action_filter)
-//        filter.icon = ResourcesCompat.getDrawable(this, R.drawable.ic_filter)
-//        val search = menu.findItem(R.id.action_search)
-//        search.icon = ResourcesCompat.getDrawable(this, R.drawable.ic_search)
-//        return super.onCreateOptionsMenu(menu)
-//    }
-//
-//    override fun onOptionsItemSelected(item: MenuItem?): Boolean
-//    {
-//        when
-//        {
-//            item !!.itemId == R.id.action_filter ->
-//            {
-//                drawerLayout.openDrawer(findViewById(R.id.filter_wrapper))
-//            }
-//            item.itemId == R.id.action_search ->
-//            {
-//                FindUserKot.startMe(this@ScheduleActivity)
-//            }
-//        }
-//        return super.onOptionsItemSelected(item)
-//    }
 
     private fun initNfc()
     {
@@ -496,9 +420,4 @@ class ScheduleActivity : AppCompatActivity(), FilterInterface, NfcAdapter.Create
 
         }
     }
-}
-
-interface FilterInterface
-{
-    fun getCurrentFilters(): ArrayList<String>
 }
