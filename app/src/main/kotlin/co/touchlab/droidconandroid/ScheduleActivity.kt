@@ -180,9 +180,12 @@ open class ScheduleActivity : AppCompatActivity(), NfcAdapter.CreateNdefMessageC
         }
 
         appbar.addOnOffsetChangedListener { appBarLayout, verticalOffset ->
-            val percentage: Float = 1 - (Math.abs(verticalOffset).toFloat() / appBarLayout.totalScrollRange)
-            schedule_toolbar_title?.alpha = percentage;
-            schedule_toolbar_profile?.alpha = percentage;
+            if (appBarLayout.totalScrollRange > 0)
+            {
+                val percentage: Float = 1 - (Math.abs(verticalOffset).toFloat() / appBarLayout.totalScrollRange)
+                schedule_toolbar_title?.alpha = percentage;
+                schedule_toolbar_profile?.alpha = percentage;
+            }
         };
 
         schedule_toolbar_profile.setOnClickListener {

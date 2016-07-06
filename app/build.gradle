@@ -160,7 +160,3 @@ dependencies {
 //
     compile project(':lib')
 }
-
-kapt {
-    generateStubs = true
-}
