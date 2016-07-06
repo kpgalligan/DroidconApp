@@ -2,6 +2,7 @@ package co.touchlab.droidconandroid
 
 import android.content.Context
 import android.content.Intent
+import android.graphics.PorterDuff
 import android.net.Uri
 import android.nfc.NdefMessage
 import android.nfc.NdefRecord
@@ -12,6 +13,7 @@ import android.os.Handler
 import android.support.design.widget.TabLayout
 import android.support.v4.app.FragmentManager
 import android.support.v4.app.FragmentPagerAdapter
+import android.support.v4.content.ContextCompat
 import android.support.v7.app.ActionBarDrawerToggle
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
@@ -308,16 +310,33 @@ class ScheduleActivity : AppCompatActivity(), FilterInterface, NfcAdapter.Create
 
     private fun adjustToolBarAndDrawers()
     {
-        //TODO toggle theme/colors
         if (allEvents)
         {
-            schedule_toolbar_title.setText(R.string.app_name)
             drawerAdapter !!.setSelectedPosition(POSITION_EXPLORE)
+            schedule_toolbar_title.setText(R.string.app_name)
+            schedule_backdrop.setColorFilter(ContextCompat.getColor(this, R.color.glyph_foreground_dark))
+            schedule_backdrop.setBackgroundColor(ContextCompat.getColor(this, R.color.glyph_background_dark))
+            schedule_toolbar_title.setTextColor(ContextCompat.getColor(this, R.color.tab_text_dark))
+            tabs.setTabTextColors(ContextCompat.getColor(this, R.color.tab_inactive_text_dark), ContextCompat.getColor(this, R.color.tab_text_dark))
+            tabs.setSelectedTabIndicatorColor(ContextCompat.getColor(this, R.color.tab_accent_dark))
+            val menuIconDark = toolbar.navigationIcon?.mutate()
+            menuIconDark?.mutate()?.setColorFilter(ContextCompat.getColor(this, R.color.tab_text_dark), PorterDuff.Mode.SRC_IN)
+            menuIconDark?.alpha = 255
+            toolbar.navigationIcon = menuIconDark
         }
         else
         {
-            schedule_toolbar_title.setText(R.string.my_schedule)
             drawerAdapter !!.setSelectedPosition(POSITION_MY_SCHEDULE)
+            schedule_toolbar_title.setText(R.string.my_schedule)
+            schedule_backdrop.setColorFilter(ContextCompat.getColor(this, R.color.glyph_foreground_light))
+            schedule_backdrop.setBackgroundColor(ContextCompat.getColor(this, R.color.glyph_background_light))
+            schedule_toolbar_title.setTextColor(ContextCompat.getColor(this, R.color.tab_text_light))
+            tabs.setTabTextColors(ContextCompat.getColor(this, R.color.tab_inactive_text_light), ContextCompat.getColor(this, R.color.tab_text_light))
+            tabs.setSelectedTabIndicatorColor(ContextCompat.getColor(this, R.color.tab_accent_light))
+            val menuIconLight = toolbar.navigationIcon?.mutate()
+            menuIconLight?.setColorFilter(ContextCompat.getColor(this, R.color.tab_text_light), PorterDuff.Mode.SRC_IN)
+            menuIconLight?.alpha = 255
+            toolbar.navigationIcon = menuIconLight
         }
     }
 
