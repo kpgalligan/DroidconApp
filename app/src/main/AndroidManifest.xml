@@ -36,6 +36,11 @@
         </activity>
 
         <activity
+            android:name=".FilterableScheduleActivity"
+            android:label="@string/app_name">
+        </activity>
+
+        <activity
             android:name=".VotingActivity"
             android:label="@string/vote"/>
 

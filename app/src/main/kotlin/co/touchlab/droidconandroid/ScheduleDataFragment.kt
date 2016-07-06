@@ -87,7 +87,12 @@ class ScheduleDataFragment() : Fragment()
     private fun updateAdapter(data: Array<out ScheduleBlockHour>?) {
         if (eventList!!.getAdapter() == null)
         {
-            adapter = EventAdapter(data!!.asList(), allEvents, (getActivity() as FilterInterface).getCurrentFilters(), object : EventClickListener {
+            var filters = ArrayList<String>()
+            if (activity is FilterInterface) {
+                filters = (activity as FilterInterface).getCurrentFilters()
+            }
+
+            adapter = EventAdapter(data!!.asList(), allEvents, filters, object : EventClickListener {
                 override fun onEventClick(event: Event) {
                     EventDetailActivity.callMe(getActivity()!!, event.id, event.category)
                 }
