@@ -2,4 +2,5 @@
 <resources>
     <dimen name="event_fab_margin">16dp</dimen>
     <dimen name="status_bar_height">25dip</dimen>
+    <dimen name="toolbar_title_margin_top">38dp</dimen>
 </resources>

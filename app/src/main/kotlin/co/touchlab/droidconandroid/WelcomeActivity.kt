@@ -85,7 +85,7 @@ public class WelcomeActivity : AppCompatActivity()
             when(position) {
                 lastIndex -> {
 //                    if(!short)
-                        MyActivity.startMe(this@WelcomeActivity)
+                        ScheduleActivity.startMe(this@WelcomeActivity)
                     finish()
                 }
                 else -> {
