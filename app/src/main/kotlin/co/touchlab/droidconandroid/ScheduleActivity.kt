@@ -187,6 +187,7 @@ open class ScheduleActivity : AppCompatActivity(), NfcAdapter.CreateNdefMessageC
                 schedule_toolbar_profile?.alpha = percentage;
             }
         };
+        appbar.setExpanded(true)
 
         schedule_toolbar_profile.setOnClickListener {
             launchUserDetail()
