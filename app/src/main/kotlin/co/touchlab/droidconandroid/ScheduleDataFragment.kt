@@ -8,6 +8,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import co.touchlab.android.threading.eventbus.EventBusExt
+import co.touchlab.droidconandroid.data.AppPrefs
 import co.touchlab.droidconandroid.data.Event
 import co.touchlab.droidconandroid.data.Track
 import co.touchlab.droidconandroid.presenter.ConferenceDataHelper
@@ -17,50 +18,49 @@ import co.touchlab.droidconandroid.ui.EventAdapter
 import co.touchlab.droidconandroid.ui.EventClickListener
 import java.util.*
 
-class ScheduleDataFragment() : Fragment()
-{
-    var eventList: RecyclerView? = null
-    var adapter: EventAdapter? = null
-    private var allEvents = true
-    private var day: Long? = null
-    private var position: Int? = null
+import kotlinx.android.synthetic.main.fragment_schedule_data.*
 
-    companion object
-    {
-        val ALL_EVENTS = "ALL_EVENTS"
-        val DAY = "DAY"
-        val POSITION = "POSITION"
+private const val ALL_EVENTS = "ALL_EVENTS"
+private const val DAY = "DAY"
+private const val POSITION = "POSITION"
 
-        fun newInstance(all: Boolean, day: Long, position: Int): ScheduleDataFragment
-        {
-            val scheduleDataFragment = ScheduleDataFragment()
-            val args = Bundle()
-            args.putBoolean(ALL_EVENTS, all)
-            args.putLong(DAY, day)
-            args.putInt(POSITION, position)
-            scheduleDataFragment.setArguments(args)
-            return scheduleDataFragment
-        }
+fun createScheduleDataFragment(all: Boolean, day: Long, position: Int): ScheduleDataFragment {
+    val scheduleDataFragment = ScheduleDataFragment()
+    val args = Bundle()
+    args.putBoolean(ALL_EVENTS, all)
+    args.putLong(DAY, day)
+    args.putInt(POSITION, position)
+    scheduleDataFragment.arguments = args
+    return scheduleDataFragment
+}
+
+class ScheduleDataFragment() : Fragment() {
+    //Extension property for casting adapter
+    val RecyclerView.eventAdapter: EventAdapter
+        get() = adapter as EventAdapter
+
+    val shouldShowNotif: Boolean
+    get() {
+        return AppPrefs.getInstance(context).showNotifCard
+                && !arguments.getBoolean(ALL_EVENTS, true)
+                && arguments.getInt(POSITION,0) == 0
     }
 
-    override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?): View?
-    {
-        return inflater!!.inflate(R.layout.fragment_schedule_data, null)!!
+    override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+        return inflater?.inflate(R.layout.fragment_schedule_data, container, false)
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
-        allEvents = getArguments()!!.getBoolean(ALL_EVENTS)
-        day = getArguments()!!.getLong(DAY)
-        position = getArguments()!!.getInt(POSITION)
-
-        eventList = view?.findViewById(R.id.eventList) as RecyclerView
-        eventList!!.setLayoutManager(LinearLayoutManager(getActivity()))
+        eventList.layoutManager = LinearLayoutManager(activity)
+        eventList.adapter = EventAdapter( arguments.getBoolean(ALL_EVENTS, true)
+                , (activity as? FilterInterface)?.getCurrentFilters() ?: emptyList()
+                , ScheduleEventClickListener()
+                , shouldShowNotif)
     }
 
-    override fun onResume()
-    {
+    override fun onResume() {
         super.onResume()
         EventBusExt.getDefault()!!.register(this)
     }
@@ -71,44 +71,32 @@ class ScheduleDataFragment() : Fragment()
         EventBusExt.getDefault()!!.unregister(this)
     }
 
-    fun onEventMainThread(dayHolders: Array<ConferenceDayHolder>?)
-    {
-        val dayString = ConferenceDataHelper.dateToDayString(Date(day!!))
-        for (holder in dayHolders!!) {
-            if(holder.dayString!!.equals(dayString))
-            {
+    private fun updateAdapter(data: Array<out ScheduleBlockHour>) {
+        eventList.eventAdapter.updateEvents(data.asList())
+    }
+
+    fun filter(track: Track) {
+        eventList.eventAdapter.toggleTrackFilter(track)
+    }
+
+    fun  updateNotifCard() {
+        eventList.eventAdapter.updateNotificationCard(shouldShowNotif)
+    }
+
+    @Suppress("unused")
+    fun onEventMainThread(dayHolders: Array<ConferenceDayHolder>) {
+        val dayString = ConferenceDataHelper.dateToDayString(Date(arguments.getLong(DAY)))
+        for (holder in dayHolders) {
+            if (holder.dayString?.equals(dayString) ?: false) {
                 updateAdapter(holder.hourHolders)
                 break
             }
         }
-
     }
 
-    private fun updateAdapter(data: Array<out ScheduleBlockHour>?) {
-        if (eventList!!.getAdapter() == null)
-        {
-            var filters = ArrayList<String>()
-            if (activity is FilterInterface) {
-                filters = (activity as FilterInterface).getCurrentFilters()
-            }
-
-            adapter = EventAdapter(data!!.asList(), allEvents, filters, object : EventClickListener {
-                override fun onEventClick(event: Event) {
-                    EventDetailActivity.callMe(getActivity()!!, event.id, event.category)
-                }
-            })
-            eventList!!.setAdapter(adapter!!)
-        }
-        else
-        {
-            (eventList!!.getAdapter() as EventAdapter).updateEvents(data!!.asList())
+    private inner class ScheduleEventClickListener : EventClickListener {
+        override fun onEventClick(event: Event) {
+            EventDetailActivity.callMe(activity, event.id, event.category)
         }
     }
-
-    fun filter(track: Track) {
-        if(adapter != null) {
-            adapter!!.update(track)
-        }
-    }
-
 }

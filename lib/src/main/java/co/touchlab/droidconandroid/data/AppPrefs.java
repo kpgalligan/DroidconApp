@@ -24,6 +24,8 @@ public class AppPrefs
     public static final String REFRESH_TIME = "refresh_time";
     public static final String MY_RSVPS_LOADED = "myrsvps3";
     public static final String VOTE_INTRO = "vote_intro";
+    public static final String ALLOW_NOTIFS = "allow_notifs";
+    public static final String SHOW_NOTIF_CARD = "show_notif_card";
     private static AppPrefs instance;
 
     private SharedPreferences prefs;
@@ -175,6 +177,12 @@ public class AppPrefs
 
     public boolean getSeenVoteIntro(){return prefs.getBoolean(VOTE_INTRO, false);}
     public void setSeenVoteIntro(boolean seen){prefs.edit().putBoolean(VOTE_INTRO, seen).apply();}
+
+    public boolean getAllowNotifications(){return prefs.getBoolean(ALLOW_NOTIFS, false);}
+    public void setAllowNotifications(boolean allow){prefs.edit().putBoolean(ALLOW_NOTIFS, allow).apply();}
+
+    public boolean getShowNotifCard(){return prefs.getBoolean(SHOW_NOTIF_CARD, true);}
+    public void setShowNotifCard(boolean show){prefs.edit().putBoolean(SHOW_NOTIF_CARD, show).apply();}
 
     //helper methods
     private void setBoolean(String key, Boolean value)
