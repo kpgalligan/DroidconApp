@@ -105,8 +105,8 @@ public class DroidconApplication extends Application
     }
 
     @SuppressWarnings("unused")
-    public void onEventMainThread(UpdateAlertsTask.ScheduleAlertMessage event)
+    public void onEventMainThread(UpdateAlertsTask task)
     {
-        AlertManagerKt.scheduleAlert(this, event.event);
+        AlertManagerKt.scheduleAlert(this, task.nextEvent);
     }
 }
