@@ -16,6 +16,8 @@ import co.touchlab.droidconandroid.presenter.ScheduleBlockHour;
  */
 public class UpdateAlertsTask extends Task
 {
+    public Event nextEvent = null;
+
     public static final long ALERT_BUFFER = TimeUnit.MINUTES.toMillis(5);
 
     @Override
@@ -34,7 +36,7 @@ public class UpdateAlertsTask extends Task
                         Event event = (Event) hour.scheduleBlock;
                         if(event.getStartLong() - ALERT_BUFFER > System.currentTimeMillis())
                         {
-                            EventBusExt.getDefault().post(new ScheduleAlertMessage(event));
+                            nextEvent = event;
                             return;
                         }
                     }
@@ -49,13 +51,9 @@ public class UpdateAlertsTask extends Task
         return false;
     }
 
-    public class ScheduleAlertMessage
+    @Override
+    protected void onComplete(Context context)
     {
-        public Event event;
-
-        public ScheduleAlertMessage(Event event)
-        {
-            this.event = event;
-        }
+        EventBusExt.getDefault().post(this);
     }
 }
