@@ -12,7 +12,7 @@ import android.os.Bundle
 import android.os.Handler
 import android.support.design.widget.TabLayout
 import android.support.v4.app.FragmentManager
-import android.support.v4.app.FragmentPagerAdapter
+import android.support.v4.app.FragmentStatePagerAdapter
 import android.support.v4.content.ContextCompat
 import android.support.v4.widget.DrawerLayout
 import android.support.v7.app.ActionBarDrawerToggle
@@ -20,6 +20,7 @@ import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
 import android.text.TextUtils
 import android.text.format.DateUtils
+import android.view.View
 import co.touchlab.android.threading.eventbus.EventBusExt
 import co.touchlab.droidconandroid.data.AppPrefs
 import co.touchlab.droidconandroid.data.DatabaseHelper
@@ -146,11 +147,17 @@ open class ScheduleActivity : AppCompatActivity(), NfcAdapter.CreateNdefMessageC
     fun onEventMainThread(notificationEvent: UpdateAllowNotificationEvent) {
         //Have to handle the notification card way out here so it can update both fragments.
         //Set the app prefs and bounce it back down to the adapter
+        updateNotifications(notificationEvent.allow)
+    }
+
+    private fun updateNotifications(allow:Boolean)
+    {
         val prefs = AppPrefs.getInstance(this)
-        prefs.allowNotifications = notificationEvent.allow
+        prefs.allowNotifications = allow
         prefs.showNotifCard = false
         pagerAdapter?.updateNotifCard()
         Queues.localQueue(this).execute(UpdateAlertsTask())
+        adjustToolBarAndDrawers()
     }
 
     override fun onBackPressed()
@@ -196,14 +203,20 @@ open class ScheduleActivity : AppCompatActivity(), NfcAdapter.CreateNdefMessageC
             if (appBarLayout.totalScrollRange > 0)
             {
                 val percentage: Float = 1 - (Math.abs(verticalOffset).toFloat() / appBarLayout.totalScrollRange)
-                schedule_toolbar_title?.alpha = percentage;
-                schedule_toolbar_profile?.alpha = percentage;
+                schedule_toolbar_title.alpha = percentage
+                schedule_toolbar_profile.alpha = percentage
+                schedule_toolbar_notif.alpha = percentage
             }
-        };
+        }
         appbar.setExpanded(true)
 
-        schedule_toolbar_profile.setOnClickListener {
+        schedule_profile_touch.setOnClickListener {
             launchUserDetail()
+        }
+
+        schedule_toolbar_notif.setOnClickListener {
+            val prefs = AppPrefs.getInstance(this)
+            updateNotifications(!prefs.allowNotifications)
         }
     }
 
@@ -293,6 +306,8 @@ open class ScheduleActivity : AppCompatActivity(), NfcAdapter.CreateNdefMessageC
             menuIconDark?.mutate()?.setColorFilter(ContextCompat.getColor(this, R.color.tab_text_dark), PorterDuff.Mode.SRC_IN)
             menuIconDark?.alpha = 255
             toolbar.navigationIcon = menuIconDark
+
+            schedule_toolbar_notif.visibility = View.GONE
         }
         else
         {
@@ -307,7 +322,14 @@ open class ScheduleActivity : AppCompatActivity(), NfcAdapter.CreateNdefMessageC
             menuIconLight?.setColorFilter(ContextCompat.getColor(this, R.color.tab_text_light), PorterDuff.Mode.SRC_IN)
             menuIconLight?.alpha = 255
             toolbar.navigationIcon = menuIconLight
+
+            schedule_toolbar_notif.visibility = View.VISIBLE
         }
+
+        if(AppPrefs.getInstance(this).allowNotifications)
+            schedule_toolbar_notif.setImageResource(R.drawable.vic_notifications_active_black_24dp)
+        else
+            schedule_toolbar_notif.setImageResource(R.drawable.vic_notifications_none_black_24dp)
     }
 
     private fun launchUserDetail() {
@@ -394,7 +416,7 @@ open class ScheduleActivity : AppCompatActivity(), NfcAdapter.CreateNdefMessageC
         }
     }
 
-    class ScheduleFragmentPagerAdapter : FragmentPagerAdapter
+    class ScheduleFragmentPagerAdapter : FragmentStatePagerAdapter
     {
         private var dates: List<Long>
         private var allEvents: Boolean
