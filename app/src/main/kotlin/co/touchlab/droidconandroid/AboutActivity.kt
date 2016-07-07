@@ -3,17 +3,17 @@ package co.touchlab.droidconandroid
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
+import android.support.v4.content.ContextCompat
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
-import android.support.v7.widget.Toolbar
 import android.view.LayoutInflater
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
+import kotlinx.android.synthetic.main.activity_about.*
 import java.util.*
 
 class AboutActivity : AppCompatActivity()
@@ -27,38 +27,31 @@ class AboutActivity : AppCompatActivity()
         }
     }
 
-
-    final var COLLAPSED_LINE_COUNT = 3
-
-    var recycler: RecyclerView? = null
-
     override fun onCreate(savedInstanceState: Bundle?)
     {
-        super<AppCompatActivity>.onCreate(savedInstanceState)
+        super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_about)
 
-        val toolbar = findViewById(R.id.toolbar) as Toolbar
-        toolbar.setTitle(R.string.about)
+        toolbar.title = ""
         setSupportActionBar(toolbar)
-        getSupportActionBar()?.setDisplayHomeAsUpEnabled(true)
-        getSupportActionBar()?.setDisplayShowHomeEnabled(true)
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        supportActionBar?.setDisplayShowHomeEnabled(true)
+        about_backdrop.setColorFilter(ContextCompat.getColor(this, R.color.glyph_foreground_dark))
 
-        recycler = findViewById(R.id.about_list) as RecyclerView
-
-        recycler!!.setLayoutManager(LinearLayoutManager(this))
+        about_list !!.layoutManager = LinearLayoutManager(this)
 
         var adapter = AboutAdapter()
 
-        adapter.add(R.string.about_con_header, R.drawable.aboutlogo, R.string.about_con)
-//        adapter.add(R.string.about_touch_header, 0, R.string.about_touch)
         adapter.add(R.string.about_app_header, 0, R.string.about_app)
+        adapter.add(R.string.about_con_header, 0, R.string.about_con)
+        adapter.add(R.string.about_touch_header, 0, R.string.about_touch)
 
-        recycler!!.setAdapter(adapter)
+        about_list !!.adapter = adapter
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean
     {
-        if (item.getItemId() == android.R.id.home)
+        if (item.itemId == android.R.id.home)
             finish()
 
         return super.onOptionsItemSelected(item)
@@ -68,9 +61,9 @@ class AboutActivity : AppCompatActivity()
     {
         private var dataset = ArrayList<AboutItem>()
 
-        public fun add(headerRes: Int, logoRes: Int, bodyRes: Int)
+        fun add(headerRes: Int, logoRes: Int, bodyRes: Int)
         {
-            dataset.add(AboutItem(headerRes, logoRes, bodyRes, false))
+            dataset.add(AboutItem(headerRes, logoRes, bodyRes))
             notifyDataSetChanged()
         }
 
@@ -86,29 +79,6 @@ class AboutActivity : AppCompatActivity()
             vh.logo!!.setImageResource(data.logoRes)
             vh.header!!.setText(data.headerRes)
             vh.body!!.setMaxLines(Int.MAX_VALUE)
-
-            if (!data.expanded)
-                vh.body!!.setMaxLines(COLLAPSED_LINE_COUNT)
-            else
-                vh.body!!.setMaxLines(Int.MAX_VALUE)
-
-            vh.button!!.setOnClickListener {
-
-                if (data.expanded) {
-                    vh.body!!.setMaxLines(COLLAPSED_LINE_COUNT)
-                    vh.button!!.setText(getResources().getString(R.string.more))
-                    data.expanded = false
-                }
-                else
-                {
-                    vh.body!!.setMaxLines(Int.MAX_VALUE)
-                    vh.button!!.setText(getResources().getString(R.string.less))
-                    data.expanded = true
-                }
-            }
-
-            if (position == dataset.size - 1)
-                vh.divider!!.setVisibility(View.GONE)
         }
 
         override fun getItemCount(): Int {
@@ -120,18 +90,14 @@ class AboutActivity : AppCompatActivity()
             var header: TextView? = null
             var logo: ImageView? = null
             var body: TextView? = null
-            var button: Button? = null
-            var divider: View? = null
             init
             {
                 header = item.findViewById(R.id.header) as TextView
                 logo = item.findViewById(R.id.logo) as ImageView
                 body = item.findViewById(R.id.body) as TextView
-                button = item.findViewById(R.id.more) as Button
-                divider = item.findViewById(R.id.divider)
             }
         }
 
-        inner class AboutItem(val headerRes: Int, val logoRes: Int, val bodyRes: Int, var expanded: Boolean)
+        inner class AboutItem(val headerRes: Int, val logoRes: Int, val bodyRes: Int)
     }
 }

@@ -7,8 +7,14 @@
     <string name="buy_ticket_url">https://droidconsf.eventbrite.com/?discount=droidcon30</string>
 
     <string name="about_con_header">About Droidcon Albany</string>
+    <!--TODO add link to sponsors-->
     <string name="about_con">
-
-        The Droidcon conferences around the world support the Android Platform and create a global network for developers and companies. San Francisco\'s first Droidcon is brought to you by Apps4All http://apps4all.agency/, and touchlab http://touchlab.co. \n\n
-    http://sf.droidcon.com/</string>
+        Droidcon conferences around the world
+        support the Android platform and create a
+        global network for developers and companies.\n\nWe offer best-in-class presentations from
+        leaders in all parts of the Android ecosystem,
+        including core development, embedded
+        solutions, augmented reality, business
+        solutions, and games.
+    </string>
 </resources>
