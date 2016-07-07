@@ -92,28 +92,23 @@
 
     <string name="about_app_header">About the app</string>
     <string name="about_app">
-        The Droidcon app has been coded in-house by touchlab\'s team.  Worked on by Liam, Izzy, Sam and Kevin.\n\n
-        More about touchlab: http://touchlab.co\n\n
-        The code is open source, at: https://github.com/touchlab/DroidconApp\n\n
-        Its a bit of an experiment, written largely in Kotlin, and including a new(ish) ORM framework. Fun stuff.
+        The Droidcon app is coded in-house by the touchlab team.  Worked on by Liam, Izzy, Sam, Ramona and Kevin.\n\nIt’s a bit of an experiment, written largely in Kotlin, and including a new(ish) ORM framework. Fun stuff.\n\nThe code is open source, at:\nhttps://github.com/touchlab/DroidconApp
     </string>
 
-
     <string name="about_touch_header">About touchlab</string>
-    <string name="about_touch">touchlab is…\n\n
-        Developer Founded\n\n
-        touchlab is a developer founded and run development shop focused on building amazing Android
-        experiences.\n\n
-        Android Pros\n\n
-        We are a group of Android experts (and experts in training) who believe that Android can and
-        must be better.\n\n
-        Overachievers\n\n
-        What we built yesterday was great, what we build with you tomorrow will be even better.\n\n
-        Currently Hiring\n\n
-        Wanna join a team where Android isn\'t "that other platform", where we care about pushing
-        our favorite technology forward and where you can get a ton of exposure to the community at
-        large? Get in touch.\n\n
-        http://touchlab.co/</string>
+    <string name="about_touch">
+        Touchlab is a developer founded and run
+        development shop focused on building
+        amazing Android experiences with great
+        design as a foundational principle.\n\nWe’re a group of Android experts who believe
+        that Android can and must be better.\n\nWe believe that what we built yesterday was
+        great, but what we build with you tomorrow
+        will be even better.\n\nAnd we’re currently hiring. Want to join a team
+        where Android isn’t that other platform, where
+        we care about pushing our favorite technology
+        forward, and where you can get more involved
+        with the community at large? Get in touch.\n\nhttp://touchlab.co\n\n
+    </string>
     <string name="more">More</string>
     <string name="less">Less</string>
 

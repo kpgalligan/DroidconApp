@@ -1,43 +1,37 @@
 <?xml version="1.0" encoding="utf-8"?>
-
 <RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
+
+    <!--TODO update icon asset-->
+
+    <ImageView
+        android:id="@+id/icon"
+        android:src="@drawable/ic_info"
+        style="@style/about_icon"/>
+    
     <TextView
         android:id="@+id/header"
+        android:layout_toRightOf="@id/icon"
         android:text="@string/about_app_header"
         style="@style/about_header" />
 
-    <ImageView
-        android:id="@+id/logo"
-        android:layout_below="@+id/header"
-        style="@style/about_logo"
-        />
-
     <TextView
         android:id="@+id/body"
-        android:layout_below="@+id/logo"
+        android:layout_toRightOf="@id/icon"
+        android:layout_below="@+id/header"
         android:text="@string/about_app"
         android:autoLink="web"
         style="@style/about_body"
         />
 
-    <Button
-        android:id="@+id/more"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+    <ImageView
+        android:id="@+id/logo"
+        android:layout_toRightOf="@id/icon"
         android:layout_below="@+id/body"
-        android:layout_alignParentRight="true"
-        android:text="@string/more"
-        android:textColor="@color/accent"
-        style="?android:attr/borderlessButtonStyle"/>
-
-    <View
-        android:id="@+id/divider"
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:layout_below="@+id/more"
-        android:background="@color/divider_grey"/>
+        android:visibility="gone"
+        style="@style/about_logo"
+    />
 
 </RelativeLayout>
