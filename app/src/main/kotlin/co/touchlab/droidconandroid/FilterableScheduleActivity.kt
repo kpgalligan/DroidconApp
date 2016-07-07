@@ -74,7 +74,7 @@ class FilterableScheduleActivity : ScheduleActivity(), FilterInterface
         {
             override fun onFilterClick(track: Track)
             {
-                pagerAdapter !!.updateFrags(track)
+                (view_pager.adapter as ScheduleFragmentPagerAdapter).updateFrags(track)
             }
         })
         filter_recycler.adapter = filterAdapter
