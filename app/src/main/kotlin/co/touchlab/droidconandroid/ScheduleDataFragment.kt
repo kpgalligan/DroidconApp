@@ -59,12 +59,17 @@ class ScheduleDataFragment() : Fragment() {
                 , ScheduleEventClickListener()
                 , shouldShowNotif)
 
-        EventBusExt.getDefault().register(this)
     }
 
-    override fun onDestroy() {
-        super.onDestroy()
-        EventBusExt.getDefault().unregister(this)
+    override fun onResume() {
+        super.onResume()
+        EventBusExt.getDefault()!!.register(this)
+    }
+
+    override fun onPause()
+    {
+        super.onPause()
+        EventBusExt.getDefault()!!.unregister(this)
     }
 
     private fun updateAdapter(data: Array<out ScheduleBlockHour>) {

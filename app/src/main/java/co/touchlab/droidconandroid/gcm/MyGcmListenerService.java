@@ -16,9 +16,9 @@ import com.google.android.gms.gcm.GcmListenerService;
 import org.apache.commons.lang3.StringUtils;
 
 import co.touchlab.droidconandroid.EventDetailActivity;
-import co.touchlab.droidconandroid.MyActivity;
 import co.touchlab.droidconandroid.R;
 import co.touchlab.droidconandroid.data.AppPrefs;
+import co.touchlab.droidconandroid.ScheduleActivity;
 import co.touchlab.droidconandroid.data.DatabaseHelper;
 import co.touchlab.droidconandroid.data.Event;
 import co.touchlab.droidconandroid.presenter.AppManager;
@@ -95,7 +95,7 @@ public class MyGcmListenerService extends GcmListenerService
      * @param message GCM message received.
      */
     private void sendNotification(String title, String message) {
-        Intent intent = new Intent(this, MyActivity.class);
+        Intent intent = new Intent(this, ScheduleActivity.class);
         sendIntentNotification(title, message, intent);
     }
 
