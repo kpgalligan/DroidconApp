@@ -178,7 +178,7 @@ public class AppPrefs
     public boolean getSeenVoteIntro(){return prefs.getBoolean(VOTE_INTRO, false);}
     public void setSeenVoteIntro(boolean seen){prefs.edit().putBoolean(VOTE_INTRO, seen).apply();}
 
-    public boolean getAllowNotifications(){return prefs.getBoolean(ALLOW_NOTIFS, true);}
+    public boolean getAllowNotifications(){return prefs.getBoolean(ALLOW_NOTIFS, false);}
     public void setAllowNotifications(boolean allow){prefs.edit().putBoolean(ALLOW_NOTIFS, allow).apply();}
 
     public boolean getShowNotifCard(){return prefs.getBoolean(SHOW_NOTIF_CARD, true);}

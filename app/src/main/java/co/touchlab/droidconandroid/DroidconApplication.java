@@ -10,8 +10,11 @@ import org.apache.commons.io.IOUtils;
 
 import java.io.IOException;
 
+import co.touchlab.android.threading.eventbus.EventBusExt;
+import co.touchlab.droidconandroid.alerts.AlertManagerKt;
 import co.touchlab.droidconandroid.presenter.AppManager;
 import co.touchlab.droidconandroid.presenter.PlatformClient;
+import co.touchlab.droidconandroid.tasks.UpdateAlertsTask;
 import retrofit.client.Client;
 
 /**
@@ -36,7 +39,8 @@ public class DroidconApplication extends Application
     public void onCreate()
     {
         super.onCreate();
-//        Fabric.with(this, new Crashlytics());
+        EventBusExt.getDefault().register(this);
+        //        Fabric.with(this, new Crashlytics());
 
 //        if(!getCurrentProcessName(this).contains("background_crash"))
         {
@@ -98,5 +102,11 @@ public class DroidconApplication extends Application
                 }
             });
         }
+    }
+
+    @SuppressWarnings("unused")
+    public void onEventMainThread(UpdateAlertsTask.ScheduleAlertMessage event)
+    {
+        AlertManagerKt.scheduleAlert(this, event.event);
     }
 }
