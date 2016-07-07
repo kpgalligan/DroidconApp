@@ -55,10 +55,9 @@ class ScheduleDataFragment() : Fragment() {
 
         eventList.layoutManager = LinearLayoutManager(activity)
         eventList.adapter = EventAdapter( arguments.getBoolean(ALL_EVENTS, true)
-                , (activity as FilterInterface).getCurrentFilters()
+                , (activity as? FilterInterface)?.getCurrentFilters() ?: emptyList()
                 , ScheduleEventClickListener()
                 , shouldShowNotif)
-
     }
 
     override fun onResume() {

@@ -31,10 +31,13 @@ import co.touchlab.droidconandroid.presenter.ConferenceDataPresenter
 import co.touchlab.droidconandroid.presenter.ConferenceDayHolder
 import co.touchlab.droidconandroid.superbus.UploadAvatarCommand
 import co.touchlab.droidconandroid.superbus.UploadCoverCommand
+import co.touchlab.droidconandroid.tasks.Queues
+import co.touchlab.droidconandroid.tasks.UpdateAlertsTask
 import co.touchlab.droidconandroid.tasks.persisted.RefreshScheduleData
 import co.touchlab.droidconandroid.ui.DrawerAdapter
 import co.touchlab.droidconandroid.ui.DrawerClickListener
 import co.touchlab.droidconandroid.ui.NavigationItem
+import co.touchlab.droidconandroid.ui.UpdateAllowNotificationEvent
 import co.touchlab.droidconandroid.utils.TimeUtils
 import com.squareup.picasso.Picasso
 import com.wnafee.vector.compat.ResourcesCompat
@@ -138,6 +141,16 @@ open class ScheduleActivity : AppCompatActivity(), NfcAdapter.CreateNdefMessageC
     fun onEventMainThread(command: UploadCoverCommand)
     {
         drawerAdapter !!.notifyDataSetChanged()
+    }
+
+    fun onEventMainThread(notificationEvent: UpdateAllowNotificationEvent) {
+        //Have to handle the notification card way out here so it can update both fragments.
+        //Set the app prefs and bounce it back down to the adapter
+        val prefs = AppPrefs.getInstance(this)
+        prefs.allowNotifications = notificationEvent.allow
+        prefs.showNotifCard = false
+        pagerAdapter?.updateNotifCard()
+        Queues.localQueue(this).execute(UpdateAlertsTask())
     }
 
     override fun onBackPressed()
@@ -403,7 +416,7 @@ open class ScheduleActivity : AppCompatActivity(), NfcAdapter.CreateNdefMessageC
 
         override fun getItem(position: Int): ScheduleDataFragment?
         {
-            return ScheduleDataFragment.newInstance(allEvents, dates.get(position), position)
+            return createScheduleDataFragment(allEvents, dates[position], position)
         }
 
         override fun getPageTitle(position: Int): CharSequence?
@@ -413,7 +426,6 @@ open class ScheduleActivity : AppCompatActivity(), NfcAdapter.CreateNdefMessageC
 
         fun updateFrags(track: Track)
         {
-
             for (fragment in fragmentManager.getFragments())
             {
                 if (fragment != null)
@@ -421,7 +433,12 @@ open class ScheduleActivity : AppCompatActivity(), NfcAdapter.CreateNdefMessageC
                     (fragment as ScheduleDataFragment).filter(track)
                 }
             }
+        }
 
+        fun  updateNotifCard() {
+            for (fragment in fragmentManager.fragments) {
+                (fragment as ScheduleDataFragment).updateNotifCard()
+            }
         }
     }
 }
