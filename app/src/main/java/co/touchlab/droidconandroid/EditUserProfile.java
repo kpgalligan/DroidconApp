@@ -15,6 +15,7 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.Toolbar;
 import android.telephony.PhoneNumberFormattingTextWatcher;
 import android.telephony.PhoneNumberUtils;
@@ -83,9 +84,12 @@ public class EditUserProfile extends StickyTaskManagerActivity
         }
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        toolbar.setTitle(R.string.title_activity_edit_user_profile);
+        toolbar.setTitle("");
         toolbar.setNavigationIcon(R.drawable.ic_action_tick);
         setSupportActionBar(toolbar);
+
+        ImageView backdrop = (ImageView) findViewById(R.id.edit_user_backdrop);
+        backdrop.setColorFilter(ContextCompat.getColor(this, R.color.glyph_foreground_dark));
 
         name = (EditText) findViewById(R.id.name);
         email = (EditText) findViewById(R.id.email);
