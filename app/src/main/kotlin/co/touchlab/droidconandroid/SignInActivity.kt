@@ -113,7 +113,7 @@ public class SignInActivity : AppCompatActivity(), LoginScreenPresenter.Host {
     {
         if (!failed) {
             finish()
-            ScheduleActivity.startMe(this)
+            startScheduleActivity(this)
             if (firstLogin)
                 EditUserProfile.callMe(this)
         }
@@ -228,7 +228,7 @@ public class SignInActivity : AppCompatActivity(), LoginScreenPresenter.Host {
         mResolvingError = false;
     }
 
-    public inner class ErrorDialogFragment : DialogFragment() {
+    inner class ErrorDialogFragment : DialogFragment() {
 
         override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
             val errorCode = this.getArguments().getInt(DIALOG_ERROR);
