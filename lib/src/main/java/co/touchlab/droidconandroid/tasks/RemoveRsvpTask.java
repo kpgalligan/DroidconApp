@@ -38,6 +38,7 @@ public class RemoveRsvpTask extends Task
                     event.rsvpUuid = null;
                     dao.update(event);
                     PersistedTaskQueueFactory.getInstance(context).execute(new RemoveRsvp(eventId));
+                    Queues.localQueue(context).execute(new UpdateAlertsTask());
                 }
 
                 return null;

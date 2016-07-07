@@ -41,6 +41,7 @@ public class AddRsvpTask extends Task
                     dao.update(event);
                     AddRsvp addRsvpCommandKot = new AddRsvp(eventId, uuid);
                     PersistedTaskQueueFactory.getInstance(context).execute(addRsvpCommandKot);
+                    Queues.localQueue(context).execute(new UpdateAlertsTask());
                 }
 
                 return null;

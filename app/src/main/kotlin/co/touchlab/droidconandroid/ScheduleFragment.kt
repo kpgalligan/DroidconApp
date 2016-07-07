@@ -18,6 +18,8 @@ import co.touchlab.droidconandroid.data.Track
 import co.touchlab.droidconandroid.presenter.ConferenceDataHost
 import co.touchlab.droidconandroid.presenter.ConferenceDataPresenter
 import co.touchlab.droidconandroid.presenter.ConferenceDayHolder
+import co.touchlab.droidconandroid.tasks.Queues
+import co.touchlab.droidconandroid.tasks.UpdateAlertsTask
 import co.touchlab.droidconandroid.tasks.persisted.RefreshScheduleData
 import co.touchlab.droidconandroid.ui.UpdateAllowNotificationEvent
 import co.touchlab.droidconandroid.utils.TimeUtils
@@ -89,6 +91,7 @@ class ScheduleFragment : Fragment(), FilterableFragmentInterface
         prefs.allowNotifications = notificationEvent.allow
         prefs.showNotifCard = false
         pagerAdapter!!.updateNotifCard()
+        Queues.localQueue(context).execute(UpdateAlertsTask())
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
