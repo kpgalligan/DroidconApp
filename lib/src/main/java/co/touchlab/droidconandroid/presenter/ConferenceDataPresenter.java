@@ -3,12 +3,12 @@ import android.content.Context;
 import android.util.Log;
 
 import com.google.j2objc.annotations.AutoreleasePool;
-import com.google.j2objc.annotations.Weak;
 
 import co.touchlab.droidconandroid.data.Block;
 import co.touchlab.droidconandroid.data.Event;
 import co.touchlab.droidconandroid.tasks.Queues;
 import co.touchlab.droidconandroid.tasks.SeedScheduleDataTask;
+import co.touchlab.droidconandroid.tasks.UpdateAlertsTask;
 import co.touchlab.droidconandroid.tasks.persisted.RefreshScheduleData;
 
 /**
@@ -41,6 +41,8 @@ public class ConferenceDataPresenter extends AbstractEventBusPresenter
     public void onEventMainThread(LoadConferenceDataTask task)
     {
         Log.w(ConferenceDataPresenter.class.getSimpleName(), "LoadConferenceDataTask returned");
+
+        Queues.localQueue(getContext()).execute(new UpdateAlertsTask());
         conferenceDataHost.loadCallback(task.conferenceDayHolders);
     }
 

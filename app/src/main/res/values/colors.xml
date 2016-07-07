@@ -81,4 +81,5 @@
     <color name="tab_text_light">@color/primary_dark_50</color>
     <color name="tab_accent_light">@color/primary_dark_50</color>
 
+    <color name="event_text_highlight">@color/black</color>
 </resources>
