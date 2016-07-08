@@ -115,7 +115,7 @@ public class SignInActivity : AppCompatActivity(), LoginScreenPresenter.Host {
             finish()
             startScheduleActivity(this)
             if (firstLogin)
-                EditUserProfile.callMe(this)
+                createEditUserProfile(this)
         }
         else
         {
