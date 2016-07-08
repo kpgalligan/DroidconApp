@@ -38,7 +38,7 @@ class UserDetailActivity : AppCompatActivity(), UserDetailFragment.Companion.Fin
     {
         if (isTaskRoot())
         {
-            ScheduleActivity.startMe(this)
+            startScheduleActivity(this)
         }
 
         finish()
