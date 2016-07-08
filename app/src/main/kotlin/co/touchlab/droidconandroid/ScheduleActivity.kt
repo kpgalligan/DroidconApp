@@ -197,7 +197,7 @@ open class ScheduleActivity : AppCompatActivity(), NfcAdapter.CreateNdefMessageC
                     }
 
                     R.string.social -> FindUserKot.startMe(this@ScheduleActivity)
-                    R.string.profile -> EditUserProfile.callMe(this@ScheduleActivity)
+                    R.string.profile -> createEditUserProfile(this@ScheduleActivity)
                     R.string.sponsors -> startActivity(WelcomeActivity.getLaunchIntent(this@ScheduleActivity,
                             true))
                     R.string.about -> AboutActivity.callMe(this@ScheduleActivity)

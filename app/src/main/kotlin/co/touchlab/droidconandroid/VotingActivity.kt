@@ -74,7 +74,7 @@ public class VotingActivity : AppCompatActivity() {
                 drawerLayout.closeDrawer(navigationRecycler)
                 when (titleRes) {
                     R.string.vote -> VotingActivity.callMe(this@VotingActivity)
-                    R.string.profile -> EditUserProfile.callMe(this@VotingActivity)
+                    R.string.profile -> createEditUserProfile(this@VotingActivity)
                     R.string.sponsors -> startActivity(WelcomeActivity.getLaunchIntent(this@VotingActivity, true))
                     R.string.about -> AboutActivity.callMe(this@VotingActivity)
                 }
