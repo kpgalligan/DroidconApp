@@ -27,7 +27,7 @@
     <string name="buy_tickets">Buy Tickets (30% off)!</string>
 
     <string name="map">Map</string>
-    <string name="social">Social</string>
+    <string name="social">Social profiles</string>
     <string name="profile">My Profile</string>
     <string name="sponsors">Sponsors</string>
     <string name="about">About</string>
@@ -139,4 +139,5 @@
     <string name="notif_title">Session starting soon</string>
     <string name="notif_body">"The \"%s\" session is starting soon!"</string>
     <string name="content_toggle_alerts">Toggle Session Alerts</string>
+    <string name="hint_gPlus">Profile</string>
 </resources>
