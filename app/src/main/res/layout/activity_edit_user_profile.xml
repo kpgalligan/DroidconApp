@@ -3,8 +3,8 @@
               xmlns:tools="http://schemas.android.com/tools"
               android:layout_width="match_parent"
               android:layout_height="match_parent"
-              android:orientation="vertical"
               android:focusableInTouchMode="true"
+              android:orientation="vertical"
               tools:context="co.touchlab.droidconandroid.EditUserProfile">
 
     <android.support.design.widget.AppBarLayout
@@ -15,39 +15,39 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
-        <ImageView
-            android:id="@+id/edit_user_backdrop"
-            android:layout_width="match_parent"
-            android:layout_height="86dp"
-            android:scaleType="centerCrop"
-            android:adjustViewBounds="true"
-            android:layout_alignBottom="@+id/toolbar"
-            android:src="@drawable/superglyph_outline360x114dp"
-            android:paddingTop="@dimen/status_bar_height"/>
+            <ImageView
+                android:id="@+id/edit_user_backdrop"
+                android:layout_width="match_parent"
+                android:layout_height="86dp"
+                android:layout_alignBottom="@+id/toolbar"
+                android:adjustViewBounds="true"
+                android:paddingTop="@dimen/status_bar_height"
+                android:scaleType="centerCrop"
+                android:src="@drawable/superglyph_outline360x114dp"
+                tools:ignore="ContentDescription"/>
 
-        <android.support.v7.widget.Toolbar
-            android:id="@+id/toolbar"
-            android:paddingTop="@dimen/status_bar_height"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            style="@style/ActionBar">
-
-            <co.touchlab.droidconandroid.ui.SabotaToolbarTitle
-                android:id="@+id/edit_profile_toolbar_title"
-                style="@style/sabota_toolbar_title"
-                android:layout_width="wrap_content"
+            <android.support.v7.widget.Toolbar
+                android:id="@+id/toolbar"
+                style="@style/ActionBar"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="0dp"
-                android:layout_marginStart="0dp"
-                android:text="@string/title_activity_edit_user_profile"
-                android:textColor="@color/white"/>
+                android:paddingTop="@dimen/status_bar_height">
+
+                <co.touchlab.droidconandroid.ui.SabotaToolbarTitle
+                    android:id="@+id/edit_profile_toolbar_title"
+                    style="@style/sabota_toolbar_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="0dp"
+                    android:layout_marginStart="0dp"
+                    android:text="@string/title_activity_edit_user_profile"
+                    android:textColor="@color/white"/>
 
             </android.support.v7.widget.Toolbar>
 
         </RelativeLayout>
 
     </android.support.design.widget.AppBarLayout>
-
 
     <ScrollView
         android:layout_width="match_parent"
@@ -57,320 +57,209 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingEnd="@dimen/profile_right_padding"
+            android:paddingLeft="0dp"
             android:paddingRight="@dimen/profile_right_padding"
-            android:paddingTop="@dimen/padding_medium"
-            android:orientation="vertical">
-
+            android:paddingStart="0dp"
+            android:paddingTop="@dimen/padding_medium">
 
             <de.hdodenhof.circleimageview.CircleImageView
                 android:id="@+id/profile_image"
-                android:layout_width="@dimen/height_xlarge"
-                android:layout_height="@dimen/height_xlarge"
-                android:layout_alignTop="@+id/name"
-                android:layout_margin="@dimen/padding_medium"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_margin="12dp"
                 tools:src="@drawable/profile_placeholder"/>
-
-            <com.wnafee.vector.MorphButton
-                android:layout_width="@dimen/social_icon"
-                android:layout_height="@dimen/social_icon"
-                android:layout_marginLeft="@dimen/height_xlarge"
-                android:layout_marginTop="@dimen/height_xlarge"
-                app:vc_startDrawable="@drawable/ic_edit"
-                app:vc_endDrawable="@drawable/ic_edit"/>
 
             <EditText
                 android:id="@+id/name"
-                android:layout_width="fill_parent"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginLeft="6dp"
+                android:layout_marginStart="6dp"
+                android:layout_toEndOf="@+id/profile_image"
                 android:layout_toRightOf="@+id/profile_image"
-                android:inputType="textPersonName"
                 android:hint="@string/hint_name"
+                android:inputType="textPersonName"
+                android:textColor="@color/primary_dark_50"
                 android:textSize="@dimen/text_xxxlarge"/>
-
-            <EditText
-                android:id="@+id/email"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:layout_alignLeft="@+id/name"
-                android:layout_below="@+id/name"
-                android:inputType="textEmailAddress"
-                android:enabled="false"
-                android:focusable="false"
-                style="@style/SignInEditText"
-                android:hint="@string/hint_email"/>
 
             <TextView
                 android:id="@+id/contactInfo"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/profile_image"
-                android:layout_marginLeft="@dimen/profile_header"
-                android:layout_marginTop="@dimen/profile_header_vertical_margin"
-                android:layout_marginBottom="@dimen/profile_header_vertical_margin"
+                android:layout_below="@id/name"
                 android:text="@string/contact"
-                android:textColor="@color/primary"/>
+                style="@style/EditProfileHeader"/>
 
-
-            <FrameLayout android:layout_width="match_parent"
-                         android:layout_height="wrap_content"
-                         android:layout_alignBottom="@+id/phone"
-                         android:layout_alignTop="@+id/phone"
-                         android:layout_toLeftOf="@+id/phone">
-
-                <com.wnafee.vector.MorphButton
-                    android:layout_width="@dimen/social_icon"
-                    android:layout_height="@dimen/social_icon"
-                    android:layout_centerHorizontal="true"
-                    android:layout_gravity="center"
-                    app:vc_startDrawable="@drawable/ic_phone"
-                    app:vc_endDrawable="@drawable/ic_phone"/>
-
-            </FrameLayout>
+            <ImageView
+                android:id="@+id/phone_icon"
+                style="@style/EditProfileIcon"
+                android:layout_below="@id/contactInfo"
+                app:srcCompat="@drawable/ic_phone"
+                tools:ignore="ContentDescription"/>
 
             <EditText
                 android:id="@+id/phone"
-                android:inputType="phone"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:layout_alignLeft="@+id/name"
-                android:layout_below="@+id/contactInfo"
-                style="@style/SignInEditText"
-                android:hint="@string/hint_phone"/>
+                style="@style/EditProfileField"
+                android:layout_below="@id/contactInfo"
+                android:hint="@string/hint_phone"
+                android:layout_marginTop="0dp"
+                android:inputType="phone" />
 
+            <ImageView
+                android:id="@+id/email_icon"
+                style="@style/EditProfileIcon"
+                android:layout_below="@id/phone_icon"
+                app:srcCompat="@drawable/ic_email"
+                tools:ignore="ContentDescription"/>
 
-            <FrameLayout android:layout_width="match_parent"
-                         android:layout_height="wrap_content"
-                         android:layout_alignBottom="@+id/company"
-                         android:layout_alignTop="@+id/company"
-                         android:layout_toLeftOf="@+id/company">
+            <EditText
+                android:id="@+id/email"
+                style="@style/EditProfileField"
+                android:layout_below="@id/phone"
+                android:hint="@string/hint_email"
+                android:inputType="textEmailAddress"
+                android:enabled="false"
+                android:focusable="false"/>
 
-                <com.wnafee.vector.MorphButton
-                    android:layout_width="@dimen/social_icon"
-                    android:layout_height="@dimen/social_icon"
-                    android:layout_gravity="center"
-                    app:vc_startDrawable="@drawable/ic_work"
-                    app:vc_endDrawable="@drawable/ic_work"/>
-
-            </FrameLayout>
-
+            <ImageView
+                android:id="@+id/company_icon"
+                style="@style/EditProfileIcon"
+                android:layout_below="@id/email_icon"
+                app:srcCompat="@drawable/ic_work"
+                tools:ignore="ContentDescription"/>
 
             <EditText
                 android:id="@+id/company"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:layout_alignLeft="@+id/name"
-                android:layout_below="@+id/phone"
-                style="@style/SignInEditText"
+                style="@style/EditProfileField"
+                android:layout_below="@id/email"
                 android:hint="@string/hint_company"/>
 
-            <FrameLayout android:layout_width="match_parent"
-                         android:layout_height="wrap_content"
-                         android:layout_alignBottom="@+id/website"
-                         android:layout_alignTop="@+id/website"
-                         android:layout_toLeftOf="@+id/website">
-
-                <com.wnafee.vector.MorphButton
-                    android:layout_width="@dimen/social_icon"
-                    android:layout_height="@dimen/social_icon"
-                    android:layout_gravity="center"
-                    app:vc_startDrawable="@drawable/ic_website"
-                    app:vc_endDrawable="@drawable/ic_website"/>
-
-            </FrameLayout>
+            <ImageView
+                android:id="@+id/website_icon"
+                style="@style/EditProfileIcon"
+                android:layout_below="@id/company_icon"
+                app:srcCompat="@drawable/ic_website"
+                tools:ignore="ContentDescription"/>
 
             <EditText
                 android:id="@+id/website"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:layout_alignLeft="@+id/name"
-                android:layout_below="@+id/company"
-                style="@style/SignInEditText"
+                style="@style/EditProfileField"
+                android:layout_below="@id/company"
                 android:hint="@string/hint_website"/>
 
             <TextView
                 android:id="@+id/social"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
+                style="@style/EditProfileHeader"
                 android:layout_below="@id/website"
-                android:layout_marginLeft="@dimen/profile_header"
-                android:layout_marginTop="@dimen/profile_header_vertical_margin"
-                android:layout_marginBottom="@dimen/profile_header_vertical_margin"
-                android:text="@string/social"
-                android:textColor="@color/primary"/>
+                android:text="@string/social"/>
 
-            <FrameLayout android:layout_width="match_parent"
-                         android:layout_height="wrap_content"
-                         android:layout_alignBottom="@+id/facebook"
-                         android:layout_alignTop="@+id/facebook"
-                         android:layout_toLeftOf="@+id/facebook">
-
-                <com.wnafee.vector.MorphButton
-                    android:layout_width="@dimen/social_icon"
-                    android:layout_height="@dimen/social_icon"
-                    android:layout_gravity="center"
-                    app:vc_startDrawable="@drawable/ic_facebook"
-                    app:vc_endDrawable="@drawable/ic_facebook"/>
-
-            </FrameLayout>
+            <ImageView
+                android:id="@+id/facebook_icon"
+                style="@style/EditProfileIcon"
+                android:layout_below="@id/social"
+                app:srcCompat="@drawable/ic_facebook"
+                tools:ignore="ContentDescription"/>
 
             <EditText
                 android:id="@+id/facebook"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:layout_alignLeft="@+id/name"
-                android:layout_below="@+id/social"
-                style="@style/SignInEditText"
-                android:inputType="text"
+                style="@style/EditProfileField"
+                android:layout_marginTop="0dp"
+                android:layout_below="@id/social"
                 android:hint="@string/hint_facebook"/>
 
-            <FrameLayout android:layout_width="match_parent"
-                         android:layout_height="wrap_content"
-                         android:layout_alignBottom="@+id/twitter"
-                         android:layout_alignTop="@+id/twitter"
-                         android:layout_toLeftOf="@+id/twitter">
-
-                <com.wnafee.vector.MorphButton
-                    android:layout_width="@dimen/social_icon"
-                    android:layout_height="@dimen/social_icon"
-                    android:layout_gravity="center"
-                    app:vc_startDrawable="@drawable/ic_twitter"
-                    app:vc_endDrawable="@drawable/ic_twitter"/>
-
-            </FrameLayout>
-
+            <ImageView
+                android:id="@+id/twitter_icon"
+                style="@style/EditProfileIcon"
+                android:layout_below="@id/facebook_icon"
+                app:srcCompat="@drawable/ic_twitter"
+                tools:ignore="ContentDescription"/>
 
             <EditText
                 android:id="@+id/twitter"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:layout_alignLeft="@+id/name"
-                android:layout_below="@+id/facebook"
-                style="@style/SignInEditText"
-                android:inputType="text"
-                android:hint="@string/hint_twitter"/>
+                style="@style/EditProfileField"
+                android:layout_below="@id/facebook"
+                android:hint="@string/hint_facebook"/>
 
-            <FrameLayout android:layout_width="match_parent"
-              android:layout_height="wrap_content"
-              android:layout_alignBottom="@+id/gPlus"
-              android:layout_alignTop="@+id/gPlus"
-              android:layout_toLeftOf="@+id/gPlus">
-
-                <com.wnafee.vector.MorphButton
-                    android:layout_width="@dimen/social_icon"
-                    android:layout_height="@dimen/social_icon"
-                    android:layout_gravity="center"
-                    app:vc_startDrawable="@drawable/ic_gplus"
-                    app:vc_endDrawable="@drawable/ic_gplus"/>
-
-            </FrameLayout>
-
+            <ImageView
+                android:id="@+id/gPlus_icon"
+                style="@style/EditProfileIcon"
+                android:layout_below="@id/twitter_icon"
+                app:srcCompat="@drawable/ic_gplus"
+                tools:ignore="ContentDescription"/>
 
             <EditText
                 android:id="@+id/gPlus"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:layout_alignLeft="@+id/name"
-                android:layout_below="@+id/twitter"
-                style="@style/SignInEditText"
-                android:hint="Profile"/>
+                style="@style/EditProfileField"
+                android:layout_below="@id/twitter"
+                android:hint="@string/hint_gPlus"/>
 
-
-            <FrameLayout android:layout_width="match_parent"
-                         android:layout_height="wrap_content"
-                         android:layout_alignBottom="@+id/linkedIn"
-                         android:layout_alignTop="@+id/linkedIn"
-                         android:layout_toLeftOf="@+id/linkedIn">
-
-            <com.wnafee.vector.MorphButton
-                android:layout_width="@dimen/social_icon"
-                android:layout_height="@dimen/social_icon"
-                android:layout_gravity="center"
-                app:vc_startDrawable="@drawable/ic_linkedin"
-                app:vc_endDrawable="@drawable/ic_linkedin"/>
-
-            </FrameLayout>
+            <ImageView
+                android:id="@+id/linkedIn_icon"
+                style="@style/EditProfileIcon"
+                android:layout_below="@id/gPlus_icon"
+                app:srcCompat="@drawable/ic_linkedin"
+                tools:ignore="ContentDescription"/>
 
             <EditText
                 android:id="@+id/linkedIn"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:layout_alignLeft="@+id/name"
-                android:layout_below="@+id/gPlus"
-                style="@style/SignInEditText"
-                android:inputType="text"
+                style="@style/EditProfileField"
+                android:layout_below="@id/gPlus"
                 android:hint="@string/hint_linkedIn"/>
 
             <TextView
                 android:id="@+id/privacy"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
+                style="@style/EditProfileHeader"
                 android:layout_below="@id/linkedIn"
-                android:layout_marginLeft="@dimen/profile_header"
-                android:layout_marginTop="@dimen/profile_header_vertical_margin"
-                android:layout_marginBottom="@dimen/profile_header_vertical_margin"
-                android:text="@string/privacy"
-                android:textColor="@color/primary"/>
-
-            <TextView
-                android:id="@+id/public_email_label"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/profile_header"
-                android:layout_marginTop="@dimen/profile_header_vertical_margin"
-                android:layout_marginBottom="@dimen/profile_header_vertical_margin"
-                android:layout_below="@id/privacy"
-                android:textSize="@dimen/text_small"
-                android:text="@string/public_email"/>
+                android:text="@string/privacy"/>
 
             <CheckBox
                 android:id="@+id/hide_email"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignRight="@+id/name"
-                android:layout_alignTop="@id/public_email_label"
+                android:layout_alignEnd="@+id/name"
+                android:layout_below="@id/privacy"
                 android:checked="true"/>
 
             <TextView
-                android:id="@+id/bioLabel"
-                android:layout_width="fill_parent"
+                android:id="@+id/public_email_label"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_alignLeft="@id/name"
+                android:layout_alignStart="@id/name"
+                android:layout_below="@id/privacy"
+                android:layout_marginLeft="4dp"
+                android:layout_marginStart="4dp"
+                android:layout_marginTop="7dp"
+                android:text="@string/public_email"
+                android:textSize="14sp"/>
+
+            <TextView
+                android:id="@+id/bioLabel"
+                style="@style/EditProfileHeader"
                 android:layout_below="@id/hide_email"
-                android:layout_marginLeft="@dimen/profile_header"
-                android:layout_marginTop="@dimen/profile_header_vertical_margin"
-                android:layout_marginBottom="@dimen/profile_header_vertical_margin"
-                android:text="@string/hint_bio"
-                android:textColor="@color/primary"/>
+                android:text="@string/hint_bio"/>
 
-            <FrameLayout android:layout_width="match_parent"
-                         android:layout_height="wrap_content"
-                         android:layout_alignTop="@+id/bio"
-                         android:layout_toLeftOf="@id/bio">
-
-                <com.wnafee.vector.MorphButton
-                    android:layout_width="@dimen/social_icon"
-                    android:layout_height="@dimen/social_icon"
-                    android:layout_gravity="center"
-                    app:vc_startDrawable="@drawable/ic_bio"
-                    app:vc_endDrawable="@drawable/ic_bio"/>
-
-            </FrameLayout>
+            <ImageView
+                android:id="@+id/bio_icon"
+                style="@style/EditProfileIcon"
+                android:layout_below="@id/bioLabel"
+                app:srcCompat="@drawable/ic_bio"
+                tools:ignore="ContentDescription"/>
 
             <EditText
                 android:id="@+id/bio"
-                android:inputType="textMultiLine|textCapSentences|textAutoCorrect"
-                android:minLines="2"
-                android:maxLines="6"
-                android:gravity="top|left"
-                android:layout_height="wrap_content"
                 android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
                 android:layout_alignLeft="@id/name"
+                android:layout_alignStart="@id/name"
                 android:layout_below="@id/bioLabel"
-                android:scrollbars="vertical"
-                android:hint="@string/hint_bio"/>
-
+                android:gravity="top|start"
+                android:hint="@string/hint_bio"
+                android:inputType="textMultiLine|textCapSentences|textAutoCorrect"
+                android:maxLines="6"
+                android:minLines="2"
+                android:scrollbars="vertical"/>
         </RelativeLayout>
-
     </ScrollView>
-
-
 </LinearLayout>
