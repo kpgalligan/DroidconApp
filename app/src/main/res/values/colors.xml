@@ -11,7 +11,8 @@
     <color name="primary_dark_50">#80dda91d</color>
     <color name="accent">#dda91d</color>-->
 
-    <color name="text_gray">#666666</color>
+    <color name="bg_window">#eeeeee</color>
+    <color name="text_gray">#777777</color>
     <color name="droidcon_green">#9ccb3f</color>
     <color name="droidcon_pink">#e63e97</color>
     <color name="droidcon_blue">#46c8f2</color>
@@ -82,4 +83,10 @@
     <color name="tab_accent_light">@color/primary_dark_50</color>
 
     <color name="event_text_highlight">@color/black</color>
+
+    <color name="card_text_title">@color/primary_dark_50</color>
+    <color name="card_text_subtitle">@color/text_gray</color>
+    <color name="card_bg_block">#fafafa</color>
+    <color name="card_bg_event">@color/white</color>
+
 </resources>
