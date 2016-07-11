@@ -32,13 +32,13 @@ class EventDetailActivity : AppCompatActivity()
 
     override fun onCreate(savedInstanceState: Bundle?)
     {
-        super<AppCompatActivity>.onCreate(savedInstanceState)
+        super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_event_detail)
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean
     {
-        if (item.getItemId() == android.R.id.home)
+        if (item.itemId == android.R.id.home)
             finish()
 
         return super.onOptionsItemSelected(item)

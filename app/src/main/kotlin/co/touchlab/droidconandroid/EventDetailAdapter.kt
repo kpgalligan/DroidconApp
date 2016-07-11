@@ -2,20 +2,18 @@ package co.touchlab.droidconandroid
 
 import android.app.Activity
 import android.content.Context
-import android.graphics.PorterDuff
-import android.graphics.PorterDuffColorFilter
 import android.support.v7.widget.RecyclerView
 import android.text.Html
 import android.text.TextUtils
-import android.util.TypedValue
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
-import android.widget.TextView
 import co.touchlab.droidconandroid.data.UserAccount
 import com.squareup.picasso.Picasso
-import com.wnafee.vector.compat.ResourcesCompat
+import kotlinx.android.synthetic.main.item_event_header.view.*
+import kotlinx.android.synthetic.main.item_event_info.view.*
+import kotlinx.android.synthetic.main.item_event_text.view.*
+import kotlinx.android.synthetic.main.item_user_summary.view.*
 import org.apache.commons.lang3.StringUtils
 import java.util.*
 
@@ -29,36 +27,48 @@ class EventDetailAdapter(val context: Context, val trackColor: Int) : RecyclerVi
     private var data = ArrayList<Detail>()
 
     //=================== Adapter types ===================
-    public val TYPE_HEADER: Int = 0
-    public val TYPE_BODY: Int = 1
-    public val TYPE_DIVIDER: Int = 3
-    public val TYPE_SPACE: Int = 4
-    public val TYPE_SPEAKER: Int = 5
+    val TYPE_HEADER: Int = 0
+    val TYPE_BODY: Int = 1
+    val TYPE_INFO: Int = 3
+    val TYPE_SPACE: Int = 4
+    val TYPE_SPEAKER: Int = 5
+    val TYPE_STREAM: Int = 6
+    val TYPE_FEEDBACK: Int = 7
 
     //=================== Public helper functions ===================
-    public fun addHeader(venue: String, icon: Int)
+    fun addHeader(title: String, venue: String)
     {
-        data.add(TextDetail(TYPE_HEADER, venue, icon))
+        data.add(HeaderDetail(TYPE_HEADER, title, venue))
     }
 
-    public fun addBody(description: String)
+    fun addStream(link: String)
+    {
+        data.add(TextDetail(TYPE_STREAM, link, 0))
+    }
+
+    fun addBody(description: String)
     {
         data.add(TextDetail(TYPE_BODY, description, 0))
     }
 
-    public fun addDivider()
+    fun addInfo(description: String)
     {
-        data.add(Detail(TYPE_DIVIDER))
+        data.add(TextDetail(TYPE_INFO, description, 0))
     }
 
-    public fun addSpace(size: Int)
+    fun addSpace(size: Int)
     {
         data.add(SpaceDetail(TYPE_SPACE, size))
     }
 
-    public fun addSpeaker(speaker: UserAccount)
+    fun addSpeaker(speaker: UserAccount)
     {
-        data.add(SpeakerDetail(TYPE_SPEAKER, speaker.avatarImageUrl(), speaker.name, speaker.profile, speaker.userCode))
+        data.add(SpeakerDetail(TYPE_SPEAKER, speaker.avatarImageUrl(), speaker.name, speaker.company, speaker.profile, speaker.userCode))
+    }
+
+    fun addFeedback(link: String)
+    {
+        data.add(TextDetail(TYPE_FEEDBACK, link, 0))
     }
 
     //=================== Adapter Overrides ===================
@@ -67,26 +77,41 @@ class EventDetailAdapter(val context: Context, val trackColor: Int) : RecyclerVi
         var holder: RecyclerView.ViewHolder? = null
         when (viewType)
         {
-            TYPE_HEADER, TYPE_BODY ->
+            TYPE_HEADER ->
             {
-                var view = LayoutInflater.from(context).inflate(R.layout.item_event_text, parent, false)
+                val view = LayoutInflater.from(context).inflate(R.layout.item_event_header, parent, false)
+                holder = HeaderVH(view)
+            }
+            TYPE_STREAM ->
+            {
+                val view = LayoutInflater.from(context).inflate(R.layout.item_event_stream, parent, false)
+                holder = StreamVH(view)
+            }
+            TYPE_BODY ->
+            {
+                val view = LayoutInflater.from(context).inflate(R.layout.item_event_text, parent, false)
                 holder = TextVH(view)
             }
-            TYPE_DIVIDER ->
+            TYPE_INFO ->
             {
-                var view = LayoutInflater.from(context).inflate(R.layout.item_drawer_divider, parent, false)
-                holder = DividerVH(view)
+                val view = LayoutInflater.from(context).inflate(R.layout.item_event_info, parent, false)
+                holder = InfoVH(view)
             }
             TYPE_SPEAKER ->
             {
-                var view = LayoutInflater.from(context).inflate(R.layout.list_user_summary, parent, false)
+                val view = LayoutInflater.from(context).inflate(R.layout.item_user_summary, parent, false)
                 holder = SpeakerVH(view)
             }
             TYPE_SPACE ->
             {
-                var view = View(context)
+                val view = View(context)
                 parent!!.addView(view)
                 holder = object: RecyclerView.ViewHolder(view){}
+            }
+            TYPE_FEEDBACK ->
+            {
+                val view = LayoutInflater.from(context).inflate(R.layout.item_event_feedback, parent, false)
+                holder = FeedbackVH(view)
             }
         }
         return holder
@@ -99,41 +124,48 @@ class EventDetailAdapter(val context: Context, val trackColor: Int) : RecyclerVi
 
     override  fun getItemViewType (position: Int): Int
     {
-        return data.get(position).getItemType();
+        return data[position].getItemType()
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder?, position: Int)
     {
-        when (holder!!.getItemViewType())
+        when (holder!!.itemViewType)
         {
             TYPE_HEADER ->
             {
-                var headerVH = holder as TextVH
-                var iconRes = (data.get(position) as TextDetail).icon
-                var drawable = ResourcesCompat.getDrawable(context, iconRes)
-                drawable.setColorFilter(PorterDuffColorFilter(trackColor, PorterDuff.Mode.SRC_IN))
-                headerVH.image!!.setImageDrawable(drawable)
+                val headerVH = holder as HeaderVH
+                headerVH.itemView.title.text = (data[position] as HeaderDetail).title
+                headerVH.itemView.subtitle.text = (data[position] as HeaderDetail).subtitle
+            }
 
-                headerVH.text!!.setText((data.get(position) as TextDetail).text)
-                headerVH.text!!.setTextColor(trackColor)
-                headerVH.text!!.setTextSize(TypedValue.COMPLEX_UNIT_SP, 18f)
+            TYPE_STREAM ->
+            {
+                val streamVH = holder as StreamVH
+                // TODO add link to live stream
+            }
+
+            TYPE_INFO ->
+            {
+                val infoVH = holder as InfoVH
+
+                val descriptionSpanned = Html.fromHtml(StringUtils.trimToEmpty((data[position] as TextDetail).text)!!)
+                infoVH.itemView.info.text = descriptionSpanned
             }
 
             TYPE_BODY ->
             {
-                var bodyVH = holder as TextVH
-                bodyVH.image!!.setVisibility(View.INVISIBLE)
+                val bodyVH = holder as TextVH
 
-                val descriptionSpanned = Html.fromHtml(StringUtils.trimToEmpty((data.get(position) as TextDetail).text)!!)
-                bodyVH.text!!.setText(descriptionSpanned)
+                val descriptionSpanned = Html.fromHtml(StringUtils.trimToEmpty((data[position] as TextDetail).text)!!)
+                bodyVH.itemView.body.text = descriptionSpanned
             }
 
             TYPE_SPEAKER ->
             {
-                var speakerVH = holder as SpeakerVH
-                val avatarView = speakerVH.image
-                val nameView = speakerVH.name
-                val user = data.get(position) as SpeakerDetail
+                val speakerVH = holder as SpeakerVH
+                val avatarView = speakerVH.itemView.profile_image
+                val nameView = speakerVH.itemView.name
+                val user = data[position] as SpeakerDetail
 
                 if (!TextUtils.isEmpty(user.avatar))
                 {
@@ -143,24 +175,29 @@ class EventDetailAdapter(val context: Context, val trackColor: Int) : RecyclerVi
                             .into(avatarView)
                 }
 
-                val formatString = context.getResources().getString(R.string.event_speaker_name);
-                nameView!!.setText(formatString.format(user.name))
+                val formatString = context.resources.getString(R.string.event_speaker_name)
+                nameView!!.text = formatString.format(user.name, user.company)
                 nameView.setTextColor(trackColor)
 
-                speakerVH.itemView.setOnClickListener(View.OnClickListener
-                {
+                speakerVH.itemView.setOnClickListener({
                     UserDetailActivity.callMe(context as Activity, user.userCode)
                 })
 
                 val bioSpanned = Html.fromHtml(StringUtils.trimToEmpty(user.bio)!!)
-                speakerVH.bio!!.setText(bioSpanned)
+                speakerVH.itemView.bio.text = bioSpanned
             }
 
             TYPE_SPACE ->
             {
-                var p = holder.itemView.getLayoutParams()
-                p.height = (data.get(position) as SpaceDetail).size
-                holder.itemView.setLayoutParams(p)
+                val p = holder.itemView.layoutParams
+                p.height = (data[position] as SpaceDetail).size
+                holder.itemView.layoutParams = p
+            }
+
+            TYPE_FEEDBACK ->
+            {
+                val feedbackVH = holder as FeedbackVH
+                // TODO add link to event feedback
             }
         }
     }
@@ -168,44 +205,31 @@ class EventDetailAdapter(val context: Context, val trackColor: Int) : RecyclerVi
     //=================== Adapter type models ===================
     open inner class Detail(val type: Int)
     {
-        public fun getItemType(): Int
+        fun getItemType(): Int
         {
-            return type;
+            return type
         }
     }
 
+    inner class HeaderDetail(type: Int, val title: String, val subtitle: String): Detail(type)
+
     inner class TextDetail(type: Int, val text: String, val icon: Int): Detail(type)
 
-    inner class SpeakerDetail(type: Int, val avatar: String?, val name: String, val bio: String?, val userCode: String): Detail(type)
+    inner class SpeakerDetail(type: Int, val avatar: String?, val name: String, val company: String, val bio: String?, val userCode: String): Detail(type)
 
     inner class SpaceDetail(type: Int, val size: Int): Detail(type)
 
     //=================== Type ViewHolders ===================
-    inner class TextVH(val item: View) : RecyclerView.ViewHolder(item)
-    {
-        public var image: ImageView? = null
-        public var text: TextView? = null
 
-        init
-        {
-            image = item.findViewById(R.id.image) as ImageView
-            text = item.findViewById(R.id.text) as TextView
-        }
-    }
+    inner class HeaderVH(val item: View) : RecyclerView.ViewHolder(item) {}
 
-    inner class DividerVH(val item: View) : RecyclerView.ViewHolder(item)
+    inner class StreamVH(val item: View) : RecyclerView.ViewHolder(item) {}
 
-    inner class SpeakerVH(val item: View): RecyclerView.ViewHolder(item)
-    {
-        public var image: ImageView? = null
-        public var name: TextView? = null
-        public var bio: TextView? = null
+    inner class InfoVH(val item: View) : RecyclerView.ViewHolder(item) {}
 
-        init
-        {
-            image = item.findViewById(R.id.profile_image) as ImageView
-            name = item.findViewById(R.id.name) as TextView
-            bio = item.findViewById(R.id.bio) as TextView
-        }
-    }
+    inner class TextVH(val item: View) : RecyclerView.ViewHolder(item) {}
+
+    inner class SpeakerVH(val item: View): RecyclerView.ViewHolder(item) {}
+
+    inner class FeedbackVH(val item: View): RecyclerView.ViewHolder(item) {}
 }
