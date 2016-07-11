@@ -1,5 +1,6 @@
 package co.touchlab.droidconandroid.ui
 
+import android.support.v4.content.ContextCompat
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
@@ -11,7 +12,6 @@ import co.touchlab.droidconandroid.data.Event
 import co.touchlab.droidconandroid.data.Track
 import co.touchlab.droidconandroid.presenter.ConferenceDataPresenter
 import co.touchlab.droidconandroid.presenter.ScheduleBlockHour
-import com.wnafee.vector.compat.ResourcesCompat
 import kotlinx.android.synthetic.main.item_event.view.*
 import kotlinx.android.synthetic.main.item_notification.view.*
 import java.util.*
@@ -65,7 +65,7 @@ class EventAdapter(private val allEvents: Boolean
         if (holder is ScheduleBlockViewHolder) {
             val scheduleBlockHour = filteredData[adjustedPosition]
 
-            ConferenceDataPresenter.styleEventRow(scheduleBlockHour, holder, allEvents)
+            ConferenceDataPresenter.styleEventRow(scheduleBlockHour, dataSet, holder, allEvents)
 
             if (!scheduleBlockHour.scheduleBlock.isBlock) {
                 holder.setOnClickListener { eventClickListener.onEventClick(scheduleBlockHour.scheduleBlock as Event) }
@@ -151,16 +151,24 @@ class EventAdapter(private val allEvents: Boolean
             itemView.location_time.text = s
         }
 
-        override fun setRsvpVisible(b: Boolean) {
-            itemView.rsvp.visibility = if (b) View.VISIBLE else View.GONE
+        override fun setRsvpVisible(rsvp: Boolean, past: Boolean) {
+            val rsvpColor = if (past) ContextCompat.getColor(itemView.context, R.color.card_text_subtitle) else ContextCompat.getColor(itemView.context, R.color.accent)
+            itemView.rsvp.setBackgroundColor(rsvpColor)
+            itemView.rsvp.visibility = if (rsvp) View.VISIBLE else View.INVISIBLE
         }
 
-        override fun setRsvpChecked() {
-            itemView.rsvp.setImageDrawable(ResourcesCompat.getDrawable(itemView.context, R.drawable.ic_check_green))
+        override fun setRsvpConflict(b: Boolean) {
+            itemView.conflict_text.visibility = if (b) View.VISIBLE else View.INVISIBLE
+            if (b) itemView.rsvp.setBackgroundColor(ContextCompat.getColor(itemView.context, R.color.red))
         }
 
-        override fun setRsvpConflict() {
-            itemView.rsvp.setImageDrawable(ResourcesCompat.getDrawable(itemView.context, R.drawable.ic_check_red))
+        override fun setLiveNowVisible(b : Boolean) {
+            itemView.live.visibility = if (b) View.VISIBLE else View.INVISIBLE
+        }
+
+        override fun setTimeGap(b : Boolean) {
+            val topPadding =  if (b) R.dimen.padding_small else R.dimen.padding_xmicro
+            itemView.setPadding(itemView.paddingLeft, itemView.context.resources.getDimensionPixelOffset(topPadding), itemView.paddingRight, itemView.paddingBottom)
         }
 
         fun setOnClickListener(listener: () -> Unit) {

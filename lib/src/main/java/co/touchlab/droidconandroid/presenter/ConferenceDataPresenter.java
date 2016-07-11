@@ -1,8 +1,11 @@
 package co.touchlab.droidconandroid.presenter;
 import android.content.Context;
+import android.text.TextUtils;
 import android.util.Log;
 
 import com.google.j2objc.annotations.AutoreleasePool;
+
+import java.util.List;
 
 import co.touchlab.droidconandroid.data.Block;
 import co.touchlab.droidconandroid.data.Event;
@@ -51,139 +54,60 @@ public class ConferenceDataPresenter extends AbstractEventBusPresenter
         refreshConferenceData();
     }
 
-    public static void styleEventRow(ScheduleBlockHour scheduleBlockHour, EventRow row, boolean allEvents)
+    public static void styleEventRow(ScheduleBlockHour scheduleBlockHour, List dataSet, EventRow row, boolean allEvents)
     {
-//        val context = holder!!.itemView.getContext()
-//        val resources = context.getResources()
-//        holder as ScheduleBlockViewHolder
-//        val scheduleBlockHour = filteredData.get(position)
+        boolean isFirstInBlock = !scheduleBlockHour.hourStringDisplay.isEmpty();
+        row.setTimeGap(isFirstInBlock);
 
-        boolean typ = scheduleBlockHour.getScheduleBlock() instanceof Event;
-
-        Log.w("asdf", "qwert");
         if(scheduleBlockHour.getScheduleBlock().isBlock())
         {
             Block block = (Block)scheduleBlockHour.scheduleBlock;
-
             row.setTitleText(block.name);
-            row.setTimeText(scheduleBlockHour.hourStringDisplay);
+            row.setTimeText(scheduleBlockHour.hourStringDisplay.toLowerCase());
             row.setDetailText("");
-            row.setRsvpVisible(false);
-
-//            holder.title.setText(block.name)
-//            holder.time.setText(scheduleBlockHour.hourStringDisplay)
-//            holder.locationTime.setText(getDetailedTime(block))
-//            holder.rsvp.setVisibility(View.GONE)
+            row.setLiveNowVisible(false);
+            row.setRsvpVisible(false, false);
+            row.setRsvpConflict(false);
         }
         else
         {
             Event event = (Event)scheduleBlockHour.scheduleBlock;
-
+            row.setTimeText(scheduleBlockHour.hourStringDisplay.toLowerCase());
             row.setTitleText(event.name);
-
-            row.setTimeText(scheduleBlockHour.hourStringDisplay);
-
-//            holder.card.setOnClickListener{
-//            eventClickListener.onEventClick(event)
-//        }
-
-            if(event.isRsvped())
-            {
-                row.setRsvpVisible(true);
-                if(event.isNow())
-                    row.setRsvpChecked();
-                //TODO: Check conflict
-//                else if(!event.isPast() && EventDetailLoadTask.hasConflict(event, dataSet))
-//                    holder.rsvp.setImageDrawable(ResourcesCompat.getDrawable(context, R.drawable.ic_check_red))
-                else if(allEvents)
-                    row.setRsvpChecked();
-                else
-                    row.setRsvpVisible(false);
-            } else {
-                row.setRsvpVisible(false);
-            }
-//            if (!TextUtils.isEmpty(event.rsvpUuid)) {
-//                holder.rsvp.setVisibility(View.VISIBLE)
-//                if(event.isNow())
-//                    holder.rsvp.setImageDrawable(ResourcesCompat.getDrawable(context, R.drawable.ic_play))
-//                else if(!event.isPast() && EventDetailLoadTask.hasConflict(event, dataSet))
-//                    holder.rsvp.setImageDrawable(ResourcesCompat.getDrawable(context, R.drawable.ic_check_red))
-//                else if(allEvents)
-//                    holder.rsvp.setImageDrawable(ResourcesCompat.getDrawable(context, R.drawable.ic_check_green))
-//                else
-//                    row.setRsvpVisible(false);
-//            } else {
-//                row.setRsvpVisible(false);
-//            }
-
-            row.setDetailText(event.allSpeakersString());
-
-//            val track = Track.findByServerName(event.category)
-//            if(track != null && !event.isPast()) {
-//
-//                holder.track.setBackgroundColor(resources.getColor(context.resources.getIdentifier(track.getTextColorRes(), "color", context.packageName)))
-//            }
-//            else
-//            {
-//                holder.track.setBackgroundColor(resources.getColor(android.R.color.transparent))
-//            }
+            row.setDetailText(event.getVenue().name);
+            row.setLiveNowVisible(event.isNow());
+            row.setRsvpVisible(allEvents && event.isRsvped(), event.isPast());
+            row.setRsvpConflict(allEvents && hasConflict(event, dataSet));
         }
-        /*if(getItemViewType(position) == VIEW_TYPE_EVENT || getItemViewType(position) == VIEW_TYPE_PAST_EVENT){
+    }
 
-            val event = scheduleBlockHour.scheduleBlock as Event
-
-            holder.title.setText(event.name)
-
-            holder.time.setText(scheduleBlockHour.hourStringDisplay)
-
-            holder.card.setOnClickListener{
-                eventClickListener.onEventClick(event)
-            }
-
-            if (!TextUtils.isEmpty(event.rsvpUuid)) {
-                holder.rsvp.setVisibility(View.VISIBLE)
-                if(event.isNow())
-                    holder.rsvp.setImageDrawable(ResourcesCompat.getDrawable(context, R.drawable.ic_play))
-                else if(!event.isPast() && EventDetailLoadTask.hasConflict(event, dataSet))
-                    holder.rsvp.setImageDrawable(ResourcesCompat.getDrawable(context, R.drawable.ic_check_red))
-                else if(allEvents)
-                    holder.rsvp.setImageDrawable(ResourcesCompat.getDrawable(context, R.drawable.ic_check_green))
-                else
-                    holder.rsvp.setVisibility(View.GONE)
-            } else {
-                holder.rsvp.setVisibility(View.GONE)
-            }
-
-            holder.locationTime.setText("${event.allSpeakersString()}")
-
-            val track = Track.findByServerName(event.category)
-            if(track != null && !event.isPast()) {
-
-                holder.track.setBackgroundColor(resources.getColor(context.resources.getIdentifier(track.getTextColorRes(), "color", context.packageName)))
-            }
-            else
+    public static boolean hasConflict(Event event, List dataSet)
+    {
+        if (event.isRsvped() && !event.isPast())
+        {
+            for(Object o : dataSet)
             {
-                holder.track.setBackgroundColor(resources.getColor(android.R.color.transparent))
+                if(o instanceof ScheduleBlockHour && ((ScheduleBlockHour) o).scheduleBlock instanceof Event)
+                {
+                    Event e = (Event) ((ScheduleBlockHour) o).scheduleBlock;
+                    if(event.id != e.id && ! TextUtils.isEmpty(e.rsvpUuid) &&
+                            event.startDateLong < e.endDateLong &&
+                            event.endDateLong > e.startDateLong) return true;
+                }
             }
-        } else if (getItemViewType(position) == VIEW_TYPE_BLOCK) {
-            val block = scheduleBlockHour.scheduleBlock as Block
+        }
 
-            holder.title.setText(block.name)
-            holder.time.setText(scheduleBlockHour.hourStringDisplay)
-            holder.locationTime.setText(getDetailedTime(block))
-            holder.rsvp.setVisibility(View.GONE)
-
-        }*/
+        return false;
     }
 
     public interface EventRow
     {
+        void setTimeGap(boolean b);
         void setTitleText(String s);
         void setTimeText(String s);
         void setDetailText(String s);
-        void setRsvpVisible(boolean b);
-        void setRsvpChecked();
-        void setRsvpConflict();
-
+        void setLiveNowVisible(boolean b);
+        void setRsvpVisible(boolean rsvp, boolean past);
+        void setRsvpConflict(boolean b);
     }
 }
