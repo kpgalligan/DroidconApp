@@ -13,9 +13,14 @@
 
     <color name="bg_window">#eeeeee</color>
     <color name="text_gray">#777777</color>
-    <color name="droidcon_green">#9ccb3f</color>
+    <!-- TODO change these if we want track colors -->
+    <color name="droidcon_green">@color/primary_dark</color>
+    <color name="droidcon_pink">@color/primary_dark</color>
+    <color name="droidcon_blue">@color/primary_dark</color>
+    <!--    <color name="droidcon_green">#9ccb3f</color>
     <color name="droidcon_pink">#e63e97</color>
-    <color name="droidcon_blue">#46c8f2</color>
+    <color name="droidcon_blue">#46c8f2</color>-->
+
     <color name="orange">#ef6541</color>
     <color name="red">#f1582c</color>
 

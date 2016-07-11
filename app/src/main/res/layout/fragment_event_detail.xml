@@ -16,8 +16,8 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             app:layout_scrollFlags="scroll|exitUntilCollapsed"
-            app:contentScrim="@color/droidcon_pink"
-            app:statusBarScrim="@color/droidcon_pink"
+            app:contentScrim="@color/glyph_background_dark"
+            app:statusBarScrim="@android:color/transparent"
             android:fitsSystemWindows="true">
 
             <ImageView
@@ -36,6 +36,7 @@
                 android:textColor="@color/white"
                 android:textSize="@dimen/text_xxlarge"
                 android:paddingLeft="@dimen/activity_horizontal_margin"
+                android:paddingStart="@dimen/activity_horizontal_margin"
                 android:paddingBottom="@dimen/padding_xlarge"/>
 
             <android.support.v7.widget.Toolbar
@@ -50,22 +51,25 @@
 
     </android.support.design.widget.AppBarLayout>
 
-    <android.support.design.widget.FloatingActionButton
-        android:id="@+id/register"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="@dimen/event_fab_margin"
-        app:layout_anchorGravity="bottom"
-        app:fabSize="mini"
-        app:borderWidth="0dp"
-        android:visibility="gone"/>
-
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recycler"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:background="@color/white"
         android:paddingRight="@dimen/activity_horizontal_margin"
+        android:paddingEnd="@dimen/activity_horizontal_margin"
         android:paddingBottom="@dimen/activity_vertical_margin"
         app:layout_behavior="@string/appbar_scrolling_view_behavior"/>
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/fab"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/event_fab_margin"
+        android:layout_marginStart="@dimen/event_fab_margin"
+        app:layout_anchorGravity="bottom"
+        app:fabSize="mini"
+        app:borderWidth="0dp"
+        android:visibility="gone"/>
 
 </android.support.design.widget.CoordinatorLayout>
