@@ -21,19 +21,18 @@ import java.util.*
  * Created by samuelhill on 8/7/15.
  */
 
+private const val TYPE_HEADER: Int = 0
+private const val TYPE_BODY: Int = 1
+private const val TYPE_INFO: Int = 3
+private const val TYPE_SPACE: Int = 4
+private const val TYPE_SPEAKER: Int = 5
+private const val TYPE_STREAM: Int = 6
+private const val TYPE_FEEDBACK: Int = 7
+
 class EventDetailAdapter(val context: Context, val trackColor: Int) : RecyclerView.Adapter<RecyclerView.ViewHolder>()
 {
     //dataset
     private var data = ArrayList<Detail>()
-
-    //=================== Adapter types ===================
-    val TYPE_HEADER: Int = 0
-    val TYPE_BODY: Int = 1
-    val TYPE_INFO: Int = 3
-    val TYPE_SPACE: Int = 4
-    val TYPE_SPEAKER: Int = 5
-    val TYPE_STREAM: Int = 6
-    val TYPE_FEEDBACK: Int = 7
 
     //=================== Public helper functions ===================
     fun addHeader(title: String, venue: String)
