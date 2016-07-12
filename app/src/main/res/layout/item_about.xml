@@ -8,18 +8,21 @@
 
     <ImageView
         android:id="@+id/icon"
-        android:src="@drawable/ic_info"
+        android:src="@drawable/vic_info_outline_black_24dp"
+        android:contentDescription="@string/cd_about_section"
         style="@style/about_icon"/>
     
     <TextView
         android:id="@+id/header"
         android:layout_toRightOf="@id/icon"
+        android:layout_toEndOf="@id/icon"
         android:text="@string/about_app_header"
         style="@style/about_header" />
 
     <TextView
         android:id="@+id/body"
         android:layout_toRightOf="@id/icon"
+        android:layout_toEndOf="@id/icon"
         android:layout_below="@+id/header"
         android:text="@string/about_app"
         android:autoLink="web"
@@ -29,8 +32,10 @@
     <ImageView
         android:id="@+id/logo"
         android:layout_toRightOf="@id/icon"
+        android:layout_toEndOf="@id/icon"
         android:layout_below="@+id/body"
         android:visibility="gone"
+        android:contentDescription="@string/cd_sponsor_logos"
         style="@style/about_logo"
     />
 

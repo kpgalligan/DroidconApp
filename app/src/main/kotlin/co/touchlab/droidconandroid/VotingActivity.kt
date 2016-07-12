@@ -101,11 +101,11 @@ public class VotingActivity : AppCompatActivity() {
 
         var drawerItems = ArrayList<Any>()
         drawerItems.add("header_placeholder")
-        drawerItems.add(NavigationItem(R.string.vote, R.drawable.ic_myschedule))
+        drawerItems.add(NavigationItem(R.string.vote, R.drawable.vic_event_black_24dp))
         drawerItems.add("divider_placeholder")
-        drawerItems.add(NavigationItem(R.string.profile, R.drawable.ic_settings))
+        drawerItems.add(NavigationItem(R.string.profile, R.drawable.vic_account_circle_black_24dp))
         drawerItems.add(NavigationItem(R.string.sponsors, R.drawable.ic_website))
-        drawerItems.add(NavigationItem(R.string.about, R.drawable.ic_info))
+        drawerItems.add(NavigationItem(R.string.about, R.drawable.vic_info_outline_black_24dp))
         return drawerItems;
     }
 }
