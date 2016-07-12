@@ -7,7 +7,7 @@
     <dimen name="status_bar_height">0dip</dimen>
     <dimen name="profile_header">41dp</dimen>
     <dimen name="profile_header_vertical_margin">17dp</dimen>
-    <dimen name="profile_right_padding">39dp</dimen>
+    <dimen name="profile_right_padding">78dp</dimen>
 
     <dimen name="padding_xmicro">.5dp</dimen>
     <dimen name="padding_micro">2dp</dimen>
@@ -41,7 +41,7 @@
     <dimen name="text_xxxxlarge">36sp</dimen>
     <dimen name="text_huge">48sp</dimen>
     <dimen name="text_xhuge">64sp</dimen>
-    <dimen name="social_icon">30dp</dimen>
+    <dimen name="social_icon">24dp</dimen>
     <dimen name="live_icon_width">12dp</dimen>
     <dimen name="live_icon_height">12dp</dimen>
 

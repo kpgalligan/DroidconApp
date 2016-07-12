@@ -27,7 +27,7 @@
     <string name="buy_tickets">Buy Tickets (30% off)!</string>
 
     <string name="map">Map</string>
-    <string name="social">Social</string>
+    <string name="social">Social profiles</string>
     <string name="profile">My Profile</string>
     <string name="sponsors">Sponsors</string>
     <string name="about">About</string>
@@ -129,6 +129,8 @@
     <string name="no_ticket">We couldn’t find your ticket info. Touch below to get a ticket or send yourself a link.\n\nIf you purchased a ticket using a different email address, authorize with Eventbrite to get started!</string>
     <string name="eb_sign_in">Sign in to Eventbrite</string>
     <string name="retry">Retry</string>
+    <string name="save_profile_toast">Photo updating. May take a bit…</string>
+    <string name="sd_profile_toast">SD card not mounted</string>
 
     <string name="notif_card_title">Session notification</string>
     <string name="notif_card_body">Turn on notifications for sessions in your schedule?</string>
@@ -139,4 +141,5 @@
     <string name="content_toggle_alerts">Toggle Session Alerts</string>
     <string name="conflict">conflict</string>
     <string name="cd_live_now">live now</string>
+    <string name="hint_gPlus">Profile</string>
 </resources>

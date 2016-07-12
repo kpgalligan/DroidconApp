@@ -130,5 +130,31 @@
         <item name="android:layout_marginLeft">@dimen/toolbar_title_margin_left</item>
         <item name="android:singleLine">true</item>
     </style>
+    <style name="EditProfileHeader">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_alignLeft">@id/name</item>
+        <item name="android:layout_marginBottom">16dp</item>
+        <item name="android:layout_marginLeft">4dp</item>
+        <item name="android:layout_marginTop">24dp</item>
+        <item name="android:fontFamily">sans-serif-medium</item>
+        <item name="android:textColor">@color/black</item>
+        <item name="android:textSize">14sp</item>
+    </style>
+    <style name="EditProfileField">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_alignLeft">@+id/name</item>
+        <item name="android:textColor">@color/primary_dark_50</item>
+        <item name="android:layout_marginTop">4dp</item>
+    </style>
+    <style name="EditProfileIcon">
+        <item name="android:layout_width">@dimen/social_icon</item>
+        <item name="android:layout_height">@dimen/social_icon</item>
+        <item name="android:layout_alignLeft">@id/profile_image</item>
+        <item name="android:layout_alignRight">@id/profile_image</item>
+        <item name="android:layout_marginBottom">12dp</item>
+        <item name="android:layout_marginTop">12dp</item>
+    </style>
 
 </resources>
