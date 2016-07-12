@@ -40,6 +40,8 @@
     <color name="black_5">#0D000000</color>
 
     <color name="divider">#f5f6f6</color>
+    <color name="nav_highlight">@color/primary_dark</color>
+    <color name="nav_icon_highlight">@color/accent</color>
 
     <color name="accent_pink">#ec3395</color>
     <color name="social_icons">#989898</color>
