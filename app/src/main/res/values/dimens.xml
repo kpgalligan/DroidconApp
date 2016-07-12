@@ -9,6 +9,7 @@
     <dimen name="profile_header_vertical_margin">17dp</dimen>
     <dimen name="profile_right_padding">78dp</dimen>
 
+    <dimen name="padding_xmicro">.5dp</dimen>
     <dimen name="padding_micro">2dp</dimen>
     <dimen name="padding_tiny">4dp</dimen>
     <dimen name="padding_small">8dp</dimen>
@@ -41,8 +42,8 @@
     <dimen name="text_huge">48sp</dimen>
     <dimen name="text_xhuge">64sp</dimen>
     <dimen name="social_icon">24dp</dimen>
-    <dimen name="rsvp_width">19dp</dimen>
-    <dimen name="rsvp_height">16dp</dimen>
+    <dimen name="live_icon_width">12dp</dimen>
+    <dimen name="live_icon_height">12dp</dimen>
 
     <dimen name="event_top_spacing">51dp</dimen>
     <dimen name="event_speaker_image">40dp</dimen>
