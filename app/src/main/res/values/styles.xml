@@ -145,6 +145,7 @@
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:layout_alignLeft">@+id/name</item>
+        <item name="android:textColor">@color/primary_dark_50</item>
         <item name="android:layout_marginTop">4dp</item>
     </style>
     <style name="EditProfileIcon">
