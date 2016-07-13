@@ -5,7 +5,7 @@
               android:layout_height="match_parent"
               android:focusableInTouchMode="true"
               android:orientation="vertical"
-              tools:context="co.touchlab.droidconandroid.EditUserProfile">
+              tools:context="co.touchlab.droidconandroid.EditUserProfileActivity">
 
     <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"
@@ -94,7 +94,8 @@
                 android:id="@+id/phone_icon"
                 style="@style/EditProfileIcon"
                 android:layout_below="@id/contactInfo"
-                app:srcCompat="@drawable/ic_phone"
+                android:tint="@color/primary_dark_50"
+                app:srcCompat="@drawable/vic_phone_black_24dp"
                 tools:ignore="ContentDescription"/>
 
             <EditText
@@ -109,7 +110,8 @@
                 android:id="@+id/email_icon"
                 style="@style/EditProfileIcon"
                 android:layout_below="@id/phone_icon"
-                app:srcCompat="@drawable/ic_email"
+                android:tint="@color/primary_dark_50"
+                app:srcCompat="@drawable/vic_email_black_24dp"
                 tools:ignore="ContentDescription"/>
 
             <EditText
@@ -125,7 +127,8 @@
                 android:id="@+id/company_icon"
                 style="@style/EditProfileIcon"
                 android:layout_below="@id/email_icon"
-                app:srcCompat="@drawable/ic_work"
+                android:tint="@color/primary_dark_50"
+                app:srcCompat="@drawable/vic_company_black_24dp"
                 tools:ignore="ContentDescription"/>
 
             <EditText
@@ -138,7 +141,8 @@
                 android:id="@+id/website_icon"
                 style="@style/EditProfileIcon"
                 android:layout_below="@id/company_icon"
-                app:srcCompat="@drawable/ic_website"
+                android:tint="@color/primary_dark_50"
+                app:srcCompat="@drawable/vic_website_black_24dp"
                 tools:ignore="ContentDescription"/>
 
             <EditText
@@ -157,7 +161,7 @@
                 android:id="@+id/facebook_icon"
                 style="@style/EditProfileIcon"
                 android:layout_below="@id/social"
-                app:srcCompat="@drawable/ic_facebook"
+                app:srcCompat="@drawable/vic_facebook_24dp"
                 tools:ignore="ContentDescription"/>
 
             <EditText
@@ -171,7 +175,7 @@
                 android:id="@+id/twitter_icon"
                 style="@style/EditProfileIcon"
                 android:layout_below="@id/facebook_icon"
-                app:srcCompat="@drawable/ic_twitter"
+                app:srcCompat="@drawable/vic_twitter_24dp"
                 tools:ignore="ContentDescription"/>
 
             <EditText
@@ -184,7 +188,7 @@
                 android:id="@+id/gPlus_icon"
                 style="@style/EditProfileIcon"
                 android:layout_below="@id/twitter_icon"
-                app:srcCompat="@drawable/ic_gplus"
+                app:srcCompat="@drawable/vic_gplus_24dp"
                 tools:ignore="ContentDescription"/>
 
             <EditText
@@ -197,7 +201,7 @@
                 android:id="@+id/linkedIn_icon"
                 style="@style/EditProfileIcon"
                 android:layout_below="@id/gPlus_icon"
-                app:srcCompat="@drawable/ic_linkedin"
+                app:srcCompat="@drawable/vic_linkedin_24dp"
                 tools:ignore="ContentDescription"/>
 
             <EditText
@@ -244,7 +248,8 @@
                 android:id="@+id/bio_icon"
                 style="@style/EditProfileIcon"
                 android:layout_below="@id/bioLabel"
-                app:srcCompat="@drawable/ic_bio"
+                android:tint="@color/primary_dark_50"
+                app:srcCompat="@drawable/vic_bio_black_24dp"
                 tools:ignore="ContentDescription"/>
 
             <EditText

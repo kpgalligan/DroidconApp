@@ -142,4 +142,7 @@
     <string name="conflict">conflict</string>
     <string name="cd_live_now">live now</string>
     <string name="hint_gPlus">Profile</string>
+    <string name="cd_close_user_detail">close user detail</string>
+    <string name="add_contact">Add to contacts</string>
+    <string name="title_activity_user_detail">Profile</string>
 </resources>
