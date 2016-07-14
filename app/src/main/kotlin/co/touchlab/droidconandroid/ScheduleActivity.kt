@@ -47,6 +47,7 @@ import kotlinx.android.synthetic.main.include_schedule_viewpager.*
 import java.text.SimpleDateFormat
 import java.util.*
 
+const val HTTPS_S3_AMAZONAWS_COM_DROIDCONIMAGES: String = "https://s3.amazonaws.com/droidconimages/"
 private const val POSITION_EXPLORE = 1
 private const val POSITION_MY_SCHEDULE = 2
 private const val ALL_EVENTS = "all_events"
@@ -144,7 +145,7 @@ open class ScheduleActivity : AppCompatActivity(), NfcAdapter.CreateNdefMessageC
         val avatarKey = AppPrefs.getInstance(this).avatarKey
         if (!TextUtils.isEmpty(avatarKey)) {
             Picasso.with(this)
-                    .load(UserDetailFragment.HTTPS_S3_AMAZONAWS_COM_DROIDCONIMAGES + avatarKey)
+                    .load(HTTPS_S3_AMAZONAWS_COM_DROIDCONIMAGES + avatarKey)
                     .into(schedule_toolbar_profile)
         }
 
