@@ -182,7 +182,7 @@
                 android:id="@+id/twitter"
                 style="@style/EditProfileField"
                 android:layout_below="@id/facebook"
-                android:hint="@string/hint_facebook"/>
+                android:hint="@string/hint_twitter"/>
 
             <ImageView
                 android:id="@+id/gPlus_icon"
