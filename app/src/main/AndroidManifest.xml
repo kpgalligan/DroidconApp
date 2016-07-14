@@ -84,7 +84,7 @@
             android:name=".WelcomeActivity" />
 
         <activity
-            android:name=".EditUserProfile"
+            android:name=".EditUserProfileActivity"
             android:windowSoftInputMode="adjustPan"
             />
 
