@@ -5,15 +5,16 @@ import android.content.Intent
 import android.graphics.PorterDuff
 import android.graphics.PorterDuffColorFilter
 import android.net.Uri
+import android.os.Build
 import android.os.Bundle
 import android.provider.ContactsContract
 import android.support.v4.app.Fragment
+import android.support.v4.content.ContextCompat
+import android.support.v7.app.AppCompatActivity
 import android.text.TextUtils
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
-import android.widget.TextView
 import co.touchlab.android.threading.eventbus.EventBusExt
 import co.touchlab.droidconandroid.data.AppPrefs
 import co.touchlab.droidconandroid.data.UserAccount
@@ -23,62 +24,24 @@ import co.touchlab.droidconandroid.tasks.Queues
 import co.touchlab.droidconandroid.utils.Toaster
 import com.squareup.picasso.Picasso
 import com.wnafee.vector.compat.ResourcesCompat
+import kotlinx.android.synthetic.main.fragment_user_detail.*
 import org.apache.commons.lang3.StringUtils
 
 /**
  * Created by kgalligan on 7/27/14.
  */
+
+private const val TWITTER_PREFIX: String = "http://www.twitter.com/"
+private const val GPLUS_PREFIX: String = "http://www.google.com/+"
+private const val LINKEDIN_PREFIX: String = "http://www.linkedin.com/in/"
+private const val FACEBOOK_PREFIX: String = "http://www.facebook.com/"
+private const val PHONE_PREFIX: String = "tel:"
+
 class UserDetailFragment() : Fragment()
 {
-    private var avatar: ImageView? = null
-    private var name: TextView? = null
-    private var phone: TextView? = null
-    private var phoneIcon: ImageView? = null
-    private var phoneWrapper: View? = null
-    private var email: TextView? = null
-    private var emailIcon: ImageView? = null
-    private var emailWrapper: View? = null
-    private var company: TextView? = null
-    private var facebookIcon: ImageView? = null
-    private var facebook: TextView? = null
-    private var facebookWrapper: View? = null
-    private var twitter: TextView? = null
-    private var twitterIcon: ImageView? = null
-    private var twitterWrapper: View? = null
-    private var linkedInIcon: ImageView? = null
-    private var linkedIn: TextView? = null
-    private var linkedInWrapper: View? = null
-    private var gPlus: TextView? = null
-    private var gPlusIcon: ImageView? = null
-    private var gPlusWrapper: View? = null
-    private var website: TextView? = null
-    private var websiteIcon: ImageView? = null
-    private var websiteWrapper: View? = null
-    private var company2: TextView? = null
-    private var companyIcon: ImageView? = null
-    private var companyWrapper: View? = null
-    private var header: ImageView? = null
-
     companion object
     {
-        val TAG: String = UserDetailFragment::class.java.getSimpleName()
-        val HTTPS_S3_AMAZONAWS_COM_DROIDCONIMAGES: String = "https://s3.amazonaws.com/droidconimages/"
-        val TWITTER_PREFIX: String = "http://www.twitter.com/"
-        val GPLUS_PREFIX: String = "http://www.google.com/+"
-        val LINKEDIN_PREFIX: String = "http://www.linkedin.com/in/"
-        val FACEBOOK_PREFIX: String = "http://www.facebook.com/"
-        val PHONE_PREFIX: String = "tel:"
-
-        fun createFragment(code: String): UserDetailFragment
-        {
-            val bundle = Bundle()
-            bundle.putString(UserDetailActivity.USER_CODE, code);
-
-            val f = UserDetailFragment()
-            f.setArguments(bundle);
-
-            return f
-        }
+        val TAG: String = UserDetailFragment::class.java.simpleName
 
         interface FinishListener
         {
@@ -86,85 +49,62 @@ class UserDetailFragment() : Fragment()
         }
     }
 
-    override fun onCreate(savedInstanceState: Bundle?) {
+    override fun onCreate(savedInstanceState: Bundle?)
+    {
         super.onCreate(savedInstanceState)
         EventBusExt.getDefault().register(this)
-        Queues.networkQueue(getActivity()).execute(FindUserTask(findUserCodeArg()))
+        Queues.networkQueue(activity).execute(FindUserTask(findUserCodeArg()))
     }
 
-    override fun onDestroy() {
+
+    override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?): View?
+    {
+        return inflater !!.inflate(R.layout.fragment_user_detail, null)
+    }
+
+    override fun onViewCreated(view: View?, savedInstanceState: Bundle?)
+    {
+        super.onViewCreated(view, savedInstanceState)
+
+        toolbar.title = ""
+        val activity = activity as AppCompatActivity
+        activity.setSupportActionBar(toolbar)
+        activity.supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        activity.supportActionBar?.setDisplayShowHomeEnabled(true)
+    }
+
+    override fun onDestroy()
+    {
         super.onDestroy()
         EventBusExt.getDefault().unregister(this)
     }
 
     private fun findUserCodeArg(): String
     {
-        var userCode = getArguments()?.getString(UserDetailActivity.USER_CODE)
+        var userCode = arguments?.getString(UserDetailActivity.USER_CODE)
         if (StringUtils.isEmpty(userCode))
         {
-            userCode = getActivity()!!.getIntent()!!.getStringExtra(UserDetailActivity.USER_CODE)
+            userCode = activity.intent.getStringExtra(UserDetailActivity.USER_CODE)
         }
 
         if (StringUtils.isEmpty(userCode))
-            throw IllegalArgumentException("Must set user code");
+            throw IllegalArgumentException("Must set user code")
 
-        return userCode!!
+        return userCode !!
     }
 
-    override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?): View?
+    fun onEventMainThread(findUserTask: AbstractFindUserTask)
     {
-        val view = inflater!!.inflate(R.layout.fragment_user_detail, null)!!
-
-        avatar = view.findView(R.id.profile_image) as ImageView
-        name = view.findView(R.id.name) as TextView
-        phone = view.findView(R.id.phone) as TextView
-        phoneIcon = view.findView(R.id.phone_icon) as ImageView
-        phoneWrapper = view.findView(R.id.phone_wrapper)
-        email = view.findView(R.id.email) as TextView
-        emailIcon = view.findView(R.id.email_icon) as ImageView
-        emailWrapper = view.findView(R.id.email_wrapper)
-        company = view.findView(R.id.company) as TextView
-        facebookIcon = view.findView(R.id.facebook_icon) as ImageView
-        facebook = view.findView(R.id.facebook) as TextView
-        facebookWrapper = view.findView(R.id.wrapper_facebook)
-        twitter = view.findView(R.id.twitter) as TextView
-        twitterIcon = view.findView(R.id.twitter_icon) as ImageView
-        twitterWrapper = view.findView(R.id.wrapper_twitter)
-        linkedInIcon = view.findView(R.id.linkedIn_icon) as ImageView
-        linkedIn = view.findView(R.id.linkedIn) as TextView
-        linkedInWrapper = view.findView(R.id.wrapper_linkedIn)
-        gPlus = view.findView(R.id.gPlus) as TextView
-        gPlusIcon = view.findView(R.id.gPlus_icon) as ImageView
-        gPlusWrapper = view.findViewById(R.id.gPlus_wrapper)
-        website = view.findView(R.id.website) as TextView
-        websiteIcon = view.findView(R.id.website_icon) as ImageView
-        websiteWrapper = view.findView(R.id.website_wrapper)
-        company2 = view.findView(R.id.company2) as TextView
-        companyIcon = view.findView(R.id.company_icon) as ImageView
-        companyWrapper = view.findView(R.id.company_wrapper)
-        header = view.findView(R.id.header) as ImageView
-
-        var close = view.findView(R.id.close);
-        close.setOnClickListener{
-        if (getActivity() is FinishListener)
-            (getActivity() as FinishListener).onFragmentFinished()
-        }
-
-        return view
-    }
-
-    public fun onEventMainThread(findUserTask: AbstractFindUserTask)
-    {
-        if (findUserTask.isError())
+        if (findUserTask.isError)
         {
-            Toaster.showMessage(getActivity(), findUserTask.errorStringCode!!)
+            Toaster.showMessage(activity, findUserTask.errorStringCode !!)
 
-            if (getActivity() is UserDetailActivity)
-                (getActivity() as UserDetailActivity).onFragmentFinished()
+            if (activity is UserDetailActivity)
+                (activity as UserDetailActivity).onFragmentFinished()
         }
         else
         {
-            val userAccount = findUserTask.user!!
+            val userAccount = findUserTask.user !!
             showUserData(userAccount)
         }
     }
@@ -172,161 +112,198 @@ class UserDetailFragment() : Fragment()
     private fun showUserData(userAccount: UserAccount)
     {
         val avatarKey = userAccount.avatarImageUrl()
-        if (!TextUtils.isEmpty(avatarKey)) {
-
-            Picasso.with(getActivity())!!
+        if (! TextUtils.isEmpty(avatarKey))
+        {
+            Picasso.with(activity)
                     .load(avatarKey)
-                    .into(avatar)
-
+                    .into(profile_image)
+        }
+        else
+        {
+            profile_image.setImageDrawable(ResourcesCompat.getDrawable(activity, R.drawable.profile_placeholder))
         }
 
-        val coverKey = userAccount.coverKey
-        val iconsDefaultColor = getResources().getColor(R.color.social_icons)
-        if (!TextUtils.isEmpty(coverKey)) {
-            Picasso.with(getActivity())!!
-                    .load(HTTPS_S3_AMAZONAWS_COM_DROIDCONIMAGES + coverKey)
-                    .into(header)
-        }
+        val iconsDefaultColor = ContextCompat.getColor(activity, R.color.social_icons)
 
         makeIconsPretty(iconsDefaultColor)
 
-        if(!TextUtils.isEmpty(userAccount.name)) {
-            name!!.setText(userAccount.name)
+        if (! TextUtils.isEmpty(userAccount.name))
+        {
+            name.text = userAccount.name
         }
 
-        if(!TextUtils.isEmpty(userAccount.phone)) {
-            phone!!.setText(userAccount.phone)
-            phoneWrapper!!.setOnClickListener {
-                val intent = Intent(Intent.ACTION_DIAL);
-                intent.setData(Uri.parse(PHONE_PREFIX + userAccount.phone));
-                if (intent.resolveActivity(getActivity().getPackageManager()) != null) {
-                    startActivity(intent);
+        if (! TextUtils.isEmpty(userAccount.phone))
+        {
+            phone.text = userAccount.phone
+            phone.setOnClickListener {
+                val intent = Intent(Intent.ACTION_DIAL)
+                intent.data = Uri.parse(PHONE_PREFIX + userAccount.phone)
+                if (intent.resolveActivity(activity.packageManager) != null)
+                {
+                    startActivity(intent)
                 }
             }
-            phoneWrapper!!.setVisibility(View.VISIBLE)
+            phone.visibility = View.VISIBLE
         }
+        else
 
-        if(!TextUtils.isEmpty(userAccount.email) && userAccount.emailPublic != null && userAccount.emailPublic) {
-            email!!.setText(userAccount.email)
+        if (! TextUtils.isEmpty(userAccount.email) && userAccount.emailPublic != null && userAccount.emailPublic)
+        {
+            email.text = userAccount.email
 
-            emailWrapper!!.setOnClickListener {
+            email.setOnClickListener {
                 val emailIntent = Intent(Intent.ACTION_SENDTO, Uri.fromParts(
-                        "mailto", userAccount.email, null));
-                startActivity(emailIntent);
+                        "mailto", userAccount.email, null))
+                startActivity(emailIntent)
             }
-            emailWrapper!!.setVisibility(View.VISIBLE)
+            email.visibility = View.VISIBLE
         }
 
-        if(!TextUtils.isEmpty(userAccount.company)) {
-            company!!.setText(userAccount.company)
-            company2!!.setText(userAccount.company)
-            companyWrapper!!.setVisibility(View.VISIBLE)
-            companyWrapper!!.setOnClickListener{
-                val intent = Intent(Intent.ACTION_WEB_SEARCH);
-                val keyword= userAccount.company;
-                intent.putExtra(SearchManager.QUERY, keyword);
-                startActivity(intent);
+        if (! TextUtils.isEmpty(userAccount.company))
+        {
+            company.text = userAccount.company
+            company.visibility = View.VISIBLE
+
+            company2.text = userAccount.company
+            company2.visibility = View.VISIBLE
+            company2.setOnClickListener {
+                val intent = Intent(Intent.ACTION_WEB_SEARCH)
+                val keyword = userAccount.company
+                intent.putExtra(SearchManager.QUERY, keyword)
+                startActivity(intent)
             }
-            company!!.setVisibility(View.VISIBLE)
         }
 
-        var facebookAccount = userAccount.facebook
-        if(!TextUtils.isEmpty(facebookAccount)) {
-            facebook!!.setText(facebookAccount)
-            facebookWrapper!!.setOnClickListener {
+        val facebookAccount = userAccount.facebook
+        if (! TextUtils.isEmpty(facebookAccount))
+        {
+            facebook.text = facebookAccount
+            facebook.setOnClickListener {
                 openLink(Uri.parse(FACEBOOK_PREFIX + facebookAccount))
             }
-            facebookWrapper!!.setVisibility(View.VISIBLE)
+            facebook.visibility = View.VISIBLE
         }
 
         var twitterAccount = userAccount.twitter
-        if(!TextUtils.isEmpty(twitterAccount)) {
+        if (! TextUtils.isEmpty(twitterAccount))
+        {
             twitterAccount = twitterAccount.replace("@", "")
-            twitter!!.setText("@$twitterAccount")
-            twitterWrapper!!.setOnClickListener {
+            twitter.text = "@$twitterAccount"
+            twitter.setOnClickListener {
                 openLink(Uri.parse(TWITTER_PREFIX + twitterAccount))
             }
-            twitterWrapper!!.setVisibility(View.VISIBLE)
+            twitter.visibility = View.VISIBLE
         }
 
-        var linkedInAccount = userAccount.linkedIn
-        if(!TextUtils.isEmpty(linkedInAccount)) {
-            linkedIn!!.setText(linkedInAccount)
-            linkedInWrapper!!.setOnClickListener {
+        val linkedInAccount = userAccount.linkedIn
+        if (! TextUtils.isEmpty(linkedInAccount))
+        {
+            linkedIn.text = linkedInAccount
+            linkedIn.setOnClickListener {
                 openLink(Uri.parse(LINKEDIN_PREFIX + linkedInAccount))
             }
-            linkedInWrapper!!.setVisibility(View.VISIBLE)
+            linkedIn.visibility = View.VISIBLE
         }
 
         var gPlusAccount = userAccount.gPlus
-        if(!TextUtils.isEmpty(gPlusAccount)) {
+        if (! TextUtils.isEmpty(gPlusAccount))
+        {
             gPlusAccount = gPlusAccount.replace("+", "")
-            gPlus!!.setText("+$gPlusAccount")
-            gPlusWrapper!!.setOnClickListener {
+            gPlus.text = "+$gPlusAccount"
+            gPlus.setOnClickListener {
                 openLink(Uri.parse(GPLUS_PREFIX + gPlusAccount))
             }
-            gPlusWrapper!!.setVisibility(View.VISIBLE)
+            gPlus.visibility = View.VISIBLE
         }
 
-        if(!TextUtils.isEmpty(userAccount.website)) {
-            website!!.setText(userAccount.website)
-            websiteWrapper!!.setOnClickListener{
+        if (! TextUtils.isEmpty(userAccount.website))
+        {
+            website.text = userAccount.website
+            website.setOnClickListener {
                 var url = userAccount.website
 
-                if (!url.startsWith("http://")) {
-                    url = "http://" + url;
+                if (! url.startsWith("http://"))
+                {
+                    url = "http://" + url
                 }
                 openLink(Uri.parse(url))
             }
-            websiteWrapper!!.setVisibility(View.VISIBLE)
+            website.visibility = View.VISIBLE
         }
-        
 
-        val appPrefs = AppPrefs.getInstance(getActivity())
-        if (!userAccount.id.equals(appPrefs.getUserId()))
+        if (! TextUtils.isEmpty(userAccount.profile))
         {
-            val addContact = view?.findView(R.id.addContact) as ImageView
-            addContact.setOnClickListener{
+            bio.text = userAccount.profile
+            bio.visibility = View.VISIBLE
+        }
+
+
+        val appPrefs = AppPrefs.getInstance(activity)
+        if (! userAccount.id.equals(appPrefs.userId))
+        {
+            addContact.setOnClickListener {
                 // Creates a new Intent to insert a contact
-                val intent = Intent(ContactsContract.Intents.Insert.ACTION);
+                val intent = Intent(ContactsContract.Intents.Insert.ACTION)
                 // Sets the MIME type to match the Contacts Provider
-                intent.setType(ContactsContract.RawContacts.CONTENT_TYPE);
+                intent.type = ContactsContract.RawContacts.CONTENT_TYPE
                 if (userAccount.emailPublic != null && userAccount.emailPublic)
                     intent.putExtra(ContactsContract.Intents.Insert.EMAIL, userAccount.email)
                 intent.putExtra(ContactsContract.Intents.Insert.COMPANY, userAccount.company)
                 intent.putExtra(ContactsContract.Intents.Insert.NAME, userAccount.name)
-                startActivity(intent);
+                startActivity(intent)
             }
-            addContact.setImageDrawable(ResourcesCompat.getDrawable(getActivity(), R.drawable.ic_addcontact))
-            addContact.setVisibility(View.VISIBLE)
+            addContact.visibility = View.VISIBLE
         }
     }
 
-    private fun openLink(webpage: Uri?) {
-        val intent = Intent(Intent.ACTION_VIEW, webpage);
-        if (intent.resolveActivity(getActivity().getPackageManager()) != null){
-            startActivity(intent);
+    private fun openLink(webPage: Uri?)
+    {
+        val intent = Intent(Intent.ACTION_VIEW, webPage)
+        if (intent.resolveActivity(activity.packageManager) != null)
+        {
+            startActivity(intent)
         }
     }
 
-    private fun makeIconsPretty(darkVibrantColor: Int) {
-        val phoneDrawable = ResourcesCompat.getDrawable(getActivity(), R.drawable.ic_phone);
-        phoneDrawable.setColorFilter(PorterDuffColorFilter(darkVibrantColor, PorterDuff.Mode.SRC_IN))
-        phoneIcon!!.setImageDrawable(phoneDrawable)
-        val emailDrawable = ResourcesCompat.getDrawable(getActivity(), R.drawable.ic_email);
-        emailDrawable.setColorFilter(PorterDuffColorFilter(darkVibrantColor, PorterDuff.Mode.SRC_IN))
-        emailIcon!!.setImageDrawable(emailDrawable)
-        val companyDrawable = ResourcesCompat.getDrawable(getActivity(), R.drawable.ic_work);
-        companyDrawable.setColorFilter(PorterDuffColorFilter(darkVibrantColor, PorterDuff.Mode.SRC_IN))
-        companyIcon!!.setImageDrawable(companyDrawable)
-        val websiteDrawable = ResourcesCompat.getDrawable(getActivity(), R.drawable.ic_website);
-        websiteDrawable.setColorFilter(PorterDuffColorFilter(darkVibrantColor, PorterDuff.Mode.SRC_IN))
-        websiteIcon!!.setImageDrawable(websiteDrawable)
+    private fun makeIconsPretty(darkVibrantColor: Int)
+    {
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M)
+        {
+            val contactDrawable = ResourcesCompat.getDrawable(activity,
+                    R.drawable.vic_person_add_black_24dp)
+            contactDrawable.colorFilter = PorterDuffColorFilter(darkVibrantColor,
+                    PorterDuff.Mode.SRC_IN)
+            addContact.setCompoundDrawablesWithIntrinsicBounds(contactDrawable, null, null, null)
 
-        twitterIcon!!.setImageDrawable(ResourcesCompat.getDrawable(getActivity(), R.drawable.ic_twitter))
-        facebookIcon!!.setImageDrawable(ResourcesCompat.getDrawable(getActivity(), R.drawable.ic_facebook))
-        linkedInIcon!!.setImageDrawable(ResourcesCompat.getDrawable(getActivity(), R.drawable.ic_linkedin))
-        gPlusIcon!!.setImageDrawable(ResourcesCompat.getDrawable(getActivity(), R.drawable.ic_gplus))
+            val phoneDrawable = ResourcesCompat.getDrawable(activity,
+                    R.drawable.vic_phone_black_24dp)
+            phoneDrawable.colorFilter = PorterDuffColorFilter(darkVibrantColor,
+                    PorterDuff.Mode.SRC_IN)
+            phone.setCompoundDrawablesWithIntrinsicBounds(phoneDrawable, null, null, null)
+
+            val emailDrawable = ResourcesCompat.getDrawable(activity,
+                    R.drawable.vic_email_black_24dp)
+            emailDrawable.colorFilter = PorterDuffColorFilter(darkVibrantColor,
+                    PorterDuff.Mode.SRC_IN)
+            email.setCompoundDrawablesWithIntrinsicBounds(emailDrawable, null, null, null)
+
+            val companyDrawable = ResourcesCompat.getDrawable(activity,
+                    R.drawable.vic_company_black_24dp)
+            companyDrawable.colorFilter = PorterDuffColorFilter(darkVibrantColor,
+                    PorterDuff.Mode.SRC_IN)
+            company2.setCompoundDrawablesWithIntrinsicBounds(companyDrawable, null, null, null)
+
+            val websiteDrawable = ResourcesCompat.getDrawable(activity,
+                    R.drawable.vic_website_black_24dp)
+            websiteDrawable.colorFilter = PorterDuffColorFilter(darkVibrantColor,
+                    PorterDuff.Mode.SRC_IN)
+            website.setCompoundDrawablesWithIntrinsicBounds(websiteDrawable, null, null, null)
+
+            val bioDrawable = ResourcesCompat.getDrawable(activity, R.drawable.vic_bio_black_24dp)
+            bioDrawable.colorFilter = PorterDuffColorFilter(darkVibrantColor,
+                    PorterDuff.Mode.SRC_IN)
+            bio.setCompoundDrawablesWithIntrinsicBounds(bioDrawable, null, null, null)
+        }
     }
 
 }
