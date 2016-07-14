@@ -11,6 +11,8 @@ import android.view.ViewGroup
 import co.touchlab.droidconandroid.HTTPS_S3_AMAZONAWS_COM_DROIDCONIMAGES
 import co.touchlab.droidconandroid.R
 import co.touchlab.droidconandroid.data.AppPrefs
+import co.touchlab.droidconandroid.utils.EmojiUtil
+import com.squareup.picasso.Callback
 import com.squareup.picasso.Picasso
 import com.wnafee.vector.compat.ResourcesCompat
 import kotlinx.android.synthetic.main.item_drawer.view.*
@@ -34,13 +36,30 @@ class DrawerAdapter(drawerItems: List<Any>, drawerClickListener: DrawerClickList
         {
             val headerHolder = holder as HeaderViewHolder
             val avatarKey = AppPrefs.getInstance(context).avatarKey
+            val name = AppPrefs.getInstance(context).name
             if (! TextUtils.isEmpty(avatarKey))
             {
+                val callback = object : Callback
+                {
+                    override fun onSuccess()
+                    {
+                       headerHolder.itemView.header_placeholder_emoji.text = ""
+                    }
 
+                    override fun onError()
+                    {
+                        headerHolder.itemView.header_placeholder_emoji.text = EmojiUtil.getEmojiForUser(name)
+                    }
+                }
                 Picasso.with(context)
                         .load(HTTPS_S3_AMAZONAWS_COM_DROIDCONIMAGES + avatarKey)
-                        .into(headerHolder.itemView.avatar)
+                        .placeholder(R.drawable.circle_profile_placeholder)
+                        .into(headerHolder.itemView.avatar, callback)
 
+            }
+            else
+            {
+                headerHolder.itemView.header_placeholder_emoji.text = EmojiUtil.getEmojiForUser(name)
             }
 
             val coverKey = AppPrefs.getInstance(context).coverKey

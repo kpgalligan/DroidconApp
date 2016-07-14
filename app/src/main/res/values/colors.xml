@@ -95,5 +95,6 @@
     <color name="card_text_subtitle">@color/text_gray</color>
     <color name="card_bg_block">#fafafa</color>
     <color name="card_bg_event">@color/white</color>
+    <color name="profile_circle">#dcdcdc</color>
 
 </resources>

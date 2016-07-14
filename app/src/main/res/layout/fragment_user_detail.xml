@@ -37,7 +37,18 @@
                     android:layout_marginStart="@dimen/padding_medium"
                     android:layout_marginRight="@dimen/padding_medium"
                     android:layout_marginEnd="@dimen/padding_medium"
-                    tools:src="@drawable/profile_placeholder"/>
+                    android:src="@drawable/circle_profile_placeholder"/>
+
+                <TextView
+                    android:id="@+id/placeholder_emoji"
+                    android:layout_width="@dimen/height_xlarge"
+                    android:layout_height="@dimen/height_xlarge"
+                    android:layout_alignTop="@id/profile_image"
+                    android:layout_alignStart="@id/profile_image"
+                    android:layout_alignLeft="@id/profile_image"
+                    android:textSize="@dimen/text_xxxxlarge"
+                    android:gravity="center"
+                    tools:text=":)"/>
 
                 <TextView
                     android:id="@+id/name"
