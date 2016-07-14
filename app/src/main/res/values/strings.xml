@@ -62,7 +62,7 @@
     <string name="hint_company">Company</string>
     <string name="hint_website">http://yoursite.com</string>
     <string name="hint_facebook">Facebook</string>
-    <string name="hint_twitter">Twitter handle</string>
+    <string name="hint_twitter">Twitter</string>
     <string name="hint_linkedIn">LinkedIn</string>
     <string name="hint_nickname">Nickname</string>
     <string name="hint_bio">Bio</string>
@@ -148,4 +148,8 @@
     <string name="cd_about_section">about section</string>
     <string name="cd_navigation_icon">navigation icon</string>
     <string name="cd_profile_cover_image">profile cover image</string>
+    <string name="cd_close_user_detail">close user detail</string>
+
+    <string name="add_contact">Add to contacts</string>
+    <string name="title_activity_user_detail">Profile</string>
 </resources>

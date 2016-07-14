@@ -8,8 +8,8 @@ import android.text.TextUtils
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import co.touchlab.droidconandroid.HTTPS_S3_AMAZONAWS_COM_DROIDCONIMAGES
 import co.touchlab.droidconandroid.R
-import co.touchlab.droidconandroid.UserDetailFragment
 import co.touchlab.droidconandroid.data.AppPrefs
 import com.squareup.picasso.Picasso
 import com.wnafee.vector.compat.ResourcesCompat
@@ -44,7 +44,7 @@ class DrawerAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>
             {
 
                 Picasso.with(context)
-                        .load(UserDetailFragment.HTTPS_S3_AMAZONAWS_COM_DROIDCONIMAGES + avatarKey)
+                        .load(HTTPS_S3_AMAZONAWS_COM_DROIDCONIMAGES + avatarKey)
                         .into(headerHolder.itemView.avatar)
 
             }
@@ -52,11 +52,10 @@ class DrawerAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>
             val coverKey = AppPrefs.getInstance(context).coverKey
             if (! TextUtils.isEmpty(coverKey))
             {
-
                 Picasso.with(context)
-                        .load(UserDetailFragment.HTTPS_S3_AMAZONAWS_COM_DROIDCONIMAGES + coverKey)
-                        .into(headerHolder.itemView.cover)
 
+                        .load(HTTPS_S3_AMAZONAWS_COM_DROIDCONIMAGES + coverKey)
+                        .into(headerHolder.itemView.cover)
             }
 
             headerHolder.itemView.name.text = AppPrefs.getInstance(context).name
