@@ -52,6 +52,7 @@
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="0dp"
+        android:background="@color/white"
         android:layout_weight="1">
 
         <RelativeLayout
@@ -69,7 +70,18 @@
                 android:layout_width="40dp"
                 android:layout_height="40dp"
                 android:layout_margin="12dp"
-                tools:src="@drawable/profile_placeholder"/>
+                android:src="@drawable/circle_profile_placeholder"/>
+
+            <TextView
+                android:id="@+id/placeholder_emoji"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_alignTop="@id/profile_image"
+                android:layout_alignStart="@id/profile_image"
+                android:layout_alignLeft="@id/profile_image"
+                android:textSize="@dimen/text_xlarge"
+                android:gravity="center"
+                tools:text=":)"/>
 
             <EditText
                 android:id="@+id/name"
@@ -259,6 +271,7 @@
                 android:layout_alignLeft="@id/name"
                 android:layout_alignStart="@id/name"
                 android:layout_below="@id/bioLabel"
+                android:textSize="@dimen/text_small"
                 android:gravity="top|start"
                 android:hint="@string/hint_bio"
                 android:inputType="textMultiLine|textCapSentences|textAutoCorrect"
