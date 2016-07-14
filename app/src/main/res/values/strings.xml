@@ -22,13 +22,13 @@
     <!-- drawer copy-->
     <string name="navigation_drawer_open">Open</string>
     <string name="navigation_drawer_close">Close</string>
-    <string name="explore">Explore sessions</string>
-    <string name="my_schedule">My schedule</string>
-    <string name="buy_tickets">Buy Tickets (30% off)!</string>
+    <string name="explore">Schedule</string>
+    <string name="my_schedule">My agenda</string>
+    <string name="buy_tickets">Buy tickets (30% off)!</string>
 
     <string name="map">Map</string>
     <string name="social">Social profiles</string>
-    <string name="profile">My Profile</string>
+    <string name="profile">Profile</string>
     <string name="sponsors">Sponsors</string>
     <string name="about">About</string>
     <string name="vote">Vote</string>
@@ -140,9 +140,16 @@
     <string name="notif_body">"The \"%s\" session is starting soon!"</string>
     <string name="content_toggle_alerts">Toggle Session Alerts</string>
     <string name="conflict">conflict</string>
-    <string name="cd_live_now">live now</string>
     <string name="hint_gPlus">Profile</string>
+
+    <!-- content descriptions-->
+    <string name="cd_live_now">live now</string>
+    <string name="cd_sponsor_logos">sponsor logos</string>
+    <string name="cd_about_section">about section</string>
+    <string name="cd_navigation_icon">navigation icon</string>
+    <string name="cd_profile_cover_image">profile cover image</string>
     <string name="cd_close_user_detail">close user detail</string>
+
     <string name="add_contact">Add to contacts</string>
     <string name="title_activity_user_detail">Profile</string>
 </resources>

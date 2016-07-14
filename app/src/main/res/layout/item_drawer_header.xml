@@ -1,31 +1,32 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-             xmlns:tools="http://schemas.android.com/tools"
-             android:layout_width="match_parent"
-             android:layout_height="@dimen/drawer_header_height"
-             android:background="@color/social_icons"
-             android:orientation="vertical">
+<FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/drawer_header_height"
+    android:background="@color/social_icons"
+    android:orientation="vertical">
 
     <ImageView
         android:id="@+id/cover"
         android:layout_width="match_parent"
-        android:scaleType="centerCrop"
-        android:layout_height="match_parent"/>
+        android:layout_height="match_parent"
+        android:contentDescription="@string/cd_profile_cover_image"
+        android:scaleType="centerCrop"/>
 
     <View
         android:layout_width="match_parent"
-        android:background="@drawable/gradient_270"
-        android:layout_height="match_parent"/>
+        android:layout_height="match_parent"
+        android:background="@drawable/gradient_270"/>
 
-
-    <RelativeLayout android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_marginTop="@dimen/status_bar_height"
-                    android:padding="@dimen/padding_medium">
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="@dimen/status_bar_height"
+        android:padding="@dimen/padding_medium">
 
         <de.hdodenhof.circleimageview.CircleImageView
-
-            android:id="@+id/profile_image"
+            android:id="@+id/avatar"
             android:layout_width="@dimen/height_large"
             android:layout_height="@dimen/height_large"
             tools:src="@drawable/profile_placeholder"/>
@@ -48,7 +49,7 @@
             android:singleLine="true"
             android:textColor="@color/white"
             tools:text="test@touchlab.co"/>
-    </RelativeLayout>
 
+    </RelativeLayout>
 
 </FrameLayout>
