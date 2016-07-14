@@ -42,7 +42,6 @@ import java.io.FileOutputStream
 import java.io.IOException
 
 private const val TAG = "EditUserProfile"
-private const val HTTPS_S3_AMAZONAWS_COM_DROIDCONIMAGES = "https://s3.amazonaws.com/droidconimages/"
 private const val PHOTO_SELECT = 100
 private const val PHOTO_CAPTURE = 101
 private const val PHOTO_EDIT_COMPLETE = 102
@@ -51,10 +50,10 @@ private const val EXTRA_DATA = "data"
 private const val EXTRA_AVATAR_PATH = "avatarPath"
 
 fun createEditUserProfile(c: Context) {
-    c.startActivity(Intent(c, EditUserProfile::class.java))
+    c.startActivity(Intent(c, EditUserProfileActivity::class.java))
 }
 
-class EditUserProfile : AppCompatActivity() {
+class EditUserProfileActivity : AppCompatActivity() {
     private var photoPath: String? = null
     private var imageURI: Uri? = null
 
@@ -325,7 +324,7 @@ class EditUserProfile : AppCompatActivity() {
         }
 
         override fun onPostExecute(file: File) {
-            val intent = PhotoScaleActivity.callMe(this@EditUserProfile, file.path)
+            val intent = PhotoScaleActivity.callMe(this@EditUserProfileActivity, file.path)
             startActivityForResult(intent, PHOTO_EDIT_COMPLETE)
         }
     }

@@ -47,6 +47,7 @@ import kotlinx.android.synthetic.main.include_schedule_viewpager.*
 import java.text.SimpleDateFormat
 import java.util.*
 
+const val HTTPS_S3_AMAZONAWS_COM_DROIDCONIMAGES: String = "https://s3.amazonaws.com/droidconimages/"
 private const val POSITION_EXPLORE = 1
 private const val POSITION_MY_SCHEDULE = 2
 private const val ALL_EVENTS = "all_events"
@@ -144,7 +145,7 @@ open class ScheduleActivity : AppCompatActivity(), NfcAdapter.CreateNdefMessageC
         val avatarKey = AppPrefs.getInstance(this).avatarKey
         if (!TextUtils.isEmpty(avatarKey)) {
             Picasso.with(this)
-                    .load(UserDetailFragment.HTTPS_S3_AMAZONAWS_COM_DROIDCONIMAGES + avatarKey)
+                    .load(HTTPS_S3_AMAZONAWS_COM_DROIDCONIMAGES + avatarKey)
                     .into(schedule_toolbar_profile)
         }
 
@@ -219,12 +220,12 @@ open class ScheduleActivity : AppCompatActivity(), NfcAdapter.CreateNdefMessageC
     private fun getDrawerItems(): List<Any> {
         val drawerItems = ArrayList<Any>()
         drawerItems.add("header_placeholder")
-        drawerItems.add(NavigationItem(R.string.explore, R.drawable.ic_explore))
-        drawerItems.add(NavigationItem(R.string.my_schedule, R.drawable.ic_myschedule))
-        drawerItems.add(NavigationItem(R.string.buy_tickets, R.drawable.ic_action_ticket))
+        drawerItems.add(NavigationItem(R.string.explore, R.drawable.vic_event_black_24dp))
+        drawerItems.add(NavigationItem(R.string.my_schedule, R.drawable.vic_clock_black_24dp))
+        drawerItems.add(NavigationItem(R.string.profile, R.drawable.vic_account_circle_black_24dp))
         drawerItems.add("divider_placeholder")
-        drawerItems.add(NavigationItem(R.string.profile, R.drawable.ic_settings))
-        drawerItems.add(NavigationItem(R.string.about, R.drawable.ic_info))
+        drawerItems.add(NavigationItem(R.string.buy_tickets, R.drawable.ic_action_ticket))
+        drawerItems.add(NavigationItem(R.string.about, R.drawable.vic_info_outline_black_24dp))
         return drawerItems
     }
 
