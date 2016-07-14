@@ -20,14 +20,14 @@ private const val VIEW_TYPE_HEADER: Int = 0
 private const val VIEW_TYPE_NAVIGATION: Int = 1
 private const val VIEW_TYPE_DIVIDER: Int = 2
 
-class DrawerAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>
+class DrawerAdapter(drawerItems: List<Any>, drawerClickListener: DrawerClickListener) : RecyclerView.Adapter<RecyclerView.ViewHolder>()
 {
     var selectedPos: Int = 1
 
     private val dataSet: List<Any>
     private val drawerClickListener: DrawerClickListener
 
-    constructor(drawerItems: List<Any>, drawerClickListener: DrawerClickListener) : super()
+    init
     {
         dataSet = drawerItems
         this.drawerClickListener = drawerClickListener
