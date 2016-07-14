@@ -5,22 +5,16 @@ import android.content.res.ColorStateList
 import android.graphics.drawable.Drawable
 import android.net.Uri
 import android.os.Bundle
-import android.support.design.widget.CollapsingToolbarLayout
 import android.support.design.widget.CoordinatorLayout
-import android.support.design.widget.FloatingActionButton
 import android.support.v4.app.Fragment
+import android.support.v4.content.ContextCompat
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
-import android.support.v7.widget.RecyclerView
-import android.support.v7.widget.Toolbar
 import android.text.TextUtils
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
-import android.widget.TextView
 import co.touchlab.android.threading.eventbus.EventBusExt
-import co.touchlab.android.threading.tasks.TaskQueue
 import co.touchlab.droidconandroid.data.Event
 import co.touchlab.droidconandroid.data.Track
 import co.touchlab.droidconandroid.data.UserAccount
@@ -31,23 +25,19 @@ import co.touchlab.droidconandroid.tasks.Queues
 import co.touchlab.droidconandroid.tasks.RemoveRsvpTask
 import co.touchlab.droidconandroid.tasks.TrackDrawableTask
 import com.wnafee.vector.compat.ResourcesCompat
+import kotlinx.android.synthetic.main.fragment_event_detail.*
 import java.text.SimpleDateFormat
 import java.util.*
 
 /**
  * Created by kgalligan on 7/27/14.
  */
-var buisnessDrawable: Drawable? = null
+var businessDrawable: Drawable? = null
 var designDrawable: Drawable? = null
 var devDrawable: Drawable? = null
+
 class EventDetailFragment() : Fragment()
 {
-    private var name: TextView? = null
-    private var backdrop: ImageView? = null
-    private var fab: FloatingActionButton? = null
-    private var collapsingToolbar: CollapsingToolbarLayout? = null
-    private var recycler: RecyclerView? = null
-
     private var trackColor: Int = 0
     private var fabColorList: ColorStateList? = null
     private var presenter: EventDetailPresenter? = null
@@ -61,10 +51,10 @@ class EventDetailFragment() : Fragment()
         {
             val bundle = Bundle()
             bundle.putLong(EVENT_ID, id)
-            bundle.putInt(TRACK_ID, track);
+            bundle.putInt(TRACK_ID, track)
 
             val f = EventDetailFragment()
-            f.setArguments(bundle);
+            f.arguments = bundle
 
             return f
         }
@@ -72,43 +62,43 @@ class EventDetailFragment() : Fragment()
 
     override fun onCreate(savedInstanceState: Bundle?)
     {
-        super<Fragment>.onCreate(savedInstanceState)
-        EventBusExt.getDefault()!!.register(this)
+        super.onCreate(savedInstanceState)
+        EventBusExt.getDefault() !!.register(this)
     }
 
     override fun onDestroy()
     {
-        super<Fragment>.onDestroy()
-        EventBusExt.getDefault()!!.unregister(this)
+        super.onDestroy()
+        EventBusExt.getDefault() !!.unregister(this)
     }
 
     private fun findEventIdArg(): Long
     {
-        var eventId = getArguments()?.getLong(EVENT_ID, -1)
-        if (eventId == null || eventId == -1L)
+        var eventId = arguments?.getLong(EVENT_ID, - 1)
+        if (eventId == null || eventId == - 1L)
         {
-            if(activity == null)
-                return -1L;
+            if (activity == null)
+                return - 1L
 
-            eventId = getActivity()!!.getIntent()!!.getLongExtra(EVENT_ID, -1)
+            eventId = activity !!.intent !!.getLongExtra(EVENT_ID, - 1)
         }
 
-        if (eventId == -1L)
-            throw IllegalArgumentException("Must set event id");
+        if (eventId == - 1L)
+            throw IllegalArgumentException("Must set event id")
 
         return eventId
     }
 
     /**
-     * Gets the track ID argument. This is to make sure we dont flash the incorrect colors
+     * Gets the track ID argument. This is to make sure we don't flash the incorrect colors
      * on things like the FAB and toolbar while waiting to load the event details
      */
     private fun findTrackIdArg(): String?
     {
-        var trackId = getArguments()?.getString(TRACK_ID)
+        var trackId = arguments?.getString(TRACK_ID)
         if (trackId == null)
         {
-            trackId = getActivity()!!.getIntent()!!.getStringExtra(TRACK_ID)
+            trackId = activity.intent.getStringExtra(TRACK_ID)
         }
 
         return trackId
@@ -116,49 +106,43 @@ class EventDetailFragment() : Fragment()
 
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?): View?
     {
-        val view = inflater!!.inflate(R.layout.fragment_event_detail, null)!!
-
-        var toolbar = view.findViewById(R.id.toolbar) as Toolbar
-        toolbar!!.setTitle("")
-        var activity = getActivity() as AppCompatActivity
-        activity.setSupportActionBar(toolbar)
-        activity.getSupportActionBar()?.setDisplayHomeAsUpEnabled(true)
-        activity.getSupportActionBar()?.setDisplayShowHomeEnabled(true)
-
-        //collect the views
-        name = view.findViewById(R.id.name) as TextView
-        backdrop = view.findViewById(R.id.backdrop) as ImageView
-        fab = view.findViewById(R.id.register) as FloatingActionButton
-        collapsingToolbar = view.findViewById(R.id.collapsingToolbar) as CollapsingToolbarLayout
-        recycler = view.findViewById(R.id.recycler) as RecyclerView
-
-        recycler!!.setLayoutManager(LinearLayoutManager(getActivity()))
-
-        updateTrackColor(findTrackIdArg())
-        backdrop!!.setBackgroundColor(trackColor)
-
-        presenter = EventDetailPresenter(getContext(), findEventIdArg(), EventDetailHost {
+        presenter = EventDetailPresenter(context, findEventIdArg(), EventDetailHost {
             dataRefresh()
         })
 
-        return view
+        return inflater !!.inflate(R.layout.fragment_event_detail, null)
+    }
+
+    override fun onViewCreated(view: View?, savedInstanceState: Bundle?)
+    {
+        super.onViewCreated(view, savedInstanceState)
+
+        val activity = activity as AppCompatActivity
+        toolbar.title = ""
+        activity.setSupportActionBar(toolbar)
+        activity.supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        activity.supportActionBar?.setDisplayShowHomeEnabled(true)
+        recycler.layoutManager = LinearLayoutManager(getActivity())
+
+        updateTrackColor(findTrackIdArg())
     }
 
     fun dataRefresh()
     {
-        if (!presenter!!.getEventDetailLoadTask().eventId.equals(findEventIdArg()))
+        if (! presenter !!.eventDetailLoadTask.eventId.equals(findEventIdArg()))
             return
 
-        val event = presenter!!.getEventDetailLoadTask().event!!
+        val event = presenter !!.eventDetailLoadTask.event !!
 
         updateTrackColor(event.category)
-        updateToolbar(event)
         updateFAB(event)
 
-        updateContent(event, presenter!!.getEventDetailLoadTask().speakers, presenter!!.getEventDetailLoadTask().conflict)
-   }
+        updateContent(event,
+                presenter !!.eventDetailLoadTask.speakers,
+                presenter !!.eventDetailLoadTask.conflict)
+    }
 
-    public fun onEventMainThread(task: TrackDrawableTask)
+    fun onEventMainThread(task: TrackDrawableTask)
     {
         when (task.drawableRes)
         {
@@ -174,12 +158,12 @@ class EventDetailFragment() : Fragment()
 
             R.drawable.illo_business ->
             {
-                buisnessDrawable = task.drawable
+                businessDrawable = task.drawable
             }
         }
 
         if (task.drawable != null)
-            updateBackdropDrawable(task.drawable!!)
+            updateBackdropDrawable(task.drawable !!)
     }
 
     /**
@@ -189,100 +173,61 @@ class EventDetailFragment() : Fragment()
     private fun updateFAB(event: Event)
     {
         //Follow Fab
-        fab!!.setBackgroundTintList(fabColorList)
-        fab!!.setRippleColor(trackColor)
+        fab.backgroundTintList = fabColorList
+        fab.setColorFilter(trackColor)
+        fab.setRippleColor(ContextCompat.getColor(context, R.color.white))
 
-
-
-            if (event.isRsvped()) {
-                fab!!.setImageDrawable(ResourcesCompat.getDrawable(getActivity(), R.drawable.ic_check))
-            } else {
-                fab!!.setImageDrawable(ResourcesCompat.getDrawable(getActivity(), R.drawable.ic_plus))
-            }
-
-
-        if(!event.isPast()) {
-            fab!!.setOnClickListener { v ->
-                if (event.isRsvped()) {
-                    Queues.localQueue(getActivity()).execute(RemoveRsvpTask(event.id))
-                } else {
-                    Queues.localQueue(getActivity()).execute(AddRsvpTask(event.id))
-                }
-            }
-        }
-
-        if(event.isNow())
+        if (event.isRsvped)
         {
-            fab!!.setOnLongClickListener { v ->
-                val intent = Intent(Intent.ACTION_VIEW, Uri.parse("http://imgur.com/gallery/7drHiqr"));
-                if (intent.resolveActivity(getActivity().getPackageManager()) != null)
-                {
-                    getActivity().startActivity(intent);
-                }
-                true;
-            }
+            fab.setImageDrawable(ResourcesCompat.getDrawable(activity, R.drawable.ic_check))
+            fab.isActivated = true
         }
-
-        var p = fab!!.getLayoutParams() as CoordinatorLayout.LayoutParams
-        if (event.isPast())
+        else
         {
-            p.setAnchorId(View.NO_ID)
-            fab!!.setLayoutParams(p)
-            fab!!.setVisibility(View.GONE)
+            fab.setImageDrawable(ResourcesCompat.getDrawable(activity, R.drawable.ic_plus))
+            fab.isActivated = false
         }
-        else {
-            p.setAnchorId(R.id.appbar)
-            fab!!.setLayoutParams(p)
-            fab!!.setVisibility(View.VISIBLE)
-        }
-    }
 
-    /**
-     * Updates the title and colors of the toolbar
-     */
-    private fun updateToolbar(event: Event)
-    {
-        name!!.setText(event.name)
-
-        //Track
-        var backdropDrawable: Drawable? = null
-//        if (!TextUtils.isEmpty(event.category))
-//        {
-            //var track = Track.findByServerName(event.category)
-            var track = Track.DESIGN
-            when (track)
-            {
-                Track.DEVELOPMENT ->
+        if (! event.isPast)
+        {
+            fab.setOnClickListener { v ->
+                if (event.isRsvped)
                 {
-                    if (devDrawable == null)
-                        TaskQueue.loadQueueDefault(getActivity()).execute(TrackDrawableTask(getActivity().getApplicationContext(), R.drawable.illo_development))
-                    else
-                        backdropDrawable = devDrawable
+                    Queues.localQueue(activity).execute(RemoveRsvpTask(event.id))
                 }
-
-                Track.DESIGN ->
+                else
                 {
-                    if (designDrawable == null)
-                        TaskQueue.loadQueueDefault(getActivity()).execute(TrackDrawableTask(getActivity().getApplicationContext(), R.drawable.illo_design))
-                    else
-                        backdropDrawable = designDrawable
-                }
-                Track.BUSINESS ->
-                {
-                    if (buisnessDrawable == null)
-                        TaskQueue.loadQueueDefault(getActivity()).execute(TrackDrawableTask(getActivity().getApplicationContext(), R.drawable.illo_business))
-                    else
-                        backdropDrawable = buisnessDrawable
+                    Queues.localQueue(activity).execute(AddRsvpTask(event.id))
                 }
             }
-        //}
+        }
 
-        if (backdropDrawable != null)
-            updateBackdropDrawable(backdropDrawable)
+        if (event.isNow)
+        {
+            fab.setOnLongClickListener { v ->
+                val intent = Intent(Intent.ACTION_VIEW,
+                        Uri.parse("http://imgur.com/gallery/7drHiqr"))
+                if (intent.resolveActivity(activity.packageManager) != null)
+                {
+                    activity.startActivity(intent)
+                }
+                true
+            }
+        }
 
-        //Toolbar Colors
-        collapsingToolbar!!.setContentScrimColor(trackColor)
-        collapsingToolbar!!.setStatusBarScrimColor(trackColor)
+        val p = fab.layoutParams as CoordinatorLayout.LayoutParams
+        if (event.isPast)
+        {
+            p.anchorId = View.NO_ID
+            fab.layoutParams = p
+            fab.visibility = View.GONE
+        }
+        else
+        {
+            p.anchorId = R.id.appbar
+            fab.layoutParams = p
+            fab.visibility = View.VISIBLE
+        }
     }
 
     /**
@@ -290,56 +235,50 @@ class EventDetailFragment() : Fragment()
      */
     private fun updateContent(event: Event, speakers: List<UserAccount>?, conflict: Boolean)
     {
-        var adapter = EventDetailAdapter(getActivity(), trackColor)
-
-        adapter.addSpace(getResources().getDimensionPixelSize(R.dimen.height_small))
+        val adapter = EventDetailAdapter(activity, trackColor)
 
         //Construct the time and venue string and add it to the adapter
-        val startDateVal = Date(event.startDateLong!!)
-        val endDateVal = Date(event.endDateLong!!)
-        val timeFormat = SimpleDateFormat("hh:mm a")
-        val venueFormatString = getResources().getString(R.string.event_venue_time);
+        val startDateVal = Date(event.startDateLong !!)
+        val endDateVal = Date(event.endDateLong !!)
+        val timeFormat = SimpleDateFormat("hh:mm a", Locale.US)
+        val venueFormatString = resources.getString(R.string.event_venue_time)
 
         var formattedStart = timeFormat.format(startDateVal)
-        var formattedEnd =  timeFormat.format(endDateVal)
+        val formattedEnd = timeFormat.format(endDateVal)
 
         val startMarker = formattedStart.substring(Math.max(formattedStart.length - 3, 0))
         val endMarker = formattedEnd.substring(Math.max(formattedEnd.length - 3, 0))
 
-        if (TextUtils.equals(startMarker, endMarker)) {
+        if (TextUtils.equals(startMarker, endMarker))
+        {
             formattedStart = formattedStart.substring(0, Math.max(formattedStart.length - 3, 0))
         }
 
-        adapter.addHeader(venueFormatString.format(event.venue.name, formattedStart, formattedEnd), R.drawable.ic_map)
+        adapter.addHeader(event.name, venueFormatString.format(event.venue.name, formattedStart, formattedEnd))
 
-        if(event.isNow())
-            adapter.addBody("<i><b>"+ getResources().getString(R.string.event_now) +"</b></i>")
-        else if(event.isPast())
-            adapter.addBody("<i><b>"+ getResources().getString(R.string.event_past) +"</b></i>")
-        else if(conflict)
-            adapter.addBody("<i><b>"+ getResources().getString(R.string.event_conflict) +"</b></i>")
+        //TODO add live stream link
+        //adapter.addStream("live stream link goes here")
+
+        if (event.isNow)
+            adapter.addInfo("<i><b>" + resources.getString(R.string.event_now) + "</b></i>")
+        else if (event.isPast)
+            adapter.addInfo("<i><b>" + resources.getString(R.string.event_past) + "</b></i>")
+        else if (conflict)
+            adapter.addInfo("<i><b>" + resources.getString(R.string.event_conflict) + "</b></i>")
 
         //Description text
-        if (!TextUtils.isEmpty(event.description))
+        if (! TextUtils.isEmpty(event.description))
             adapter.addBody(event.description)
 
-        //Track
-        if (!TextUtils.isEmpty(event.category))
-        {
-            var track = Track.findByServerName(event.category)
-            var trackName = getResources().getString(context.resources.getIdentifier(track.getDisplayNameRes(), "string", context.packageName))
-            val trackFormatString = getResources().getString(R.string.event_track);
-            adapter.addHeader(trackFormatString.format(trackName), R.drawable.ic_track)
-        }
-
-        adapter.addDivider()
-
-        for(item: UserAccount in speakers as ArrayList)
+        for (item: UserAccount in speakers as ArrayList)
         {
             adapter.addSpeaker(item)
         }
 
-        recycler!!.setAdapter(adapter)
+        //TODO add feedback link
+        //adapter.addFeedback("feedback link goes here")
+
+        recycler.adapter = adapter
     }
 
     /**
@@ -348,20 +287,60 @@ class EventDetailFragment() : Fragment()
     private fun updateTrackColor(category: String?)
     {
         //Default to design
-        var track = null as Track?
+        val track = if (! TextUtils.isEmpty(category)) Track.findByServerName(category)
+        else Track.findByServerName("Design")
 
-        if (!TextUtils.isEmpty(category))
-            track = Track.findByServerName(category)
+        //TODO add new backdrop assets
+//        var backdropDrawable: Drawable? = null
+//
+//        when (track)
+//        {
+//            Track.DEVELOPMENT ->
+//            {
+//                if (devDrawable == null)
+//                    TaskQueue.loadQueueDefault(activity).execute(TrackDrawableTask(activity.applicationContext,
+//                            R.drawable.illo_development))
+//                else
+//                    backdropDrawable = devDrawable
+//            }
+//
+//            Track.DESIGN ->
+//            {
+//                if (designDrawable == null)
+//                    TaskQueue.loadQueueDefault(activity).execute(TrackDrawableTask(activity.applicationContext,
+//                            R.drawable.illo_design))
+//                else
+//                    backdropDrawable = designDrawable
+//            }
+//            Track.BUSINESS ->
+//            {
+//                if (businessDrawable == null)
+//                    TaskQueue.loadQueueDefault(activity).execute(TrackDrawableTask(activity.applicationContext,
+//                            R.drawable.illo_business))
+//                else
+//                    backdropDrawable = businessDrawable
+//            }
+//        }
+//
+//        if (backdropDrawable != null)
+//            updateBackdropDrawable(backdropDrawable)
 
-        if(track == null)
-            track = Track.findByServerName("Design")
+        trackColor = ContextCompat.getColor(context,
+                context.resources.getIdentifier(track.textColorRes,
+                        "color",
+                        context.packageName))
+        fabColorList = ContextCompat.getColorStateList(context,
+                context.resources.getIdentifier(track.checkBoxSelectorRes,
+                        "color",
+                        context.packageName))
 
-        trackColor = getResources().getColor(context.resources.getIdentifier(track!!.getTextColorRes(), "color", context.packageName))
-        fabColorList = getResources().getColorStateList(context.resources.getIdentifier(track!!.getCheckBoxSelectorRes(), "color", context.packageName))
+        collapsingToolbar.setContentScrimColor(trackColor)
+        collapsingToolbar.setStatusBarScrimColor(trackColor)
+        backdrop.setBackgroundColor(trackColor)
     }
 
     private fun updateBackdropDrawable(backdropDrawable: Drawable)
     {
-        backdrop!!.setImageDrawable(backdropDrawable)
+        backdrop.setImageDrawable(backdropDrawable)
     }
 }
