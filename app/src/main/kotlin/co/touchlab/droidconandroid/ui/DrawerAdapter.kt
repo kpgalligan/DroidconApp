@@ -24,14 +24,8 @@ class DrawerAdapter(drawerItems: List<Any>, drawerClickListener: DrawerClickList
 {
     var selectedPos: Int = 1
 
-    private val dataSet: List<Any>
-    private val drawerClickListener: DrawerClickListener
-
-    init
-    {
-        dataSet = drawerItems
-        this.drawerClickListener = drawerClickListener
-    }
+    private val dataSet: List<Any> = drawerItems
+    private val drawerClickListener: DrawerClickListener = drawerClickListener
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder?, position: Int)
     {
