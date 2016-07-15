@@ -21,7 +21,9 @@ import co.touchlab.droidconandroid.data.UserAccount
 import co.touchlab.droidconandroid.tasks.AbstractFindUserTask
 import co.touchlab.droidconandroid.tasks.FindUserTask
 import co.touchlab.droidconandroid.tasks.Queues
+import co.touchlab.droidconandroid.utils.EmojiUtil
 import co.touchlab.droidconandroid.utils.Toaster
+import com.squareup.picasso.Callback
 import com.squareup.picasso.Picasso
 import com.wnafee.vector.compat.ResourcesCompat
 import kotlinx.android.synthetic.main.fragment_user_detail.*
@@ -114,13 +116,27 @@ class UserDetailFragment() : Fragment()
         val avatarKey = userAccount.avatarImageUrl()
         if (! TextUtils.isEmpty(avatarKey))
         {
+            val callback = object : Callback
+            {
+                override fun onSuccess()
+                {
+                    placeholder_emoji.text = ""
+                }
+
+                override fun onError()
+                {
+                    placeholder_emoji.text = EmojiUtil.getEmojiForUser(userAccount.name)
+                }
+            }
+
             Picasso.with(activity)
                     .load(avatarKey)
-                    .into(profile_image)
+                    .placeholder(R.drawable.circle_profile_placeholder)
+                    .into(profile_image, callback)
         }
         else
         {
-            profile_image.setImageDrawable(ResourcesCompat.getDrawable(activity, R.drawable.profile_placeholder))
+            placeholder_emoji.text = EmojiUtil.getEmojiForUser(userAccount.name)
         }
 
         val iconsDefaultColor = ContextCompat.getColor(activity, R.color.social_icons)

@@ -39,7 +39,9 @@ import co.touchlab.droidconandroid.ui.DrawerAdapter
 import co.touchlab.droidconandroid.ui.DrawerClickListener
 import co.touchlab.droidconandroid.ui.NavigationItem
 import co.touchlab.droidconandroid.ui.UpdateAllowNotificationEvent
+import co.touchlab.droidconandroid.utils.EmojiUtil
 import co.touchlab.droidconandroid.utils.TimeUtils
+import com.squareup.picasso.Callback
 import com.squareup.picasso.Picasso
 import com.wnafee.vector.compat.ResourcesCompat
 import kotlinx.android.synthetic.main.activity_schedule.*
@@ -143,10 +145,31 @@ open class ScheduleActivity : AppCompatActivity(), NfcAdapter.CreateNdefMessageC
                 R.drawable.superglyph_outline360x114dp))
 
         val avatarKey = AppPrefs.getInstance(this).avatarKey
-        if (!TextUtils.isEmpty(avatarKey)) {
+        val name = AppPrefs.getInstance(this).name
+
+        if (! TextUtils.isEmpty(avatarKey))
+        {
+            val callback = object : Callback
+            {
+                override fun onSuccess()
+                {
+                    schedule_placeholder_emoji.text = ""
+                }
+
+                override fun onError()
+                {
+                    schedule_placeholder_emoji.text = EmojiUtil.getEmojiForUser(name)
+                }
+            }
+
             Picasso.with(this)
                     .load(HTTPS_S3_AMAZONAWS_COM_DROIDCONIMAGES + avatarKey)
-                    .into(schedule_toolbar_profile)
+                    .placeholder(R.drawable.circle_profile_placeholder)
+                    .into(schedule_toolbar_profile, callback)
+        }
+        else
+        {
+            schedule_placeholder_emoji.text = EmojiUtil.getEmojiForUser(name)
         }
 
         appbar.addOnOffsetChangedListener { appBarLayout, verticalOffset ->
@@ -155,6 +178,7 @@ open class ScheduleActivity : AppCompatActivity(), NfcAdapter.CreateNdefMessageC
                 schedule_toolbar_title.alpha = percentage
                 schedule_toolbar_profile.alpha = percentage
                 schedule_toolbar_notif.alpha = percentage
+                schedule_placeholder_emoji.alpha = percentage
             }
         }
         appbar.setExpanded(true)

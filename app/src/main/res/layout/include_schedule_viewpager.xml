@@ -73,7 +73,19 @@
                         android:id="@+id/schedule_toolbar_profile"
                         android:layout_width="@dimen/height_xxtiny"
                         android:layout_height="@dimen/height_xxtiny"
-                        tools:src="@drawable/profile_placeholder"/>
+                        android:src="@drawable/circle_profile_placeholder"/>
+
+                    <TextView
+                        android:id="@+id/schedule_placeholder_emoji"
+                        android:layout_width="@dimen/height_xxtiny"
+                        android:layout_height="@dimen/height_xxtiny"
+                        android:layout_alignLeft="@id/schedule_toolbar_profile"
+                        android:layout_alignStart="@id/schedule_toolbar_profile"
+                        android:layout_alignTop="@id/schedule_toolbar_profile"
+                        android:gravity="center"
+                        android:textSize="@dimen/text_small"
+                        tools:text=":)"/>
+
                 </FrameLayout>
             </LinearLayout>
 
