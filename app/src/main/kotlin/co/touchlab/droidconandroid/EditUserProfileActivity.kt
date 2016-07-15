@@ -31,9 +31,11 @@ import co.touchlab.droidconandroid.tasks.GrabUserProfile
 import co.touchlab.droidconandroid.tasks.Queues
 import co.touchlab.droidconandroid.tasks.UpdateUserProfileTask
 import co.touchlab.droidconandroid.tasks.persisted.PersistedTaskQueueFactory
+import co.touchlab.droidconandroid.utils.EmojiUtil
 import co.touchlab.droidconandroid.utils.Toaster
 import co.touchlab.profilephotoeditor.BitmapUtils
 import co.touchlab.profilephotoeditor.PhotoScaleActivity
+import com.squareup.picasso.Callback
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.activity_edit_user_profile.*
 import org.apache.commons.lang3.StringUtils
@@ -154,10 +156,29 @@ class EditUserProfileActivity : AppCompatActivity() {
             hide_email.isChecked = !(ua.emailPublic ?: false)
         }
 
-        if (!TextUtils.isEmpty(ua.avatarKey)) {
-            Picasso.with(this).load(HTTPS_S3_AMAZONAWS_COM_DROIDCONIMAGES + ua.avatarKey).into(profile_image)
-        } else {
-            profile_image.setImageResource(R.drawable.profile_placeholder)
+        if (! TextUtils.isEmpty(ua.avatarKey))
+        {
+            val callback = object : Callback
+            {
+                override fun onSuccess()
+                {
+                    placeholder_emoji.text = ""
+                }
+
+                override fun onError()
+                {
+                    placeholder_emoji.text = EmojiUtil.getEmojiForUser(ua.name)
+                }
+            }
+
+            Picasso.with(this)
+                    .load(HTTPS_S3_AMAZONAWS_COM_DROIDCONIMAGES + ua.avatarKey)
+                    .placeholder(R.drawable.circle_profile_placeholder)
+                    .into(profile_image, callback)
+        }
+        else
+        {
+            placeholder_emoji.text = EmojiUtil.getEmojiForUser(ua.name)
         }
 
         profile_image.setOnClickListener({ callPhotoGrabber() })
