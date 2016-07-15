@@ -160,4 +160,5 @@
 
     <string name="add_contact">Add to contacts</string>
     <string name="title_activity_user_detail">Profile</string>
+    <string name="tablet">tablet</string>
 </resources>
