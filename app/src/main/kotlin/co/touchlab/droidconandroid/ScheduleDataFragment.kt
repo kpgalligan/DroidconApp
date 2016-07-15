@@ -2,6 +2,7 @@ package co.touchlab.droidconandroid
 
 import android.os.Bundle
 import android.support.v4.app.Fragment
+import android.support.v7.widget.GridLayoutManager
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
@@ -23,6 +24,7 @@ import kotlinx.android.synthetic.main.fragment_schedule_data.*
 private const val ALL_EVENTS = "ALL_EVENTS"
 private const val DAY = "DAY"
 private const val POSITION = "POSITION"
+private const val TABLET_COLUMNS = 2
 
 fun createScheduleDataFragment(all: Boolean, day: Long, position: Int): ScheduleDataFragment {
     val scheduleDataFragment = ScheduleDataFragment()
@@ -50,10 +52,18 @@ class ScheduleDataFragment() : Fragment() {
         return inflater?.inflate(R.layout.fragment_schedule_data, container, false)
     }
 
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
+    override fun onViewCreated(view: View?, savedInstanceState: Bundle?)
+    {
+        super.onViewCreated(view, savedInstanceState)
+        if (getString(R.string.tablet).equals(eventList.tag))
+        {
+            eventList.layoutManager = GridLayoutManager(activity, TABLET_COLUMNS)
+        }
+        else
+        {
+            eventList.layoutManager = LinearLayoutManager(activity)
+        }
 
-        eventList.layoutManager = LinearLayoutManager(activity)
         eventList.adapter = EventAdapter( arguments.getBoolean(ALL_EVENTS, true)
                 , (activity as? FilterInterface)?.getCurrentFilters() ?: emptyList()
                 , ScheduleEventClickListener()
