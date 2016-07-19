@@ -99,7 +99,7 @@ class UserDetailFragment() : Fragment()
     {
         if (findUserTask.isError)
         {
-            Toaster.showMessage(activity, findUserTask.errorStringCode !!)
+            Toaster.showMessage(activity, getString(R.string.network_error))
 
             if (activity is UserDetailActivity)
                 (activity as UserDetailActivity).onFragmentFinished()
