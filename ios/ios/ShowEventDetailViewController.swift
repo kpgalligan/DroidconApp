@@ -10,6 +10,8 @@ import UIKit
 
 @objc class ShowEventDetailViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, DCPEventDetailHost {
     
+    // MARK: Properties
+    
     var titleString: String?
     var descriptionString: String?
     var dateTime: String?
@@ -19,6 +21,70 @@ import UIKit
     var eventDetailPresenter: DCPEventDetailPresenter!
     
     @IBOutlet weak var tableView : UITableView!
+    @IBOutlet weak var rsvpButton: UIButton!
+    
+    // MARK: Lifecycle events
+    
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(true)
+        
+        let tintColor = UIColor(red:(0/255.0), green:(90/255.0), blue:(224/255.0), alpha: 1.0)
+        navigationController!.navigationBar.barTintColor = tintColor
+        navigationController!.navigationBar.translucent = false
+        UINavigationBar.appearance().tintColor = UIColor.whiteColor()
+        
+        // Hide the nav bar bottom shadow
+        navigationController!.navigationBar.setBackgroundImage(UIImage(), forBarPosition: UIBarPosition.Any, barMetrics: UIBarMetrics.Default)
+        navigationController!.navigationBar.shadowImage = UIImage()
+        
+    }
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
+        if eventDetailPresenter != nil {
+            eventDetailPresenter.unregister()
+        }
+        
+        eventDetailPresenter = DCPEventDetailPresenter(androidContentContext: DCPAppManager.getContext(), withLong: event.getId(), withDCPEventDetailHost: self)
+        
+        let nib = UINib(nibName: "EventTableViewCell", bundle: nil)
+        tableView.registerNib(nib, forCellReuseIdentifier: "eventCell")
+        
+        let nib2 = UINib(nibName: "SpeakerTableViewCell", bundle: nil)
+        tableView.registerNib(nib2, forCellReuseIdentifier: "speakerCell")
+        
+        self.tableView.contentInset = UIEdgeInsetsZero
+        self.tableView.separatorStyle = .None
+        
+        print(dateTime!)
+        print(trackNumString!)
+        
+        self.tableView.reloadData()
+        
+        styleButton()
+    }
+    
+    override func viewDidDisappear(animated: Bool) {
+        eventDetailPresenter.unregister()
+        //        eventDetailPresenter = nil
+    }
+    
+    override func didReceiveMemoryWarning() {
+        super.didReceiveMemoryWarning()
+        // Dispose of any resources that can be recreated.
+    }
+    
+    // MARK: Data refresh
+    
+    func dataRefresh() {
+        event = eventDetailPresenter.getEventDetailLoadTask().getEvent()
+        speakers = PlatformContext_iOS.javaListToNSArray(eventDetailPresenter.getEventDetailLoadTask().getEvent().getSpeakerList()) as? [DCDEventSpeaker]
+        tableView.reloadData()
+        updateButton()
+    }
+    
+    // MARK: TableView
     
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {
         return 2
@@ -61,15 +127,15 @@ import UIKit
             return "Speakers : "
         }
         
-        return "Speaker : "
+        return ""
     }
     
     func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         if section == 0 {
-            return 0.1
+            return 0
         }
         
-        return 25
+        return 0
     }
     
     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
@@ -79,22 +145,22 @@ import UIKit
             let rTitle = titleString!.boundingRectWithSize(szTitle, options: NSStringDrawingOptions.UsesLineFragmentOrigin, attributes:attrTitle, context:nil)
             let htTitle = ceil(rTitle.size.height)
             
-            let attrDescription = [NSFontAttributeName: UIFont.systemFontOfSize(14.0)]
+            let attrDescription = [NSFontAttributeName: UIFont.systemFontOfSize(16.0)]
             let szDescription = CGSize(width: view.bounds.width - 16, height:500)
             let rDescription = descriptionString!.boundingRectWithSize(szDescription, options: NSStringDrawingOptions.UsesLineFragmentOrigin, attributes:attrDescription, context:nil)
             let htDescription = ceil(rDescription.size.height)
 
-            return htTitle + htDescription + 50.0
+            return htTitle + htDescription + 100
         }
 
         
         if let speakerDescription = speakers?[indexPath.row].valueForKey("userAccount_")!.valueForKey("profile_") {
-            let attrDescription = [NSFontAttributeName: UIFont.systemFontOfSize(14.0)]
+            let attrDescription = [NSFontAttributeName: UIFont.systemFontOfSize(16.0)]
             let szDescription = CGSize(width: view.bounds.width - 16, height:500)
             let rDescription = speakerDescription.boundingRectWithSize(szDescription, options: NSStringDrawingOptions.UsesLineFragmentOrigin, attributes:attrDescription, context:nil)
             let htDescription = ceil(rDescription.size.height)
             
-            return htDescription + 133.0
+            return htDescription + 100
         }
         
         return 200
@@ -104,51 +170,30 @@ import UIKit
         return 500.0
     }
     
-    override func viewWillAppear(animated: Bool) {
-        super.viewWillAppear(true)
-        
-        let tintColor = UIColor(red:(125/255.0), green:(216/255.0), blue:(20/255.0), alpha: 1.0)
-        navigationController!.navigationBar.barTintColor = tintColor
-        UINavigationBar.appearance().tintColor = UIColor.whiteColor()
-    }
+    // MARK: Button
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        
-        if eventDetailPresenter != nil {
-            eventDetailPresenter.unregister()
-        }
-        
-        eventDetailPresenter = DCPEventDetailPresenter(androidContentContext: DCPAppManager.getContext(), withLong: event.getId(), withDCPEventDetailHost: self)
-        
-        let nib = UINib(nibName: "EventTableViewCell", bundle: nil)
-        tableView.registerNib(nib, forCellReuseIdentifier: "eventCell")
-        
-        let nib2 = UINib(nibName: "SpeakerTableViewCell", bundle: nil)
-        tableView.registerNib(nib2, forCellReuseIdentifier: "speakerCell")
-        
-        self.tableView.contentInset = UIEdgeInsetsMake(1.0, 0.0, 0.0, 0.0);
-        self.tableView.tableHeaderView = UIView(frame: CGRectMake(0.0, 0.0, tableView.bounds.size.width, 0.1))
-        
-        print(dateTime!)
-        print(trackNumString!)
-        
-        self.tableView.reloadData()
-    }
-    
-    override func viewDidDisappear(animated: Bool) {
-        eventDetailPresenter.unregister()
-//        eventDetailPresenter = nil
+    func styleButton() {
+        rsvpButton.layer.cornerRadius = 24
+        rsvpButton.layer.masksToBounds = true
+        rsvpButton.layer.shadowColor = UIColor.blackColor().CGColor
+        rsvpButton.layer.shadowOffset = CGSizeMake(5, 5)
+        rsvpButton.layer.shadowRadius = 5
+        rsvpButton.layer.shadowOpacity = 1.0
+        updateButton()
     }
 
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
+    
+    func updateButton() {
+        if (event.isRsvped()) {
+            rsvpButton.setImage(UIImage(named: "ic_done"), forState: .Normal)
+            rsvpButton.backgroundColor = UIColor.whiteColor()
+        } else {
+            rsvpButton.setImage(UIImage(named: "ic_add"), forState: .Normal)
+            rsvpButton.backgroundColor = UIColor(red: 93/255.0, green: 253/255.0, blue: 173/255.0, alpha: 1.0)
+        }
     }
     
-    func dataRefresh() {
-        event = eventDetailPresenter.getEventDetailLoadTask().getEvent();
-        speakers = PlatformContext_iOS.javaListToNSArray(eventDetailPresenter.getEventDetailLoadTask().getEvent().getSpeakerList()) as? [DCDEventSpeaker];
-        tableView.reloadData();
+    @IBAction func toggleRsvp(sender: UIButton) {
+        eventDetailPresenter.toggleRsvp()
     }
 }
