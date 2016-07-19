@@ -2,7 +2,6 @@ package co.touchlab.droidconandroid
 
 import android.content.Context
 import android.content.Intent
-import android.content.res.Configuration
 import android.graphics.PorterDuff
 import android.net.Uri
 import android.nfc.NdefMessage
@@ -88,18 +87,22 @@ open class ScheduleActivity : AppCompatActivity(), NfcAdapter.CreateNdefMessageC
                 }
 
                 setContentView(R.layout.activity_schedule)
-                setupToolbar()
-                setupNavigationDrawer()
                 initNfc()
-                adjustToolBarAndDrawers()
-
-                EventBusExt.getDefault().register(this)
 
                 // Start IntentService to register this application with GCM.
                 val intent = Intent(this, RegistrationIntentService::class.java)
                 startService(intent)
             }
         }
+    }
+
+    override fun onStart() {
+        super.onStart()
+        setupToolbar()
+        setupNavigationDrawer()
+        adjustToolBarAndDrawers()
+
+        EventBusExt.getDefault().register(this)
     }
 
     override fun onResume() {
@@ -116,13 +119,6 @@ open class ScheduleActivity : AppCompatActivity(), NfcAdapter.CreateNdefMessageC
         }
     }
 
-    override fun onConfigurationChanged(newConfig: Configuration?)
-    {
-        super.onConfigurationChanged(newConfig)
-        setupToolbar()
-        setupNavigationDrawer()
-    }
-
     override fun onBackPressed()
     {
         when {
@@ -137,10 +133,14 @@ open class ScheduleActivity : AppCompatActivity(), NfcAdapter.CreateNdefMessageC
         outState.putBoolean(ALL_EVENTS, allEvents)
     }
 
+    override fun onStop() {
+        EventBusExt.getDefault().unregister(this)
+        super.onStop()
+    }
+
     override fun onDestroy() {
         super.onDestroy()
         conferenceDataPresenter?.unregister()
-        EventBusExt.getDefault().unregister(this)
     }
 
     private fun setupToolbar() {
@@ -214,7 +214,7 @@ open class ScheduleActivity : AppCompatActivity(), NfcAdapter.CreateNdefMessageC
                     R.string.navigation_drawer_open, R.string.navigation_drawer_close
             )
             drawer_layout.setDrawerListener(drawerToggle)
-
+            drawer_layout.closeDrawer(drawer_recycler)
             drawerToggle.syncState()
             drawer_layout.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED, drawer_recycler)
         }
