@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="10117" systemVersion="15D21" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9532" systemVersion="14F27" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9530"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <objects>
@@ -12,44 +12,42 @@
             <rect key="frame" x="0.0" y="0.0" width="320" height="400"/>
             <autoresizingMask key="autoresizingMask"/>
             <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="XOL-iK-bFV" id="YcR-Cc-Hdz">
-                <rect key="frame" x="0.0" y="0.0" width="320" height="399"/>
+                <rect key="frame" x="0.0" y="0.0" width="320" height="399.5"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Kv0-F4-vGC">
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Kv0-F4-vGC">
                         <rect key="frame" x="8" y="8" width="48" height="48"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="48" id="QNY-bY-PUj"/>
                             <constraint firstAttribute="width" constant="48" id="aAr-qs-EkQ"/>
                         </constraints>
                     </imageView>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qCf-1y-7Lg">
-                        <rect key="frame" x="64" y="22" width="41" height="20"/>
-                        <fontDescription key="fontDescription" type="system" weight="medium" pointSize="16"/>
-                        <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                        <nil key="highlightedColor"/>
-                    </label>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" numberOfLines="40" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dmI-Z3-ba9">
-                        <rect key="frame" x="64" y="64" width="256" height="15"/>
-                        <fontDescription key="fontDescription" type="system" pointSize="12"/>
-                        <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                        <nil key="highlightedColor"/>
-                    </label>
+                    <stackView opaque="NO" contentMode="scaleToFill" misplaced="YES" axis="vertical" alignment="top" spacing="12" translatesAutoresizingMaskIntoConstraints="NO" id="e4I-gl-rbG">
+                        <rect key="frame" x="70" y="8" width="238" height="41"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qCf-1y-7Lg">
+                                <rect key="frame" x="0.0" y="0.0" width="31" height="15"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                <color key="textColor" red="0.0" green="0.25490196079999999" blue="0.63921568630000003" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" numberOfLines="40" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dmI-Z3-ba9">
+                                <rect key="frame" x="0.0" y="27" width="31" height="15"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                    </stackView>
                 </subviews>
                 <constraints>
-                    <constraint firstItem="qCf-1y-7Lg" firstAttribute="centerY" secondItem="Kv0-F4-vGC" secondAttribute="centerY" id="8UZ-cv-41v"/>
-                    <constraint firstItem="Kv0-F4-vGC" firstAttribute="top" secondItem="YcR-Cc-Hdz" secondAttribute="top" constant="8" id="AQR-r1-qp7"/>
-                    <constraint firstAttribute="bottom" secondItem="dmI-Z3-ba9" secondAttribute="bottom" constant="8" id="ayo-9H-56B"/>
-                    <constraint firstItem="dmI-Z3-ba9" firstAttribute="trailing" secondItem="YcR-Cc-Hdz" secondAttribute="trailingMargin" constant="8" id="gKZ-Lw-G5g"/>
-                    <constraint firstItem="qCf-1y-7Lg" firstAttribute="leading" secondItem="Kv0-F4-vGC" secondAttribute="trailing" constant="8" id="hVw-Bo-jSF"/>
-                    <constraint firstItem="dmI-Z3-ba9" firstAttribute="top" secondItem="Kv0-F4-vGC" secondAttribute="bottom" constant="8" id="qCT-hq-lHi"/>
-                    <constraint firstItem="Kv0-F4-vGC" firstAttribute="leading" secondItem="YcR-Cc-Hdz" secondAttribute="leading" constant="8" id="uhr-Tz-HUf"/>
-                    <constraint firstItem="dmI-Z3-ba9" firstAttribute="leading" secondItem="qCf-1y-7Lg" secondAttribute="leading" id="xoa-uh-ZDs"/>
+                    <constraint firstItem="e4I-gl-rbG" firstAttribute="leading" secondItem="Kv0-F4-vGC" secondAttribute="trailing" constant="14" id="1Fo-H4-4ld"/>
+                    <constraint firstItem="e4I-gl-rbG" firstAttribute="leading" secondItem="Kv0-F4-vGC" secondAttribute="trailing" constant="14" id="TWn-5m-DqN"/>
+                    <constraint firstAttribute="trailingMargin" secondItem="e4I-gl-rbG" secondAttribute="trailing" id="Yaa-yi-d2X"/>
+                    <constraint firstItem="Kv0-F4-vGC" firstAttribute="leading" secondItem="YcR-Cc-Hdz" secondAttribute="leadingMargin" constant="4" id="bnt-cF-Pba"/>
+                    <constraint firstItem="e4I-gl-rbG" firstAttribute="top" secondItem="YcR-Cc-Hdz" secondAttribute="topMargin" id="nGy-fk-BwX"/>
+                    <constraint firstItem="Kv0-F4-vGC" firstAttribute="top" secondItem="YcR-Cc-Hdz" secondAttribute="topMargin" id="rxf-Sm-xkp"/>
                 </constraints>
-                <variation key="default">
-                    <mask key="constraints">
-                        <exclude reference="ayo-9H-56B"/>
-                    </mask>
-                </variation>
             </tableViewCellContentView>
             <connections>
                 <outlet property="infoLabel" destination="dmI-Z3-ba9" id="XHG-tr-C9C"/>
