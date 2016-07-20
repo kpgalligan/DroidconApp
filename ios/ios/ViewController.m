@@ -35,8 +35,8 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    self.tableView.tableHeaderView = [[UIView alloc] initWithFrame:CGRectMake(0.0f, 0.0f, self.tableView.bounds.size.width, 15.0f)];
-    self.tableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
+    self.tableView.tableHeaderView = nil;
+    self.tableView.tableFooterView = nil;
     
     [self loadConferenceSchedule];
     self.tableView.delegate = self.platformContext;
@@ -69,8 +69,8 @@
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     
-    self.navigationController.navigationBar.barTintColor = [UIColor colorWithRed:(125/255.0) green:(216/255.0) blue:(20/255.0) alpha:1.0];
-    self.navigationController.navigationBar.tintColor = [UIColor whiteColor];
+    self.navigationController.navigationBar.barTintColor = [UIColor colorWithRed:(0/255.0) green:(90/255.0) blue:(224/255.0) alpha:1.0];
+    self.navigationController.navigationBar.translucent = false;
     [self.navigationController.navigationBar setTitleTextAttributes : @{NSForegroundColorAttributeName: [UIColor whiteColor]}];
 }
 
