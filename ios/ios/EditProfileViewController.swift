@@ -30,6 +30,8 @@ class EditProfileViewController: UIViewController, DCPEditProfileHost {
     @IBOutlet weak var bioIcon: UIImageView!
     @IBOutlet weak var websiteIcon: UIImageView!
     @IBOutlet weak var navBar: UINavigationBar!
+    @IBOutlet weak var scrollView: UIScrollView!
+    @IBOutlet weak var contentView: UIView!
     
     var userDetailPresenter: DCPEditProfilePresenter!
     
@@ -64,6 +66,11 @@ class EditProfileViewController: UIViewController, DCPEditProfileHost {
         websiteIcon.image = websiteIcon.image!.imageWithRenderingMode(UIImageRenderingMode.AlwaysTemplate)
         websiteIcon.tintColor = UIColor(red: 0/255.0, green: 65/255.0, blue: 163/255.0, alpha: 1.0)
         
+    }
+    
+    override func viewDidLayoutSubviews() {
+        scrollView.addSubview(contentView)
+        scrollView.contentSize = contentView.frame.size
     }
     
     override func viewWillDisappear(animated: Bool) {
