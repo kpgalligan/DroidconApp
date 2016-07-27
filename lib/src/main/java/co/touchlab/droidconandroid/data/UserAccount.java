@@ -66,6 +66,86 @@ public class UserAccount
     @DatabaseField
     public Boolean emailPublic;
 
+    public Long getId()
+    {
+        return id;
+    }
+
+    public String getName()
+    {
+        return name;
+    }
+
+    public String getProfile()
+    {
+        return profile;
+    }
+
+    public String getUserCode()
+    {
+        return userCode;
+    }
+
+    public String getCompany()
+    {
+        return company;
+    }
+
+    public String getFacebook()
+    {
+        return facebook;
+    }
+
+    public String getTwitter()
+    {
+        return twitter;
+    }
+
+    public String getLinkedIn()
+    {
+        return linkedIn;
+    }
+
+    public String getWebsite()
+    {
+        return website;
+    }
+
+    public boolean isFollowing()
+    {
+        return following;
+    }
+
+    public String getEmail()
+    {
+        return email;
+    }
+
+    public String getgPlus()
+    {
+        return gPlus;
+    }
+
+    public String getPhone()
+    {
+        return phone;
+    }
+
+    public String getCoverKey()
+    {
+        return coverKey;
+    }
+
+    public boolean getEmailPublic()
+    {
+        return emailPublic == null ? false : emailPublic;
+    }
+
+    public String getAvatarKey()
+    {
+        return avatarKey;
+    }
+
     public String avatarImageUrl()
     {
         if(TextUtils.isEmpty(avatarKey)) return null;

@@ -25,7 +25,9 @@
 		63EE30DF1CD025AC00B64D3D /* EventListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63EE30DE1CD025AC00B64D3D /* EventListCell.swift */; };
 		A133A438C64DE6FC93D9530F /* Pods_ios.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CBB7FE920FA6320D289E1684 /* Pods_ios.framework */; };
 		B51821F4B77C4FA3452415AC /* Pods_iosTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 29474B79E0DD967EE9352429 /* Pods_iosTests.framework */; };
+		F92CCB491D3FF35D0048C8A2 /* EditProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F92CCB481D3FF35D0048C8A2 /* EditProfileViewController.swift */; };
 		F9903FA21D3FBEC70050687E /* DroidconTabBarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9903FA11D3FBEC70050687E /* DroidconTabBarViewController.swift */; };
+		F9D6952D1D47AF9D0095F0F9 /* AboutViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9D6952C1D47AF9D0095F0F9 /* AboutViewController.swift */; };
 		FA258F5E1C934BA200986E0D /* dataseed.json in Resources */ = {isa = PBXBuildFile; fileRef = FA258F5D1C934BA200986E0D /* dataseed.json */; };
 		FA258F611C937F5900986E0D /* NoteTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = FA258F601C937F5900986E0D /* NoteTableViewCell.xib */; };
 		FA258F641C9381C600986E0D /* NoteTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = FA258F631C9381C600986E0D /* NoteTableViewCell.m */; };
@@ -89,7 +91,9 @@
 		94A921638B3412284B5796F9 /* Pods-iosUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-iosUITests.release.xcconfig"; path = "Pods/Target Support Files/Pods-iosUITests/Pods-iosUITests.release.xcconfig"; sourceTree = "<group>"; };
 		C82EA0FD61D649A5A084911A /* Pods-iosTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-iosTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-iosTests/Pods-iosTests.release.xcconfig"; sourceTree = "<group>"; };
 		CBB7FE920FA6320D289E1684 /* Pods_ios.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ios.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		F92CCB481D3FF35D0048C8A2 /* EditProfileViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EditProfileViewController.swift; sourceTree = "<group>"; };
 		F9903FA11D3FBEC70050687E /* DroidconTabBarViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DroidconTabBarViewController.swift; sourceTree = "<group>"; };
+		F9D6952C1D47AF9D0095F0F9 /* AboutViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AboutViewController.swift; sourceTree = "<group>"; };
 		FA258F5D1C934BA200986E0D /* dataseed.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = dataseed.json; sourceTree = "<group>"; };
 		FA258F601C937F5900986E0D /* NoteTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = NoteTableViewCell.xib; sourceTree = "<group>"; };
 		FA258F621C9381C600986E0D /* NoteTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NoteTableViewCell.h; sourceTree = "<group>"; };
@@ -214,6 +218,8 @@
 				63EE30D51CC7DDE600B64D3D /* UIViewController+Utils.h */,
 				63EE30DE1CD025AC00B64D3D /* EventListCell.swift */,
 				F9903FA11D3FBEC70050687E /* DroidconTabBarViewController.swift */,
+				F92CCB481D3FF35D0048C8A2 /* EditProfileViewController.swift */,
+				F9D6952C1D47AF9D0095F0F9 /* AboutViewController.swift */,
 			);
 			path = ios;
 			sourceTree = "<group>";
@@ -540,6 +546,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F92CCB491D3FF35D0048C8A2 /* EditProfileViewController.swift in Sources */,
 				63EE30DF1CD025AC00B64D3D /* EventListCell.swift in Sources */,
 				63EE30D21CC6C76200B64D3D /* LoginViewController.swift in Sources */,
 				63EE30CC1CC5E1BD00B64D3D /* CheckLoginController.swift in Sources */,
@@ -548,6 +555,7 @@
 				63EE30D01CC6AD4400B64D3D /* WelcomeViewController.swift in Sources */,
 				FA86A7F81C91EDDE00C09CE7 /* PlatformContext_iOS.m in Sources */,
 				631B98F61C7D6533008AA20D /* ViewController.m in Sources */,
+				F9D6952D1D47AF9D0095F0F9 /* AboutViewController.swift in Sources */,
 				631B98F31C7D6533008AA20D /* AppDelegate.m in Sources */,
 				FA258F641C9381C600986E0D /* NoteTableViewCell.m in Sources */,
 				FAE033A61C974C65001C50E1 /* ShowEventDetailViewController.swift in Sources */,
