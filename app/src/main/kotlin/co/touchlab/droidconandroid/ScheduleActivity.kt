@@ -114,15 +114,26 @@ open class ScheduleActivity : AppCompatActivity(), NfcAdapter.CreateNdefMessageC
         val lastRefresh = prefs.refreshTime
 
         if (prefs.isLoggedIn
-                && (System.currentTimeMillis() - lastRefresh > (DateUtils.HOUR_IN_MILLIS * 6))) {
+                && (System.currentTimeMillis() - lastRefresh > (DateUtils.HOUR_IN_MILLIS * 6)))
+        {
             RefreshScheduleData.callMe(this)
+        }
+
+        if (isTablet())
+        {
+            drawer_layout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_OPEN, drawer_recycler)
+        }
+        else
+        {
+            drawer_layout.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED, drawer_recycler)
+            drawer_layout.closeDrawer(drawer_recycler)
         }
     }
 
     override fun onBackPressed()
     {
         when {
-            getString(R.string.tablet).equals(drawer_layout.tag) &&
+            !isTablet() &&
                     drawer_layout.isDrawerOpen(drawer_recycler) -> drawer_layout.closeDrawer(drawer_recycler)
             else -> super.onBackPressed()
         }
@@ -146,8 +157,8 @@ open class ScheduleActivity : AppCompatActivity(), NfcAdapter.CreateNdefMessageC
     private fun setupToolbar() {
         setSupportActionBar(toolbar)
         supportActionBar?.setDisplayShowTitleEnabled(false)
-        supportActionBar?.setDisplayHomeAsUpEnabled(! getString(R.string.tablet).equals(drawer_layout.tag))
-        supportActionBar?.setHomeButtonEnabled(! getString(R.string.tablet).equals(drawer_layout.tag))
+        supportActionBar?.setDisplayHomeAsUpEnabled(! isTablet())
+        supportActionBar?.setHomeButtonEnabled(! isTablet())
 
         schedule_backdrop.setImageDrawable(ResourcesCompat.getDrawable(this,
                 R.drawable.superglyph_outline360x114dp))
@@ -202,9 +213,9 @@ open class ScheduleActivity : AppCompatActivity(), NfcAdapter.CreateNdefMessageC
     }
 
     private fun setupNavigationDrawer() {
-        if(getString(R.string.tablet).equals(drawer_layout.tag))
+
+        if(isTablet())
         {
-            drawer_layout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_OPEN, drawer_recycler)
             drawer_layout.setScrimColor(ContextCompat.getColor(this, android.R.color.transparent))
         }
         else
@@ -214,14 +225,12 @@ open class ScheduleActivity : AppCompatActivity(), NfcAdapter.CreateNdefMessageC
                     R.string.navigation_drawer_open, R.string.navigation_drawer_close
             )
             drawer_layout.setDrawerListener(drawerToggle)
-            drawer_layout.closeDrawer(drawer_recycler)
             drawerToggle.syncState()
-            drawer_layout.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED, drawer_recycler)
         }
 
         drawer_recycler.adapter = DrawerAdapter(getDrawerItems(), object : DrawerClickListener {
             override fun onNavigationItemClick(position: Int, titleRes: Int) {
-                if (! getString(R.string.tablet).equals(drawer_layout.tag)) drawer_layout.closeDrawer(drawer_recycler)
+                if (! isTablet()) drawer_layout.closeDrawer(drawer_recycler)
 
                 when (titleRes) {
                     R.string.explore -> {
@@ -323,10 +332,14 @@ open class ScheduleActivity : AppCompatActivity(), NfcAdapter.CreateNdefMessageC
             val ua = DatabaseHelper.getInstance(this).userAccountDao.queryForId(
                     userId)
             if (ua != null && ua.userCode != null && !TextUtils.isEmpty(ua.userCode)) {
-                if (! getString(R.string.tablet).equals(drawer_layout.tag)) drawer_layout.closeDrawer(drawer_recycler)
+                if (! isTablet()) drawer_layout.closeDrawer(drawer_recycler)
                 UserDetailActivity.callMe(this, ua.userCode)
             }
         }
+    }
+
+    private fun isTablet() : Boolean {
+        return resources.getBoolean(R.bool.is_tablet)
     }
 
     private fun initNfc() {
