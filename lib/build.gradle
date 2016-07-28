@@ -10,28 +10,30 @@ dependencies {
 
     apt 'co.touchlab.squeaky:squeaky-processor:0.5.0.0'
     compile 'co.touchlab.squeaky:squeaky-query:0.5.0.0'
-    compile 'co.touchlab:magicthreads:0.9.0'
+    provided 'com.intellij:annotations:9.0.4'
+    compile 'commons-io:commons-io:1.4'
+    compile 'org.apache.commons:commons-lang3:3.3.2'
+    compile 'co.touchlab:magicthreads:0.9.1'
 
     compile 'com.squareup.retrofit:retrofit:1.9.0'
     compile 'de.greenrobot:eventbus:2.4.0'
-    compile 'commons-io:commons-io:2.4'
     compile 'com.google.code.gson:gson:2.3.1'
-    compile 'org.apache.commons:commons-lang3:3.3.2'
 
-    testApt 'co.touchlab.doppel:testapt:0.1.0-SNAPSHOT'
+    testApt 'co.touchlab.doppel:testapt:'+ coreVersion
 
-    doppel 'com.squareup.retrofit:retrofit:1.9.1-SNAPSHOT@dop'
-    doppel 'com.google.code.gson:gson:2.6.2-SNAPSHOT@dop'
-    doppel 'de.greenrobot:eventbus:2.2.1-SNAPSHOT@dop'
-    doppel 'co.touchlab.squeaky:squeakycore:0.5.0.0-SNAPSHOT@dop'
-    doppel 'co.touchlab.squeaky:squeakyquery:0.5.0.0-SNAPSHOT@dop'
-    doppel 'co.touchlab:magicthreads:0.9.0-SNAPSHOT@dop'
-    doppel 'org.apache.commons:commons-lang3:3.3.2-SNAPSHOT@dop'
-    doppel 'commons-io:commons-io:1.4-SNAPSHOT@dop'
-    doppel 'rxjava:rxjava:1.1.0-SNAPSHOT@dop'
+    doppel 'doppl.com.squareup.retrofit:retrofit:1.9.0.0@dop'
+    doppel 'doppl.com.google.code.gson:gson:2.6.2.1@dop'
+    doppel 'doppl.de.greenrobot:eventbus:2.4.0.0@dop'
+    doppel 'doppl.co.touchlab.squeaky:squeaky-core:0.5.0.0@dop'
+    doppel 'doppl.co.touchlab.squeaky:squeaky-query:0.5.0.0@dop'
+    doppel 'doppl.co.touchlab:magicthreads:0.9.1.0@dop'
+    doppel 'doppl.org.apache.commons:commons-lang3:3.3.2@dop'
+    doppel 'doppl.commons-io:commons-io:1.4@dop'
+    doppel 'doppl.io.reactivex:rxjava:1.0.0.0@dop'
 
-    provided 'com.intellij:intellijannotations:9.0.4'
-    doppel 'com.intellij:intellijannotations:9.0.4-SNAPSHOT@dop'
+
+    provided 'com.intellij:annotations:9.0.4'
+    doppel 'doppl.com.intellij:intellijannotations:9.0.4@dop'
 }
 
 j2objcConfig {

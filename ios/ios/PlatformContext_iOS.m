@@ -161,13 +161,6 @@
 }
 
 #pragma Table View - Delegate
-- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
-//    if(self.hourBlocks == nil)
-//        return 0;
-//    else
-//        return [self.hourBlocks count];
-    return 1;
-}
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
     
@@ -242,28 +235,5 @@
         [self.reloadDelegate showEventDetailViewWithEvent:event andIndex:[indexPath row]];
     }
 }
-
-- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
-{
-    UIView *headerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, tableView.frame.size.width, 30)];
-    /* Create custom view to display section header... */
-    UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(20, -3, tableView.frame.size.width-40, 20)];
-    [label setFont:[UIFont systemFontOfSize:12.0]];
-    [label setTextColor:[UIColor colorWithRed:(87/255.0) green:(125/255.0) blue:(140/255.0) alpha:1.0]];
-    [label setTextAlignment:NSTextAlignmentCenter];
-//    DCPConferenceHourHolder *hourHolder = [self.hourBlocks objectAtIndex:section];
-    NSString *sectionName = @"Heyo";
-    [label setText:sectionName];
-    [headerView addSubview:label];
-    [headerView setBackgroundColor:[UIColor clearColor]];
-    
-    return headerView;
-}
-
-- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
-{
-    return 30.0;
-}
-
 
 @end
