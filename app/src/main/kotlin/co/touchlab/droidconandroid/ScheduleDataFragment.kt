@@ -17,9 +17,8 @@ import co.touchlab.droidconandroid.presenter.ConferenceDayHolder
 import co.touchlab.droidconandroid.presenter.ScheduleBlockHour
 import co.touchlab.droidconandroid.ui.EventAdapter
 import co.touchlab.droidconandroid.ui.EventClickListener
-import java.util.*
-
 import kotlinx.android.synthetic.main.fragment_schedule_data.*
+import java.util.*
 
 private const val ALL_EVENTS = "ALL_EVENTS"
 private const val DAY = "DAY"
@@ -55,7 +54,7 @@ class ScheduleDataFragment() : Fragment() {
     override fun onViewCreated(view: View?, savedInstanceState: Bundle?)
     {
         super.onViewCreated(view, savedInstanceState)
-        if (getString(R.string.tablet).equals(eventList.tag))
+        if (resources.getBoolean(R.bool.is_tablet))
         {
             eventList.layoutManager = GridLayoutManager(activity, TABLET_COLUMNS)
         }

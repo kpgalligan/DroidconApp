@@ -190,7 +190,7 @@ class EventAdapter(private val allEvents: Boolean
         }
 
         override fun setTimeGap(b : Boolean) {
-            if (! itemView.context.getString(R.string.tablet).equals(itemView.tag)) {
+            if (!isTablet(itemView)) {
                 val topPadding = if (b) R.dimen.padding_small else R.dimen.padding_xmicro
                 itemView.setPadding(itemView.paddingLeft,
                         itemView.context.resources.getDimensionPixelOffset(topPadding),
@@ -201,6 +201,10 @@ class EventAdapter(private val allEvents: Boolean
 
         fun setOnClickListener(listener: () -> Unit) {
             itemView.card.setOnClickListener { listener() }
+        }
+
+        fun isTablet(itemView : View) : Boolean {
+            return itemView.context.resources.getBoolean(R.bool.is_tablet)
         }
     }
 
