@@ -6,8 +6,10 @@ buildscript {
         mavenCentral()
         maven { url "https://plugins.gradle.org/m2/" }
         maven { url "http://dl.bintray.com/populov/maven" }
-        flatDir {
-            dirs "/Users/kgalligan/temp/flatdirtest"
+        maven {
+            // change to point to your repo, e.g. http://my.org/repo
+//            url "http://dopplmaven.s3-website-us-east-1.amazonaws.com/"
+            url dopplMavenDeploy
         }
 //        maven { url 'http://oss.jfrog.org/artifactory/oss-snapshot-local' }
     }
@@ -17,7 +19,7 @@ buildscript {
         classpath 'com.neenbedankt.gradle.plugins:android-apt:1.4'
         classpath 'com.google.gms:google-services:3.0.0'
         classpath 'net.ltgt.gradle:gradle-apt-plugin:0.5'
-        classpath 'com.touchlab.doppel:doppelgradle:0.1.0-alpha-SNAPSHOT'
+        classpath  group: 'co.touchlab.doppel', name: 'doppelgradle', version: coreVersion
 
         // NOTE: Do not place your application dependencies here; they belong
         // in the individual module build.gradle files
@@ -30,8 +32,10 @@ allprojects {
         maven { url "http://dl.bintray.com/populov/maven" }
         jcenter()
         mavenCentral()
-        flatDir {
-            dirs "/Users/kgalligan/temp/flatdirtest"
+        maven {
+            // change to point to your repo, e.g. http://my.org/repo
+//            url "http://dopplmaven.s3-website-us-east-1.amazonaws.com/"
+            url dopplMavenDeploy
         }
     }
 }

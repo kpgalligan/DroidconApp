@@ -19,6 +19,8 @@ class SpeakerTableViewCell: UITableViewCell {
         nameLabel.text = name
         infoLabel.attributedText = formatHTMLString(info)
         speakerImage.kf_setImageWithURL(NSURL(string: imgUrl)!)
+        speakerImage.layer.cornerRadius = 24
+        speakerImage.layer.masksToBounds = true
     }
     
     override func awakeFromNib() {
@@ -31,6 +33,13 @@ class SpeakerTableViewCell: UITableViewCell {
     }
 
     func formatHTMLString(htmlString: String) -> NSAttributedString {
-        return try! NSAttributedString(data: htmlString.dataUsingEncoding(NSUTF8StringEncoding, allowLossyConversion: true)!, options: [NSDocumentTypeDocumentAttribute: NSHTMLTextDocumentType], documentAttributes: nil);
+        let modifiedFont = NSString(format:"<span style=\"font: -apple-system-body; font-size: 12px\">%@</span>", htmlString) as String
+        
+        let attrStr = try! NSAttributedString(
+            data: modifiedFont.dataUsingEncoding(NSUnicodeStringEncoding, allowLossyConversion: true)!,
+            options: [NSDocumentTypeDocumentAttribute: NSHTMLTextDocumentType, NSCharacterEncodingDocumentAttribute: NSUTF8StringEncoding],
+            documentAttributes: nil)
+        
+        return attrStr
     }
 }
