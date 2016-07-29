@@ -25,6 +25,7 @@ private const val VIEW_TYPE_EVENT = 0
 private const val VIEW_TYPE_BLOCK = 1
 private const val VIEW_TYPE_PAST_EVENT = 2
 private const val VIEW_TYPE_NOTIFICATION = 3
+private const val VIEW_TYPE_NEW_ROW = 4
 
 private const val HEADER_ITEMS_COUNT = 1
 
@@ -34,7 +35,7 @@ class EventAdapter(private val allEvents: Boolean
                    , var showNotificationCard: Boolean) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     private var dataSet: List<ScheduleBlockHour> = emptyList()
-    private var filteredData: ArrayList<ScheduleBlockHour> = ArrayList()
+    private var filteredData: ArrayList<ScheduleBlockHour?> = ArrayList()
     private var currentTracks: ArrayList<String> = ArrayList(initialFilters)
 
     override fun getItemCount(): Int {
@@ -55,6 +56,10 @@ class EventAdapter(private val allEvents: Boolean
                 val v = LayoutInflater.from(parent.context).inflate(R.layout.item_notification, parent, false)
                 return NotificationViewHolder(v)
             }
+            VIEW_TYPE_NEW_ROW -> {
+                val v = LayoutInflater.from(parent.context).inflate(R.layout.item_new_row, parent, false)
+                return NewRowViewHolder(v)
+            }
 
             else -> throw UnsupportedOperationException()
         }
@@ -65,10 +70,12 @@ class EventAdapter(private val allEvents: Boolean
         if (holder is ScheduleBlockViewHolder) {
             val scheduleBlockHour = filteredData[adjustedPosition]
 
-            ConferenceDataPresenter.styleEventRow(scheduleBlockHour, dataSet, holder, allEvents)
+            if (scheduleBlockHour != null) {
+                ConferenceDataPresenter.styleEventRow(scheduleBlockHour, dataSet, holder, allEvents)
 
-            if (!scheduleBlockHour.scheduleBlock.isBlock) {
-                holder.setOnClickListener { eventClickListener.onEventClick(scheduleBlockHour.scheduleBlock as Event) }
+                if (!scheduleBlockHour.scheduleBlock.isBlock) {
+                    holder.setOnClickListener { eventClickListener.onEventClick(scheduleBlockHour.scheduleBlock as Event) }
+                }
             }
         }
     }
@@ -79,7 +86,11 @@ class EventAdapter(private val allEvents: Boolean
 
         val adjustedPosition = position - if (showNotificationCard) HEADER_ITEMS_COUNT else 0
 
-        val item = filteredData[adjustedPosition].scheduleBlock
+        if (filteredData[adjustedPosition] == null) {
+            return VIEW_TYPE_NEW_ROW
+        }
+
+        val item = filteredData[adjustedPosition]?.scheduleBlock
         when (item) {
             is Event -> return if (item.isPast) VIEW_TYPE_PAST_EVENT else VIEW_TYPE_EVENT
             is Block -> return VIEW_TYPE_BLOCK
@@ -100,7 +111,14 @@ class EventAdapter(private val allEvents: Boolean
     private fun updateData() {
         filteredData.clear()
         if (currentTracks.isEmpty()) {
-            filteredData = ArrayList(dataSet)
+            for (item in dataSet) {
+                val position = filteredData.size + if (showNotificationCard) HEADER_ITEMS_COUNT else 0
+                if (!item.hourStringDisplay.isEmpty() && position % 2 != 0) {
+                    // Insert an empty block to indicate a new row
+                    filteredData.add(null)
+                }
+                filteredData.add(item)
+            }
         } else {
             //TODO: Filter
             /*for (item in dataSet) {
@@ -151,6 +169,11 @@ class EventAdapter(private val allEvents: Boolean
             itemView.location_time.text = s
         }
 
+        override fun setDescription(s: String?) {
+            // Field only exists for tablet
+            itemView.event_description?.text = s
+        }
+
         override fun setRsvpVisible(rsvp: Boolean, past: Boolean) {
             val rsvpColor = if (past) ContextCompat.getColor(itemView.context, R.color.card_text_subtitle) else ContextCompat.getColor(itemView.context, R.color.accent)
             itemView.rsvp.setBackgroundColor(rsvpColor)
@@ -167,12 +190,21 @@ class EventAdapter(private val allEvents: Boolean
         }
 
         override fun setTimeGap(b : Boolean) {
-            val topPadding =  if (b) R.dimen.padding_small else R.dimen.padding_xmicro
-            itemView.setPadding(itemView.paddingLeft, itemView.context.resources.getDimensionPixelOffset(topPadding), itemView.paddingRight, itemView.paddingBottom)
+            if (!isTablet(itemView)) {
+                val topPadding = if (b) R.dimen.padding_small else R.dimen.padding_xmicro
+                itemView.setPadding(itemView.paddingLeft,
+                        itemView.context.resources.getDimensionPixelOffset(topPadding),
+                        itemView.paddingRight,
+                        itemView.paddingBottom)
+            }
         }
 
         fun setOnClickListener(listener: () -> Unit) {
             itemView.card.setOnClickListener { listener() }
+        }
+
+        fun isTablet(itemView : View) : Boolean {
+            return itemView.context.resources.getBoolean(R.bool.is_tablet)
         }
     }
 
@@ -186,6 +218,8 @@ class EventAdapter(private val allEvents: Boolean
             }
         }
     }
+
+    inner class NewRowViewHolder(itemView: View) : ScheduleCardViewHolder(itemView) {}
 }
 
 interface EventClickListener {
