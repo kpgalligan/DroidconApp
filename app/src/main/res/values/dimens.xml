@@ -75,4 +75,29 @@
 
     <dimen name="toolbar_title_margin_top">13dp</dimen>
     <dimen name="toolbar_title_margin_left">56dp</dimen>
+
+    <dimen name="item_root_padding_bottom">@dimen/padding_xmicro</dimen>
+    <dimen name="item_root_padding_top">@dimen/padding_small</dimen>
+    <dimen name="notify_card_margin_start">@dimen/height_xlarge</dimen>
+    <dimen name="item_new_row_width">0dp</dimen>
+    <dimen name="item_new_row_height">0dp</dimen>
+    <dimen name="item_event_layout_width">@dimen/wrap_content</dimen>
+    <dimen name="item_event_layout_height">82dp</dimen>
+    <dimen name="item_event_padding_bottom">@dimen/padding_xmicro</dimen>
+    <dimen name="item_event_padding_top">@dimen/padding_small</dimen>
+    <dimen name="conflict_text_width">@dimen/height_xlarge</dimen>
+    <dimen name="item_event_card_margin_start">@dimen/height_xlarge</dimen>
+    <dimen name="live_icon_margin">@dimen/padding_medium</dimen>
+    <dimen name="location_time_margin_bottom">@dimen/padding_medium</dimen>
+    <dimen name="event_divider_width">0dp</dimen>
+    <dimen name="event_divider_height">0dp</dimen>
+    <dimen name="event_description_width">0dp</dimen>
+    <dimen name="event_description_height">0dp</dimen>
+    <dimen name="event_description_margin_bottom">0dp</dimen>
+    <dimen name="event_description_margin_start">0dp</dimen>
+    <dimen name="event_description_margin_top">0dp</dimen>
+    <dimen name="event_list_margin_start">0dp</dimen>
+
+    <dimen name="match_parent">-1px</dimen>
+    <dimen name="wrap_content">-2px</dimen>
 </resources>

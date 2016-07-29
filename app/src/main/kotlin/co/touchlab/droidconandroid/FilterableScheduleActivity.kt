@@ -13,7 +13,6 @@ import co.touchlab.droidconandroid.data.Track
 import co.touchlab.droidconandroid.ui.FilterAdapter
 import co.touchlab.droidconandroid.ui.FilterClickListener
 import kotlinx.android.synthetic.main.activity_schedule.*
-import kotlinx.android.synthetic.main.include_schedule_viewpager.*
 import java.util.*
 
 /**

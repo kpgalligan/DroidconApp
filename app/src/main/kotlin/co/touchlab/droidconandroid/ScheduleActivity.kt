@@ -45,7 +45,6 @@ import com.squareup.picasso.Callback
 import com.squareup.picasso.Picasso
 import com.wnafee.vector.compat.ResourcesCompat
 import kotlinx.android.synthetic.main.activity_schedule.*
-import kotlinx.android.synthetic.main.include_schedule_viewpager.*
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -88,18 +87,22 @@ open class ScheduleActivity : AppCompatActivity(), NfcAdapter.CreateNdefMessageC
                 }
 
                 setContentView(R.layout.activity_schedule)
-                setupToolbar()
-                setupNavigationDrawer()
                 initNfc()
-                adjustToolBarAndDrawers()
-
-                EventBusExt.getDefault().register(this)
 
                 // Start IntentService to register this application with GCM.
                 val intent = Intent(this, RegistrationIntentService::class.java)
                 startService(intent)
             }
         }
+    }
+
+    override fun onStart() {
+        super.onStart()
+        setupToolbar()
+        setupNavigationDrawer()
+        adjustToolBarAndDrawers()
+
+        EventBusExt.getDefault().register(this)
     }
 
     override fun onResume() {
@@ -111,15 +114,27 @@ open class ScheduleActivity : AppCompatActivity(), NfcAdapter.CreateNdefMessageC
         val lastRefresh = prefs.refreshTime
 
         if (prefs.isLoggedIn
-                && (System.currentTimeMillis() - lastRefresh > (DateUtils.HOUR_IN_MILLIS * 6))) {
+                && (System.currentTimeMillis() - lastRefresh > (DateUtils.HOUR_IN_MILLIS * 6)))
+        {
             RefreshScheduleData.callMe(this)
+        }
+
+        if (isTablet())
+        {
+            drawer_layout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_OPEN, drawer_recycler)
+        }
+        else
+        {
+            drawer_layout.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED, drawer_recycler)
+            drawer_layout.closeDrawer(drawer_recycler)
         }
     }
 
     override fun onBackPressed()
     {
         when {
-            drawer_layout.isDrawerOpen(drawer_recycler) -> drawer_layout.closeDrawer(drawer_recycler)
+            !isTablet() &&
+                    drawer_layout.isDrawerOpen(drawer_recycler) -> drawer_layout.closeDrawer(drawer_recycler)
             else -> super.onBackPressed()
         }
     }
@@ -129,17 +144,21 @@ open class ScheduleActivity : AppCompatActivity(), NfcAdapter.CreateNdefMessageC
         outState.putBoolean(ALL_EVENTS, allEvents)
     }
 
+    override fun onStop() {
+        EventBusExt.getDefault().unregister(this)
+        super.onStop()
+    }
+
     override fun onDestroy() {
         super.onDestroy()
         conferenceDataPresenter?.unregister()
-        EventBusExt.getDefault().unregister(this)
     }
 
     private fun setupToolbar() {
         setSupportActionBar(toolbar)
         supportActionBar?.setDisplayShowTitleEnabled(false)
-        supportActionBar?.setDisplayHomeAsUpEnabled(true)
-        supportActionBar?.setHomeButtonEnabled(true)
+        supportActionBar?.setDisplayHomeAsUpEnabled(! isTablet())
+        supportActionBar?.setHomeButtonEnabled(! isTablet())
 
         schedule_backdrop.setImageDrawable(ResourcesCompat.getDrawable(this,
                 R.drawable.superglyph_outline360x114dp))
@@ -194,17 +213,24 @@ open class ScheduleActivity : AppCompatActivity(), NfcAdapter.CreateNdefMessageC
     }
 
     private fun setupNavigationDrawer() {
-        val drawerToggle = ActionBarDrawerToggle(
-                this, drawer_layout, toolbar,
-                R.string.navigation_drawer_open, R.string.navigation_drawer_close
-        )
-        drawer_layout.setDrawerListener(drawerToggle)
 
-        drawerToggle.syncState()
+        if(isTablet())
+        {
+            drawer_layout.setScrimColor(ContextCompat.getColor(this, android.R.color.transparent))
+        }
+        else
+        {
+            val drawerToggle = ActionBarDrawerToggle(
+                    this, drawer_layout, toolbar,
+                    R.string.navigation_drawer_open, R.string.navigation_drawer_close
+            )
+            drawer_layout.setDrawerListener(drawerToggle)
+            drawerToggle.syncState()
+        }
 
         drawer_recycler.adapter = DrawerAdapter(getDrawerItems(), object : DrawerClickListener {
             override fun onNavigationItemClick(position: Int, titleRes: Int) {
-                drawer_layout.closeDrawer(drawer_recycler)
+                if (! isTablet()) drawer_layout.closeDrawer(drawer_recycler)
 
                 when (titleRes) {
                     R.string.explore -> {
@@ -306,10 +332,14 @@ open class ScheduleActivity : AppCompatActivity(), NfcAdapter.CreateNdefMessageC
             val ua = DatabaseHelper.getInstance(this).userAccountDao.queryForId(
                     userId)
             if (ua != null && ua.userCode != null && !TextUtils.isEmpty(ua.userCode)) {
-                drawer_layout.closeDrawer(drawer_recycler)
+                if (! isTablet()) drawer_layout.closeDrawer(drawer_recycler)
                 UserDetailActivity.callMe(this, ua.userCode)
             }
         }
+    }
+
+    private fun isTablet() : Boolean {
+        return resources.getBoolean(R.bool.is_tablet)
     }
 
     private fun initNfc() {
@@ -391,18 +421,12 @@ open class ScheduleActivity : AppCompatActivity(), NfcAdapter.CreateNdefMessageC
         }
     }
 
-    class ScheduleFragmentPagerAdapter : FragmentStatePagerAdapter {
-        private var dates: List<Long>
-        private var allEvents: Boolean
-        private var fragmentManager: FragmentManager
+    class ScheduleFragmentPagerAdapter(fm: FragmentManager, dates: List<Long>, allEvents: Boolean) : FragmentStatePagerAdapter(fm) {
+        private var dates = dates
+        private var allEvents = allEvents
+        private var fragmentManager = fm
 
         private val tabDateFormat = SimpleDateFormat("MMM dd", Locale.US)
-
-        constructor(fm: FragmentManager, dates: List<Long>, allEvents: Boolean) : super(fm) {
-            this.dates = dates
-            this.allEvents = allEvents
-            this.fragmentManager = fm
-        }
 
         override fun getCount(): Int {
             return dates.size
