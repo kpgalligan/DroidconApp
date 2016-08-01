@@ -17,6 +17,7 @@
 #import "UIViewController+Utils.h"
 #import <Fabric/Fabric.h>
 #import <Crashlytics/Crashlytics.h>
+#import "Reachability.h"
 
 
 @interface AppDelegate ()
@@ -42,6 +43,19 @@
                          withDCPAppManager_LoadDataSeed:self];
     
 //    [CoTouchlabDroidconandroidPlatformClientContainer initPlatformClientWithCoTouchlabDroidconandroidPlatformClient:[CoTouchlabDroidconandroidIosIosPlatformClient new]];
+    
+    Reachability *reachability = [Reachability reachabilityWithHostname:@"droidcon-server.herokuapp.com"];
+    
+    reachability.reachableBlock = ^(Reachability *reachability) {
+        NSLog(@"Network is reachable.");
+    };
+    
+    reachability.unreachableBlock = ^(Reachability *reachability) {
+        NSLog(@"Network is unreachable.");
+    };
+    
+    // Start Monitoring
+    [reachability startNotifier];
     
     return YES;
 }
