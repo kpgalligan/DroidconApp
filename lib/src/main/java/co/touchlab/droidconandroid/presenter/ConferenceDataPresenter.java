@@ -65,6 +65,7 @@ public class ConferenceDataPresenter extends AbstractEventBusPresenter
             row.setTitleText(block.name);
             row.setTimeText(scheduleBlockHour.hourStringDisplay.toLowerCase());
             row.setDetailText("");
+            row.setDescription(block.description);
             row.setLiveNowVisible(false);
             row.setRsvpVisible(false, false);
             row.setRsvpConflict(false);
@@ -75,6 +76,7 @@ public class ConferenceDataPresenter extends AbstractEventBusPresenter
             row.setTimeText(scheduleBlockHour.hourStringDisplay.toLowerCase());
             row.setTitleText(event.name);
             row.setDetailText(event.getVenue().name);
+            row.setDescription(event.description);
             row.setLiveNowVisible(event.isNow());
             row.setRsvpVisible(allEvents && event.isRsvped(), event.isPast());
             row.setRsvpConflict(allEvents && hasConflict(event, dataSet));
@@ -106,6 +108,7 @@ public class ConferenceDataPresenter extends AbstractEventBusPresenter
         void setTitleText(String s);
         void setTimeText(String s);
         void setDetailText(String s);
+        void setDescription(String s);
         void setLiveNowVisible(boolean b);
         void setRsvpVisible(boolean rsvp, boolean past);
         void setRsvpConflict(boolean b);
