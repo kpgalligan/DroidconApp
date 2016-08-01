@@ -2,20 +2,20 @@
 <RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="wrap_content"
+    android:layout_width="@dimen/item_event_layout_width"
     android:layout_height="wrap_content"
     android:clipToPadding="false"
     android:orientation="vertical"
-    android:paddingBottom="@dimen/padding_xmicro"
+    android:paddingBottom="@dimen/item_event_padding_bottom"
     android:paddingEnd="0dp"
     android:paddingLeft="@dimen/padding_medium"
     android:paddingRight="0dp"
     android:paddingStart="@dimen/padding_medium"
-    android:paddingTop="@dimen/padding_small">
+    android:paddingTop="@dimen/item_event_padding_top">
 
     <TextView
         android:id="@+id/time"
-        android:layout_width="@dimen/height_xlarge"
+        android:layout_width="@dimen/conflict_text_width"
         android:layout_height="wrap_content"
         android:gravity="end"
         android:paddingEnd="@dimen/padding_small"
@@ -28,7 +28,7 @@
 
     <TextView
         android:id="@+id/conflict_text"
-        android:layout_width="@dimen/height_xlarge"
+        android:layout_width="@dimen/conflict_text_width"
         android:layout_height="wrap_content"
         android:gravity="end"
         android:paddingEnd="@dimen/padding_small"
@@ -48,8 +48,10 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_marginBottom="0dp"
-        android:layout_marginLeft="@dimen/height_xlarge"
-        android:layout_marginStart="@dimen/height_xlarge"
+        android:layout_marginLeft="@dimen/item_event_card_margin_start"
+        android:layout_marginStart="@dimen/item_event_card_margin_start"
+        android:layout_marginRight="@dimen/padding_xmicro"
+        android:layout_marginEnd="@dimen/padding_xmicro"
         android:layout_marginTop="0dp"
         android:stateListAnimator="@anim/lift"
         card_view:cardBackgroundColor="@color/card_bg_block"
@@ -67,9 +69,9 @@
             android:layout_width="24dp"
             android:layout_height="24dp"
             android:layout_gravity="end|bottom"
-            android:layout_marginBottom="@dimen/padding_medium"
-            android:layout_marginEnd="@dimen/padding_medium"
-            android:layout_marginRight="@dimen/padding_medium"
+            android:layout_marginBottom="@dimen/live_icon_margin"
+            android:layout_marginEnd="@dimen/live_icon_margin"
+            android:layout_marginRight="@dimen/live_icon_margin"
             android:contentDescription="@string/cd_live_now"
             android:src="@drawable/ic_play_24dp"
             android:tint="@color/card_text_title"
@@ -88,6 +90,7 @@
                           android:paddingRight="@dimen/padding_large"
                           android:paddingStart="@dimen/padding_small"
                           android:paddingTop="@dimen/padding_tiny">
+
                 <TextView
                     android:id="@+id/title"
                     android:layout_width="match_parent"
@@ -102,12 +105,34 @@
                     android:id="@+id/location_time"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_marginBottom="@dimen/padding_medium"
+                    android:layout_marginBottom="@dimen/location_time_margin_bottom"
                     android:layout_marginLeft="@dimen/padding_micro"
                     android:layout_marginStart="@dimen/padding_micro"
                     android:layout_marginTop="@dimen/padding_tiny"
                     android:textColor="@color/card_text_subtitle"
                     tools:text="Place"/>
+
+                <View
+                    android:id="@+id/event_divider"
+                    android:layout_width="@dimen/event_divider_width"
+                    android:layout_height="@dimen/event_divider_height"
+                    android:background="#e5e5e5"/>
+
+                <TextView
+                    android:id="@+id/event_description"
+                    android:layout_width="@dimen/event_description_width"
+                    android:layout_height="@dimen/event_description_height"
+                    android:layout_marginBottom="@dimen/event_description_margin_bottom"
+                    android:layout_marginLeft="@dimen/event_description_margin_start"
+                    android:layout_marginStart="@dimen/event_description_margin_start"
+                    android:layout_marginTop="@dimen/event_description_margin_top"
+                    android:minLines="4"
+                    android:maxLines="4"
+                    android:ellipsize="end"
+                    android:textColor="@color/card_text_subtitle"
+                    tools:text="@string/lorem_long"/>
+
+
 
             </LinearLayout>
 

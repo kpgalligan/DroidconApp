@@ -17,4 +17,7 @@
     <dimen name="sponsor_bronze_height">39dp</dimen>
     <dimen name="sponsor_padding">12dp</dimen>
     <dimen name="sponsor_section_title">40sp</dimen>
+
+    <dimen name="toolbar_title_margin_top">42dp</dimen>
+    <dimen name="toolbar_title_margin_left">66dp</dimen>
 </resources>
