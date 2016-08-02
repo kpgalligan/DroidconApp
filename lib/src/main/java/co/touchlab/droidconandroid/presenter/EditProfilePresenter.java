@@ -2,6 +2,7 @@ package co.touchlab.droidconandroid.presenter;
 import android.content.Context;
 import android.telephony.PhoneNumberUtils;
 import android.text.TextUtils;
+import android.util.Log;
 import android.util.Patterns;
 
 import com.google.j2objc.annotations.Weak;
@@ -90,5 +91,12 @@ public class EditProfilePresenter extends AbstractEventBusPresenter
 
         return true;
     }
-    
+
+    public void uploadProfilePhoto(String path)
+    {
+        Log.d("ramona", "uploadProfilePhoto: " + path);
+//        Queues.localQueue(getContext()).execute(new QuickClearAvatarTask(userId));
+//        PersistedTaskQueueFactory.getInstance(getContext()).execute(new UploadProfilePhotoTask(path));
+    }
+
 }

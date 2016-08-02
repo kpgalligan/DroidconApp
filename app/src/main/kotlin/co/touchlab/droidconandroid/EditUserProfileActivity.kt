@@ -26,9 +26,9 @@ import co.touchlab.droidconandroid.data.AppPrefs
 import co.touchlab.droidconandroid.data.UserAccount
 import co.touchlab.droidconandroid.presenter.EditProfileHost
 import co.touchlab.droidconandroid.presenter.EditProfilePresenter
-import co.touchlab.droidconandroid.superbus.QuickClearAvatarTask
 import co.touchlab.droidconandroid.superbus.UploadAvatarCommand
 import co.touchlab.droidconandroid.tasks.Queues
+import co.touchlab.droidconandroid.tasks.QuickClearAvatarTask
 import co.touchlab.droidconandroid.tasks.persisted.PersistedTaskQueueFactory
 import co.touchlab.droidconandroid.utils.EmojiUtil
 import co.touchlab.droidconandroid.utils.Toaster

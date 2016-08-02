@@ -3,12 +3,10 @@ package co.touchlab.droidconandroid.superbus
 import android.content.Context
 import android.util.Log
 import co.touchlab.android.threading.eventbus.EventBusExt
-import co.touchlab.android.threading.tasks.Task
 import co.touchlab.android.threading.tasks.helper.RetrofitPersistedTask
 import co.touchlab.android.threading.tasks.persisted.PersistedTask
 import co.touchlab.droidconandroid.BuildConfig
 import co.touchlab.droidconandroid.data.AppPrefs
-import co.touchlab.droidconandroid.data.DatabaseHelper
 import co.touchlab.droidconandroid.network.dao.UserInfoResponse
 import co.touchlab.droidconandroid.presenter.AppManager
 import co.touchlab.droidconandroid.tasks.AbstractFindUserTask
@@ -70,17 +68,17 @@ open class UploadAvatarCommand(val imageURL: String? = null) : RetrofitPersisted
 /**
  * Remove reference to the avatar image.  For use after uploading new avatar.
  */
-class QuickClearAvatarTask(val userId: Long) : Task() {
-    override fun handleError(context: Context?, e: Throwable?): Boolean {
-        return false
-    }
-
-    override fun run(context: Context?) {
-        val dao = DatabaseHelper.getInstance(context).getUserAccountDao()
-        val userAccount = dao.queryForId(userId)
-        userAccount!!.avatarKey = null;
-        AppPrefs.getInstance(context).setAvatarKey(null)
-        dao.createOrUpdate(userAccount)
-
-    }
-}
+//class QuickClearAvatarTask(val userId: Long) : Task() {
+//    override fun handleError(context: Context?, e: Throwable?): Boolean {
+//        return false
+//    }
+//
+//    override fun run(context: Context?) {
+//        val dao = DatabaseHelper.getInstance(context).getUserAccountDao()
+//        val userAccount = dao.queryForId(userId)
+//        userAccount!!.avatarKey = null;
+//        AppPrefs.getInstance(context).setAvatarKey(null)
+//        dao.createOrUpdate(userAccount)
+//
+//    }
+//}

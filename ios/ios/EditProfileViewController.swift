@@ -100,7 +100,19 @@ class EditProfileViewController: UIViewController,  UIImagePickerControllerDeleg
             profileImageView.contentMode = .ScaleAspectFill
             profileImageView.image = pickedImage
             
-            // TODO upload avatar image
+            let imageURL = info[UIImagePickerControllerReferenceURL] as! NSURL
+            let imageName = imageURL.lastPathComponent
+            let documentDirectory = NSFileManager.defaultManager().URLsForDirectory(.DocumentDirectory, inDomains: .UserDomainMask)[0]
+            let localURL = documentDirectory.URLByAppendingPathComponent(imageName!)
+            let path = localURL.path!
+            
+            let image = info[UIImagePickerControllerOriginalImage] as! UIImage
+            let data = UIImagePNGRepresentation(image)
+            data!.writeToFile(path, atomically: true)
+            
+            print(path)
+            editProfilePresenter.uploadProfilePhotoWithNSString(path)
+            
         }
         
         dismissViewControllerAnimated(true, completion: nil)
