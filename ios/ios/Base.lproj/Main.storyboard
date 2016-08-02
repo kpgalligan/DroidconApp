@@ -402,10 +402,10 @@
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="idN-Ph-iLY">
-                                                <rect key="frame" x="86" y="575" width="494" height="31"/>
+                                                <rect key="frame" x="86" y="575" width="494" height="200"/>
                                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                 <constraints>
-                                                    <constraint firstAttribute="height" constant="31" id="jV9-jb-jbk"/>
+                                                    <constraint firstAttribute="height" constant="200" id="BF1-LB-hHr"/>
                                                 </constraints>
                                                 <color key="textColor" red="0.0" green="0.25490196079999999" blue="0.63921568630000003" alpha="1" colorSpace="calibratedRGB"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="12"/>
@@ -647,7 +647,8 @@
                                 <rect key="frame" x="0.0" y="0.0" width="600" height="64"/>
                                 <color key="backgroundColor" red="0.0" green="0.3529411764705882" blue="0.8784313725490196" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="64" id="E52-bJ-URh"/>
+                                    <constraint firstAttribute="height" constant="64" id="1P4-d6-NJj"/>
+                                    <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="64" id="blY-Ax-SlC"/>
                                 </constraints>
                                 <color key="barTintColor" red="0.0" green="0.3529411764705882" blue="0.8784313725490196" alpha="1" colorSpace="calibratedRGB"/>
                                 <textAttributes key="titleTextAttributes">
@@ -657,86 +658,129 @@
                                     <navigationItem title="About" id="82e-EG-pfM"/>
                                 </items>
                             </navigationBar>
-                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="15" translatesAutoresizingMaskIntoConstraints="NO" id="REE-3Y-kNa">
-                                <rect key="frame" x="20" y="104" width="560" height="383"/>
+                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="DSQ-hI-l2X">
+                                <rect key="frame" x="0.0" y="64" width="600" height="487"/>
                                 <subviews>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="About the Droidcon NYC 2016 app" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="E5W-0Y-4as">
-                                        <rect key="frame" x="0.0" y="0.0" width="560" height="15"/>
-                                        <fontDescription key="fontDescription" type="system" weight="medium" pointSize="12"/>
-                                        <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" lineBreakMode="wordWrap" numberOfLines="20" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="VIh-7I-yAB">
-                                        <rect key="frame" x="0.0" y="29" width="560" height="43"/>
-                                        <string key="text">The Droidcon app is coded in-house by the touchlab team.  Worked on by Liam, Izzy, Sam, Ramona and Kevin. It’s a bit of an experiment, written largely in Kotlin, and including a new(ish) ORM framework. Fun stuff. The code is open source, at:</string>
-                                        <fontDescription key="fontDescription" type="system" pointSize="12"/>
-                                        <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
-                                    <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" editable="NO" text="https://github.com/touchlab/DroidconApp" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="Zfz-Gq-Rpg">
-                                        <rect key="frame" x="0.0" y="87" width="560" height="25"/>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="udt-ka-FgF">
+                                        <rect key="frame" x="0.0" y="0.0" width="600" height="500"/>
+                                        <subviews>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="About the Droidcon NYC 2016 app" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="E5W-0Y-4as">
+                                                <rect key="frame" x="38" y="38" width="554" height="15"/>
+                                                <fontDescription key="fontDescription" type="system" weight="medium" pointSize="12"/>
+                                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" lineBreakMode="wordWrap" numberOfLines="20" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="VIh-7I-yAB">
+                                                <rect key="frame" x="38" y="60" width="554" height="43"/>
+                                                <string key="text">The Droidcon app is coded in-house by the touchlab team.  Worked on by Liam, Izzy, Sam, Ramona and Kevin. It’s a bit of an experiment, written largely in Kotlin, and including a new(ish) ORM framework. Fun stuff. The code is open source, at:</string>
+                                                <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" editable="NO" text="https://github.com/touchlab/DroidconApp" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="Zfz-Gq-Rpg">
+                                                <rect key="frame" x="38" y="111" width="554" height="38"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="38" id="uEi-1G-J1A"/>
+                                                </constraints>
+                                                <color key="textColor" red="0.0" green="0.25490196079999999" blue="0.63921568630000003" alpha="1" colorSpace="calibratedRGB"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                                                <dataDetectorType key="dataDetectorTypes" link="YES"/>
+                                            </textView>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="About Droidcon" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Mrh-Pz-tMC">
+                                                <rect key="frame" x="38" y="157" width="554" height="15"/>
+                                                <fontDescription key="fontDescription" type="system" weight="medium" pointSize="12"/>
+                                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="About touchlab" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="VDI-Rb-l4S">
+                                                <rect key="frame" x="38" y="258" width="554" height="15"/>
+                                                <fontDescription key="fontDescription" type="system" weight="medium" pointSize="12"/>
+                                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="wordWrap" numberOfLines="20" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0Me-pN-hgs">
+                                                <rect key="frame" x="38" y="280" width="554" height="84"/>
+                                                <attributedString key="attributedText">
+                                                    <fragment>
+                                                        <string key="content">Touchlab is a developer founded and run development shop focused on building amazing Android experiences with great design as a foundational principle. We’re a group of Android experts who believe that Android can and must be better. We believe that what we built yesterday was great, but what we build with you tomorrow will be even better. And we’re currently hiring. Want to join a team where Android isn’t that other platform, where we care about pushing our favorite technology forward, and where you can get more involved with the community at large? Get in touch:</string>
+                                                        <attributes>
+                                                            <color key="NSColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                                            <font key="NSFont" size="12" name="HelveticaNeue"/>
+                                                            <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="natural"/>
+                                                        </attributes>
+                                                    </fragment>
+                                                </attributedString>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="20" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ZmA-0b-uKl">
+                                                <rect key="frame" x="38" y="179" width="554" height="58"/>
+                                                <string key="text">Droidcon conferences around the world support the Android platform and create a global network for developers and companies. We offer best-in-class presentations from leaders in all parts of the Android ecosystem, including core development, embedded solutions, augmented reality, business solutions, and games.</string>
+                                                <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" editable="NO" text="http://touchlab.co" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="4x5-1P-Yeg">
+                                                <rect key="frame" x="38" y="372" width="554" height="38"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="38" id="Q1n-Bh-XzO"/>
+                                                </constraints>
+                                                <color key="textColor" red="0.0" green="0.25490196079999999" blue="0.63921568630000003" alpha="1" colorSpace="calibratedRGB"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                                                <dataDetectorType key="dataDetectorTypes" link="YES"/>
+                                            </textView>
+                                        </subviews>
+                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         <constraints>
-                                            <constraint firstAttribute="height" constant="25" id="UWk-B5-4BX"/>
+                                            <constraint firstItem="VDI-Rb-l4S" firstAttribute="top" secondItem="ZmA-0b-uKl" secondAttribute="bottom" constant="21" id="0P3-yf-AAE"/>
+                                            <constraint firstAttribute="trailing" secondItem="E5W-0Y-4as" secondAttribute="trailing" constant="8" id="6Uy-du-6mR"/>
+                                            <constraint firstItem="E5W-0Y-4as" firstAttribute="leading" secondItem="udt-ka-FgF" secondAttribute="leading" constant="38" id="8L3-oX-OuP"/>
+                                            <constraint firstAttribute="trailing" secondItem="Zfz-Gq-Rpg" secondAttribute="trailing" constant="8" id="8hA-So-7Le"/>
+                                            <constraint firstItem="VIh-7I-yAB" firstAttribute="leading" secondItem="udt-ka-FgF" secondAttribute="leading" constant="38" id="9Hb-c1-LBa"/>
+                                            <constraint firstAttribute="trailing" secondItem="VDI-Rb-l4S" secondAttribute="trailing" constant="8" id="BjD-uk-5H9"/>
+                                            <constraint firstItem="Zfz-Gq-Rpg" firstAttribute="top" secondItem="VIh-7I-yAB" secondAttribute="bottom" constant="8" id="Dad-jS-OO1"/>
+                                            <constraint firstItem="Zfz-Gq-Rpg" firstAttribute="leading" secondItem="udt-ka-FgF" secondAttribute="leading" constant="38" id="FKQ-Xm-1fr"/>
+                                            <constraint firstAttribute="trailing" secondItem="4x5-1P-Yeg" secondAttribute="trailing" constant="8" id="JOj-bn-khh"/>
+                                            <constraint firstAttribute="trailing" secondItem="ZmA-0b-uKl" secondAttribute="trailing" constant="8" id="KZt-y3-ECv"/>
+                                            <constraint firstItem="VIh-7I-yAB" firstAttribute="top" secondItem="E5W-0Y-4as" secondAttribute="bottom" constant="7" id="LCh-b5-4fg"/>
+                                            <constraint firstAttribute="trailing" secondItem="VIh-7I-yAB" secondAttribute="trailing" constant="8" id="SMa-TS-0Td"/>
+                                            <constraint firstItem="4x5-1P-Yeg" firstAttribute="top" secondItem="0Me-pN-hgs" secondAttribute="bottom" constant="8" id="Sfo-fn-rJL"/>
+                                            <constraint firstAttribute="height" constant="500" id="V0E-c3-DTA"/>
+                                            <constraint firstItem="Mrh-Pz-tMC" firstAttribute="leading" secondItem="udt-ka-FgF" secondAttribute="leading" constant="38" id="Whj-LG-zg5"/>
+                                            <constraint firstItem="Mrh-Pz-tMC" firstAttribute="top" secondItem="Zfz-Gq-Rpg" secondAttribute="bottom" constant="8" id="Y1P-lJ-gzi"/>
+                                            <constraint firstItem="4x5-1P-Yeg" firstAttribute="leading" secondItem="udt-ka-FgF" secondAttribute="leading" constant="38" id="cdb-Yw-z0x"/>
+                                            <constraint firstItem="ZmA-0b-uKl" firstAttribute="leading" secondItem="udt-ka-FgF" secondAttribute="leading" constant="38" id="eCU-CY-qtr"/>
+                                            <constraint firstItem="VDI-Rb-l4S" firstAttribute="leading" secondItem="udt-ka-FgF" secondAttribute="leading" constant="38" id="rS9-nO-V8g"/>
+                                            <constraint firstItem="ZmA-0b-uKl" firstAttribute="top" secondItem="Mrh-Pz-tMC" secondAttribute="bottom" constant="8" id="sWk-a2-9uM"/>
+                                            <constraint firstAttribute="trailing" secondItem="0Me-pN-hgs" secondAttribute="trailing" constant="8" id="scc-Bd-e0g"/>
+                                            <constraint firstAttribute="trailing" secondItem="Mrh-Pz-tMC" secondAttribute="trailing" constant="8" id="trG-sI-U5v"/>
+                                            <constraint firstItem="0Me-pN-hgs" firstAttribute="top" secondItem="VDI-Rb-l4S" secondAttribute="bottom" constant="8" id="u4q-Zr-K9e"/>
+                                            <constraint firstItem="0Me-pN-hgs" firstAttribute="leading" secondItem="udt-ka-FgF" secondAttribute="leading" constant="38" id="yUM-aD-PQ1"/>
+                                            <constraint firstItem="E5W-0Y-4as" firstAttribute="top" secondItem="udt-ka-FgF" secondAttribute="top" constant="38" id="zxK-bd-sTj"/>
                                         </constraints>
-                                        <color key="textColor" red="0.0" green="0.25490196079999999" blue="0.63921568630000003" alpha="1" colorSpace="calibratedRGB"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="12"/>
-                                        <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
-                                        <dataDetectorType key="dataDetectorTypes" link="YES"/>
-                                    </textView>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="About Droidcon" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Mrh-Pz-tMC">
-                                        <rect key="frame" x="0.0" y="127" width="560" height="15"/>
-                                        <fontDescription key="fontDescription" type="system" weight="medium" pointSize="12"/>
-                                        <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="20" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ZmA-0b-uKl">
-                                        <rect key="frame" x="0.0" y="157" width="560" height="58"/>
-                                        <string key="text">Droidcon conferences around the world support the Android platform and create a global network for developers and companies. We offer best-in-class presentations from leaders in all parts of the Android ecosystem, including core development, embedded solutions, augmented reality, business solutions, and games.</string>
-                                        <fontDescription key="fontDescription" type="system" pointSize="12"/>
-                                        <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="About touchlab" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="VDI-Rb-l4S">
-                                        <rect key="frame" x="0.0" y="229" width="560" height="15"/>
-                                        <fontDescription key="fontDescription" type="system" weight="medium" pointSize="12"/>
-                                        <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="wordWrap" numberOfLines="20" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0Me-pN-hgs">
-                                        <rect key="frame" x="0.0" y="259" width="560" height="84"/>
-                                        <attributedString key="attributedText">
-                                            <fragment>
-                                                <string key="content">Touchlab is a developer founded and run development shop focused on building amazing Android experiences with great design as a foundational principle. We’re a group of Android experts who believe that Android can and must be better. We believe that what we built yesterday was great, but what we build with you tomorrow will be even better. And we’re currently hiring. Want to join a team where Android isn’t that other platform, where we care about pushing our favorite technology forward, and where you can get more involved with the community at large? Get in touch:</string>
-                                                <attributes>
-                                                    <color key="NSColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                                    <font key="NSFont" size="12" name="HelveticaNeue"/>
-                                                    <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="natural"/>
-                                                </attributes>
-                                            </fragment>
-                                        </attributedString>
-                                        <nil key="highlightedColor"/>
-                                    </label>
-                                    <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" editable="NO" text="http://touchlab.co" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="4x5-1P-Yeg">
-                                        <rect key="frame" x="0.0" y="358" width="560" height="25"/>
-                                        <constraints>
-                                            <constraint firstAttribute="height" constant="25" id="7Fz-jb-2h6"/>
-                                        </constraints>
-                                        <color key="textColor" red="0.0" green="0.25490196079999999" blue="0.63921568630000003" alpha="1" colorSpace="calibratedRGB"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="12"/>
-                                        <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
-                                        <dataDetectorType key="dataDetectorTypes" link="YES"/>
-                                    </textView>
+                                    </view>
                                 </subviews>
-                            </stackView>
+                                <constraints>
+                                    <constraint firstAttribute="trailing" secondItem="udt-ka-FgF" secondAttribute="trailing" id="0Q1-Ed-QOv"/>
+                                    <constraint firstItem="udt-ka-FgF" firstAttribute="top" secondItem="DSQ-hI-l2X" secondAttribute="top" id="ISZ-Jg-Sa9"/>
+                                    <constraint firstItem="udt-ka-FgF" firstAttribute="leading" secondItem="DSQ-hI-l2X" secondAttribute="leading" id="SC8-4x-kwn"/>
+                                    <constraint firstItem="E5W-0Y-4as" firstAttribute="width" secondItem="DSQ-hI-l2X" secondAttribute="width" constant="-46" id="WWe-Ab-GEh"/>
+                                    <constraint firstItem="udt-ka-FgF" firstAttribute="leading" secondItem="DSQ-hI-l2X" secondAttribute="leading" id="ZG2-9Z-GX2"/>
+                                    <constraint firstAttribute="trailing" secondItem="udt-ka-FgF" secondAttribute="trailing" id="pyr-k8-4FR"/>
+                                    <constraint firstAttribute="bottom" secondItem="udt-ka-FgF" secondAttribute="bottom" constant="-13" id="sbH-iq-lrM"/>
+                                </constraints>
+                            </scrollView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="TT5-5I-JdE" firstAttribute="top" secondItem="MKK-rS-hLa" secondAttribute="topMargin" id="GES-pG-mOJ"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="REE-3Y-kNa" secondAttribute="trailing" id="UP3-BN-3uK"/>
-                            <constraint firstItem="REE-3Y-kNa" firstAttribute="leading" secondItem="MKK-rS-hLa" secondAttribute="leadingMargin" id="l6n-CH-84A"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="TT5-5I-JdE" secondAttribute="trailing" constant="-20" id="qCk-KY-6VJ"/>
-                            <constraint firstItem="TT5-5I-JdE" firstAttribute="leading" secondItem="MKK-rS-hLa" secondAttribute="leadingMargin" constant="-20" id="rHT-Ue-Ite"/>
-                            <constraint firstItem="REE-3Y-kNa" firstAttribute="top" secondItem="TT5-5I-JdE" secondAttribute="bottom" constant="40" id="y9t-OP-15B"/>
+                            <constraint firstItem="DSQ-hI-l2X" firstAttribute="top" secondItem="TT5-5I-JdE" secondAttribute="bottom" id="Emj-sl-IYG"/>
+                            <constraint firstItem="TT5-5I-JdE" firstAttribute="leading" secondItem="MKK-rS-hLa" secondAttribute="leadingMargin" constant="-20" id="FG7-DD-OPa"/>
+                            <constraint firstItem="DSQ-hI-l2X" firstAttribute="leading" secondItem="TT5-5I-JdE" secondAttribute="leading" id="bhY-Xr-GB8"/>
+                            <constraint firstItem="DSQ-hI-l2X" firstAttribute="trailing" secondItem="TT5-5I-JdE" secondAttribute="trailing" id="muN-8E-pGV"/>
+                            <constraint firstItem="TT5-5I-JdE" firstAttribute="top" secondItem="MKK-rS-hLa" secondAttribute="topMargin" id="ocL-bJ-N8S"/>
+                            <constraint firstItem="DSQ-hI-l2X" firstAttribute="bottom" secondItem="o6d-84-LyN" secondAttribute="top" id="ooJ-Rf-ctn"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="TT5-5I-JdE" secondAttribute="trailing" constant="-20" id="v6T-yI-Fu5"/>
                         </constraints>
                     </view>
                     <tabBarItem key="tabBarItem" title="ABOUT" image="ic_info_outline_white" id="fz8-KM-NeQ">
@@ -747,12 +791,14 @@
                         </userDefinedRuntimeAttributes>
                     </tabBarItem>
                     <connections>
+                        <outlet property="contentView" destination="udt-ka-FgF" id="Epd-aQ-RST"/>
                         <outlet property="navBar" destination="TT5-5I-JdE" id="geg-al-dPz"/>
+                        <outlet property="scrollView" destination="DSQ-hI-l2X" id="egN-1G-S3E"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="TEE-Uo-vuv" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3146" y="217"/>
+            <point key="canvasLocation" x="3145" y="335"/>
         </scene>
         <!--Droidcon Tab Bar View Controller-->
         <scene sceneID="R1K-Rd-8j6">

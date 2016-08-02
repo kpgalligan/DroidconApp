@@ -11,11 +11,18 @@ import UIKit
 class AboutViewController: UIViewController {
 
     @IBOutlet weak var navBar: UINavigationBar!
+    @IBOutlet weak var scrollView: UIScrollView!
+    @IBOutlet weak var contentView: UIView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
 
         navBar.translucent = false
+    }
+    
+    override func viewDidLayoutSubviews() {
+        scrollView.addSubview(contentView)
+        scrollView.contentSize = contentView.frame.size
     }
 
     override func didReceiveMemoryWarning() {
