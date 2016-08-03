@@ -27,16 +27,6 @@ import UIKit
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(true)
-        
-        let tintColor = UIColor(red:(0/255.0), green:(90/255.0), blue:(224/255.0), alpha: 1.0)
-        navigationController!.navigationBar.barTintColor = tintColor
-        navigationController!.navigationBar.translucent = false
-        UINavigationBar.appearance().tintColor = UIColor.whiteColor()
-        
-        // Hide the nav bar bottom shadow
-        navigationController!.navigationBar.setBackgroundImage(UIImage(), forBarPosition: UIBarPosition.Any, barMetrics: UIBarMetrics.Default)
-        navigationController!.navigationBar.shadowImage = UIImage()
-        
     }
     
     override func viewDidLoad() {
@@ -64,7 +54,7 @@ import UIKit
         
         styleButton()
     }
-    
+
     override func viewDidDisappear(animated: Bool) {
         eventDetailPresenter.unregister()
         //        eventDetailPresenter = nil
