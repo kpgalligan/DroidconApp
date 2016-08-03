@@ -111,7 +111,8 @@ import UIKit
             let speaker = speakers![indexPath.row] as DCDEventSpeaker
             if let speakerDescription = speakers?[indexPath.row].valueForKey("userAccount_")!.valueForKey("profile_") {
                 let userAccount = speaker.getUserAccount()
-                cell.loadInfo(userAccount!.valueForKey("name_") as! String, info: speakerDescription as! String, imgUrl: userAccount.avatarImageUrl())
+                let imageUrl = userAccount!.avatarImageUrl() ?? ""
+                cell.loadInfo(userAccount!.valueForKey("name_") as! String, info: speakerDescription as! String, imgUrl: imageUrl)
             }
             cell.selectionStyle = UITableViewCellSelectionStyle.None
             return cell
@@ -150,7 +151,7 @@ import UIKit
             let rDescription = descriptionString!.boundingRectWithSize(szDescription, options: NSStringDrawingOptions.UsesLineFragmentOrigin, attributes:attrDescription, context:nil)
             let htDescription = ceil(rDescription.size.height)
 
-            return htTitle + htDescription + 100
+            return htTitle + htDescription + 60
         }
 
         
@@ -160,7 +161,7 @@ import UIKit
             let rDescription = speakerDescription.boundingRectWithSize(szDescription, options: NSStringDrawingOptions.UsesLineFragmentOrigin, attributes:attrDescription, context:nil)
             let htDescription = ceil(rDescription.size.height)
             
-            return htDescription + 100
+            return htDescription + 50
         }
         
         return 200
