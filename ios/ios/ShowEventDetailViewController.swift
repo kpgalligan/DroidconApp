@@ -124,10 +124,6 @@ import UIKit
             return nil
         }
         
-        if speakers?.count > 1 {
-            return "Speakers : "
-        }
-        
         return ""
     }
     
