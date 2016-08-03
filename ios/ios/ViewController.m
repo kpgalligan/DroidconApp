@@ -41,6 +41,10 @@
     [self loadConferenceSchedule];
     self.tableView.delegate = self.platformContext;
     self.tableView.dataSource = self.platformContext;
+    
+    // Hide the nav bar shadow
+    [self.navigationController.navigationBar setShadowImage:[[UIImage alloc] init]];
+    [self.navigationController.navigationBar setBackgroundImage:[[UIImage alloc]init] forBarMetrics:UIBarMetricsDefault];
 }
 
 - (void)createSDASimple
