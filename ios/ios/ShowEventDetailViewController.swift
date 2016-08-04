@@ -103,9 +103,12 @@ import UIKit
             let cell:EventTableViewCell = tableView.dequeueReusableCellWithIdentifier("eventCell") as! EventTableViewCell
             
             cell.loadInfo(titleString!, description: descriptionString!, track: trackNumString!, time: dateTime!, event: event, eventDetailPresenter: eventDetailPresenter)
-            cell.liveStreamButton.tag = indexPath.row
-            cell.liveStreamButton.addTarget(self, action: "liveStreamTapped:", forControlEvents: UIControlEvents.TouchUpInside)
             cell.selectionStyle = UITableViewCellSelectionStyle.None
+            if ((event.isNow() || event.isPast()) && event.getStreamUrl() != nil) {
+                cell.liveStreamButton.addTarget(self, action: "liveStreamTapped:", forControlEvents: UIControlEvents.TouchUpInside)
+            } else {
+                cell.liveStreamButton.hidden = true
+            }
             return cell
         } else {
             let cell:SpeakerTableViewCell = tableView.dequeueReusableCellWithIdentifier("speakerCell") as! SpeakerTableViewCell
@@ -207,10 +210,8 @@ import UIKit
         if(segue.identifier == "LiveStream") {
             let liveStreamVC = (segue.destinationViewController as! LiveStreamViewController)
             liveStreamVC.titleString = titleString
-            
-            //TODO update content urls
-            liveStreamVC.streamUrl = "http://content.bitsontherun.com/videos/3XnJSIm4-injeKYZS.mp4"
-            liveStreamVC.coverUrl = "http://content.bitsontherun.com/thumbs/bkaovAYt-480.jpg"
+            liveStreamVC.streamUrl = event.getStreamUrl()
+            liveStreamVC.coverUrl = event.getCoverUrl()
         }
     }
 }

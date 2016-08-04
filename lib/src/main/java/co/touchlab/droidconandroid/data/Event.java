@@ -58,6 +58,12 @@ public class Event implements ScheduleBlock
     @DatabaseField
     public Integer vote;
 
+    @DatabaseField
+    public String streamUrl;
+
+    @DatabaseField
+    public String coverUrl;
+
     public long getId()
     {
         return id;
@@ -171,6 +177,16 @@ public class Event implements ScheduleBlock
     public void setRsvpUuid(String rsvpUuid)
     {
         this.rsvpUuid = rsvpUuid;
+    }
+
+    public String getStreamUrl()
+    {
+        return streamUrl;
+    }
+
+    public String getCoverUrl()
+    {
+        return coverUrl;
     }
 
     public String allSpeakersString()
