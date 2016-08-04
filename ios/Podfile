@@ -44,6 +44,7 @@ pod 'j2objc-intellijannotations-release', :configuration => ['Release'], :path =
     pod 'Google/SignIn'
     pod 'Kingfisher', '~> 2.4'
     pod 'Reachability', '~> 3.2'
+    pod 'JWPlayer-SDK', '~> 2.4.1'
 end
 
 target 'iosTests' do
