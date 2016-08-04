@@ -28,10 +28,8 @@ class LiveStreamViewController: UIViewController, JWPlayerDelegate {
     }
     
     override func viewDidLoad() {
-        
         self.edgesForExtendedLayout =  UIRectEdge.None
         self.view.backgroundColor = UIColor.blackColor()
-        
         self.automaticallyAdjustsScrollViewInsets = false
         
         super.viewDidLoad()
@@ -46,8 +44,9 @@ class LiveStreamViewController: UIViewController, JWPlayerDelegate {
     
     func createPlayer() {
         let config: JWConfig = JWConfig(contentURL: streamUrl)
-        config.image = coverUrl
-        
+        if coverUrl != nil {
+            config.image = coverUrl
+        }
         config.title = titleString
         config.controls = true  //default
         config.`repeat` = false   //default
