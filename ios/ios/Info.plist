@@ -80,6 +80,8 @@
 	<false/>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<false/>
+	<key>JWPlayerKey</key>
+	<string>BrPL0+c6WZB7vzcOunl7GvBj8l3qbIqVweQRKLd7Rguiz7ffetbDnucrFn4=</string>
 	<key>UISupportedInterfaceOrientations~ipad</key>
 	<array>
 		<string>UIInterfaceOrientationPortrait</string>

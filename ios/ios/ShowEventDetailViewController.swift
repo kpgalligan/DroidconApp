@@ -103,6 +103,8 @@ import UIKit
             let cell:EventTableViewCell = tableView.dequeueReusableCellWithIdentifier("eventCell") as! EventTableViewCell
             
             cell.loadInfo(titleString!, description: descriptionString!, track: trackNumString!, time: dateTime!, event: event, eventDetailPresenter: eventDetailPresenter)
+            cell.liveStreamButton.tag = indexPath.row
+            cell.liveStreamButton.addTarget(self, action: "liveStreamTapped:", forControlEvents: UIControlEvents.TouchUpInside)
             cell.selectionStyle = UITableViewCellSelectionStyle.None
             return cell
         } else {
@@ -170,7 +172,7 @@ import UIKit
         return 500.0
     }
     
-    // MARK: Button
+    // MARK: Action
     
     func styleButton() {
         rsvpButton.layer.cornerRadius = 24
@@ -195,5 +197,20 @@ import UIKit
     
     @IBAction func toggleRsvp(sender: UIButton) {
         eventDetailPresenter.toggleRsvp()
+    }
+    
+    func liveStreamTapped(sender: UIButton) {
+        performSegueWithIdentifier("LiveStream", sender: self)
+    }
+    
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        if(segue.identifier == "LiveStream") {
+            let liveStreamVC = (segue.destinationViewController as! LiveStreamViewController)
+            liveStreamVC.titleString = titleString
+            
+            //TODO update content urls
+            liveStreamVC.streamUrl = "http://content.bitsontherun.com/videos/3XnJSIm4-injeKYZS.mp4"
+            liveStreamVC.coverUrl = "http://content.bitsontherun.com/thumbs/bkaovAYt-480.jpg"
+        }
     }
 }
