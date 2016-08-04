@@ -1,1 +1,1 @@
-include ':app', ':profilephotoeditor', ':lib'
+include ':app', ':profilephotoeditor', ':lib', ':jwplayer-android-sdk-2.4.1+158'
