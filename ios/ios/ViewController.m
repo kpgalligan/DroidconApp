@@ -30,10 +30,20 @@
 @property (nonatomic, strong) JavaUtilArrayList *notes;
 @end
 
+BOOL allEvents = NO;
+
 @implementation ViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    if (self.tabBarController.selectedIndex == 0) {
+        allEvents = YES;
+        self.navigationItem.title = @"Droidcon NYC";
+    } else {
+        allEvents = NO;
+        self.navigationItem.title = @"My Agenda";
+    }
     
     self.tableView.tableHeaderView = nil;
     self.tableView.tableFooterView = nil;
@@ -45,6 +55,8 @@
     // Hide the nav bar shadow
     [self.navigationController.navigationBar setShadowImage:[[UIImage alloc] init]];
     [self.navigationController.navigationBar setBackgroundImage:[[UIImage alloc]init] forBarMetrics:UIBarMetricsDefault];
+    
+    self.navigationController.navigationBar.translucent = false;
 }
 
 - (void)createSDASimple
@@ -54,7 +66,7 @@
     PlatformContext_iOS *pcios = [PlatformContext_iOS new];
     self.platformContext = pcios;
     self.platformContext.reloadDelegate = self;
-    self.dataPresenter = [[DCPConferenceDataPresenter alloc] initWithAndroidContentContext:[DCPAppManager getContext] withDCPConferenceDataHost:pcios withBoolean:true];
+    self.dataPresenter = [[DCPConferenceDataPresenter alloc] initWithAndroidContentContext:[DCPAppManager getContext] withDCPConferenceDataHost:pcios withBoolean:allEvents];
     }
 }
 
@@ -68,14 +80,6 @@
     }
     [self.platformContext updateTableData];
     [self.tableView reloadData];
-}
-
-- (void)viewWillAppear:(BOOL)animated {
-    [super viewWillAppear:animated];
-    
-    self.navigationController.navigationBar.barTintColor = [UIColor colorWithRed:(0/255.0) green:(90/255.0) blue:(224/255.0) alpha:1.0];
-    self.navigationController.navigationBar.translucent = false;
-    [self.navigationController.navigationBar setTitleTextAttributes : @{NSForegroundColorAttributeName: [UIColor whiteColor]}];
 }
 
 - (void)loadImageWithPath:(NSString *)imagePath
