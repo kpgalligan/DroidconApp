@@ -27,16 +27,6 @@ import UIKit
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(true)
-        
-        let tintColor = UIColor(red:(0/255.0), green:(90/255.0), blue:(224/255.0), alpha: 1.0)
-        navigationController!.navigationBar.barTintColor = tintColor
-        navigationController!.navigationBar.translucent = false
-        UINavigationBar.appearance().tintColor = UIColor.whiteColor()
-        
-        // Hide the nav bar bottom shadow
-        navigationController!.navigationBar.setBackgroundImage(UIImage(), forBarPosition: UIBarPosition.Any, barMetrics: UIBarMetrics.Default)
-        navigationController!.navigationBar.shadowImage = UIImage()
-        
     }
     
     override func viewDidLoad() {
@@ -64,7 +54,7 @@ import UIKit
         
         styleButton()
     }
-    
+
     override func viewDidDisappear(animated: Bool) {
         eventDetailPresenter.unregister()
         //        eventDetailPresenter = nil
@@ -104,6 +94,11 @@ import UIKit
             
             cell.loadInfo(titleString!, description: descriptionString!, track: trackNumString!, time: dateTime!, event: event, eventDetailPresenter: eventDetailPresenter)
             cell.selectionStyle = UITableViewCellSelectionStyle.None
+            if ((event.isNow() || event.isPast()) && event.getStreamUrl() != nil) {
+                cell.liveStreamButton.addTarget(self, action: "liveStreamTapped:", forControlEvents: UIControlEvents.TouchUpInside)
+            } else {
+                cell.liveStreamButton.hidden = true
+            }
             return cell
         } else {
             let cell:SpeakerTableViewCell = tableView.dequeueReusableCellWithIdentifier("speakerCell") as! SpeakerTableViewCell
@@ -111,7 +106,8 @@ import UIKit
             let speaker = speakers![indexPath.row] as DCDEventSpeaker
             if let speakerDescription = speakers?[indexPath.row].valueForKey("userAccount_")!.valueForKey("profile_") {
                 let userAccount = speaker.getUserAccount()
-                cell.loadInfo(userAccount!.valueForKey("name_") as! String, info: speakerDescription as! String, imgUrl: userAccount.avatarImageUrl())
+                let imageUrl = userAccount!.avatarImageUrl() ?? ""
+                cell.loadInfo(userAccount!.valueForKey("name_") as! String, info: speakerDescription as! String, imgUrl: imageUrl)
             }
             cell.selectionStyle = UITableViewCellSelectionStyle.None
             return cell
@@ -121,10 +117,6 @@ import UIKit
     func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         if section == 0 {
             return nil
-        }
-        
-        if speakers?.count > 1 {
-            return "Speakers : "
         }
         
         return ""
@@ -150,7 +142,7 @@ import UIKit
             let rDescription = descriptionString!.boundingRectWithSize(szDescription, options: NSStringDrawingOptions.UsesLineFragmentOrigin, attributes:attrDescription, context:nil)
             let htDescription = ceil(rDescription.size.height)
 
-            return htTitle + htDescription + 100
+            return htTitle + htDescription + 60
         }
 
         
@@ -160,7 +152,7 @@ import UIKit
             let rDescription = speakerDescription.boundingRectWithSize(szDescription, options: NSStringDrawingOptions.UsesLineFragmentOrigin, attributes:attrDescription, context:nil)
             let htDescription = ceil(rDescription.size.height)
             
-            return htDescription + 100
+            return htDescription + 50
         }
         
         return 200
@@ -170,7 +162,7 @@ import UIKit
         return 500.0
     }
     
-    // MARK: Button
+    // MARK: Action
     
     func styleButton() {
         rsvpButton.layer.cornerRadius = 24
@@ -195,5 +187,18 @@ import UIKit
     
     @IBAction func toggleRsvp(sender: UIButton) {
         eventDetailPresenter.toggleRsvp()
+    }
+    
+    func liveStreamTapped(sender: UIButton) {
+        performSegueWithIdentifier("LiveStream", sender: self)
+    }
+    
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        if(segue.identifier == "LiveStream") {
+            let liveStreamVC = (segue.destinationViewController as! LiveStreamViewController)
+            liveStreamVC.titleString = titleString
+            liveStreamVC.streamUrl = event.getStreamUrl()
+            liveStreamVC.coverUrl = event.getCoverUrl()
+        }
     }
 }

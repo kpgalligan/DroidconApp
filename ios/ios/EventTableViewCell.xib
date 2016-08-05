@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9532" systemVersion="14F27" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9532" systemVersion="14F1909" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9530"/>
@@ -12,7 +12,7 @@
             <rect key="frame" x="0.0" y="0.0" width="320" height="300"/>
             <autoresizingMask key="autoresizingMask"/>
             <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="byx-nF-Lp7" id="jnG-8t-Cv4">
-                <rect key="frame" x="0.0" y="0.0" width="320" height="299.5"/>
+                <rect key="frame" x="0.0" y="0.0" width="320" height="300"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <stackView opaque="NO" contentMode="scaleToFill" placeholderIntrinsicWidth="32" placeholderIntrinsicHeight="50" axis="vertical" spacing="12" translatesAutoresizingMaskIntoConstraints="NO" id="XfI-15-PuS">
@@ -59,6 +59,13 @@
                                     </mask>
                                 </variation>
                             </label>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ViC-o1-3if">
+                                <rect key="frame" x="0.0" y="86" width="238" height="27"/>
+                                <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="12"/>
+                                <state key="normal" title="LIVE STREAM">
+                                    <color key="titleColor" red="0.0" green="0.25490196079999999" blue="0.63921568630000003" alpha="1" colorSpace="calibratedRGB"/>
+                                </state>
+                            </button>
                         </subviews>
                     </stackView>
                 </subviews>
@@ -70,6 +77,7 @@
             </tableViewCellContentView>
             <connections>
                 <outlet property="descriptionLabel" destination="g7K-E8-3hs" id="LQR-R2-K16"/>
+                <outlet property="liveStreamButton" destination="ViC-o1-3if" id="nCS-JJ-eZk"/>
                 <outlet property="timeInfoLabel" destination="bMK-8H-j0u" id="4C8-tW-ajy"/>
                 <outlet property="titleLabel" destination="Ql4-vP-vc9" id="O3b-Wb-2sd"/>
             </connections>
