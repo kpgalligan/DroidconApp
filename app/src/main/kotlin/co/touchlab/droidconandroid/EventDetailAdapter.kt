@@ -29,7 +29,8 @@ private const val TYPE_SPACE: Int = 4
 private const val TYPE_SPEAKER: Int = 5
 private const val TYPE_STREAM: Int = 6
 private const val TYPE_FEEDBACK: Int = 7
-const val EXTRA_STREAM_LINK = "EXTRA_STREAM_LINK";
+const val EXTRA_STREAM_LINK = "EXTRA_STREAM_LINK"
+const val EXTRA_STREAM_COVER = "EXTRA_STREAM_COVER"
 
 class EventDetailAdapter(val context: Context, val trackColor: Int) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     //dataset
@@ -40,8 +41,8 @@ class EventDetailAdapter(val context: Context, val trackColor: Int) : RecyclerVi
         data.add(HeaderDetail(TYPE_HEADER, title, venue))
     }
 
-    fun addStream(link: String) {
-        data.add(TextDetail(TYPE_STREAM, link, 0))
+    fun addStream(link: String, cover: String) {
+        data.add(StreamDetail(TYPE_STREAM, link, cover))
     }
 
     fun addBody(description: String) {
@@ -121,7 +122,8 @@ class EventDetailAdapter(val context: Context, val trackColor: Int) : RecyclerVi
                 val streamVH = holder as StreamVH
                 streamVH.itemView.setOnClickListener {
                     val i = Intent(context, VideoActivity::class.java)
-                    i.putExtra(EXTRA_STREAM_LINK, (data[position] as TextDetail).text)
+                    i.putExtra(EXTRA_STREAM_LINK, (data[position] as StreamDetail).link)
+                    i.putExtra(EXTRA_STREAM_COVER, (data[position] as StreamDetail).cover)
                     context.startActivity(i)
                 }
             }
@@ -188,6 +190,8 @@ class EventDetailAdapter(val context: Context, val trackColor: Int) : RecyclerVi
     inner class HeaderDetail(type: Int, val title: String, val subtitle: String) : Detail(type)
 
     inner class TextDetail(type: Int, val text: String, val icon: Int) : Detail(type)
+
+    inner class StreamDetail(type: Int, val link: String, val cover: String) : Detail(type)
 
     inner class SpeakerDetail(type: Int, val avatar: String?, val name: String, val company: String, val bio: String?, val userCode: String) : Detail(type)
 
