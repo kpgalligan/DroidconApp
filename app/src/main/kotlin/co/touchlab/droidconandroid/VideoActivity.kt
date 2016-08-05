@@ -14,9 +14,14 @@ class VideoActivity : AppCompatActivity(), VideoPlayerEvents.OnFullscreenListene
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_video)
         val link = intent.getStringExtra(EXTRA_STREAM_LINK)
+        val cover = intent.getStringExtra(EXTRA_STREAM_COVER)
         if (!TextUtils.isEmpty(link)) {
-            val pi = PlaylistItem.Builder().file(link).title("BipBop").description("A video player testing video.").build()
-            jwplayer.load(pi)
+            val builder = PlaylistItem.Builder().file(link)
+
+            if(!TextUtils.isEmpty(cover))
+                builder.image(cover)
+
+            jwplayer.load(builder.build())
         } else {
             FirebaseCrash.report(RuntimeException("Failed to load video link"))
             finish()

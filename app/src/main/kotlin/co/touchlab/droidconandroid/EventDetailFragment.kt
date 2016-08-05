@@ -255,10 +255,9 @@ class EventDetailFragment() : Fragment()
         }
 
         adapter.addHeader(event.name, venueFormatString.format(event.venue.name, formattedStart, formattedEnd))
-        adapter.addStream("http://playertest.longtailvideo.com/adaptive/bipbop/gear4/prog_index.m3u8")
 
-        //TODO add live stream link
-        //adapter.addStream("live stream link goes here")
+        if(event.isNow && !TextUtils.isEmpty(event.getStreamUrl()))
+            adapter.addStream(event.getStreamUrl(), event.getCoverUrl())
 
         if (event.isNow)
             adapter.addInfo("<i><b>" + resources.getString(R.string.event_now) + "</b></i>")
