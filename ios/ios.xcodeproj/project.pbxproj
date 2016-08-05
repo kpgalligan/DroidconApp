@@ -27,6 +27,7 @@
 		B51821F4B77C4FA3452415AC /* Pods_iosTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 29474B79E0DD967EE9352429 /* Pods_iosTests.framework */; };
 		F92CCB491D3FF35D0048C8A2 /* EditProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F92CCB481D3FF35D0048C8A2 /* EditProfileViewController.swift */; };
 		F9903FA21D3FBEC70050687E /* DroidconTabBarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9903FA11D3FBEC70050687E /* DroidconTabBarViewController.swift */; };
+		F9B8C7011D539328000724FC /* LiveStreamViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9B8C7001D539328000724FC /* LiveStreamViewController.swift */; };
 		F9D6952D1D47AF9D0095F0F9 /* AboutViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9D6952C1D47AF9D0095F0F9 /* AboutViewController.swift */; };
 		FA258F5E1C934BA200986E0D /* dataseed.json in Resources */ = {isa = PBXBuildFile; fileRef = FA258F5D1C934BA200986E0D /* dataseed.json */; };
 		FA258F611C937F5900986E0D /* NoteTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = FA258F601C937F5900986E0D /* NoteTableViewCell.xib */; };
@@ -93,6 +94,7 @@
 		CBB7FE920FA6320D289E1684 /* Pods_ios.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ios.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		F92CCB481D3FF35D0048C8A2 /* EditProfileViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EditProfileViewController.swift; sourceTree = "<group>"; };
 		F9903FA11D3FBEC70050687E /* DroidconTabBarViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DroidconTabBarViewController.swift; sourceTree = "<group>"; };
+		F9B8C7001D539328000724FC /* LiveStreamViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LiveStreamViewController.swift; sourceTree = "<group>"; };
 		F9D6952C1D47AF9D0095F0F9 /* AboutViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AboutViewController.swift; sourceTree = "<group>"; };
 		FA258F5D1C934BA200986E0D /* dataseed.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = dataseed.json; sourceTree = "<group>"; };
 		FA258F601C937F5900986E0D /* NoteTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = NoteTableViewCell.xib; sourceTree = "<group>"; };
@@ -220,6 +222,7 @@
 				F9903FA11D3FBEC70050687E /* DroidconTabBarViewController.swift */,
 				F92CCB481D3FF35D0048C8A2 /* EditProfileViewController.swift */,
 				F9D6952C1D47AF9D0095F0F9 /* AboutViewController.swift */,
+				F9B8C7001D539328000724FC /* LiveStreamViewController.swift */,
 			);
 			path = ios;
 			sourceTree = "<group>";
@@ -271,7 +274,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 631B99181C7D6533008AA20D /* Build configuration list for PBXNativeTarget "ios" */;
 			buildPhases = (
-				44DE23B9D422AACD96482296 /* 📦 Check Pods Manifest.lock */,
+				44DE23B9D422AACD96482296 /* [CP] Check Pods Manifest.lock */,
 				0A6247AEC8D968A764B28F56 /* [CP] Check Pods Manifest.lock */,
 				631B98E71C7D6533008AA20D /* Sources */,
 				631B98E81C7D6533008AA20D /* Frameworks */,
@@ -295,7 +298,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 631B991B1C7D6533008AA20D /* Build configuration list for PBXNativeTarget "iosTests" */;
 			buildPhases = (
-				4ADFA7188E05A380D7FB1124 /* 📦 Check Pods Manifest.lock */,
+				4ADFA7188E05A380D7FB1124 /* [CP] Check Pods Manifest.lock */,
 				FC31444A3DD843EC58A23100 /* [CP] Check Pods Manifest.lock */,
 				631B99001C7D6533008AA20D /* Sources */,
 				631B99011C7D6533008AA20D /* Frameworks */,
@@ -319,7 +322,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 631B991E1C7D6533008AA20D /* Build configuration list for PBXNativeTarget "iosUITests" */;
 			buildPhases = (
-				EECE534BCAF213B373DD5048 /* 📦 Check Pods Manifest.lock */,
+				EECE534BCAF213B373DD5048 /* [CP] Check Pods Manifest.lock */,
 				9271E4B8A8FFFFFC6B3F0340 /* [CP] Check Pods Manifest.lock */,
 				631B990B1C7D6533008AA20D /* Sources */,
 				631B990C1C7D6533008AA20D /* Frameworks */,
@@ -474,14 +477,14 @@
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-ios/Pods-ios-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		44DE23B9D422AACD96482296 /* 📦 Check Pods Manifest.lock */ = {
+		44DE23B9D422AACD96482296 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
-			name = "📦 Check Pods Manifest.lock";
+			name = "[CP] Check Pods Manifest.lock";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -489,14 +492,14 @@
 			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
 			showEnvVarsInLog = 0;
 		};
-		4ADFA7188E05A380D7FB1124 /* 📦 Check Pods Manifest.lock */ = {
+		4ADFA7188E05A380D7FB1124 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
-			name = "📦 Check Pods Manifest.lock";
+			name = "[CP] Check Pods Manifest.lock";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -622,14 +625,14 @@
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-ios/Pods-ios-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		EECE534BCAF213B373DD5048 /* 📦 Check Pods Manifest.lock */ = {
+		EECE534BCAF213B373DD5048 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
-			name = "📦 Check Pods Manifest.lock";
+			name = "[CP] Check Pods Manifest.lock";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -674,6 +677,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F9B8C7011D539328000724FC /* LiveStreamViewController.swift in Sources */,
 				F92CCB491D3FF35D0048C8A2 /* EditProfileViewController.swift in Sources */,
 				63EE30DF1CD025AC00B64D3D /* EventListCell.swift in Sources */,
 				63EE30D21CC6C76200B64D3D /* LoginViewController.swift in Sources */,

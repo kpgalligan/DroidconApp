@@ -13,6 +13,7 @@ class EventTableViewCell: UITableViewCell {
     @IBOutlet weak var titleLabel : UILabel!
     @IBOutlet weak var descriptionLabel : UILabel!
     @IBOutlet weak var timeInfoLabel : UILabel!
+    @IBOutlet weak var liveStreamButton: UIButton!
     
     var event: DCDEvent!
     var eventDetailPresenter: DCPEventDetailPresenter!
