@@ -27,16 +27,6 @@ import UIKit
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(true)
-        
-        let tintColor = UIColor(red:(0/255.0), green:(90/255.0), blue:(224/255.0), alpha: 1.0)
-        navigationController!.navigationBar.barTintColor = tintColor
-        navigationController!.navigationBar.translucent = false
-        UINavigationBar.appearance().tintColor = UIColor.whiteColor()
-        
-        // Hide the nav bar bottom shadow
-        navigationController!.navigationBar.setBackgroundImage(UIImage(), forBarPosition: UIBarPosition.Any, barMetrics: UIBarMetrics.Default)
-        navigationController!.navigationBar.shadowImage = UIImage()
-        
     }
     
     override func viewDidLoad() {
@@ -64,7 +54,7 @@ import UIKit
         
         styleButton()
     }
-    
+
     override func viewDidDisappear(animated: Bool) {
         eventDetailPresenter.unregister()
         //        eventDetailPresenter = nil
@@ -116,7 +106,8 @@ import UIKit
             let speaker = speakers![indexPath.row] as DCDEventSpeaker
             if let speakerDescription = speakers?[indexPath.row].valueForKey("userAccount_")!.valueForKey("profile_") {
                 let userAccount = speaker.getUserAccount()
-                cell.loadInfo(userAccount!.valueForKey("name_") as! String, info: speakerDescription as! String, imgUrl: userAccount.avatarImageUrl())
+                let imageUrl = userAccount!.avatarImageUrl() ?? ""
+                cell.loadInfo(userAccount!.valueForKey("name_") as! String, info: speakerDescription as! String, imgUrl: imageUrl)
             }
             cell.selectionStyle = UITableViewCellSelectionStyle.None
             return cell
@@ -126,10 +117,6 @@ import UIKit
     func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         if section == 0 {
             return nil
-        }
-        
-        if speakers?.count > 1 {
-            return "Speakers : "
         }
         
         return ""
@@ -155,7 +142,7 @@ import UIKit
             let rDescription = descriptionString!.boundingRectWithSize(szDescription, options: NSStringDrawingOptions.UsesLineFragmentOrigin, attributes:attrDescription, context:nil)
             let htDescription = ceil(rDescription.size.height)
 
-            return htTitle + htDescription + 100
+            return htTitle + htDescription + 60
         }
 
         
@@ -165,7 +152,7 @@ import UIKit
             let rDescription = speakerDescription.boundingRectWithSize(szDescription, options: NSStringDrawingOptions.UsesLineFragmentOrigin, attributes:attrDescription, context:nil)
             let htDescription = ceil(rDescription.size.height)
             
-            return htDescription + 100
+            return htDescription + 50
         }
         
         return 200
