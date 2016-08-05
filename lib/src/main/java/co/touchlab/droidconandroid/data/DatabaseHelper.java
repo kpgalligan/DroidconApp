@@ -27,7 +27,8 @@ public class DatabaseHelper extends SqueakyOpenHelper
     private static final String DATABASE_FILE_NAME = "droidcon";
     public static final  int    BASELINE           = 3;
     private static final int    VOTE               = 4;
-    private static final int    VERSION            = VOTE;
+    private static final int    STREAM             = 5;
+    private static final int    VERSION            = STREAM;
     private static DatabaseHelper instance;
 
     // @reminder Ordering matters, create foreign key dependant classes later
@@ -72,6 +73,20 @@ public class DatabaseHelper extends SqueakyOpenHelper
             try
             {
                 TableUtils.createTables(new SQLiteDatabaseImpl(db), TalkSubmission.class);
+            }
+            catch(SQLException e)
+            {
+                throw new RuntimeException(e);
+            }
+
+        }
+
+        if(oldVersion < STREAM)
+        {
+            try
+            {
+                TableUtils.dropTables(new SQLiteDatabaseImpl(db), false, Event.class);
+                TableUtils.createTables(new SQLiteDatabaseImpl(db), Event.class);
             }
             catch(SQLException e)
             {
