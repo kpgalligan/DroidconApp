@@ -13,6 +13,7 @@ import java.util.Set;
 import java.util.concurrent.Callable;
 
 import co.touchlab.droidconandroid.data.staff.EventAttendee;
+import co.touchlab.droidconandroid.tasks.persisted.RefreshScheduleData;
 import co.touchlab.squeaky.dao.Dao;
 import co.touchlab.squeaky.db.sqlite.SQLiteDatabaseImpl;
 import co.touchlab.squeaky.db.sqlite.SqueakyOpenHelper;
@@ -34,9 +35,12 @@ public class DatabaseHelper extends SqueakyOpenHelper
     // @reminder Ordering matters, create foreign key dependant classes later
     private final Class[] tableClasses = new Class[] {Venue.class, Event.class, Block.class, Invite.class, UserAccount.class, EventAttendee.class, EventSpeaker.class, TalkSubmission.class};
 
+    private Context context;
+
     private DatabaseHelper(Context context)
     {
         super(context, DATABASE_FILE_NAME, null, VERSION);
+        this.context = context;
     }
 
     @NotNull
@@ -94,6 +98,8 @@ public class DatabaseHelper extends SqueakyOpenHelper
             }
 
         }
+
+        RefreshScheduleData.callMe(context);
     }
 
     @Override
