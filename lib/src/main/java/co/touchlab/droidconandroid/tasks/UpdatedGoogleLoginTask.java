@@ -11,6 +11,7 @@ import co.touchlab.droidconandroid.data.UserAccount;
 import co.touchlab.droidconandroid.data.UserAuthHelper;
 import co.touchlab.droidconandroid.network.GoogleLoginRequest;
 import co.touchlab.droidconandroid.network.dao.LoginResult;
+import co.touchlab.droidconandroid.presenter.AppManager;
 import co.touchlab.droidconandroid.tasks.persisted.RefreshScheduleData;
 import retrofit.RestAdapter;
 
@@ -41,7 +42,8 @@ public class UpdatedGoogleLoginTask extends Task
         /*RestAdapter restAdapter = DataHelper
                 .makeRequestAdapter(context, PlatformClientContainer.platformClient);*/
         RestAdapter.Builder builder = new RestAdapter.Builder();
-        builder.setEndpoint("https://droidcon-server.herokuapp.com/");
+
+        builder.setEndpoint(AppManager.getPlatformClient().baseUrl());
         final RestAdapter restAdapter = builder.build();
 //        final RefreshScheduleDataRequest refreshScheduleDataRequest = restAdapter
 //                .create(RefreshScheduleDataRequest.class);
