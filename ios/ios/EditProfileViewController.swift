@@ -8,7 +8,7 @@
 
 import UIKit
 
-class EditProfileViewController: UIViewController, DCPEditProfileHost {
+class EditProfileViewController: UIViewController,  UIImagePickerControllerDelegate, UINavigationControllerDelegate, DCPEditProfileHost {
     
     // MARK: Properties
 
@@ -33,23 +33,31 @@ class EditProfileViewController: UIViewController, DCPEditProfileHost {
     @IBOutlet weak var scrollView: UIScrollView!
     @IBOutlet weak var contentView: UIView!
     
-    var userDetailPresenter: DCPEditProfilePresenter!
+    var editProfilePresenter: DCPEditProfilePresenter!
+    let imagePicker = UIImagePickerController()
     
     // MARK: Lifecycle events
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        if userDetailPresenter != nil {
-            userDetailPresenter.unregister()
+        if editProfilePresenter != nil {
+            editProfilePresenter.unregister()
         }
         
-        userDetailPresenter = DCPEditProfilePresenter(androidContentContext: DCPAppManager.getContext(), withDCPEditProfileHost: self)
+        editProfilePresenter = DCPEditProfilePresenter(androidContentContext: DCPAppManager.getContext(), withDCPEditProfileHost: self, withBoolean: false)
+        
+        imagePicker.delegate = self
         
         navBar.translucent = false
         
         profileImageView.layer.cornerRadius = 21
         profileImageView.layer.masksToBounds = true
+        
+        // Setup tap gesture recognizer on the profile photo
+        let tapGesture = UITapGestureRecognizer(target: self, action: "profileImageTapped:")
+        profileImageView.addGestureRecognizer(tapGesture)
+        profileImageView.userInteractionEnabled = true
         
         phoneIcon.image = phoneIcon.image!.imageWithRenderingMode(UIImageRenderingMode.AlwaysTemplate)
         phoneIcon.tintColor = UIColor(red: 0/255.0, green: 65/255.0, blue: 163/255.0, alpha: 1.0)
@@ -74,17 +82,39 @@ class EditProfileViewController: UIViewController, DCPEditProfileHost {
     }
     
     override func viewWillDisappear(animated: Bool) {
-        userDetailPresenter.unregister()
+        editProfilePresenter.unregister()
         super.viewWillDisappear(animated)
     }
     
     // MARK: Actions
     
-    @IBAction func saveProfile(sender: UIBarButtonItem) {
-        userDetailPresenter.saveProfileWithNSString(nameField.text, withNSString: bioTextView.text, withNSString: companyField.text, withNSString: twitterField.text, withNSString: linkedInField.text, withNSString: websiteField.text, withNSString:facebookField.text, withNSString: phoneField.text, withNSString: emailField.text, withNSString: gplusField.text, withBoolean: !hideEmailSwitch.on)
+    func profileImageTapped(gesture: UIGestureRecognizer) {
+        imagePicker.allowsEditing = true
+        imagePicker.sourceType = .PhotoLibrary
+        
+        presentViewController(imagePicker, animated: true, completion: nil)
     }
     
-    func dataRefreshWithDCDUserAccount(ua: DCDUserAccount!) {
+    func imagePickerController(picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : AnyObject]) {
+        if let pickedImage = info[UIImagePickerControllerOriginalImage] as? UIImage {
+            profileImageView.contentMode = .ScaleAspectFill
+            profileImageView.image = pickedImage
+            
+            // TODO upload avatar image
+        }
+        
+        dismissViewControllerAnimated(true, completion: nil)
+    }
+    
+    @IBAction func saveProfile(sender: UIBarButtonItem) {
+        let success = editProfilePresenter.saveProfileWithNSString(nameField.text, withNSString: bioTextView.text, withNSString: companyField.text, withNSString: twitterField.text, withNSString: linkedInField.text, withNSString: websiteField.text, withNSString:facebookField.text, withNSString: phoneField.text, withNSString: emailField.text, withNSString: gplusField.text, withBoolean: !hideEmailSwitch.on)
+        
+        if (success) {
+            showMessageWithNSString("Profile updated.")
+        }
+    }
+    
+    func setUserAccountWithDCDUserAccount(ua: DCDUserAccount!) {
         profileImageView.kf_setImageWithURL(NSURL(string: ua.avatarImageUrl())!)
         nameField.text = ua.getName()
         phoneField.text = ua.getPhone()
@@ -97,6 +127,17 @@ class EditProfileViewController: UIViewController, DCPEditProfileHost {
         linkedInField.text = ua.getLinkedIn()
         bioTextView.text = ua.getProfile()
         hideEmailSwitch.on = !ua.getEmailPublic()
+    }
+    
+    func setProfilePhotoWithNSString(avatarUrl: String!, withNSString name: String!) {
+        profileImageView.kf_setImageWithURL(NSURL(string: avatarUrl)!)
+    }
+    
+    func showMessageWithNSString(msg: String!) {
+        let alertController = UIAlertController(title: msg, message: "", preferredStyle: .Alert)
+        let actionOk = UIAlertAction(title: "OK", style: .Default, handler: nil)
+        alertController.addAction(actionOk)
+        self.presentViewController(alertController, animated: true, completion: nil)
     }
 
 }
