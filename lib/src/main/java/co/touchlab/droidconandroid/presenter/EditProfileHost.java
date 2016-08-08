@@ -8,5 +8,9 @@ import co.touchlab.droidconandroid.data.UserAccount;
 
 public interface EditProfileHost
 {
-    void dataRefresh(UserAccount userAccount);
+    void setUserAccount(UserAccount ua);
+
+    void setProfilePhoto(String photoUrl, String name);
+
+    void showMessage(String msg);
 }
