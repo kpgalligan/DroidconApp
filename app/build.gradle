@@ -66,7 +66,7 @@ android {
             keyAlias "androiddebugkey"
             keyPassword "android"
         }
-        staging{
+        staging {
             storeFile file("release.jks")
             keyAlias "android"
             storePassword "$releasePassword"
@@ -101,6 +101,9 @@ android {
     packagingOptions {
         exclude 'META-INF/LICENSE.txt'
         exclude 'META-INF/NOTICE.txt'
+        exclude 'META-INF/maven/org.apache.commons/commons-lang3/pom.xml'
+        exclude 'META-INF/maven/org.apache.commons/commons-lang3/pom.properties'
+        exclude 'jsr305_annotations/Jsr305_annotations.gwt.xml'
     }
     sourceSets {
         main.java.srcDirs += 'src/main/kotlin'
@@ -159,4 +162,5 @@ dependencies {
 //    }
 //
     compile project(':lib')
+    compile project(':jwplayer-android-sdk-2.4.1+158')
 }
