@@ -21,15 +21,9 @@ import android.util.Log
 import android.view.MenuItem
 import android.widget.EditText
 import android.widget.Toast
-import co.touchlab.android.threading.eventbus.EventBusExt
-import co.touchlab.droidconandroid.data.AppPrefs
 import co.touchlab.droidconandroid.data.UserAccount
 import co.touchlab.droidconandroid.presenter.EditProfileHost
 import co.touchlab.droidconandroid.presenter.EditProfilePresenter
-import co.touchlab.droidconandroid.superbus.QuickClearAvatarTask
-import co.touchlab.droidconandroid.superbus.UploadAvatarCommand
-import co.touchlab.droidconandroid.tasks.Queues
-import co.touchlab.droidconandroid.tasks.persisted.PersistedTaskQueueFactory
 import co.touchlab.droidconandroid.utils.EmojiUtil
 import co.touchlab.droidconandroid.utils.Toaster
 import co.touchlab.profilephotoeditor.BitmapUtils
@@ -75,14 +69,11 @@ class EditUserProfileActivity : AppCompatActivity(), EditProfileHost
         phone.addTextChangedListener(PhoneNumberFormattingTextWatcher())
 
         editProfilePresenter = EditProfilePresenter(this, this, savedInstanceState != null)
-
-        EventBusExt.getDefault().register(this)
     }
 
     override fun onDestroy()
     {
         super.onDestroy()
-        EventBusExt.getDefault().unregister(this)
         editProfilePresenter !!.unregister()
     }
 
@@ -314,10 +305,7 @@ class EditUserProfileActivity : AppCompatActivity(), EditProfileHost
 
     fun photoEditComplete(path: String)
     {
-        Queues.localQueue(this).execute(
-                QuickClearAvatarTask(AppPrefs.getInstance(this).userId!!))
-        editProfilePresenter!!.refreshData()
-        PersistedTaskQueueFactory.getInstance(this).execute(UploadAvatarCommand(path))
+        editProfilePresenter!!.uploadProfilePhoto(path)
         Toaster.showMessage(this, getString(R.string.save_profile_toast))
     }
 
@@ -341,12 +329,6 @@ class EditUserProfileActivity : AppCompatActivity(), EditProfileHost
             e.printStackTrace()
             return null
         }
-    }
-
-    @Suppress("unused", "UNUSED_PARAMETER")
-    fun onEventMainThread(command: UploadAvatarCommand)
-    {
-        editProfilePresenter!!.refreshData()
     }
 
     private inner class SaveBitmapTask : AsyncTask<Bitmap, Void, File>()

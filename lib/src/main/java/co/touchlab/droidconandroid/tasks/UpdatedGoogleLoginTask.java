@@ -1,5 +1,6 @@
 package co.touchlab.droidconandroid.tasks;
 import android.content.Context;
+import android.text.TextUtils;
 import android.util.Log;
 
 import org.apache.commons.lang3.StringUtils;
@@ -12,7 +13,9 @@ import co.touchlab.droidconandroid.data.UserAuthHelper;
 import co.touchlab.droidconandroid.network.GoogleLoginRequest;
 import co.touchlab.droidconandroid.network.dao.LoginResult;
 import co.touchlab.droidconandroid.presenter.AppManager;
+import co.touchlab.droidconandroid.tasks.persisted.PersistedTaskQueueFactory;
 import co.touchlab.droidconandroid.tasks.persisted.RefreshScheduleData;
+import co.touchlab.droidconandroid.tasks.persisted.UploadProfilePhotoTask;
 import retrofit.RestAdapter;
 
 /**
@@ -58,8 +61,8 @@ public class UpdatedGoogleLoginTask extends Task
 
         Log.w(UpdatedGoogleLoginTask.class.getSimpleName(), "Logged in! "+ userAccount.email);
 
-//        if (! TextUtils.isEmpty(imageURL))
-//            PersistedTaskQueueFactory.getInstance(context).execute(UploadAvatarCommand(imageURL));
+        if (! TextUtils.isEmpty(imageURL))
+            PersistedTaskQueueFactory.getInstance(context).execute(new UploadProfilePhotoTask(imageURL, false));
 //
 //        if (!TextUtils.isEmpty(coverURL))
 //            PersistedTaskQueueFactory.getInstance(context).execute(UploadCoverCommand(coverURL));

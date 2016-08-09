@@ -34,6 +34,7 @@
             android:layout_alignStart="@id/avatar"
             android:layout_alignLeft="@id/avatar"
             android:textSize="@dimen/text_xxxxlarge"
+            android:textColor="@color/black"
             android:gravity="center"
             tools:text=":)"/>
 
