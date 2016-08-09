@@ -47,6 +47,7 @@
                     android:layout_alignStart="@id/profile_image"
                     android:layout_alignLeft="@id/profile_image"
                     android:textSize="@dimen/text_xxxxlarge"
+                    android:textColor="@color/black"
                     android:gravity="center"
                     tools:text=":)"/>
 

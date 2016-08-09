@@ -79,6 +79,7 @@
                 android:layout_alignTop="@id/profile_image"
                 android:layout_alignStart="@id/profile_image"
                 android:layout_alignLeft="@id/profile_image"
+                android:textColor="@color/black"
                 android:textSize="@dimen/text_xlarge"
                 android:gravity="center"
                 tools:text=":)"/>
