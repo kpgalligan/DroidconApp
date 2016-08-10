@@ -95,7 +95,7 @@ import UIKit
             cell.loadInfo(titleString!, description: descriptionString!, track: trackNumString!, time: dateTime!, event: event, eventDetailPresenter: eventDetailPresenter)
             cell.selectionStyle = UITableViewCellSelectionStyle.None
             if ((event.isNow() || event.isPast()) && event.getStreamUrl() != nil) {
-                cell.liveStreamButton.addTarget(self, action: "liveStreamTapped:", forControlEvents: UIControlEvents.TouchUpInside)
+                cell.liveStreamButton.addTarget(self, action: #selector(ShowEventDetailViewController.liveStreamTapped(_:)), forControlEvents: UIControlEvents.TouchUpInside)
             } else {
                 cell.liveStreamButton.hidden = true
             }
