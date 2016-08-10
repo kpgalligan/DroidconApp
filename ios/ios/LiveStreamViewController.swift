@@ -77,7 +77,7 @@ class LiveStreamViewController: UIViewController, JWPlayerDelegate {
         let center:  NSNotificationCenter = NSNotificationCenter.defaultCenter()
         
         for(_, notification) in notifications.enumerate() {
-            center.addObserver(self, selector: "handleNotification:", name: notification, object: nil)
+            center.addObserver(self, selector: #selector(LiveStreamViewController.handleNotification(_:)), name: notification, object: nil)
         }
     }
     

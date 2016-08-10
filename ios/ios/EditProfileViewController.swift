@@ -55,7 +55,7 @@ class EditProfileViewController: UIViewController,  UIImagePickerControllerDeleg
         profileImageView.layer.masksToBounds = true
         
         // Setup tap gesture recognizer on the profile photo
-        let tapGesture = UITapGestureRecognizer(target: self, action: "profileImageTapped:")
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(EditProfileViewController.profileImageTapped(_:)))
         profileImageView.addGestureRecognizer(tapGesture)
         profileImageView.userInteractionEnabled = true
         
