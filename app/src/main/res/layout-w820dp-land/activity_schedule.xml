@@ -82,6 +82,7 @@
                         android:layout_alignStart="@id/schedule_toolbar_profile"
                         android:layout_alignTop="@id/schedule_toolbar_profile"
                         android:gravity="center"
+                        android:textColor="@color/black"
                         android:textSize="@dimen/text_small"
                         tools:text=":)"/>
                 </RelativeLayout>

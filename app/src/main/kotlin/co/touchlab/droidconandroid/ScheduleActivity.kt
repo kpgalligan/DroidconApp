@@ -30,11 +30,11 @@ import co.touchlab.droidconandroid.presenter.AppManager
 import co.touchlab.droidconandroid.presenter.ConferenceDataHost
 import co.touchlab.droidconandroid.presenter.ConferenceDataPresenter
 import co.touchlab.droidconandroid.presenter.ConferenceDayHolder
-import co.touchlab.droidconandroid.superbus.UploadAvatarCommand
 import co.touchlab.droidconandroid.superbus.UploadCoverCommand
 import co.touchlab.droidconandroid.tasks.Queues
 import co.touchlab.droidconandroid.tasks.UpdateAlertsTask
 import co.touchlab.droidconandroid.tasks.persisted.RefreshScheduleData
+import co.touchlab.droidconandroid.tasks.persisted.UploadProfilePhotoTask
 import co.touchlab.droidconandroid.ui.DrawerAdapter
 import co.touchlab.droidconandroid.ui.DrawerClickListener
 import co.touchlab.droidconandroid.ui.NavigationItem
@@ -188,6 +188,7 @@ open class ScheduleActivity : AppCompatActivity(), NfcAdapter.CreateNdefMessageC
         }
         else
         {
+            schedule_toolbar_profile.setImageDrawable(ResourcesCompat.getDrawable(this, R.drawable.circle_profile_placeholder))
             schedule_placeholder_emoji.text = EmojiUtil.getEmojiForUser(name)
         }
 
@@ -368,7 +369,7 @@ open class ScheduleActivity : AppCompatActivity(), NfcAdapter.CreateNdefMessageC
     }
 
     @Suppress("unused", "UNUSED_PARAMETER")
-    fun onEventMainThread(command: UploadAvatarCommand) {
+    fun onEventMainThread(command: UploadProfilePhotoTask) {
         drawer_recycler.adapter.notifyDataSetChanged()
         setupToolbar()
     }

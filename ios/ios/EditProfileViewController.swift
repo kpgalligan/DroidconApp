@@ -100,7 +100,17 @@ class EditProfileViewController: UIViewController,  UIImagePickerControllerDeleg
             profileImageView.contentMode = .ScaleAspectFill
             profileImageView.image = pickedImage
             
-            // TODO upload avatar image
+            let imageURL = info[UIImagePickerControllerReferenceURL] as! NSURL
+            let imageName = imageURL.lastPathComponent
+            let documentDirectory = NSFileManager.defaultManager().URLsForDirectory(.DocumentDirectory, inDomains: .UserDomainMask)[0]
+            let localURL = documentDirectory.URLByAppendingPathComponent(imageName!)
+            let path = localURL.path!
+            
+            let image = info[UIImagePickerControllerOriginalImage] as! UIImage
+            let data = UIImagePNGRepresentation(image)
+            data!.writeToFile(path, atomically: true)
+            print(path)
+            editProfilePresenter.uploadProfilePhotoWithNSString(path)
         }
         
         dismissViewControllerAnimated(true, completion: nil)
@@ -115,7 +125,7 @@ class EditProfileViewController: UIViewController,  UIImagePickerControllerDeleg
     }
     
     func setUserAccountWithDCDUserAccount(ua: DCDUserAccount!) {
-        profileImageView.kf_setImageWithURL(NSURL(string: ua.avatarImageUrl())!)
+        setProfilePhotoWithNSString(ua.avatarImageUrl(), withNSString: ua.getName())
         nameField.text = ua.getName()
         phoneField.text = ua.getPhone()
         emailField.text = ua.getEmail()
@@ -130,7 +140,9 @@ class EditProfileViewController: UIViewController,  UIImagePickerControllerDeleg
     }
     
     func setProfilePhotoWithNSString(avatarUrl: String!, withNSString name: String!) {
-        profileImageView.kf_setImageWithURL(NSURL(string: avatarUrl)!)
+        if avatarUrl != nil {
+            profileImageView.kf_setImageWithURL(NSURL(string: avatarUrl)!)
+        }
     }
     
     func showMessageWithNSString(msg: String!) {
