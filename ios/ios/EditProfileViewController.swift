@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Toast_Swift
 
 class EditProfileViewController: UIViewController,  UIImagePickerControllerDelegate, UINavigationControllerDelegate, DCPEditProfileHost {
     
@@ -146,10 +147,9 @@ class EditProfileViewController: UIViewController,  UIImagePickerControllerDeleg
     }
     
     func showMessageWithNSString(msg: String!) {
-        let alertController = UIAlertController(title: msg, message: "", preferredStyle: .Alert)
-        let actionOk = UIAlertAction(title: "OK", style: .Default, handler: nil)
-        alertController.addAction(actionOk)
-        self.presentViewController(alertController, animated: true, completion: nil)
+        var style = ToastStyle()
+        style.backgroundColor = UIColor(red: 0/255.0, green: 65/255.0, blue: 163/255.0, alpha: 1.0)
+        self.view.makeToast(msg, duration: 3.0, position: .Bottom, style: style)
     }
 
 }
