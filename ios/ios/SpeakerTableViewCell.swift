@@ -18,14 +18,13 @@ class SpeakerTableViewCell: UITableViewCell {
     func loadInfo(name: String, info: String, imgUrl: String) {
         nameLabel.text = name
         infoLabel.attributedText = formatHTMLString(info)
+        
+        nameLabel.sizeToFit()
+        infoLabel.sizeToFit()
+        
         speakerImage.kf_setImageWithURL(NSURL(string: imgUrl)!)
         speakerImage.layer.cornerRadius = 24
         speakerImage.layer.masksToBounds = true
-    }
-    
-    override func awakeFromNib() {
-        super.awakeFromNib()
-
     }
 
     override func setSelected(selected: Bool, animated: Bool) {

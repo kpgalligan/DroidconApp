@@ -38,6 +38,9 @@ import UIKit
         
         eventDetailPresenter = DCPEventDetailPresenter(androidContentContext: DCPAppManager.getContext(), withLong: event.getId(), withDCPEventDetailHost: self)
         
+        tableView.rowHeight = UITableViewAutomaticDimension
+        tableView.estimatedRowHeight = 800
+        
         let nib = UINib(nibName: "EventTableViewCell", bundle: nil)
         tableView.registerNib(nib, forCellReuseIdentifier: "eventCell")
         
@@ -46,10 +49,6 @@ import UIKit
         
         self.tableView.contentInset = UIEdgeInsetsZero
         self.tableView.separatorStyle = .None
-        
-        print(dateTime!)
-        print(trackNumString!)
-        
         self.tableView.reloadData()
         
         styleButton()
@@ -57,12 +56,6 @@ import UIKit
 
     override func viewDidDisappear(animated: Bool) {
         eventDetailPresenter.unregister()
-        //        eventDetailPresenter = nil
-    }
-    
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
     }
     
     // MARK: Data refresh
@@ -94,10 +87,11 @@ import UIKit
             
             cell.loadInfo(titleString!, description: descriptionString!, track: trackNumString!, time: dateTime!, event: event, eventDetailPresenter: eventDetailPresenter)
             cell.selectionStyle = UITableViewCellSelectionStyle.None
-            if ((event.isNow() || event.isPast()) && event.getStreamUrl() != nil) {
+            if (event.isNow() && event.getStreamUrl() != nil) {
                 cell.liveStreamButton.addTarget(self, action: "liveStreamTapped:", forControlEvents: UIControlEvents.TouchUpInside)
             } else {
                 cell.liveStreamButton.hidden = true
+                cell.liveStreamIcon.hidden = true
             }
             return cell
         } else {
@@ -112,54 +106,6 @@ import UIKit
             cell.selectionStyle = UITableViewCellSelectionStyle.None
             return cell
         }
-    }
-    
-    func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        if section == 0 {
-            return nil
-        }
-        
-        return ""
-    }
-    
-    func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        if section == 0 {
-            return 0
-        }
-        
-        return 0
-    }
-    
-    func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
-        if indexPath.section == 0 {
-            let attrTitle = [NSFontAttributeName: UIFont.systemFontOfSize(16.0)]
-            let szTitle = CGSize(width: view.bounds.width - 16, height:200)
-            let rTitle = titleString!.boundingRectWithSize(szTitle, options: NSStringDrawingOptions.UsesLineFragmentOrigin, attributes:attrTitle, context:nil)
-            let htTitle = ceil(rTitle.size.height)
-            
-            let attrDescription = [NSFontAttributeName: UIFont.systemFontOfSize(16.0)]
-            let szDescription = CGSize(width: view.bounds.width - 16, height:500)
-            let rDescription = descriptionString!.boundingRectWithSize(szDescription, options: NSStringDrawingOptions.UsesLineFragmentOrigin, attributes:attrDescription, context:nil)
-            let htDescription = ceil(rDescription.size.height)
-
-            return htTitle + htDescription + 60
-        }
-
-        
-        if let speakerDescription = speakers?[indexPath.row].valueForKey("userAccount_")!.valueForKey("profile_") {
-            let attrDescription = [NSFontAttributeName: UIFont.systemFontOfSize(16.0)]
-            let szDescription = CGSize(width: view.bounds.width - 16, height:500)
-            let rDescription = speakerDescription.boundingRectWithSize(szDescription, options: NSStringDrawingOptions.UsesLineFragmentOrigin, attributes:attrDescription, context:nil)
-            let htDescription = ceil(rDescription.size.height)
-            
-            return htDescription + 50
-        }
-        
-        return 200
-    }
-    
-    func tableView(tableView: UITableView, estimatedHeightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
-        return 500.0
     }
     
     // MARK: Action
