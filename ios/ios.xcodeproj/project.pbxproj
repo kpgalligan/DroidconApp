@@ -26,6 +26,8 @@
 		A133A438C64DE6FC93D9530F /* Pods_ios.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CBB7FE920FA6320D289E1684 /* Pods_ios.framework */; };
 		B51821F4B77C4FA3452415AC /* Pods_iosTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 29474B79E0DD967EE9352429 /* Pods_iosTests.framework */; };
 		F92CCB491D3FF35D0048C8A2 /* EditProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F92CCB481D3FF35D0048C8A2 /* EditProfileViewController.swift */; };
+		F92EB65A1D5A5EEC003B47B7 /* WelcomePageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F92EB6591D5A5EEC003B47B7 /* WelcomePageViewController.swift */; };
+		F92EB65C1D5B7D3B003B47B7 /* Welcome4ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F92EB65B1D5B7D3B003B47B7 /* Welcome4ViewController.swift */; };
 		F9903FA21D3FBEC70050687E /* DroidconTabBarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9903FA11D3FBEC70050687E /* DroidconTabBarViewController.swift */; };
 		F9B8C7011D539328000724FC /* LiveStreamViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9B8C7001D539328000724FC /* LiveStreamViewController.swift */; };
 		F9D6952D1D47AF9D0095F0F9 /* AboutViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9D6952C1D47AF9D0095F0F9 /* AboutViewController.swift */; };
@@ -93,6 +95,8 @@
 		C82EA0FD61D649A5A084911A /* Pods-iosTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-iosTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-iosTests/Pods-iosTests.release.xcconfig"; sourceTree = "<group>"; };
 		CBB7FE920FA6320D289E1684 /* Pods_ios.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ios.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		F92CCB481D3FF35D0048C8A2 /* EditProfileViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EditProfileViewController.swift; sourceTree = "<group>"; };
+		F92EB6591D5A5EEC003B47B7 /* WelcomePageViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WelcomePageViewController.swift; sourceTree = "<group>"; };
+		F92EB65B1D5B7D3B003B47B7 /* Welcome4ViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Welcome4ViewController.swift; sourceTree = "<group>"; };
 		F9903FA11D3FBEC70050687E /* DroidconTabBarViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DroidconTabBarViewController.swift; sourceTree = "<group>"; };
 		F9B8C7001D539328000724FC /* LiveStreamViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LiveStreamViewController.swift; sourceTree = "<group>"; };
 		F9D6952C1D47AF9D0095F0F9 /* AboutViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AboutViewController.swift; sourceTree = "<group>"; };
@@ -223,6 +227,8 @@
 				F92CCB481D3FF35D0048C8A2 /* EditProfileViewController.swift */,
 				F9D6952C1D47AF9D0095F0F9 /* AboutViewController.swift */,
 				F9B8C7001D539328000724FC /* LiveStreamViewController.swift */,
+				F92EB6591D5A5EEC003B47B7 /* WelcomePageViewController.swift */,
+				F92EB65B1D5B7D3B003B47B7 /* Welcome4ViewController.swift */,
 			);
 			path = ios;
 			sourceTree = "<group>";
@@ -691,8 +697,10 @@
 				631B98F31C7D6533008AA20D /* AppDelegate.m in Sources */,
 				FA258F641C9381C600986E0D /* NoteTableViewCell.m in Sources */,
 				FAE033A61C974C65001C50E1 /* ShowEventDetailViewController.swift in Sources */,
+				F92EB65C1D5B7D3B003B47B7 /* Welcome4ViewController.swift in Sources */,
 				FA6128BF1C986E05001142E8 /* SpeakerTableViewCell.swift in Sources */,
 				F9903FA21D3FBEC70050687E /* DroidconTabBarViewController.swift in Sources */,
+				F92EB65A1D5A5EEC003B47B7 /* WelcomePageViewController.swift in Sources */,
 				631B98F01C7D6533008AA20D /* main.m in Sources */,
 				63EE30CE1CC6985800B64D3D /* StartScreenViewController.swift in Sources */,
 			);
