@@ -12,12 +12,14 @@
 //#import "co/touchlab/droidconandroid/PlatformClientContainer.h"
 #import "co/touchlab/droidconandroid/presenter/PlatformClient.h"
 #import "co/touchlab/droidconandroid/ios/IosPlatformClient.h"
+#import "co/touchlab/droidconandroid/tasks/persisted/RefreshScheduleData.h"
 #import "android/content/IOSContext.h"
 #import "android/os/Looper.h"
 #import "UIViewController+Utils.h"
 #import <Fabric/Fabric.h>
 #import <Crashlytics/Crashlytics.h>
 #import "Reachability.h"
+@import Firebase;
 
 
 @interface AppDelegate ()
@@ -57,6 +59,25 @@
     // Start Monitoring
     [reachability startNotifier];
     
+    // Register for remote notifications
+    if (floor(NSFoundationVersionNumber) <= NSFoundationVersionNumber_iOS_7_1) {
+        // iOS 7.1 or earlier
+        UIRemoteNotificationType allNotificationTypes =
+        (UIRemoteNotificationTypeSound | UIRemoteNotificationTypeAlert | UIRemoteNotificationTypeBadge);
+        [application registerForRemoteNotificationTypes:allNotificationTypes];
+    } else {
+        // iOS 8 or later
+        // [START register_for_notifications]
+        UIUserNotificationType allNotificationTypes =
+        (UIUserNotificationTypeSound | UIUserNotificationTypeAlert | UIUserNotificationTypeBadge);
+        UIUserNotificationSettings *settings =
+        [UIUserNotificationSettings settingsForTypes:allNotificationTypes categories:nil];
+        [[UIApplication sharedApplication] registerUserNotificationSettings:settings];
+        [[UIApplication sharedApplication] registerForRemoteNotifications];
+        // [END register_for_notifications]
+    }
+    
+    [FIRApp configure];
     return YES;
 }
 
@@ -75,6 +96,21 @@
     return [[GIDSignIn sharedInstance] handleURL:url
                                sourceApplication:sourceApplication
                                       annotation:annotation];
+}
+
+- (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo
+fetchCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler {
+    NSString* type = userInfo[@"type"];
+    //check the type. event messages just open the app so dont need to the handled here.
+    if([type isEqualToString:@"updateSchedule"])
+    {
+        [CoTouchlabDroidconandroidTasksPersistedRefreshScheduleData callMeWithAndroidContentContext:[AndroidContentIOSContext new]];
+        completionHandler(UIBackgroundFetchResultNewData);
+    }
+    else
+    {
+        completionHandler(UIBackgroundFetchResultNoData);
+    }
 }
 
 - (void)signIn:(GIDSignIn *)signIn
@@ -112,6 +148,7 @@ didSignInForUser:(GIDGoogleUser *)user
 - (void)applicationDidEnterBackground:(UIApplication *)application {
     // Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later.
     // If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
+    [[FIRMessaging messaging] disconnect];
 }
 
 - (void)applicationWillEnterForeground:(UIApplication *)application {
@@ -120,10 +157,22 @@ didSignInForUser:(GIDGoogleUser *)user
 
 - (void)applicationDidBecomeActive:(UIApplication *)application {
     // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
+    
+    [self connectToFcm];
 }
 
 - (void)applicationWillTerminate:(UIApplication *)application {
     // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
+}
+
+- (void)connectToFcm {
+    [[FIRMessaging messaging] connectWithCompletion:^(NSError * _Nullable error) {
+        if (error != nil) {
+            NSLog(@"Unable to connect to FCM. %@", error);
+        } else {
+            NSLog(@"Connected to FCM.");
+        }
+    }];
 }
 
 - (NSString *)dataSeed

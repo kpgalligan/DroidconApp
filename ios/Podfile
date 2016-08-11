@@ -45,6 +45,8 @@ pod 'j2objc-intellijannotations-release', :configuration => ['Release'], :path =
     pod 'Kingfisher', '~> 2.4'
     pod 'Reachability', '~> 3.2'
     pod 'JWPlayer-SDK', '~> 2.4.1'
+    pod 'Firebase/Core'
+    pod 'Firebase/Messaging'
 end
 
 target 'iosTests' do
@@ -78,6 +80,8 @@ pod 'j2objc-intellijannotations-release', :configuration => ['Release'], :path =
     pod 'Crashlytics'
     pod 'Google/SignIn'
     pod 'Reachability', '~> 3.2'
+    pod 'Firebase/Core'
+    pod 'Firebase/Messaging'
 end
 
 target 'iosUITests' do
