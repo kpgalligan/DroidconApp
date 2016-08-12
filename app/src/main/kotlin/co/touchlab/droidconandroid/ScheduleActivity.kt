@@ -3,7 +3,6 @@ package co.touchlab.droidconandroid
 import android.content.Context
 import android.content.Intent
 import android.graphics.PorterDuff
-import android.net.Uri
 import android.nfc.NdefMessage
 import android.nfc.NdefRecord
 import android.nfc.NfcAdapter
@@ -242,11 +241,6 @@ open class ScheduleActivity : AppCompatActivity(), NfcAdapter.CreateNdefMessageC
                         allEvents = false
                         appbar.setExpanded(true)
                     }
-                    R.string.buy_tickets -> {
-                        val i = Intent(Intent.ACTION_VIEW)
-                        i.data = Uri.parse(getString(R.string.buy_ticket_url))
-                        startActivity(i)
-                    }
 
                     R.string.social -> FindUserKot.startMe(this@ScheduleActivity)
                     R.string.profile -> createEditUserProfile(this@ScheduleActivity)
@@ -275,7 +269,6 @@ open class ScheduleActivity : AppCompatActivity(), NfcAdapter.CreateNdefMessageC
         drawerItems.add(NavigationItem(R.string.my_schedule, R.drawable.vic_clock_black_24dp))
         drawerItems.add(NavigationItem(R.string.profile, R.drawable.vic_account_circle_black_24dp))
         drawerItems.add("divider_placeholder")
-        drawerItems.add(NavigationItem(R.string.buy_tickets, R.drawable.ic_action_ticket))
         drawerItems.add(NavigationItem(R.string.about, R.drawable.vic_info_outline_black_24dp))
         return drawerItems
     }
