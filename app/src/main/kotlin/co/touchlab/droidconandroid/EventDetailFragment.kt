@@ -14,16 +14,15 @@ import android.text.TextUtils
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import co.touchlab.android.threading.eventbus.EventBusExt
+import co.touchlab.android.threading.tasks.TaskQueue
 import co.touchlab.droidconandroid.data.Event
 import co.touchlab.droidconandroid.data.Track
 import co.touchlab.droidconandroid.data.UserAccount
 import co.touchlab.droidconandroid.presenter.EventDetailHost
 import co.touchlab.droidconandroid.presenter.EventDetailPresenter
-import co.touchlab.droidconandroid.tasks.AddRsvpTask
-import co.touchlab.droidconandroid.tasks.Queues
-import co.touchlab.droidconandroid.tasks.RemoveRsvpTask
-import co.touchlab.droidconandroid.tasks.TrackDrawableTask
+import co.touchlab.droidconandroid.tasks.*
 import com.wnafee.vector.compat.ResourcesCompat
 import kotlinx.android.synthetic.main.fragment_event_detail.*
 import java.text.SimpleDateFormat
@@ -166,6 +165,31 @@ class EventDetailFragment() : Fragment()
             updateBackdropDrawable(task.drawable !!)
     }
 
+    fun callStartVideo(detail: EventDetailAdapter.StreamDetail)
+    {
+        TaskQueue.loadQueueNetwork(context).execute(StartWatchVideoTask(detail.link, detail.cover))
+    }
+
+    @Suppress("unused")
+    fun onEventMainThread(task: StartWatchVideoTask)
+    {
+        if(task.videoOk)
+        {
+            callStreamActivity(task)
+        }
+        else
+        {
+            Toast.makeText(context, "Couldn't start video", Toast.LENGTH_LONG).show();
+        }
+    }
+
+    fun callStreamActivity(detail: StartWatchVideoTask) {
+        val i = Intent(context, VideoActivity::class.java)
+        i.putExtra(EXTRA_STREAM_LINK, detail.link)
+        i.putExtra(EXTRA_STREAM_COVER, detail.cover)
+        context.startActivity(i)
+    }
+
     /**
      * Sets up the floating action bar according to the event details. This includes setting the color
      * and adjusting the icon according to rsvp status
@@ -235,7 +259,7 @@ class EventDetailFragment() : Fragment()
      */
     private fun updateContent(event: Event, speakers: List<UserAccount>?, conflict: Boolean)
     {
-        val adapter = EventDetailAdapter(activity, trackColor)
+        val adapter = EventDetailAdapter(activity, this, trackColor)
 
         //Construct the time and venue string and add it to the adapter
         val startDateVal = Date(event.startDateLong !!)
@@ -259,6 +283,11 @@ class EventDetailFragment() : Fragment()
         if(event.isNow && !TextUtils.isEmpty(event.getStreamUrl()))
             adapter.addStream(event.getStreamUrl(), event.getCoverUrl())
 
+        /*
+        //        if(event.isNow && !TextUtils.isEmpty(event.getStreamUrl()))
+            adapter.addStream("http://content.bitsontherun.com/videos/3XnJSIm4-injeKYZS.mp4", "")
+
+         */
         if (event.isNow)
             adapter.addInfo("<i><b>" + resources.getString(R.string.event_now) + "</b></i>")
         else if (event.isPast)

@@ -337,8 +337,7 @@ open class ScheduleActivity : AppCompatActivity(), NfcAdapter.CreateNdefMessageC
     }
 
     private fun initNfc() {
-        val nfcAdapter = NfcAdapter.getDefaultAdapter(this)
-        nfcAdapter.setNdefPushMessageCallback(this, this)
+        NfcAdapter.getDefaultAdapter(this)?.setNdefPushMessageCallback(this, this)
     }
 
     override fun createNdefMessage(event: NfcEvent?): NdefMessage? {

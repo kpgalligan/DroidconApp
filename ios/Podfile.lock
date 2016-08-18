@@ -56,6 +56,7 @@ PODS:
   - j2objc-squeaky-core-release (1.0)
   - j2objc-squeaky-query-debug (1.0)
   - j2objc-squeaky-query-release (1.0)
+  - JWPlayer-SDK (2.4.1)
   - Kingfisher (2.4.1)
   - Reachability (3.2)
 
@@ -89,6 +90,7 @@ DEPENDENCIES:
   - j2objc-squeaky-core-release (from `../lib/build/doppelDependencyExploded/doppl_co_touchlab_squeaky_squeaky_core_0_5_0_2`)
   - j2objc-squeaky-query-debug (from `../lib/build/doppelDependencyExploded/doppl_co_touchlab_squeaky_squeaky_query_0_5_0_2`)
   - j2objc-squeaky-query-release (from `../lib/build/doppelDependencyExploded/doppl_co_touchlab_squeaky_squeaky_query_0_5_0_2`)
+  - JWPlayer-SDK (~> 2.4.1)
   - Kingfisher (~> 2.4)
   - Reachability (~> 3.2)
 
@@ -185,9 +187,10 @@ SPEC CHECKSUMS:
   j2objc-squeaky-core-release: 802908a6e5b3420ef3d50790238a65471ca2f66c
   j2objc-squeaky-query-debug: 72b0e80a2cab608e09ee99f4eede100b7f3d052b
   j2objc-squeaky-query-release: e66d5d948fc8bc91089209f538857842e596a54f
+  JWPlayer-SDK: d4e6f614c639c1dbb763126d2f1c0399b6fc42a7
   Kingfisher: 41aed5b6c1ed8fa98cf6d75283ce89cf7890f517
   Reachability: 33e18b67625424e47b6cde6d202dce689ad7af96
 
-PODFILE CHECKSUM: ee8d42b78a6a35f03e6c65e16af79a3a1e30b329
+PODFILE CHECKSUM: d1b226c46e5a11763c144ff63e0413aca9861891
 
 COCOAPODS: 1.0.0
