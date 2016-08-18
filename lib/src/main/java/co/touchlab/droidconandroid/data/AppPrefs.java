@@ -6,6 +6,8 @@ import android.content.SharedPreferences;
 import org.apache.commons.lang3.StringUtils;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.UUID;
+
 /**
  * Created by kgalligan on 6/28/14.
  */
@@ -20,12 +22,14 @@ public class AppPrefs
     public static final String CAN_VOTE            = "can_vote";
     public static final String COVER_KEY        = "cover_key";
     public static final String CONVENTION_START = "convention_start";
-    public static final String CONVENTION_END = "convention_end";
-    public static final String REFRESH_TIME = "refresh_time";
-    public static final String MY_RSVPS_LOADED = "myrsvps3";
-    public static final String VOTE_INTRO = "vote_intro";
-    public static final String ALLOW_NOTIFS = "allow_notifs";
-    public static final String SHOW_NOTIF_CARD = "show_notif_card";
+    public static final String CONVENTION_END   = "convention_end";
+    public static final String REFRESH_TIME     = "refresh_time";
+    public static final String MY_RSVPS_LOADED  = "myrsvps3";
+    public static final String VOTE_INTRO       = "vote_intro";
+    public static final String ALLOW_NOTIFS     = "allow_notifs";
+    public static final String SHOW_NOTIF_CARD  = "show_notif_card";
+    public static final String VIDEO_DEVICE_ID  = "VIDEO_DEVICE_ID";
+
     private static AppPrefs instance;
 
     private SharedPreferences prefs;
@@ -158,6 +162,17 @@ public class AppPrefs
     public void setConventionEndDate(@NotNull String endDate)
     {
         setString(CONVENTION_END, endDate);
+    }
+
+    public String getVideoDeviceId()
+    {
+        String deviceId = getString(VIDEO_DEVICE_ID, null);
+        if(deviceId == null)
+        {
+            deviceId = UUID.randomUUID().toString();
+            setString(VIDEO_DEVICE_ID, deviceId);
+        }
+        return deviceId;
     }
 
     public String getConventionEndDate()

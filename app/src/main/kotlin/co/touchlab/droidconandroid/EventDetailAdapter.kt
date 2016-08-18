@@ -32,7 +32,7 @@ private const val TYPE_FEEDBACK: Int = 7
 const val EXTRA_STREAM_LINK = "EXTRA_STREAM_LINK"
 const val EXTRA_STREAM_COVER = "EXTRA_STREAM_COVER"
 
-class EventDetailAdapter(val context: Context, val trackColor: Int) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+class EventDetailAdapter(val context: Context, val frag:EventDetailFragment, val trackColor: Int) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     //dataset
     private var data = ArrayList<Detail>()
 
@@ -121,10 +121,7 @@ class EventDetailAdapter(val context: Context, val trackColor: Int) : RecyclerVi
             TYPE_STREAM -> {
                 val streamVH = holder as StreamVH
                 streamVH.itemView.setOnClickListener {
-                    val i = Intent(context, VideoActivity::class.java)
-                    i.putExtra(EXTRA_STREAM_LINK, (data[position] as StreamDetail).link)
-                    i.putExtra(EXTRA_STREAM_COVER, (data[position] as StreamDetail).cover)
-                    context.startActivity(i)
+                    frag.callStartVideo(data[position] as StreamDetail)
                 }
             }
 
