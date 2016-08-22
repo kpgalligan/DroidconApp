@@ -118,7 +118,17 @@ class EditProfileViewController: UIViewController,  UIImagePickerControllerDeleg
     }
     
     @IBAction func saveProfile(sender: UIBarButtonItem) {
-        let success = editProfilePresenter.saveProfileWithNSString(nameField.text, withNSString: bioTextView.text, withNSString: companyField.text, withNSString: twitterField.text, withNSString: linkedInField.text, withNSString: websiteField.text, withNSString:facebookField.text, withNSString: phoneField.text, withNSString: emailField.text, withNSString: gplusField.text, withBoolean: !hideEmailSwitch.on)
+        let success = editProfilePresenter.saveProfileWithNSString(nameField.text,
+                                                                   withNSString: bioTextView.text,
+                                                                   withNSString: companyField.text,
+                                                                   withNSString: twitterField.text,
+                                                                   withNSString: linkedInField.text,
+                                                                   withNSString: websiteField.text,
+                                                                   withNSString:facebookField.text,
+                                                                   withNSString: phoneField.text,
+                                                                   withNSString: emailField.text,
+                                                                   withNSString: gplusField.text,
+                                                                   withBoolean: !hideEmailSwitch.on)
         
         if (success) {
             showMessageWithNSString("Profile updated.")
