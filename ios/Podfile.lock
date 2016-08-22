@@ -59,6 +59,7 @@ PODS:
   - JWPlayer-SDK (2.4.1)
   - Kingfisher (2.4.1)
   - Reachability (3.2)
+  - Toast-Swift (1.3.0)
 
 DEPENDENCIES:
   - Crashlytics
@@ -91,8 +92,9 @@ DEPENDENCIES:
   - j2objc-squeaky-query-debug (from `../lib/build/doppelDependencyExploded/doppl_co_touchlab_squeaky_squeaky_query_0_5_0_2`)
   - j2objc-squeaky-query-release (from `../lib/build/doppelDependencyExploded/doppl_co_touchlab_squeaky_squeaky_query_0_5_0_2`)
   - JWPlayer-SDK (~> 2.4.1)
-  - Kingfisher (~> 2.4)
+  - Kingfisher (~> 2.4.1)
   - Reachability (~> 3.2)
+  - Toast-Swift (~> 1.3.0)
 
 EXTERNAL SOURCES:
   j2objc-androidbase-debug:
@@ -190,7 +192,8 @@ SPEC CHECKSUMS:
   JWPlayer-SDK: d4e6f614c639c1dbb763126d2f1c0399b6fc42a7
   Kingfisher: 41aed5b6c1ed8fa98cf6d75283ce89cf7890f517
   Reachability: 33e18b67625424e47b6cde6d202dce689ad7af96
+  Toast-Swift: 25c3d98db42dc70d9a77b5006ee000e0becb458e
 
-PODFILE CHECKSUM: d1b226c46e5a11763c144ff63e0413aca9861891
+PODFILE CHECKSUM: 1e61495bd4c5098950722e2db4458192f83a2dc7
 
 COCOAPODS: 1.0.0
