@@ -36,7 +36,9 @@ class LoginViewController: UIViewController, DCPLoginScreenPresenter_Host, GIDSi
     
     func loggedIn(user: GIDGoogleUser)
     {
-        presenter?.runGoogleLoginWithNSString(user.authentication.idToken, withNSString: user.profile.name, withNSString: nil, withNSString: nil)
+        if user.authentication != nil {
+            presenter?.runGoogleLoginWithNSString(user.authentication.idToken, withNSString: user.profile.name, withNSString: nil, withNSString: nil)
+        }
     }
     
     @objc func onLoginReturnedWithBoolean(failed: jboolean, withBoolean firstLogin: jboolean)

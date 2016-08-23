@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Toast_Swift
 
 class EditProfileViewController: UIViewController,  UIImagePickerControllerDelegate, UINavigationControllerDelegate, DCPEditProfileHost {
     
@@ -117,7 +118,17 @@ class EditProfileViewController: UIViewController,  UIImagePickerControllerDeleg
     }
     
     @IBAction func saveProfile(sender: UIBarButtonItem) {
-        let success = editProfilePresenter.saveProfileWithNSString(nameField.text, withNSString: bioTextView.text, withNSString: companyField.text, withNSString: twitterField.text, withNSString: linkedInField.text, withNSString: websiteField.text, withNSString:facebookField.text, withNSString: phoneField.text, withNSString: emailField.text, withNSString: gplusField.text, withBoolean: !hideEmailSwitch.on)
+        let success = editProfilePresenter.saveProfileWithNSString(nameField.text,
+                                                                   withNSString: bioTextView.text,
+                                                                   withNSString: companyField.text,
+                                                                   withNSString: twitterField.text,
+                                                                   withNSString: linkedInField.text,
+                                                                   withNSString: websiteField.text,
+                                                                   withNSString:facebookField.text,
+                                                                   withNSString: phoneField.text,
+                                                                   withNSString: emailField.text,
+                                                                   withNSString: gplusField.text,
+                                                                   withBoolean: !hideEmailSwitch.on)
         
         if (success) {
             showMessageWithNSString("Profile updated.")
@@ -146,10 +157,9 @@ class EditProfileViewController: UIViewController,  UIImagePickerControllerDeleg
     }
     
     func showMessageWithNSString(msg: String!) {
-        let alertController = UIAlertController(title: msg, message: "", preferredStyle: .Alert)
-        let actionOk = UIAlertAction(title: "OK", style: .Default, handler: nil)
-        alertController.addAction(actionOk)
-        self.presentViewController(alertController, animated: true, completion: nil)
+        var style = ToastStyle()
+        style.backgroundColor = UIColor(red: 0/255.0, green: 65/255.0, blue: 163/255.0, alpha: 1.0)
+        self.view.makeToast(msg, duration: 3.0, position: .Bottom, style: style)
     }
 
 }
