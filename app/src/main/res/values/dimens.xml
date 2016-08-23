@@ -100,4 +100,5 @@
 
     <dimen name="match_parent">-1px</dimen>
     <dimen name="wrap_content">-2px</dimen>
+    <dimen name="pager_margin">16dp</dimen>
 </resources>
