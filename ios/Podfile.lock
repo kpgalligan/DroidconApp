@@ -1,13 +1,13 @@
 PODS:
-  - Crashlytics (3.7.0):
+  - Crashlytics (3.7.3):
     - Fabric (~> 1.6.3)
-  - Fabric (1.6.7)
-  - FirebaseAnalytics (3.2.0):
+  - Fabric (1.6.8)
+  - FirebaseAnalytics (3.3.0):
     - FirebaseInstanceID (~> 1.0)
     - GoogleInterchangeUtilities (~> 1.2)
     - GoogleSymbolUtilities (~> 1.1)
-    - GoogleUtilities (~> 1.3)
-  - FirebaseInstanceID (1.0.6)
+    - GoogleUtilities (~> 1.2)
+  - FirebaseInstanceID (1.0.8)
   - Google/Core (3.0.3):
     - FirebaseAnalytics (~> 3.2)
   - Google/SignIn (3.0.3):
@@ -56,8 +56,8 @@ PODS:
   - j2objc-squeaky-core-release (1.0)
   - j2objc-squeaky-query-debug (1.0)
   - j2objc-squeaky-query-release (1.0)
-  - JWPlayer-SDK (2.4.1)
-  - Kingfisher (2.4.1)
+  - JWPlayer-SDK (2.4.3)
+  - Kingfisher (2.4.3)
   - Reachability (3.2)
   - Toast-Swift (1.3.0)
 
@@ -92,69 +92,69 @@ DEPENDENCIES:
   - j2objc-squeaky-query-debug (from `../lib/build/doppelDependencyExploded/doppl_co_touchlab_squeaky_squeaky_query_0_5_0_2`)
   - j2objc-squeaky-query-release (from `../lib/build/doppelDependencyExploded/doppl_co_touchlab_squeaky_squeaky_query_0_5_0_2`)
   - JWPlayer-SDK (~> 2.4.1)
-  - Kingfisher (~> 2.4.1)
+  - Kingfisher (~> 2.4)
   - Reachability (~> 3.2)
   - Toast-Swift (~> 1.3.0)
 
 EXTERNAL SOURCES:
   j2objc-androidbase-debug:
-    :path: ../lib/build/doppelDependencyExploded/co_touchlab_doppel_androidbase_0_3_1_SNAPSHOT
+    :path: "../lib/build/doppelDependencyExploded/co_touchlab_doppel_androidbase_0_3_1_SNAPSHOT"
   j2objc-androidbase-release:
-    :path: ../lib/build/doppelDependencyExploded/co_touchlab_doppel_androidbase_0_3_1_SNAPSHOT
+    :path: "../lib/build/doppelDependencyExploded/co_touchlab_doppel_androidbase_0_3_1_SNAPSHOT"
   j2objc-androidbasetest-debug:
-    :path: ../lib/build/doppelDependencyExploded/co_touchlab_doppel_androidbasetest_0_3_1_SNAPSHOT
+    :path: "../lib/build/doppelDependencyExploded/co_touchlab_doppel_androidbasetest_0_3_1_SNAPSHOT"
   j2objc-androidbasetest-release:
-    :path: ../lib/build/doppelDependencyExploded/co_touchlab_doppel_androidbasetest_0_3_1_SNAPSHOT
+    :path: "../lib/build/doppelDependencyExploded/co_touchlab_doppel_androidbasetest_0_3_1_SNAPSHOT"
   j2objc-commons-io-debug:
-    :path: ../lib/build/doppelDependencyExploded/doppl_commons_io_commons_io_1_4_3
+    :path: "../lib/build/doppelDependencyExploded/doppl_commons_io_commons_io_1_4_3"
   j2objc-commons-io-release:
-    :path: ../lib/build/doppelDependencyExploded/doppl_commons_io_commons_io_1_4_3
+    :path: "../lib/build/doppelDependencyExploded/doppl_commons_io_commons_io_1_4_3"
   j2objc-commons-lang3-debug:
-    :path: ../lib/build/doppelDependencyExploded/doppl_org_apache_commons_commons_lang3_3_3_2_3
+    :path: "../lib/build/doppelDependencyExploded/doppl_org_apache_commons_commons_lang3_3_3_2_3"
   j2objc-commons-lang3-release:
-    :path: ../lib/build/doppelDependencyExploded/doppl_org_apache_commons_commons_lang3_3_3_2_3
+    :path: "../lib/build/doppelDependencyExploded/doppl_org_apache_commons_commons_lang3_3_3_2_3"
   j2objc-eventbus-debug:
-    :path: ../lib/build/doppelDependencyExploded/doppl_de_greenrobot_eventbus_2_4_0_2
+    :path: "../lib/build/doppelDependencyExploded/doppl_de_greenrobot_eventbus_2_4_0_2"
   j2objc-eventbus-release:
-    :path: ../lib/build/doppelDependencyExploded/doppl_de_greenrobot_eventbus_2_4_0_2
+    :path: "../lib/build/doppelDependencyExploded/doppl_de_greenrobot_eventbus_2_4_0_2"
   j2objc-gson-debug:
-    :path: ../lib/build/doppelDependencyExploded/doppl_com_google_code_gson_gson_2_6_2_3
+    :path: "../lib/build/doppelDependencyExploded/doppl_com_google_code_gson_gson_2_6_2_3"
   j2objc-gson-release:
-    :path: ../lib/build/doppelDependencyExploded/doppl_com_google_code_gson_gson_2_6_2_3
+    :path: "../lib/build/doppelDependencyExploded/doppl_com_google_code_gson_gson_2_6_2_3"
   j2objc-intellijannotations-debug:
-    :path: ../lib/build/doppelDependencyExploded/doppl_com_intellij_intellijannotations_9_0_4
+    :path: "../lib/build/doppelDependencyExploded/doppl_com_intellij_intellijannotations_9_0_4"
   j2objc-intellijannotations-release:
-    :path: ../lib/build/doppelDependencyExploded/doppl_com_intellij_intellijannotations_9_0_4
+    :path: "../lib/build/doppelDependencyExploded/doppl_com_intellij_intellijannotations_9_0_4"
   j2objc-lib-debug:
-    :path: ../lib/build/doppel
+    :path: "../lib/build/doppel"
   j2objc-lib-release:
-    :path: ../lib/build/doppel
+    :path: "../lib/build/doppel"
   j2objc-magicthreads-debug:
-    :path: ../lib/build/doppelDependencyExploded/doppl_co_touchlab_magicthreads_0_9_1_1
+    :path: "../lib/build/doppelDependencyExploded/doppl_co_touchlab_magicthreads_0_9_1_1"
   j2objc-magicthreads-release:
-    :path: ../lib/build/doppelDependencyExploded/doppl_co_touchlab_magicthreads_0_9_1_1
+    :path: "../lib/build/doppelDependencyExploded/doppl_co_touchlab_magicthreads_0_9_1_1"
   j2objc-retrofit-debug:
-    :path: ../lib/build/doppelDependencyExploded/doppl_com_squareup_retrofit_retrofit_1_9_0_2
+    :path: "../lib/build/doppelDependencyExploded/doppl_com_squareup_retrofit_retrofit_1_9_0_2"
   j2objc-retrofit-release:
-    :path: ../lib/build/doppelDependencyExploded/doppl_com_squareup_retrofit_retrofit_1_9_0_2
+    :path: "../lib/build/doppelDependencyExploded/doppl_com_squareup_retrofit_retrofit_1_9_0_2"
   j2objc-rxjava-debug:
-    :path: ../lib/build/doppelDependencyExploded/doppl_io_reactivex_rxjava_1_1_6_2
+    :path: "../lib/build/doppelDependencyExploded/doppl_io_reactivex_rxjava_1_1_6_2"
   j2objc-rxjava-release:
-    :path: ../lib/build/doppelDependencyExploded/doppl_io_reactivex_rxjava_1_1_6_2
+    :path: "../lib/build/doppelDependencyExploded/doppl_io_reactivex_rxjava_1_1_6_2"
   j2objc-squeaky-core-debug:
-    :path: ../lib/build/doppelDependencyExploded/doppl_co_touchlab_squeaky_squeaky_core_0_5_0_2
+    :path: "../lib/build/doppelDependencyExploded/doppl_co_touchlab_squeaky_squeaky_core_0_5_0_2"
   j2objc-squeaky-core-release:
-    :path: ../lib/build/doppelDependencyExploded/doppl_co_touchlab_squeaky_squeaky_core_0_5_0_2
+    :path: "../lib/build/doppelDependencyExploded/doppl_co_touchlab_squeaky_squeaky_core_0_5_0_2"
   j2objc-squeaky-query-debug:
-    :path: ../lib/build/doppelDependencyExploded/doppl_co_touchlab_squeaky_squeaky_query_0_5_0_2
+    :path: "../lib/build/doppelDependencyExploded/doppl_co_touchlab_squeaky_squeaky_query_0_5_0_2"
   j2objc-squeaky-query-release:
-    :path: ../lib/build/doppelDependencyExploded/doppl_co_touchlab_squeaky_squeaky_query_0_5_0_2
+    :path: "../lib/build/doppelDependencyExploded/doppl_co_touchlab_squeaky_squeaky_query_0_5_0_2"
 
 SPEC CHECKSUMS:
-  Crashlytics: c3a2333dea9e2733d2777f730910321fc9e25c0d
-  Fabric: caf7580c725e64db144f610ac65cd60956911dc7
-  FirebaseAnalytics: 6f75b04e6bfb8e0b6e9ef298e04c24eea3b13863
-  FirebaseInstanceID: d014d574053a2fe84478f12f7bae96979e7051bb
+  Crashlytics: 76f6beaff70acf226139582c09c78461597c2b98
+  Fabric: 5755268d0171435ab167e3d0878a28a777deaf10
+  FirebaseAnalytics: 228be2991cb28efb96cdafc4d62f64680e615c69
+  FirebaseInstanceID: ba1e640935235e5fac39dfa816fe7660e72e1a8a
   Google: 813c467362eabc11385f5a5cc9ad0cb651a58f4e
   GoogleAppUtilities: f1730f91f67767b453c289577040dd3f425ffdc7
   GoogleAuthUtilities: d7a19615cd7627688afcf181737f1011ee8b5a23
@@ -163,37 +163,37 @@ SPEC CHECKSUMS:
   GoogleSignIn: 09036ed61f8e75f1424100d63f7719480b2428c3
   GoogleSymbolUtilities: 33117db1b5f290c6fbf259585e4885b4c84b98d7
   GoogleUtilities: 56c5ac05b7aa5dc417a1bb85221a9516e04d7032
-  j2objc-androidbase-debug: 25b391e859348b394e3d781ac183e8b52ccc5083
-  j2objc-androidbase-release: 1fa8d108cc916e107d97b76a398b81338ea66cab
-  j2objc-androidbasetest-debug: a9b7780079fd2229ea2a12f34696795ed4377ed2
-  j2objc-androidbasetest-release: 368867055a3296b5985702cceb9d2ed80470db23
-  j2objc-commons-io-debug: 00963276cf2ffb7315174ad952dc7b38d6360054
-  j2objc-commons-io-release: 2ae79d52acef616b0e92682998a53ebba92f2e29
-  j2objc-commons-lang3-debug: 9fb57d05ee7bea00f302a12106cfb2d63b850824
-  j2objc-commons-lang3-release: 912da56631d39b9f1c4c86df23d6816c47bd641a
-  j2objc-eventbus-debug: d93107f9ed89e1affedab08f625c8c7395569052
-  j2objc-eventbus-release: b49e3cfd130918a268f00131216e78080590ea60
-  j2objc-gson-debug: 5bb1263bef02cdb136a8ba957db8276876820f0a
-  j2objc-gson-release: 0a9d53a745eaa69aaa5cbb5e1a37ca5edc05ad80
-  j2objc-intellijannotations-debug: 1ecf34cc76b452d25cadc44e9cf85a26440c207c
-  j2objc-intellijannotations-release: 44c0c837a66dcb4b018236d2b31da6ea1ad70cf5
-  j2objc-lib-debug: 333e6e7e821af458eb734e92d03c015806a6476d
-  j2objc-lib-release: d344e72d03d833f3004c7dafde5e37c106d59b32
-  j2objc-magicthreads-debug: c1cbef752901ad5713afc7e77b356d41b691f050
-  j2objc-magicthreads-release: b342f3bad5fe223c48cf88e1fcbb1c0a795cac1f
-  j2objc-retrofit-debug: 035fdcf5c566edde2d6ef376ae928918a0400c5a
-  j2objc-retrofit-release: aede8e639cd65712a83d0d09ca13d57c824e3ebc
-  j2objc-rxjava-debug: 64ecab8274649d184cc188f230d98a0b6cca247d
-  j2objc-rxjava-release: d5850a6f6242fc7589f069fd6059ee7333b926a3
-  j2objc-squeaky-core-debug: 3d0d5e2eb72790dd35304ba648ada744eef4c1c7
-  j2objc-squeaky-core-release: 802908a6e5b3420ef3d50790238a65471ca2f66c
-  j2objc-squeaky-query-debug: 72b0e80a2cab608e09ee99f4eede100b7f3d052b
-  j2objc-squeaky-query-release: e66d5d948fc8bc91089209f538857842e596a54f
-  JWPlayer-SDK: d4e6f614c639c1dbb763126d2f1c0399b6fc42a7
-  Kingfisher: 41aed5b6c1ed8fa98cf6d75283ce89cf7890f517
+  j2objc-androidbase-debug: d8d2eca774b41b260cf11c77d23e924a9a745232
+  j2objc-androidbase-release: df055955ab04c178befb5bad2de06fa50f817d97
+  j2objc-androidbasetest-debug: 35eafab6a00cc65b4cdc5863b2a7874391b0fe26
+  j2objc-androidbasetest-release: 444483063932bdad85c503d0060a3a76993594c3
+  j2objc-commons-io-debug: 11e6132ef5ea83706e7331a913dd3ad157b57cf9
+  j2objc-commons-io-release: 4783a36439007d3485709f66554b87cc17479afa
+  j2objc-commons-lang3-debug: 0ea70ed0ebf5e032f8ac7823c7f590a3fb4c48c5
+  j2objc-commons-lang3-release: 9a096abbc98020378578f1a5dda6756867f01f61
+  j2objc-eventbus-debug: 557b5420b2be53c960407ba2f171fdbb5c69c3a0
+  j2objc-eventbus-release: 5f35719c2d149a0bd8a493ebc65610fda62c23cb
+  j2objc-gson-debug: d03397b7063a4123f66d464251473394c14e2379
+  j2objc-gson-release: d85648176e6747714ec2625e936171d6b7ccd0a9
+  j2objc-intellijannotations-debug: 9bca07f3abd731842886c1b2dc872eda4db6dc60
+  j2objc-intellijannotations-release: 670a7790a5cf8b341045368f052f96da26c8ce59
+  j2objc-lib-debug: 99ecf9966e8c9cadb081aa1a6758c0755e1d1014
+  j2objc-lib-release: 80ba56d41b923ba02f69f8655bd2ef74bbfec658
+  j2objc-magicthreads-debug: 9fc4f6c1e52aa78a55fdcbad9b49f28aa032078c
+  j2objc-magicthreads-release: 012040ecda70feef768c7fa39347f1cb26be07ee
+  j2objc-retrofit-debug: 4b326a77a91489191fb0d2c69493b697ef0942ff
+  j2objc-retrofit-release: da8f7753fc9c15a3ee24ccc05a07e64fc379f120
+  j2objc-rxjava-debug: 4b12277e67f80cfe3a4ce8aae8efd940a140f86d
+  j2objc-rxjava-release: 182691f570a308ab2586db2aafbfde53f5d1b00f
+  j2objc-squeaky-core-debug: 73cbba0d1640c5c4a25a51819d092d89b792388f
+  j2objc-squeaky-core-release: 87ba067acd0849b5917bf7239a2c9342044f2a11
+  j2objc-squeaky-query-debug: 9ad62657a155e0aab55c179b83c78aa556980f94
+  j2objc-squeaky-query-release: e251620ebed524f137582fda8fcb36bdecb34703
+  JWPlayer-SDK: cfbf6a5b4b68f3376c4af8b4c59d77ce0bb469ec
+  Kingfisher: 322a9c1c5b03212c1e741d6bece72d387b01a77a
   Reachability: 33e18b67625424e47b6cde6d202dce689ad7af96
   Toast-Swift: 25c3d98db42dc70d9a77b5006ee000e0becb458e
 
-PODFILE CHECKSUM: 1e61495bd4c5098950722e2db4458192f83a2dc7
+PODFILE CHECKSUM: f5a2e7efad1f35876611e506445713ab38183c6c
 
-COCOAPODS: 1.0.0
+COCOAPODS: 1.0.1
