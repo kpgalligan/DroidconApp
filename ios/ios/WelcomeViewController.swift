@@ -10,11 +10,33 @@ import UIKit
 
 class WelcomeViewController: UIViewController
 {
-    @IBOutlet var doneButton: UIButton!
+    @IBOutlet weak var containerView: UIView!
+    @IBOutlet weak var pageControl: UIPageControl!
     
-    @IBAction func doneClicked(sender: AnyObject) {
-        DCPAppManager.getAppPrefs().setHasSeenWelcome()
-        performSegueWithIdentifier("Login", sender: self)
+    override func viewDidLoad() {
+        super.viewDidLoad()
+    }
+    
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        if let welcomePageViewController = segue.destinationViewController as? WelcomePageViewController {
+            welcomePageViewController.welcomeDelegate = self
+        }
+    }
+}
+
+extension WelcomeViewController: WelcomePageViewControllerDelegate
+{
+    func welcomePageViewController(welcomePageViewController: WelcomePageViewController,
+                                    didUpdatePageCount count: Int) {
+        pageControl.numberOfPages = count
+    }
+    
+    func welcomePageViewController(welcomePageViewController: WelcomePageViewController,
+                                    didUpdatePageIndex index: Int) {
+        pageControl.currentPage = index
         
+        if (pageControl.numberOfPages - 1 == pageControl.currentPage) {
+            DCPAppManager.getAppPrefs().setHasSeenWelcome()
+        }
     }
 }

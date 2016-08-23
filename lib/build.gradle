@@ -32,7 +32,6 @@ dependencies {
     doppel 'doppl.commons-io:commons-io:1.4.3@dop'
     doppel 'doppl.io.reactivex:rxjava:1.1.6.2@dop'
 
-
     provided 'com.intellij:annotations:9.0.4'
     doppel 'doppl.com.intellij:intellijannotations:9.0.4@dop'
 }
@@ -43,32 +42,14 @@ test{
 
 j2objcConfig {
 
-//    j2objcCycleFinder { enabled = true }
-
-//    translateDoppelLibs 'eventbus', 'squeakycore', 'squeakyquery', 'androidbase', 'intellij', 'magicthreads-0.9.0', 'retrofit', 'rxjava', 'rxandroid', 'commons-io', 'commons-lang3', 'gson', 'dagger', 'agera'
-
-    // Omit these two lines if you don't configure your Xcode project with CocoaPods
     xcodeProjectDir '../ios'  //  suggested directory name
     xcodeTargetsIos 'ios', 'iosTests'  // replace with your iOS targets
-
-//    doppelDeployDir = '/Users/kgalligan/devel/xp/gradletrans/out'
 
     testMinExpectedTests 0
 
     translateArgs '--prefix', 'co.touchlab.droidconandroid.data=DCD'
     translateArgs '--prefix', 'co.touchlab.droidconandroid.presenter=DCP'
     translateArgs '--prefix', 'co.touchlab.droidconandroid.tasks=DCT'
-
-//    podDependency 'J2OBJC,../../J2OBJC'
-    extraLinkerArgs '-lsqlite3'
-
-//    extraNativeLib library:'eventbuslibspec', linkage:'static'
-
-//    extraObjcCompilerArgs '-I/Users/kgalligan/devel/xp/gradletrans/eventbus/trans/eb/build/j2objcOutputs/src/main/objc'
-//    translateClasspaths '/Users/kgalligan/devel/xp/gradletrans/eventbus/trans/eb/build/classes/main'
-
-//    extraLinkerArgs '-L/Users/kgalligan/devel/xp/gradletrans/eventbus/trans/eb/build/j2objcOutputs/lib/x86_64Debug'
-//    extraLinkerArgs '-leventbus-j2objc'
 
     finalConfigure()          // Must be last call to configuration
 }
