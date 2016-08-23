@@ -280,14 +280,12 @@ class EventDetailFragment() : Fragment()
 
         adapter.addHeader(event.name, venueFormatString.format(event.venue.name, formattedStart, formattedEnd))
 
-        if(event.isNow && !TextUtils.isEmpty(event.getStreamUrl()))
-            adapter.addStream(event.getStreamUrl(), event.getCoverUrl())
+//        if(event.isNow && !TextUtils.isEmpty(event.getStreamUrl()))
+//            adapter.addStream(event.getStreamUrl(), event.getCoverUrl())
 
-        /*
         //        if(event.isNow && !TextUtils.isEmpty(event.getStreamUrl()))
             adapter.addStream("http://content.bitsontherun.com/videos/3XnJSIm4-injeKYZS.mp4", "")
 
-         */
         if (event.isNow)
             adapter.addInfo("<i><b>" + resources.getString(R.string.event_now) + "</b></i>")
         else if (event.isPast)
