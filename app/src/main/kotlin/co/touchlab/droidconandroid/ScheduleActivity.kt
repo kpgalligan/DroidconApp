@@ -51,7 +51,7 @@ const val HTTPS_S3_AMAZONAWS_COM_DROIDCONIMAGES: String = "https://s3.amazonaws.
 private const val POSITION_EXPLORE = 1
 private const val POSITION_MY_SCHEDULE = 2
 private const val ALL_EVENTS = "all_events"
-private const val ALPHA_OPAQUE = 255
+const val ALPHA_OPAQUE = 255
 
 fun startScheduleActivity(c: Context) {
     c.startActivity(Intent(c, ScheduleActivity::class.java))
@@ -244,9 +244,8 @@ open class ScheduleActivity : AppCompatActivity(), NfcAdapter.CreateNdefMessageC
 
                     R.string.social -> FindUserKot.startMe(this@ScheduleActivity)
                     R.string.profile -> createEditUserProfile(this@ScheduleActivity)
-                    R.string.sponsors -> startActivity(WelcomeActivity.getLaunchIntent(this@ScheduleActivity,
-                            true))
                     R.string.about -> AboutActivity.callMe(this@ScheduleActivity)
+                    R.string.sponsors -> SponsorsActivity.startMe(this@ScheduleActivity)
                 }
 
                 Handler().post(RefreshRunnable())
@@ -269,6 +268,7 @@ open class ScheduleActivity : AppCompatActivity(), NfcAdapter.CreateNdefMessageC
         drawerItems.add(NavigationItem(R.string.my_schedule, R.drawable.vic_clock_black_24dp))
         drawerItems.add(NavigationItem(R.string.profile, R.drawable.vic_account_circle_black_24dp))
         drawerItems.add("divider_placeholder")
+        drawerItems.add(NavigationItem(R.string.sponsors, R.drawable.placeholder_square_red))
         drawerItems.add(NavigationItem(R.string.about, R.drawable.vic_info_outline_black_24dp))
         return drawerItems
     }

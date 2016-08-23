@@ -141,6 +141,7 @@
     <string name="conflict">conflict</string>
     <string name="hint_gPlus">Profile</string>
 
+    <string name="lorem_name">Lorem Ipsum</string>
     <string name="lorem_short">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</string>
     <string name="lorem_long">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.\n\nUt enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
     </string>
@@ -159,4 +160,11 @@
 
     <string name="add_contact">Add to contacts</string>
     <string name="title_activity_user_detail">Profile</string>
+    <string name="title_activity_sponsors">OUR AWESOME SPONSORS</string>
+    <string name="sponsor_image">Sponsor Image</string>
+
+    <string name="sponsors_tab_general">GENERAL &#x1F60E;</string>
+    <string name="sponsors_tab_streaming">STREAMING &#x1F4FA;</string>
+    <string name="sponsors_tab_party">PARTY &#x1F389;</string>
+
 </resources>
