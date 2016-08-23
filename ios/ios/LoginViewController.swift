@@ -24,7 +24,7 @@ class LoginViewController: UIViewController, DCPLoginScreenPresenter_Host, GIDSi
         let button = UIButton(type: UIButtonType.RoundedRect)
         button.frame = CGRectMake(20, 50, 100, 30)
         button.setTitle("Crash", forState: UIControlState.Normal)
-        button.addTarget(self, action: "crashButtonTapped:", forControlEvents: UIControlEvents.TouchUpInside)
+        button.addTarget(self, action: #selector(LoginViewController.crashButtonTapped(_:)), forControlEvents: UIControlEvents.TouchUpInside)
         view.addSubview(button)
 
     }
@@ -36,7 +36,9 @@ class LoginViewController: UIViewController, DCPLoginScreenPresenter_Host, GIDSi
     
     func loggedIn(user: GIDGoogleUser)
     {
-        presenter?.runGoogleLoginWithNSString(user.authentication.idToken, withNSString: user.profile.name, withNSString: nil, withNSString: nil)
+        if user.authentication != nil {
+            presenter?.runGoogleLoginWithNSString(user.authentication.idToken, withNSString: user.profile.name, withNSString: nil, withNSString: nil)
+        }
     }
     
     @objc func onLoginReturnedWithBoolean(failed: jboolean, withBoolean firstLogin: jboolean)

@@ -3,7 +3,6 @@ package co.touchlab.droidconandroid
 import android.content.Context
 import android.content.Intent
 import android.graphics.PorterDuff
-import android.net.Uri
 import android.nfc.NdefMessage
 import android.nfc.NdefRecord
 import android.nfc.NfcAdapter
@@ -30,11 +29,11 @@ import co.touchlab.droidconandroid.presenter.AppManager
 import co.touchlab.droidconandroid.presenter.ConferenceDataHost
 import co.touchlab.droidconandroid.presenter.ConferenceDataPresenter
 import co.touchlab.droidconandroid.presenter.ConferenceDayHolder
-import co.touchlab.droidconandroid.superbus.UploadAvatarCommand
 import co.touchlab.droidconandroid.superbus.UploadCoverCommand
 import co.touchlab.droidconandroid.tasks.Queues
 import co.touchlab.droidconandroid.tasks.UpdateAlertsTask
 import co.touchlab.droidconandroid.tasks.persisted.RefreshScheduleData
+import co.touchlab.droidconandroid.tasks.persisted.UploadProfilePhotoTask
 import co.touchlab.droidconandroid.ui.DrawerAdapter
 import co.touchlab.droidconandroid.ui.DrawerClickListener
 import co.touchlab.droidconandroid.ui.NavigationItem
@@ -188,6 +187,7 @@ open class ScheduleActivity : AppCompatActivity(), NfcAdapter.CreateNdefMessageC
         }
         else
         {
+            schedule_toolbar_profile.setImageDrawable(ResourcesCompat.getDrawable(this, R.drawable.circle_profile_placeholder))
             schedule_placeholder_emoji.text = EmojiUtil.getEmojiForUser(name)
         }
 
@@ -241,11 +241,6 @@ open class ScheduleActivity : AppCompatActivity(), NfcAdapter.CreateNdefMessageC
                         allEvents = false
                         appbar.setExpanded(true)
                     }
-                    R.string.buy_tickets -> {
-                        val i = Intent(Intent.ACTION_VIEW)
-                        i.data = Uri.parse(getString(R.string.buy_ticket_url))
-                        startActivity(i)
-                    }
 
                     R.string.social -> FindUserKot.startMe(this@ScheduleActivity)
                     R.string.profile -> createEditUserProfile(this@ScheduleActivity)
@@ -274,7 +269,6 @@ open class ScheduleActivity : AppCompatActivity(), NfcAdapter.CreateNdefMessageC
         drawerItems.add(NavigationItem(R.string.my_schedule, R.drawable.vic_clock_black_24dp))
         drawerItems.add(NavigationItem(R.string.profile, R.drawable.vic_account_circle_black_24dp))
         drawerItems.add("divider_placeholder")
-        drawerItems.add(NavigationItem(R.string.buy_tickets, R.drawable.ic_action_ticket))
         drawerItems.add(NavigationItem(R.string.about, R.drawable.vic_info_outline_black_24dp))
         return drawerItems
     }
@@ -343,8 +337,7 @@ open class ScheduleActivity : AppCompatActivity(), NfcAdapter.CreateNdefMessageC
     }
 
     private fun initNfc() {
-        val nfcAdapter = NfcAdapter.getDefaultAdapter(this)
-        nfcAdapter.setNdefPushMessageCallback(this, this)
+        NfcAdapter.getDefaultAdapter(this)?.setNdefPushMessageCallback(this, this)
     }
 
     override fun createNdefMessage(event: NfcEvent?): NdefMessage? {
@@ -368,7 +361,7 @@ open class ScheduleActivity : AppCompatActivity(), NfcAdapter.CreateNdefMessageC
     }
 
     @Suppress("unused", "UNUSED_PARAMETER")
-    fun onEventMainThread(command: UploadAvatarCommand) {
+    fun onEventMainThread(command: UploadProfilePhotoTask) {
         drawer_recycler.adapter.notifyDataSetChanged()
         setupToolbar()
     }
