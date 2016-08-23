@@ -40,7 +40,7 @@ import UIKit
         
         tableView.rowHeight = UITableViewAutomaticDimension
         tableView.estimatedRowHeight = 800
-        
+
         let nib = UINib(nibName: "EventTableViewCell", bundle: nil)
         tableView.registerNib(nib, forCellReuseIdentifier: "eventCell")
         
@@ -88,7 +88,7 @@ import UIKit
             cell.loadInfo(titleString!, description: descriptionString!, track: trackNumString!, time: dateTime!, event: event, eventDetailPresenter: eventDetailPresenter)
             cell.selectionStyle = UITableViewCellSelectionStyle.None
             if (event.isNow() && event.getStreamUrl() != nil) {
-                cell.liveStreamButton.addTarget(self, action: "liveStreamTapped:", forControlEvents: UIControlEvents.TouchUpInside)
+                cell.liveStreamButton.addTarget(self, action: #selector(ShowEventDetailViewController.liveStreamTapped(_:)), forControlEvents: UIControlEvents.TouchUpInside)
             } else {
                 cell.liveStreamButton.hidden = true
                 cell.liveStreamIcon.hidden = true
@@ -107,7 +107,7 @@ import UIKit
             return cell
         }
     }
-    
+
     // MARK: Action
     
     func styleButton() {

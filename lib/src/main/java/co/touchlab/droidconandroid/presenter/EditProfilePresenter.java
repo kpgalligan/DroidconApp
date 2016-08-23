@@ -9,7 +9,10 @@ import com.google.j2objc.annotations.Weak;
 import co.touchlab.droidconandroid.data.AppPrefs;
 import co.touchlab.droidconandroid.tasks.GrabUserProfile;
 import co.touchlab.droidconandroid.tasks.Queues;
+import co.touchlab.droidconandroid.tasks.QuickClearAvatarTask;
 import co.touchlab.droidconandroid.tasks.UpdateUserProfileTask;
+import co.touchlab.droidconandroid.tasks.persisted.PersistedTaskQueueFactory;
+import co.touchlab.droidconandroid.tasks.persisted.UploadProfilePhotoTask;
 
 /**
  * Created by Ramona Harrison
@@ -53,6 +56,11 @@ public class EditProfilePresenter extends AbstractEventBusPresenter
         host.setProfilePhoto(task.userAccount.avatarImageUrl(), task.userAccount.name);
     }
 
+    public void onEventMainThread(UploadProfilePhotoTask task)
+    {
+        refreshData();
+    }
+
     public boolean saveProfile(String name, String bio, String company, String twitter, String linkedIn, String website, String facebook, String phone, String email, String gPlus, boolean showEmail)
     {
         if(TextUtils.isEmpty(name))
@@ -90,5 +98,11 @@ public class EditProfilePresenter extends AbstractEventBusPresenter
 
         return true;
     }
-    
+
+    public void uploadProfilePhoto(String path)
+    {
+        Queues.localQueue(getContext()).execute(new QuickClearAvatarTask(userId));
+        PersistedTaskQueueFactory.getInstance(getContext())
+                .execute(new UploadProfilePhotoTask(path, true));
+    }
 }

@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Toast_Swift
 
 class EditProfileViewController: UIViewController,  UIImagePickerControllerDelegate, UINavigationControllerDelegate, DCPEditProfileHost {
     
@@ -55,7 +56,7 @@ class EditProfileViewController: UIViewController,  UIImagePickerControllerDeleg
         profileImageView.layer.masksToBounds = true
         
         // Setup tap gesture recognizer on the profile photo
-        let tapGesture = UITapGestureRecognizer(target: self, action: "profileImageTapped:")
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(EditProfileViewController.profileImageTapped(_:)))
         profileImageView.addGestureRecognizer(tapGesture)
         profileImageView.userInteractionEnabled = true
         
@@ -100,14 +101,34 @@ class EditProfileViewController: UIViewController,  UIImagePickerControllerDeleg
             profileImageView.contentMode = .ScaleAspectFill
             profileImageView.image = pickedImage
             
-            // TODO upload avatar image
+            let imageURL = info[UIImagePickerControllerReferenceURL] as! NSURL
+            let imageName = imageURL.lastPathComponent
+            let documentDirectory = NSFileManager.defaultManager().URLsForDirectory(.DocumentDirectory, inDomains: .UserDomainMask)[0]
+            let localURL = documentDirectory.URLByAppendingPathComponent(imageName!)
+            let path = localURL.path!
+            
+            let image = info[UIImagePickerControllerOriginalImage] as! UIImage
+            let data = UIImagePNGRepresentation(image)
+            data!.writeToFile(path, atomically: true)
+            print(path)
+            editProfilePresenter.uploadProfilePhotoWithNSString(path)
         }
         
         dismissViewControllerAnimated(true, completion: nil)
     }
     
     @IBAction func saveProfile(sender: UIBarButtonItem) {
-        let success = editProfilePresenter.saveProfileWithNSString(nameField.text, withNSString: bioTextView.text, withNSString: companyField.text, withNSString: twitterField.text, withNSString: linkedInField.text, withNSString: websiteField.text, withNSString:facebookField.text, withNSString: phoneField.text, withNSString: emailField.text, withNSString: gplusField.text, withBoolean: !hideEmailSwitch.on)
+        let success = editProfilePresenter.saveProfileWithNSString(nameField.text,
+                                                                   withNSString: bioTextView.text,
+                                                                   withNSString: companyField.text,
+                                                                   withNSString: twitterField.text,
+                                                                   withNSString: linkedInField.text,
+                                                                   withNSString: websiteField.text,
+                                                                   withNSString:facebookField.text,
+                                                                   withNSString: phoneField.text,
+                                                                   withNSString: emailField.text,
+                                                                   withNSString: gplusField.text,
+                                                                   withBoolean: !hideEmailSwitch.on)
         
         if (success) {
             showMessageWithNSString("Profile updated.")
@@ -115,7 +136,7 @@ class EditProfileViewController: UIViewController,  UIImagePickerControllerDeleg
     }
     
     func setUserAccountWithDCDUserAccount(ua: DCDUserAccount!) {
-        profileImageView.kf_setImageWithURL(NSURL(string: ua.avatarImageUrl())!)
+        setProfilePhotoWithNSString(ua.avatarImageUrl(), withNSString: ua.getName())
         nameField.text = ua.getName()
         phoneField.text = ua.getPhone()
         emailField.text = ua.getEmail()
@@ -130,14 +151,15 @@ class EditProfileViewController: UIViewController,  UIImagePickerControllerDeleg
     }
     
     func setProfilePhotoWithNSString(avatarUrl: String!, withNSString name: String!) {
-        profileImageView.kf_setImageWithURL(NSURL(string: avatarUrl)!)
+        if avatarUrl != nil {
+            profileImageView.kf_setImageWithURL(NSURL(string: avatarUrl)!)
+        }
     }
     
     func showMessageWithNSString(msg: String!) {
-        let alertController = UIAlertController(title: msg, message: "", preferredStyle: .Alert)
-        let actionOk = UIAlertAction(title: "OK", style: .Default, handler: nil)
-        alertController.addAction(actionOk)
-        self.presentViewController(alertController, animated: true, completion: nil)
+        var style = ToastStyle()
+        style.backgroundColor = UIColor(red: 0/255.0, green: 65/255.0, blue: 163/255.0, alpha: 1.0)
+        self.view.makeToast(msg, duration: 3.0, position: .Bottom, style: style)
     }
 
 }
