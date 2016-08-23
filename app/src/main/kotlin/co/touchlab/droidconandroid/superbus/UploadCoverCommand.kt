@@ -5,7 +5,6 @@ import android.util.Log
 import co.touchlab.android.threading.eventbus.EventBusExt
 import co.touchlab.android.threading.tasks.helper.RetrofitPersistedTask
 import co.touchlab.android.threading.tasks.persisted.PersistedTask
-import co.touchlab.droidconandroid.BuildConfig
 import co.touchlab.droidconandroid.data.AppPrefs
 import co.touchlab.droidconandroid.network.dao.UserInfoResponse
 import co.touchlab.droidconandroid.presenter.AppManager
@@ -35,7 +34,7 @@ open class UploadCoverCommand(val coverURL: String? = null) : RetrofitPersistedT
         body = response!!.getBody()!!
 
         val uuid = AppPrefs.getInstance(context).getUserUuid()
-        val postClient = BasicHttpClient(BuildConfig.BASE_URL)
+        val postClient = BasicHttpClient(AppManager.getPlatformClient().baseUrl())
         postClient.addHeader("uuid", uuid);
         val uploadResponse = postClient.post("dataTest/uploadCover", "image/jpeg", body)
 //        postClient.checkAndThrowError()
