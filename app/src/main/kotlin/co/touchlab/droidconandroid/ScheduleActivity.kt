@@ -24,7 +24,6 @@ import co.touchlab.android.threading.eventbus.EventBusExt
 import co.touchlab.droidconandroid.data.AppPrefs
 import co.touchlab.droidconandroid.data.DatabaseHelper
 import co.touchlab.droidconandroid.data.Track
-import co.touchlab.droidconandroid.gcm.RegistrationIntentService
 import co.touchlab.droidconandroid.presenter.AppManager
 import co.touchlab.droidconandroid.presenter.ConferenceDataHost
 import co.touchlab.droidconandroid.presenter.ConferenceDataPresenter
@@ -40,6 +39,7 @@ import co.touchlab.droidconandroid.ui.NavigationItem
 import co.touchlab.droidconandroid.ui.UpdateAllowNotificationEvent
 import co.touchlab.droidconandroid.utils.EmojiUtil
 import co.touchlab.droidconandroid.utils.TimeUtils
+import com.google.firebase.messaging.FirebaseMessaging
 import com.squareup.picasso.Callback
 import com.squareup.picasso.Picasso
 import com.wnafee.vector.compat.ResourcesCompat
@@ -63,7 +63,8 @@ open class ScheduleActivity : AppCompatActivity(), NfcAdapter.CreateNdefMessageC
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
+        FirebaseMessaging.getInstance().subscribeToTopic("all")
+        FirebaseMessaging.getInstance().subscribeToTopic("android")
         when (AppManager.findStartScreen(getString(R.string.voting_ends))) {
             AppManager.AppScreens.Welcome -> {
                 startActivity(WelcomeActivity.getLaunchIntent(this@ScheduleActivity, false))
@@ -87,10 +88,6 @@ open class ScheduleActivity : AppCompatActivity(), NfcAdapter.CreateNdefMessageC
 
                 setContentView(R.layout.activity_schedule)
                 initNfc()
-
-                // Start IntentService to register this application with GCM.
-                val intent = Intent(this, RegistrationIntentService::class.java)
-                startService(intent)
             }
         }
     }
