@@ -148,13 +148,16 @@
 
 - (void)loadCallbackWithDCPConferenceDayHolderArray:(IOSObjectArray *)conferenceDayHolders
 {
-    self.hourBlocks = [[NSMutableArray alloc] init];
+    if (!self.successfulRequest) {
+        self.hourBlocks = [[NSMutableArray alloc] init];
         
-    self.conferenceDays = (NSArray *)conferenceDayHolders;
-    [self updateTableData];
-    [self.reloadDelegate reloadTableView];
-    
-    NSLog(@"Received data from server.");
+        self.conferenceDays = (NSArray *)conferenceDayHolders;
+        [self updateTableData];
+        [self.reloadDelegate reloadTableView];
+        
+        self.successfulRequest = YES;
+        NSLog(@"Received data from server.");
+    }
 }
 
 #pragma Table View - Delegate
