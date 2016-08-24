@@ -216,8 +216,8 @@ public class RefreshScheduleData extends RetrofitPersistedTask
 
                     }
 
-                    //Just in case it was empty or whatever
-                    if(foundEvents.size() > 30)
+                    // don't clear the db if no events are returned
+                    if(! foundEvents.isEmpty())
                     {
                         databaseHelper.deleteEventsNotIn(foundEvents);
                     }
