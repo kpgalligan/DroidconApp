@@ -1,0 +1,101 @@
+{
+  "totalSpanCount": 12,
+  "sponsors": [
+    {
+      "spanCount": 6,
+      "sponsorName": "Twilio",
+      "sponsorImage": "http://static1.squarespace.com/static/57435443b654f9e7bf666709/t/57867f99ff7c509730330e9a/1469030915599/?format=750w",
+      "sponsorLink": "https://www.twilio.com/"
+    },
+    {
+      "spanCount": 6,
+      "sponsorName": "Badoo",
+      "sponsorImage": "http://static1.squarespace.com/static/57435443b654f9e7bf666709/t/57867fb5bebafb879f1cc440/1469031087111/?format=750w",
+      "sponsorLink": "https://corp.badoo.com/en/"
+    },
+    {
+      "spanCount": 6,
+      "sponsorName": "American Express",
+      "sponsorImage": "http://static1.squarespace.com/static/57435443b654f9e7bf666709/t/57867fa6bebafb879f1cc396/1468432298382/?format=750w",
+      "sponsorLink": "https://card.americanexpress.com"
+    },
+    {
+      "spanCount": 6,
+      "sponsorName": "Facebook",
+      "sponsorImage": "http://static1.squarespace.com/static/57435443b654f9e7bf666709/t/57bb60d3b8a79b49892628a5/1471897846878/?format=750w",
+      "sponsorLink": "https://www.facebook.com/careers/"
+    },
+    {
+      "spanCount": 6,
+      "sponsorName": "Instagram",
+      "sponsorImage": "http://static1.squarespace.com/static/57435443b654f9e7bf666709/t/57bb6103893fc091bb1b2b68/1471897865531/?format=750w",
+      "sponsorLink": "https://www.instagram.com/"
+    },
+    {
+      "spanCount": 4,
+      "sponsorName": "Airtime",
+      "sponsorImage": "http://static1.squarespace.com/static/57435443b654f9e7bf666709/t/578682aa15d5db1ac046bd59/1468433086617/?format=500w",
+      "sponsorLink": "https://www.airtime.com/about#story"
+    },
+    {
+      "spanCount": 4,
+      "sponsorName": "Contentful",
+      "sponsorImage": "http://static1.squarespace.com/static/57435443b654f9e7bf666709/t/578fa1b92e69cf4e4e06fc0d/1469030863770/?format=500w",
+      "sponsorLink": "https://www.contentful.com/careers/"
+    },
+    {
+      "spanCount": 4,
+      "sponsorName": "Tumblr",
+      "sponsorImage": "http://static1.squarespace.com/static/57435443b654f9e7bf666709/t/578680bae6f2e1a75bee26a8/1469031123732/?format=500w",
+      "sponsorLink": "http://tumblr.com/about"
+    },
+    {
+      "spanCount": 4,
+      "sponsorName": "Meetup",
+      "sponsorImage": "http://static1.squarespace.com/static/57435443b654f9e7bf666709/t/578fa421d1758e1faf8aa17f/1469031465060/?format=500w",
+      "sponsorLink": "http://www.meetup.com/"
+    },
+    {
+      "spanCount": 4,
+      "sponsorName": "Branch",
+      "sponsorImage": "http://static1.squarespace.com/static/57435443b654f9e7bf666709/t/57b49b0bcd0f68856d4d267c/1471453967636/?format=500w",
+      "sponsorLink": "http://branch.io/"
+    },
+    {
+      "spanCount": 4,
+      "sponsorName": "Twitter",
+      "sponsorImage": "http://static1.squarespace.com/static/57435443b654f9e7bf666709/t/578fa647ff7c509745a615d0/1471897395387/?format=500w",
+      "sponsorLink": "https://dev.twitter.com/"
+    },
+    {
+      "spanCount": 4,
+      "sponsorName": "Comixology",
+      "sponsorImage": "http://static1.squarespace.com/static/57435443b654f9e7bf666709/t/57b4a57c20099e493d14a4d5/1471456674277/?format=500w",
+      "sponsorLink": "https://www.comixology.com/"
+    },
+    {
+      "spanCount": 4,
+      "sponsorName": "Hyphenate",
+      "sponsorImage": "http://static1.squarespace.com/static/57435443b654f9e7bf666709/t/57bc5d84e4fcb5cba1e63643/1471962506411/?format=500w",
+      "sponsorLink": "http://www.hyphenate.io/"
+    },
+    {
+      "spanCount": 3,
+      "sponsorName": "Button",
+      "sponsorImage": "http://static1.squarespace.com/static/57435443b654f9e7bf666709/t/57b62caabebafbbfedd69b74/1471556786208/?format=500w",
+      "sponsorLink": "https://www.usebutton.com/"
+    },
+    {
+      "spanCount": 3,
+      "sponsorName": "Sympli",
+      "sponsorImage": "http://static1.squarespace.com/static/57435443b654f9e7bf666709/t/57b62d2437c581c30a6385ab/1471556910492/?format=500w",
+      "sponsorLink": "http://sympli.io/"
+    },
+    {
+      "spanCount": 3,
+      "sponsorName": "Safedk",
+      "sponsorImage": "http://static1.squarespace.com/static/57435443b654f9e7bf666709/t/57b62e6c29687fe934242d45/1471557237647/?format=500w",
+      "sponsorLink": "https://www.safedk.com/"
+    }
+  ]
+}

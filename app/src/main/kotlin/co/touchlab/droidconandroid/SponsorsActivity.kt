@@ -11,6 +11,9 @@ import android.support.v4.app.FragmentStatePagerAdapter
 import android.support.v4.content.ContextCompat
 import android.support.v7.app.AppCompatActivity
 import android.view.MenuItem
+import co.touchlab.droidconandroid.tasks.SPONSOR_GENERAL
+import co.touchlab.droidconandroid.tasks.SPONSOR_PARTY
+import co.touchlab.droidconandroid.tasks.SPONSOR_STREAMING
 import kotlinx.android.synthetic.main.activity_sponsors.*
 
 class SponsorsActivity : AppCompatActivity() {
@@ -108,7 +111,7 @@ class SponsorsActivity : AppCompatActivity() {
         override fun getPageTitle(position: Int): CharSequence {
             when (position) {
                 SPONSOR_GENERAL -> return context.getString(R.string.sponsors_tab_general)
-                SPONSOR_STREAM -> return context.getString(R.string.sponsors_tab_streaming)
+                SPONSOR_STREAMING -> return context.getString(R.string.sponsors_tab_streaming)
                 SPONSOR_PARTY -> return context.getString(R.string.sponsors_tab_party)
                 else -> { // Note the block
                     return super.getPageTitle(position)
