@@ -132,7 +132,7 @@
         <!--Show Event Detail View Controller-->
         <scene sceneID="7Q1-LW-v1f">
             <objects>
-                <viewController automaticallyAdjustsScrollViewInsets="NO" id="eMM-Ow-Y8D" customClass="ShowEventDetailViewController" customModule="ios" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="EventDetail" automaticallyAdjustsScrollViewInsets="NO" id="eMM-Ow-Y8D" customClass="ShowEventDetailViewController" customModule="ios" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="evr-4l-2Pv"/>
                         <viewControllerLayoutGuide type="bottom" id="mXV-h5-qs4"/>
@@ -1159,6 +1159,9 @@
         <image name="ic_twitter" width="200" height="200"/>
     </resources>
     <inferredMetricsTieBreakers>
+        <segue reference="wiZ-ik-Hhb"/>
+        <segue reference="KfB-yP-8Oj"/>
+        <segue reference="pVg-yj-H2O"/>
         <segue reference="6Qh-G4-O2e"/>
         <segue reference="gpQ-ie-VS3"/>
         <segue reference="wiZ-ik-Hhb"/>

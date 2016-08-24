@@ -12,7 +12,6 @@ buildscript {
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply plugin: 'com.neenbedankt.android-apt'
-apply plugin: 'com.google.gms.google-services'
 apply plugin: 'kotlin-android-extensions'
 
 Properties properties = new Properties()
@@ -136,7 +135,6 @@ dependencies {
     compile 'co.touchlab.squeaky:squeaky-query:0.5.0.0'
     compile 'com.google.android.gms:play-services-identity:9.0.0'
     compile 'com.google.android.gms:play-services-plus:9.0.0'
-    compile 'com.google.android.gms:play-services-gcm:9.0.0'
     /*compile('com.github.androidsocialnetworks:library:0.3.2@aar') {
               transitive = true
           }*/
@@ -164,3 +162,4 @@ dependencies {
     compile project(':lib')
     compile project(':jwplayer-android-sdk-2.4.1+158')
 }
+apply plugin: 'com.google.gms.google-services'
