@@ -46,7 +46,7 @@
     
 //    [CoTouchlabDroidconandroidPlatformClientContainer initPlatformClientWithCoTouchlabDroidconandroidPlatformClient:[CoTouchlabDroidconandroidIosIosPlatformClient new]];
     
-    Reachability *reachability = [Reachability reachabilityWithHostname:@"droidcon-server.herokuapp.com"];
+    Reachability *reachability = [Reachability reachabilityWithHostname:[[NSURL URLWithString:[[DCPAppManager getPlatformClient] baseUrl]] host]];
     
     reachability.reachableBlock = ^(Reachability *reachability) {
         NSLog(@"Network is reachable.");
