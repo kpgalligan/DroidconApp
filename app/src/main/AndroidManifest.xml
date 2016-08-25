@@ -46,6 +46,9 @@
             android:name=".AboutActivity"
             android:label="@string/about"/>
         <activity
+            android:name=".SponsorsActivity"
+            android:label="@string/sponsors"/>
+        <activity
             android:name=".ScheduleDataActivity"
             android:label="@string/title_activity_debug_schedule_display"/>
 
