@@ -6,7 +6,6 @@ import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v7.widget.GridLayoutManager
 import android.support.v7.widget.RecyclerView
-import android.util.Log
 import android.util.SparseIntArray
 import android.view.LayoutInflater
 import android.view.View
@@ -14,8 +13,8 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import co.touchlab.android.threading.eventbus.EventBusExt
 import co.touchlab.android.threading.tasks.TaskQueue
-import co.touchlab.droidconandroid.data.SponsorsResponse
-import co.touchlab.droidconandroid.tasks.LoadSponsorsTask
+import co.touchlab.droidconandroid.network.SponsorsResult
+import co.touchlab.droidconandroid.tasks.SponsorsTask
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.fragment_sponsors_list.*
 import java.util.*
@@ -47,7 +46,7 @@ class SponsorsListFragment() : Fragment() {
         super.onStart()
         EventBusExt.getDefault()!!.register(this)
         val type = arguments.getInt(SPONSOR_TYPE)
-        TaskQueue.loadQueueNetwork(context).execute(LoadSponsorsTask(activity, type))
+        TaskQueue.loadQueueDefault(context.applicationContext).execute(SponsorsTask(type))
     }
 
     override fun onStop() {
@@ -56,7 +55,7 @@ class SponsorsListFragment() : Fragment() {
     }
 
     @Suppress("unused")
-    fun onEventMainThread(task: LoadSponsorsTask) {
+    fun onEventMainThread(task: SponsorsTask) {
         if (task.type == arguments.getInt(SPONSOR_TYPE)) {
             val totalSpanCount = task.response!!.totalSpanCount
 
@@ -97,7 +96,6 @@ class SponsorsListFragment() : Fragment() {
             var layoutManager = GridLayoutManager(activity, totalSpanCount)
             val spanSizeLookip: GridLayoutManager.SpanSizeLookup = object : GridLayoutManager.SpanSizeLookup() {
                 override fun getSpanSize(position: Int): Int {
-                    Log.i("TAg", "getSpanSize $position")
                     return adapter!!.getItemSpanSize(position)
                 }
             }
@@ -117,7 +115,7 @@ class SponsorsListFragment() : Fragment() {
         private var dataset: ArrayList<Any> = ArrayList()
 
         override fun getItemViewType(position: Int): Int {
-             if (dataset[position] is SponsorsResponse.Sponsor) return VIEW_TYPE_ITEM else return VIEW_TYPE_EMPTY
+             if (dataset[position] is SponsorsResult.Sponsor) return VIEW_TYPE_ITEM else return VIEW_TYPE_EMPTY
         }
 
         override fun onCreateViewHolder(parent: ViewGroup?, viewType: Int): RecyclerView.ViewHolder? {
@@ -133,7 +131,7 @@ class SponsorsListFragment() : Fragment() {
         override fun onBindViewHolder(holder: RecyclerView.ViewHolder?, position: Int) {
             if (getItemViewType(position) == VIEW_TYPE_ITEM) {
                 val vh = holder as SponsorVH
-                val data = dataset[position] as SponsorsResponse.Sponsor
+                val data = dataset[position] as SponsorsResult.Sponsor
 
                 // Load image and set content desc
                 vh.image!!.contentDescription = data.sponsorName
@@ -167,8 +165,8 @@ class SponsorsListFragment() : Fragment() {
         }
 
         fun getItemSpanSize(position: Int): Int {
-            if (dataset[position] is SponsorsResponse.Sponsor) {
-                return (dataset[position] as SponsorsResponse.Sponsor).spanCount
+            if (dataset[position] is SponsorsResult.Sponsor) {
+                return (dataset[position] as SponsorsResult.Sponsor).spanCount
             } else{
                 return (dataset[position] as Empty).spanCount
             }
@@ -180,7 +178,7 @@ class SponsorsListFragment() : Fragment() {
         }
 
         fun add(spanCount: Int, name: String, image: String, link: String) {
-            dataset.add(SponsorsResponse.Sponsor(spanCount, name, image, link))
+            dataset.add(SponsorsResult().Sponsor(spanCount, name, image, link))
             notifyDataSetChanged()
         }
     }
