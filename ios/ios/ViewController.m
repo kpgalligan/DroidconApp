@@ -17,6 +17,7 @@
 #import "java/util/List.h"
 #import "NoteTableViewCell.h"
 #import <Crashlytics/Crashlytics.h>
+@import FirebaseMessaging;
 
 
 @interface ViewController ()
@@ -57,6 +58,9 @@ BOOL allEvents = NO;
     [self.navigationController.navigationBar setBackgroundImage:[[UIImage alloc]init] forBarMetrics:UIBarMetricsDefault];
     
     self.navigationController.navigationBar.translucent = false;
+    
+    [[FIRMessaging messaging] subscribeToTopic:@"/topics/all"];
+    [[FIRMessaging messaging] subscribeToTopic:@"/topics/ios"];
 }
 
 - (void)createSDASimple
