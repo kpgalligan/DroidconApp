@@ -24,8 +24,7 @@ public class DataHelper
     public static RestAdapter makeRequestAdapter(Context context, PlatformClient platformClient)
     {
         RestAdapter.Builder builder = makeRequestAdapterBuilder(context, platformClient);
-        return builder
-                .build();
+        return builder.build();
     }
 
     public static RestAdapter.Builder makeRequestAdapterBuilder(Context context, PlatformClient platformClient)
@@ -36,6 +35,15 @@ public class DataHelper
     @NotNull
     public static RestAdapter.Builder makeRequestAdapterBuilder(Context context, PlatformClient platformClient, ErrorHandler errorHandler)
     {
+        return makeRequestAdapterBuilder(context,
+                platformClient,
+                platformClient.baseUrl(),
+                errorHandler);
+    }
+
+    @NotNull
+    public static RestAdapter.Builder makeRequestAdapterBuilder(Context context, PlatformClient platformClient, String baseUrl, ErrorHandler errorHandler)
+    {
         AppPrefs appPrefs = AppPrefs.getInstance(context);
         final String userUuid = appPrefs.getUserUuid();
 
@@ -45,27 +53,33 @@ public class DataHelper
             public void intercept(RequestFacade request)
             {
                 request.addHeader("Accept", "application/json");
-                if (!TextUtils.isEmpty(userUuid))
+                if(! TextUtils.isEmpty(userUuid))
+                {
                     request.addHeader("uuid", userUuid);
+                }
             }
         };
         Gson gson = new GsonBuilder().create();
         GsonConverter gsonConverter = new GsonConverter(gson);
 
-        RestAdapter.Builder builder = new RestAdapter.Builder()
-                .setRequestInterceptor(requestInterceptor)
+        RestAdapter.Builder builder = new RestAdapter.Builder().setRequestInterceptor(
+                requestInterceptor)
                 .setConverter(gsonConverter)
                 .setLogLevel(RestAdapter.LogLevel.FULL)
                 .setLog(new AndroidLog("DroidconApp"))
-                .setEndpoint(platformClient.baseUrl());
-//                .setClient(new OkClient(okHttpClient));
+                .setEndpoint(baseUrl);
+        //                .setClient(new OkClient(okHttpClient));
 
         final Client client = platformClient.makeClient();
         if(client != null)
+        {
             builder.setClient(client);
+        }
 
-        if (errorHandler != null)
+        if(errorHandler != null)
+        {
             builder.setErrorHandler(errorHandler);
+        }
 
         return builder;
     }
