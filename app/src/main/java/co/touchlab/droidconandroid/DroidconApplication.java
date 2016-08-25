@@ -5,12 +5,17 @@ import android.app.Application;
 import android.content.Context;
 
 import com.google.firebase.crash.FirebaseCrash;
+import com.hyphenate.EMCallBack;
+import com.hyphenate.chat.EMClient;
+import com.hyphenate.chat.EMOptions;
 
 import org.apache.commons.io.IOUtils;
 
 import java.io.IOException;
 
 import co.touchlab.android.threading.eventbus.EventBusExt;
+import co.touchlab.android.threading.tasks.Task;
+import co.touchlab.android.threading.tasks.TaskQueue;
 import co.touchlab.droidconandroid.alerts.AlertManagerKt;
 import co.touchlab.droidconandroid.presenter.AppManager;
 import co.touchlab.droidconandroid.presenter.PlatformClient;
@@ -22,15 +27,18 @@ import retrofit.client.Client;
  */
 public class DroidconApplication extends Application
 {
-    public static String getCurrentProcessName(Context context) {
+    public static String getCurrentProcessName(Context context)
+    {
         // Log.d(TAG, "getCurrentProcessName");
         int pid = android.os.Process.myPid();
         ActivityManager manager = (ActivityManager) context.getSystemService(Context.ACTIVITY_SERVICE);
-        for (ActivityManager.RunningAppProcessInfo processInfo : manager.getRunningAppProcesses())
+        for(ActivityManager.RunningAppProcessInfo processInfo : manager.getRunningAppProcesses())
         {
             // Log.d(TAG, processInfo.processName);
-            if (processInfo.pid == pid)
+            if(processInfo.pid == pid)
+            {
                 return processInfo.processName;
+            }
         }
         return "";
     }
@@ -40,9 +48,49 @@ public class DroidconApplication extends Application
     {
         super.onCreate();
         EventBusExt.getDefault().register(this);
+        EMOptions options = new EMOptions();
+        options.setGCMNumber("51784079976");
+        options.setAppKey("tltest#tltest");
+        EMClient.getInstance().init(this, options);
+        EMClient.getInstance().setDebugMode(BuildConfig.DEBUG);
+
+        TaskQueue.loadQueueDefault(this).execute(new Task()
+        {
+            @Override
+            protected void run(Context context) throws Throwable
+            {
+                EMClient.getInstance().login("brad", "password", new EMCallBack()
+                {
+                    @Override
+                    public void onSuccess()
+                    {
+
+                    }
+
+                    @Override
+                    public void onError(int i, String s)
+                    {
+
+                    }
+
+                    @Override
+                    public void onProgress(int i, String s)
+                    {
+
+                    }
+                });
+            }
+
+            @Override
+            protected boolean handleError(Context context, Throwable throwable)
+            {
+                return false;
+            }
+        });
+
         //        Fabric.with(this, new Crashlytics());
 
-//        if(!getCurrentProcessName(this).contains("background_crash"))
+        //        if(!getCurrentProcessName(this).contains("background_crash"))
         {
             PlatformClient platformClient = new co.touchlab.droidconandroid.presenter.PlatformClient()
             {
@@ -81,8 +129,9 @@ public class DroidconApplication extends Application
                 @Override
                 public String getString(String id)
                 {
-                    return DroidconApplication.this.getString(
-                            getResources().getIdentifier(id, "string", getPackageName()));
+                    return DroidconApplication.this.getString(getResources().getIdentifier(id,
+                            "string",
+                            getPackageName()));
                 }
             };
 

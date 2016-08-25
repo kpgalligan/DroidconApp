@@ -105,7 +105,10 @@ android {
         exclude 'jsr305_annotations/Jsr305_annotations.gwt.xml'
     }
     sourceSets {
-        main.java.srcDirs += 'src/main/kotlin'
+        main{
+            java.srcDirs += 'src/main/kotlin'
+            jniLibs.srcDirs = ['libs']
+        }
     }
 
     lintOptions {
@@ -135,6 +138,7 @@ dependencies {
     compile 'co.touchlab.squeaky:squeaky-query:0.5.0.0'
     compile 'com.google.android.gms:play-services-identity:9.0.0'
     compile 'com.google.android.gms:play-services-plus:9.0.0'
+    compile "com.google.android.gms:play-services-gcm:9.0.0"
     /*compile('com.github.androidsocialnetworks:library:0.3.2@aar') {
               transitive = true
           }*/
