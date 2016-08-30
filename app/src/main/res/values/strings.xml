@@ -24,7 +24,6 @@
     <string name="navigation_drawer_close">Close</string>
     <string name="explore">Schedule</string>
     <string name="my_schedule">My agenda</string>
-    <string name="streaming">Streaming</string>
 
     <string name="map">Map</string>
     <string name="social">Social profiles</string>
@@ -168,5 +167,7 @@
     <string name="sponsors_tab_general">GENERAL &#x1F60E;</string>
     <string name="sponsors_tab_streaming">STREAMING &#x1F4FA;</string>
     <string name="sponsors_tab_party">PARTY &#x1F389;</string>
+
+    <string name="streaming_email">It looks like %1$s isn\'t associated with a streaming-enabled ticket.</string>
 
 </resources>

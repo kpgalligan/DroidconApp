@@ -46,9 +46,6 @@
             android:name=".AboutActivity"
             android:label="@string/about"/>
         <activity
-            android:name=".EventbriteInfoActivity"
-            android:label="@string/streaming"/>
-        <activity
             android:name=".SponsorsActivity"
             android:label="@string/sponsors"/>
         <activity

@@ -60,6 +60,18 @@
         <item name="tabSelectedTextColor">@color/white</item>
     </style>
 
+    <style name="AlertDialogTheme" parent="Theme.AppCompat.Light.Dialog.Alert">
+        <item name="colorAccent">@color/primary_dark</item>
+        <item name="android:windowTitleStyle">@style/AlertTitleTextStyle</item>
+        <item name="colorControlActivated">@color/text_gray</item>
+        <item name="colorControlHighlight">@color/text_gray</item>
+    </style>
+
+    <style name="AlertTitleTextStyle">
+        <item name="android:textColor">@color/primary_dark</item>
+        <item name="android:textAppearance">@style/TextAppearance.AppCompat.Title</item>
+    </style>
+
     <style name="track_checkbox">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>

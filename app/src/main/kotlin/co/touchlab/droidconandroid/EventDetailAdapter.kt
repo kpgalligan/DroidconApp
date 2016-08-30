@@ -2,7 +2,6 @@ package co.touchlab.droidconandroid
 
 import android.app.Activity
 import android.content.Context
-import android.content.Intent
 import android.support.v7.widget.RecyclerView
 import android.text.Html
 import android.text.TextUtils
@@ -12,10 +11,10 @@ import android.view.ViewGroup
 import co.touchlab.droidconandroid.data.UserAccount
 import co.touchlab.droidconandroid.presenter.EventDetailPresenter
 import com.squareup.picasso.Picasso
-import kotlinx.android.synthetic.main.item_event_info.view.*
-import kotlinx.android.synthetic.main.item_event_text.view.*
 import kotlinx.android.synthetic.main.item_event_header.view.*
+import kotlinx.android.synthetic.main.item_event_info.view.*
 import kotlinx.android.synthetic.main.item_event_stream.view.*
+import kotlinx.android.synthetic.main.item_event_text.view.*
 import kotlinx.android.synthetic.main.item_user_summary.view.*
 import org.apache.commons.lang3.StringUtils
 import java.util.*
@@ -126,6 +125,14 @@ class EventDetailAdapter(val context: Context, val frag:EventDetailFragment, val
                     val detail = data[position] as StreamDetail
                     presenter.callStartVideo(detail.link, detail.cover)
                     notifyDataSetChanged()
+                }
+                if(BuildConfig.DEBUG)
+                {
+                    streamVH.itemView.stream.setOnLongClickListener {
+                        val detail = data[position] as StreamDetail
+                        presenter.setEventbriteEmail("debug@touchlab.co", detail.link, detail.cover)
+                        true
+                    }
                 }
 
                 if(presenter.isStreamStarting) {
