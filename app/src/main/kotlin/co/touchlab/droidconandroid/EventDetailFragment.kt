@@ -1,5 +1,6 @@
 package co.touchlab.droidconandroid
 
+import android.content.DialogInterface
 import android.content.Intent
 import android.content.res.ColorStateList
 import android.graphics.drawable.Drawable
@@ -8,6 +9,7 @@ import android.os.Bundle
 import android.support.design.widget.CoordinatorLayout
 import android.support.v4.app.Fragment
 import android.support.v4.content.ContextCompat
+import android.support.v7.app.AlertDialog
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
 import android.text.TextUtils
@@ -35,7 +37,7 @@ var businessDrawable: Drawable? = null
 var designDrawable: Drawable? = null
 var devDrawable: Drawable? = null
 
-class EventDetailFragment() : Fragment()
+class EventDetailFragment() : Fragment(), EventDetailHost
 {
     private var trackColor: Int = 0
     private var fabColorList: ColorStateList? = null
@@ -105,9 +107,7 @@ class EventDetailFragment() : Fragment()
 
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?): View?
     {
-        presenter = EventDetailPresenter(context, findEventIdArg(), EventDetailHost {
-            dataRefresh()
-        })
+        presenter = EventDetailPresenter(context, findEventIdArg(), this)
 
         return inflater !!.inflate(R.layout.fragment_event_detail, null)
     }
@@ -126,7 +126,7 @@ class EventDetailFragment() : Fragment()
         updateTrackColor(findTrackIdArg())
     }
 
-    fun dataRefresh()
+    override fun dataRefresh()
     {
         if (! presenter !!.eventDetailLoadTask.eventId.equals(findEventIdArg()))
             return
@@ -165,29 +165,34 @@ class EventDetailFragment() : Fragment()
             updateBackdropDrawable(task.drawable !!)
     }
 
-    fun callStartVideo(detail: EventDetailAdapter.StreamDetail)
-    {
-        TaskQueue.loadQueueNetwork(context).execute(StartWatchVideoTask(detail.link, detail.cover))
+    override fun reportError(error: String){
+        Toast.makeText(context, error, Toast.LENGTH_LONG).show()
     }
 
-    @Suppress("unused")
-    fun onEventMainThread(task: StartWatchVideoTask)
+    override fun showTicketOptions()
     {
-        if(task.videoOk)
-        {
-            callStreamActivity(task)
-        }
-        else
-        {
-            Toast.makeText(context, "Couldn't start video", Toast.LENGTH_LONG).show();
-        }
+        val builder = AlertDialog.Builder(activity)
+        builder.setTitle("Streaming Ticket")
+        builder.setMessage("We couldn't find your Droidcon NYC ticket. Please go to Settings to set your eventbrite order email, or Purchase a streaming ticket.")
+        builder.setPositiveButton("Purchase", DialogInterface.OnClickListener { dialogInterface, i ->
+            val url = "https://www.eventbrite.com/e/droidcon-nyc-2016-tickets-25645809306"
+            val i = Intent(Intent.ACTION_VIEW)
+            i.data = Uri.parse(url)
+            startActivity(i)
+        })
+        builder.setNegativeButton("Settings", null)
+        builder.show()
     }
 
-    fun callStreamActivity(detail: StartWatchVideoTask) {
+    override fun callStreamActivity(detail: StartWatchVideoTask) {
         val i = Intent(context, VideoActivity::class.java)
         i.putExtra(EXTRA_STREAM_LINK, detail.link)
         i.putExtra(EXTRA_STREAM_COVER, detail.cover)
         context.startActivity(i)
+    }
+
+    override fun resetStreamProgress(){
+        recycler.adapter.notifyDataSetChanged()
     }
 
     /**
@@ -217,11 +222,11 @@ class EventDetailFragment() : Fragment()
             fab.setOnClickListener { v ->
                 if (event.isRsvped)
                 {
-                    Queues.localQueue(activity).execute(RemoveRsvpTask(event.id))
+                    TaskQueue.loadQueueDefault(activity).execute(RemoveRsvpTask(event.id))
                 }
                 else
                 {
-                    Queues.localQueue(activity).execute(AddRsvpTask(event.id))
+                    TaskQueue.loadQueueDefault(activity).execute(AddRsvpTask(event.id))
                 }
             }
         }
@@ -259,7 +264,7 @@ class EventDetailFragment() : Fragment()
      */
     private fun updateContent(event: Event, speakers: List<UserAccount>?, conflict: Boolean)
     {
-        val adapter = EventDetailAdapter(activity, this, trackColor)
+        val adapter = EventDetailAdapter(activity, this, presenter!!, trackColor)
 
         //Construct the time and venue string and add it to the adapter
         val startDateVal = Date(event.startDateLong !!)

@@ -18,6 +18,7 @@ import retrofit.client.Response;
 public abstract class AbstractWatchVideoTask extends Task
 {
     public boolean videoOk;
+    public boolean unauthorized;
 
     @Override
     protected void onComplete(Context context)
@@ -31,8 +32,9 @@ public abstract class AbstractWatchVideoTask extends Task
         RestAdapter restAdapter = DataHelper.makeRequestAdapter(context,
                 AppManager.getPlatformClient());
         WatchVideoRequest watchVideoRequest = restAdapter.create(WatchVideoRequest.class);
-        String email = AppPrefs.getInstance(context).getEmail();
-        String uuid = AppPrefs.getInstance(context).getVideoDeviceId();
+        AppPrefs appPrefs = AppPrefs.getInstance(context);
+        String email = appPrefs.getEventbriteEmail();
+        String uuid = appPrefs.getVideoDeviceId();
         boolean checkVideo = this instanceof CheckWatchVideoTask;
         if(checkVideo)
         {
@@ -53,6 +55,8 @@ public abstract class AbstractWatchVideoTask extends Task
             {
                 RetrofitError retrofitError = (RetrofitError) e;
                 int errorStatus = retrofitError.getResponse().getStatus();
+                unauthorized = errorStatus == 401;
+
                 if(checkVideo && errorStatus == 401)
                     videoOk = false;
             }

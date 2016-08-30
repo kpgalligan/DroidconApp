@@ -22,7 +22,6 @@ import co.touchlab.android.threading.tasks.BaseTaskQueue;
 import co.touchlab.android.threading.tasks.Task;
 import co.touchlab.android.threading.tasks.TaskQueue;
 import co.touchlab.droidconandroid.network.dao.UserAccount;
-import co.touchlab.droidconandroid.tasks.Queues;
 import co.touchlab.droidconandroid.tasks.SearchUsersTask;
 
 /**
@@ -65,7 +64,7 @@ public class EmailAccountsEditText extends AutoCompleteTextView
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count)
             {
-                TaskQueue taskQueue = Queues.networkQueue(getContext());
+                TaskQueue taskQueue = TaskQueue.loadQueueNetwork(getContext());
                 taskQueue.query(new BaseTaskQueue.QueueQuery()
                 {
                     @Override
@@ -92,7 +91,7 @@ public class EmailAccountsEditText extends AutoCompleteTextView
             @Override
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event)
             {
-                TaskQueue taskQueue = Queues.networkQueue(getContext());
+                TaskQueue taskQueue = TaskQueue.loadQueueNetwork(getContext());
                 taskQueue.query(new BaseTaskQueue.QueueQuery()
                 {
                     @Override

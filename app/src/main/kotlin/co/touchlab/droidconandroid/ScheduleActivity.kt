@@ -21,6 +21,7 @@ import android.text.TextUtils
 import android.text.format.DateUtils
 import android.view.View
 import co.touchlab.android.threading.eventbus.EventBusExt
+import co.touchlab.android.threading.tasks.TaskQueue
 import co.touchlab.droidconandroid.data.AppPrefs
 import co.touchlab.droidconandroid.data.DatabaseHelper
 import co.touchlab.droidconandroid.data.Track
@@ -29,7 +30,6 @@ import co.touchlab.droidconandroid.presenter.ConferenceDataHost
 import co.touchlab.droidconandroid.presenter.ConferenceDataPresenter
 import co.touchlab.droidconandroid.presenter.ConferenceDayHolder
 import co.touchlab.droidconandroid.superbus.UploadCoverCommand
-import co.touchlab.droidconandroid.tasks.Queues
 import co.touchlab.droidconandroid.tasks.UpdateAlertsTask
 import co.touchlab.droidconandroid.tasks.persisted.RefreshScheduleData
 import co.touchlab.droidconandroid.tasks.persisted.UploadProfilePhotoTask
@@ -241,6 +241,11 @@ open class ScheduleActivity : AppCompatActivity(), NfcAdapter.CreateNdefMessageC
 
                     R.string.social -> FindUserKot.startMe(this@ScheduleActivity)
                     R.string.profile -> createEditUserProfile(this@ScheduleActivity)
+                    R.string.streaming -> {
+                        val intent = Intent(this@ScheduleActivity, EventbriteInfoActivity::class.java)
+                        this@ScheduleActivity.startActivity(intent)
+                    }
+
                     R.string.about -> AboutActivity.callMe(this@ScheduleActivity)
                     R.string.sponsors -> SponsorsActivity.startMe(this@ScheduleActivity)
                 }
@@ -264,6 +269,7 @@ open class ScheduleActivity : AppCompatActivity(), NfcAdapter.CreateNdefMessageC
         drawerItems.add(NavigationItem(R.string.explore, R.drawable.vic_event_black_24dp))
         drawerItems.add(NavigationItem(R.string.my_schedule, R.drawable.vic_clock_black_24dp))
         drawerItems.add(NavigationItem(R.string.profile, R.drawable.vic_account_circle_black_24dp))
+        drawerItems.add(NavigationItem(R.string.streaming, R.drawable.vic_account_circle_black_24dp))
         drawerItems.add("divider_placeholder")
         drawerItems.add(NavigationItem(R.string.sponsors, R.drawable.vic_star_circle))
         drawerItems.add(NavigationItem(R.string.about, R.drawable.vic_info_outline_black_24dp))
@@ -313,7 +319,7 @@ open class ScheduleActivity : AppCompatActivity(), NfcAdapter.CreateNdefMessageC
         prefs.allowNotifications = allow
         prefs.showNotifCard = false
         (view_pager.adapter as ScheduleFragmentPagerAdapter).updateNotifCard()
-        Queues.localQueue(this).execute(UpdateAlertsTask())
+        TaskQueue.loadQueueDefault(this).execute(UpdateAlertsTask())
         adjustToolBarAndDrawers()
     }
 
