@@ -178,6 +178,7 @@ class EventDetailFragment() : Fragment(), EventDetailHost
     override fun showTicketOptions(email: String, link: String, cover: String)
     {
         val bodyView = LayoutInflater.from(activity).inflate(R.layout.view_streaming_email_dialog, null)
+        bodyView.streaming_email_top.text = buildEmailString(email)
         val buyClickListener = DialogInterface.OnClickListener { dialogInterface, i ->
             val url = "https://www.eventbrite.com/e/droidcon-nyc-2016-tickets-25645809306"
             val i = Intent(Intent.ACTION_VIEW)
@@ -194,12 +195,6 @@ class EventDetailFragment() : Fragment(), EventDetailHost
         dialog.getButton(AlertDialog.BUTTON_NEGATIVE)
                 .setTextColor(ContextCompat.getColor(activity, R.color.text_gray))
 
-        val baseEmailString = activity.getString(R.string.streaming_email, email)
-        val stringBuider = SpannableStringBuilder(baseEmailString)
-        val fcs = ForegroundColorSpan(ContextCompat.getColor(activity, R.color.primary))
-        val start = baseEmailString.indexOf(email)
-        stringBuider.setSpan(fcs, start, start + email.length, Spannable.SPAN_INCLUSIVE_EXCLUSIVE)
-        bodyView.streaming_email_top.text = stringBuider
         bodyView.streaming_email_edit_text.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
             }
@@ -210,18 +205,29 @@ class EventDetailFragment() : Fragment(), EventDetailHost
                     dialog.setButton(AlertDialog.BUTTON_POSITIVE, buttonText, { dialogInterface, i ->
                         presenter!!.setEventbriteEmail(email, link, cover)
                     })
+                    // setButton doesn't update the title after dialog is shown, use getButton
                     dialog.getButton(AlertDialog.BUTTON_POSITIVE).text = buttonText
                 }
                 else
                 {
                     val buttonText = "Buy a ticket"
                     dialog.setButton(AlertDialog.BUTTON_POSITIVE, buttonText, buyClickListener)
+                    // setButton doesn't update the title after dialog is shown, use getButton
                     dialog.getButton(AlertDialog.BUTTON_POSITIVE).text = buttonText
                 }
             }
             override fun afterTextChanged(s: Editable?) {
             }
         })
+    }
+
+    private fun buildEmailString(email: String): SpannableStringBuilder {
+        val baseEmailString = activity.getString(R.string.streaming_email, email)
+        val stringBuider = SpannableStringBuilder(baseEmailString)
+        val fcs = ForegroundColorSpan(ContextCompat.getColor(activity, R.color.primary))
+        val start = baseEmailString.indexOf(email)
+        stringBuider.setSpan(fcs, start, start + email.length, Spannable.SPAN_INCLUSIVE_EXCLUSIVE)
+        return stringBuider
     }
 
     override fun callStreamActivity(detail: StartWatchVideoTask) {
