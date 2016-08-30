@@ -67,6 +67,17 @@ import UIKit
         updateButton()
     }
     
+    func callStreamActivityWithDCTStartWatchVideoTask(task: DCTStartWatchVideoTask){
+        performSegueWithIdentifier("LiveStream", sender: self)
+    }
+    
+    func reportErrorWithNSString(error: String){
+        print(error)
+//        let alert = UIAlertView(title: "Video Error", message: error as String, delegate: nil, cancelButtonTitle: "Ok")
+//        alert.show()
+    }
+
+    
     // MARK: TableView
     
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {
@@ -136,7 +147,7 @@ import UIKit
     }
     
     func liveStreamTapped(sender: UIButton) {
-        performSegueWithIdentifier("LiveStream", sender: self)
+        eventDetailPresenter.callStartVideoWithNSString(event.getStreamUrl(), withNSString: event.getCoverUrl())
     }
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
