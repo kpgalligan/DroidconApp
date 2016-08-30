@@ -9,6 +9,8 @@
 #import "co/touchlab/droidconandroid/presenter/EditProfilePresenter.h"
 #import "co/touchlab/droidconandroid/presenter/EditProfileHost.h"
 #import "co/touchlab/droidconandroid/tasks/EventDetailLoadTask.h"
+#import "co/touchlab/droidconandroid/tasks/StartWatchVideoTask.h"
+
 #import "co/touchlab/droidconandroid/data/AppPrefs.h"
 #import "android/content/Context.h"
 #import "android/content/IOSContext.h"

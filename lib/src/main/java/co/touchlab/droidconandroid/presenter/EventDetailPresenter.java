@@ -4,10 +4,13 @@ import android.util.Log;
 
 import com.google.j2objc.annotations.Weak;
 
+import co.touchlab.android.threading.tasks.TaskQueue;
+import co.touchlab.android.threading.tasks.utils.TaskQueueHelper;
 import co.touchlab.droidconandroid.tasks.AddRsvpTask;
 import co.touchlab.droidconandroid.tasks.EventDetailLoadTask;
 import co.touchlab.droidconandroid.tasks.Queues;
 import co.touchlab.droidconandroid.tasks.RemoveRsvpTask;
+import co.touchlab.droidconandroid.tasks.StartWatchVideoTask;
 
 /**
  * Created by kgalligan on 4/25/16.
@@ -33,6 +36,11 @@ public class EventDetailPresenter extends AbstractEventBusPresenter
         Queues.localQueue(getContext()).execute(new EventDetailLoadTask(this.eventId));
     }
 
+    public void callStartVideo(String link, String cover)
+    {
+        TaskQueue.loadQueueNetwork(getContext()).execute(new StartWatchVideoTask(link, cover));
+    }
+
     public void onEventMainThread(EventDetailLoadTask task)
     {
         Log.w("asdf", "EventDetailLoadTask "+ eventId);
@@ -48,6 +56,28 @@ public class EventDetailPresenter extends AbstractEventBusPresenter
     public void onEventMainThread(AddRsvpTask task)
     {
         refreshData();
+    }
+
+    public void onEventMainThread(StartWatchVideoTask task)
+    {
+        host.resetStreamProgress();
+        if(task.videoOk)
+        {
+            host.callStreamActivity(task);
+        }
+        else if(task.unauthorized)
+        {
+            host.showTicketOptions();
+        }
+        else
+        {
+            host.reportError("Couldn't start video. Either server or network issue.");
+        }
+    }
+
+    public boolean isStreamStarting()
+    {
+        return TaskQueueHelper.hasTasksOfType(TaskQueue.loadQueueNetwork(getContext()), StartWatchVideoTask.class);
     }
 
     private boolean ready()

@@ -17,8 +17,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
+import co.touchlab.android.threading.tasks.TaskQueue
 import co.touchlab.droidconandroid.presenter.LoginScreenPresenter
-import co.touchlab.droidconandroid.tasks.Queues
 import co.touchlab.droidconandroid.tasks.RunGoogleLoginTask
 import co.touchlab.droidconandroid.utils.Toaster
 import com.google.android.gms.common.ConnectionResult
@@ -174,7 +174,7 @@ public class SignInActivity : AppCompatActivity(), LoginScreenPresenter.Host {
             }
 
             val runGoogle = RunGoogleLoginTask(accountName, presenter, person.displayName, imageURL, coverURL)
-            Queues.networkQueue(this@SignInActivity).execute(runGoogle)
+            TaskQueue.loadQueueNetwork(this@SignInActivity).execute(runGoogle)
         }
 
         override fun onConnectionSuspended(i: Int) {

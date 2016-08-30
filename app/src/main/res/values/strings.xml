@@ -24,6 +24,7 @@
     <string name="navigation_drawer_close">Close</string>
     <string name="explore">Schedule</string>
     <string name="my_schedule">My agenda</string>
+    <string name="streaming">Streaming</string>
 
     <string name="map">Map</string>
     <string name="social">Social profiles</string>
@@ -147,6 +148,7 @@
     </string>
     <string name="feedback">Feedback</string>
     <string name="live_stream">Live stream</string>
+    <string name="live_stream_loading">Live stream loading...</string>
 
     <!-- content descriptions-->
     <string name="cd_live_now">live now</string>

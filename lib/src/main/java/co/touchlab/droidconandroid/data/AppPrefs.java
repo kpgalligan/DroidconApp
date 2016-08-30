@@ -19,6 +19,7 @@ public class AppPrefs
     public static final String AVATAR_KEY       = "avatar_key";
     public static final String NAME             = "name";
     public static final String EMAIL            = "email";
+    public static final String EVENTBRITE_EMAIL            = "EVENTBRITE_EMAIL";
     public static final String CAN_VOTE            = "can_vote";
     public static final String COVER_KEY        = "cover_key";
     public static final String CONVENTION_START = "convention_start";
@@ -119,14 +120,32 @@ public class AppPrefs
         return getString(NAME, null);
     }
 
-    public void setEmail(String key)
+    public void setEmail(String email)
     {
-        setString(EMAIL, key);
+        setString(EMAIL, email);
     }
 
     public String getEmail()
     {
         return getString(EMAIL, null);
+    }
+
+    public void setEventbriteEmail(String email)
+    {
+        if(StringUtils.isEmpty(email))
+            prefs.edit().remove(EVENTBRITE_EMAIL).apply();
+        else
+            setString(EVENTBRITE_EMAIL, email);
+    }
+
+    public String getEventbriteEmail()
+    {
+        String email = getString(EVENTBRITE_EMAIL, null);
+        if(StringUtils.isEmpty(email))
+        {
+            email = getEmail();
+        }
+        return email;
     }
 
     public boolean canUserVote()

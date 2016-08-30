@@ -8,9 +8,9 @@ import android.content.Intent
 import android.media.RingtoneManager
 import android.support.v4.app.TaskStackBuilder
 import android.support.v7.app.NotificationCompat
+import co.touchlab.android.threading.tasks.TaskQueue
 import co.touchlab.droidconandroid.EventDetailActivity
 import co.touchlab.droidconandroid.R
-import co.touchlab.droidconandroid.tasks.Queues
 import co.touchlab.droidconandroid.tasks.UpdateAlertsTask
 
 const val EXTRA_EVENT_NAME = "EXTRA_EVENT_NAME"
@@ -48,6 +48,6 @@ class AlertReceiver : BroadcastReceiver() {
         }
 
         //This receiver also gets triggered for time changes. Always update the alarms here
-        Queues.localQueue(context).execute(UpdateAlertsTask())
+        TaskQueue.loadQueueDefault(context).execute(UpdateAlertsTask())
     }
 }
