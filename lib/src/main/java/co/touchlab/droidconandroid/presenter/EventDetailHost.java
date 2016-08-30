@@ -10,5 +10,5 @@ public interface EventDetailHost
     void callStreamActivity(StartWatchVideoTask task);
     void resetStreamProgress();
     void reportError(String error);
-    void showTicketOptions();
+    void showTicketOptions(String email, String link, String cover);
 }

@@ -4,8 +4,11 @@ import android.util.Log;
 
 import com.google.j2objc.annotations.Weak;
 
+import org.jetbrains.annotations.NotNull;
+
 import co.touchlab.android.threading.tasks.TaskQueue;
 import co.touchlab.android.threading.tasks.utils.TaskQueueHelper;
+import co.touchlab.droidconandroid.data.AppPrefs;
 import co.touchlab.droidconandroid.tasks.AddRsvpTask;
 import co.touchlab.droidconandroid.tasks.EventDetailLoadTask;
 import co.touchlab.droidconandroid.tasks.Queues;
@@ -67,7 +70,7 @@ public class EventDetailPresenter extends AbstractEventBusPresenter
         }
         else if(task.unauthorized)
         {
-            host.showTicketOptions();
+            host.showTicketOptions(AppPrefs.getInstance(getContext()).getEventbriteEmail(), task.link, task.cover);
         }
         else
         {
@@ -113,5 +116,11 @@ public class EventDetailPresenter extends AbstractEventBusPresenter
         {
             Queues.localQueue(getContext()).execute(new AddRsvpTask(eventDetailLoadTask.event.id));
         }
+    }
+
+    public void setEventbriteEmail(@NotNull CharSequence email, String link, String cover)
+    {
+        AppPrefs.getInstance(getContext()).setEventbriteEmail(email.toString());
+        callStartVideo(link, cover);
     }
 }
