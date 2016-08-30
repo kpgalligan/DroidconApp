@@ -10,10 +10,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import co.touchlab.droidconandroid.data.UserAccount
+import co.touchlab.droidconandroid.presenter.EventDetailPresenter
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.item_event_info.view.*
 import kotlinx.android.synthetic.main.item_event_text.view.*
 import kotlinx.android.synthetic.main.item_event_header.view.*
+import kotlinx.android.synthetic.main.item_event_stream.view.*
 import kotlinx.android.synthetic.main.item_user_summary.view.*
 import org.apache.commons.lang3.StringUtils
 import java.util.*
@@ -32,7 +34,7 @@ private const val TYPE_FEEDBACK: Int = 7
 const val EXTRA_STREAM_LINK = "EXTRA_STREAM_LINK"
 const val EXTRA_STREAM_COVER = "EXTRA_STREAM_COVER"
 
-class EventDetailAdapter(val context: Context, val frag:EventDetailFragment, val trackColor: Int) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+class EventDetailAdapter(val context: Context, val frag:EventDetailFragment, val presenter:EventDetailPresenter, val trackColor: Int) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     //dataset
     private var data = ArrayList<Detail>()
 
@@ -120,8 +122,19 @@ class EventDetailAdapter(val context: Context, val frag:EventDetailFragment, val
 
             TYPE_STREAM -> {
                 val streamVH = holder as StreamVH
-                streamVH.itemView.setOnClickListener {
-                    frag.callStartVideo(data[position] as StreamDetail)
+                streamVH.itemView.stream.setOnClickListener {
+                    val detail = data[position] as StreamDetail
+                    presenter.callStartVideo(detail.link, detail.cover)
+                    notifyDataSetChanged()
+                }
+
+                if(presenter.isStreamStarting) {
+                    streamVH.itemView.streamLoading.visibility = View.VISIBLE
+                    streamVH.itemView.stream.visibility = View.GONE
+                }
+                else {
+                    streamVH.itemView.streamLoading.visibility = View.GONE
+                    streamVH.itemView.stream.visibility = View.VISIBLE
                 }
             }
 

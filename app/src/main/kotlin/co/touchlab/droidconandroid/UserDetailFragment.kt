@@ -16,11 +16,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import co.touchlab.android.threading.eventbus.EventBusExt
+import co.touchlab.android.threading.tasks.TaskQueue
 import co.touchlab.droidconandroid.data.AppPrefs
 import co.touchlab.droidconandroid.data.UserAccount
 import co.touchlab.droidconandroid.tasks.AbstractFindUserTask
 import co.touchlab.droidconandroid.tasks.FindUserTask
-import co.touchlab.droidconandroid.tasks.Queues
 import co.touchlab.droidconandroid.utils.EmojiUtil
 import co.touchlab.droidconandroid.utils.Toaster
 import com.squareup.picasso.Callback
@@ -55,7 +55,7 @@ class UserDetailFragment() : Fragment()
     {
         super.onCreate(savedInstanceState)
         EventBusExt.getDefault().register(this)
-        Queues.networkQueue(activity).execute(FindUserTask(findUserCodeArg()))
+        TaskQueue.loadQueueNetwork(activity).execute(FindUserTask(findUserCodeArg()))
     }
 
 
