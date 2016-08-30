@@ -12,7 +12,8 @@ import android.support.v4.content.ContextCompat
 import android.support.v7.app.AlertDialog
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
-import android.text.TextUtils
+import android.text.*
+import android.text.style.ForegroundColorSpan
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -24,9 +25,13 @@ import co.touchlab.droidconandroid.data.Track
 import co.touchlab.droidconandroid.data.UserAccount
 import co.touchlab.droidconandroid.presenter.EventDetailHost
 import co.touchlab.droidconandroid.presenter.EventDetailPresenter
-import co.touchlab.droidconandroid.tasks.*
+import co.touchlab.droidconandroid.tasks.AddRsvpTask
+import co.touchlab.droidconandroid.tasks.RemoveRsvpTask
+import co.touchlab.droidconandroid.tasks.StartWatchVideoTask
+import co.touchlab.droidconandroid.tasks.TrackDrawableTask
 import com.wnafee.vector.compat.ResourcesCompat
 import kotlinx.android.synthetic.main.fragment_event_detail.*
+import kotlinx.android.synthetic.main.view_streaming_email_dialog.view.*
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -70,6 +75,7 @@ class EventDetailFragment() : Fragment(), EventDetailHost
     override fun onDestroy()
     {
         super.onDestroy()
+        presenter!!.unregister()
         EventBusExt.getDefault() !!.unregister(this)
     }
 
@@ -169,19 +175,53 @@ class EventDetailFragment() : Fragment(), EventDetailHost
         Toast.makeText(context, error, Toast.LENGTH_LONG).show()
     }
 
-    override fun showTicketOptions()
+    override fun showTicketOptions(email: String, link: String, cover: String)
     {
-        val builder = AlertDialog.Builder(activity)
-        builder.setTitle("Streaming Ticket")
-        builder.setMessage("We couldn't find your Droidcon NYC ticket. Please go to Settings to set your eventbrite order email, or Purchase a streaming ticket.")
-        builder.setPositiveButton("Purchase", DialogInterface.OnClickListener { dialogInterface, i ->
+        val bodyView = LayoutInflater.from(activity).inflate(R.layout.view_streaming_email_dialog, null)
+        val buyClickListener = DialogInterface.OnClickListener { dialogInterface, i ->
             val url = "https://www.eventbrite.com/e/droidcon-nyc-2016-tickets-25645809306"
             val i = Intent(Intent.ACTION_VIEW)
             i.data = Uri.parse(url)
             startActivity(i)
+        }
+
+        val builder = AlertDialog.Builder(activity, R.style.AlertDialogTheme)
+        builder.setTitle("Whoops!")
+        builder.setView(bodyView)
+        builder.setPositiveButton("Buy a ticket", buyClickListener)
+        builder.setNegativeButton("Cancel", null)
+        val dialog = builder.show()
+        dialog.getButton(AlertDialog.BUTTON_NEGATIVE)
+                .setTextColor(ContextCompat.getColor(activity, R.color.text_gray))
+
+        val baseEmailString = activity.getString(R.string.streaming_email, email)
+        val stringBuider = SpannableStringBuilder(baseEmailString)
+        val fcs = ForegroundColorSpan(ContextCompat.getColor(activity, R.color.primary))
+        val start = baseEmailString.indexOf(email)
+        stringBuider.setSpan(fcs, start, start + email.length, Spannable.SPAN_INCLUSIVE_EXCLUSIVE)
+        bodyView.streaming_email_top.text = stringBuider
+        bodyView.streaming_email_edit_text.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+            }
+            override fun onTextChanged(email: CharSequence?, start: Int, before: Int, count: Int) {
+                if(email!!.isNotEmpty())
+                {
+                    val buttonText = "Continue"
+                    dialog.setButton(AlertDialog.BUTTON_POSITIVE, buttonText, { dialogInterface, i ->
+                        presenter!!.setEventbriteEmail(email, link, cover)
+                    })
+                    dialog.getButton(AlertDialog.BUTTON_POSITIVE).text = buttonText
+                }
+                else
+                {
+                    val buttonText = "Buy a ticket"
+                    dialog.setButton(AlertDialog.BUTTON_POSITIVE, buttonText, buyClickListener)
+                    dialog.getButton(AlertDialog.BUTTON_POSITIVE).text = buttonText
+                }
+            }
+            override fun afterTextChanged(s: Editable?) {
+            }
         })
-        builder.setNegativeButton("Settings", null)
-        builder.show()
     }
 
     override fun callStreamActivity(detail: StartWatchVideoTask) {

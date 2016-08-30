@@ -76,6 +76,14 @@ import UIKit
 //        let alert = UIAlertView(title: "Video Error", message: error as String, delegate: nil, cancelButtonTitle: "Ok")
 //        alert.show()
     }
+    
+    func resetStreamProgress() {
+        // TODO
+    }
+    
+    func showTicketOptionsWithNSString(email: String!, withNSString link: String!, withNSString cover: String!) {
+        // TODO
+    }
 
     
     // MARK: TableView
