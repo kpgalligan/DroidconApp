@@ -28,7 +28,6 @@ import co.touchlab.droidconandroid.presenter.EventDetailPresenter
 import co.touchlab.droidconandroid.tasks.AddRsvpTask
 import co.touchlab.droidconandroid.tasks.RemoveRsvpTask
 import co.touchlab.droidconandroid.tasks.StartWatchVideoTask
-import co.touchlab.droidconandroid.tasks.TrackDrawableTask
 import com.wnafee.vector.compat.ResourcesCompat
 import kotlinx.android.synthetic.main.fragment_event_detail.*
 import kotlinx.android.synthetic.main.view_streaming_email_dialog.view.*
@@ -69,14 +68,14 @@ class EventDetailFragment() : Fragment(), EventDetailHost
     override fun onCreate(savedInstanceState: Bundle?)
     {
         super.onCreate(savedInstanceState)
-        EventBusExt.getDefault() !!.register(this)
+//        EventBusExt.getDefault() !!.register(this)
     }
 
     override fun onDestroy()
     {
         super.onDestroy()
         presenter!!.unregister()
-        EventBusExt.getDefault() !!.unregister(this)
+//        EventBusExt.getDefault() !!.unregister(this)
     }
 
     private fun findEventIdArg(): Long
@@ -145,30 +144,6 @@ class EventDetailFragment() : Fragment(), EventDetailHost
         updateContent(event,
                 presenter !!.eventDetailLoadTask.speakers,
                 presenter !!.eventDetailLoadTask.conflict)
-    }
-
-    fun onEventMainThread(task: TrackDrawableTask)
-    {
-        when (task.drawableRes)
-        {
-            R.drawable.illo_development ->
-            {
-                devDrawable = task.drawable
-            }
-
-            R.drawable.illo_design ->
-            {
-                designDrawable = task.drawable
-            }
-
-            R.drawable.illo_business ->
-            {
-                businessDrawable = task.drawable
-            }
-        }
-
-        if (task.drawable != null)
-            updateBackdropDrawable(task.drawable !!)
     }
 
     override fun reportError(error: String){
@@ -368,40 +343,25 @@ class EventDetailFragment() : Fragment(), EventDetailHost
         val track = if (! TextUtils.isEmpty(category)) Track.findByServerName(category)
         else Track.findByServerName("Design")
 
-        //TODO add new backdrop assets
-//        var backdropDrawable: Drawable? = null
-//
-//        when (track)
-//        {
-//            Track.DEVELOPMENT ->
-//            {
-//                if (devDrawable == null)
-//                    TaskQueue.loadQueueDefault(activity).execute(TrackDrawableTask(activity.applicationContext,
-//                            R.drawable.illo_development))
-//                else
-//                    backdropDrawable = devDrawable
-//            }
-//
-//            Track.DESIGN ->
-//            {
-//                if (designDrawable == null)
-//                    TaskQueue.loadQueueDefault(activity).execute(TrackDrawableTask(activity.applicationContext,
-//                            R.drawable.illo_design))
-//                else
-//                    backdropDrawable = designDrawable
-//            }
-//            Track.BUSINESS ->
-//            {
-//                if (businessDrawable == null)
-//                    TaskQueue.loadQueueDefault(activity).execute(TrackDrawableTask(activity.applicationContext,
-//                            R.drawable.illo_business))
-//                else
-//                    backdropDrawable = businessDrawable
-//            }
-//        }
-//
-//        if (backdropDrawable != null)
-//            updateBackdropDrawable(backdropDrawable)
+        var drawableResourceId = R.drawable.illo_development
+
+        when (track)
+        {
+            Track.DEVDESIGN ->
+            {
+                drawableResourceId = R.drawable.illo_designdevtalk
+            }
+
+            Track.DESIGN ->
+            {
+                drawableResourceId = R.drawable.illo_designtalk
+            }
+
+            Track.DESIGNLAB ->
+            {
+                drawableResourceId = R.drawable.illo_designlab
+            }
+        }
 
         trackColor = ContextCompat.getColor(context,
                 context.resources.getIdentifier(track.textColorRes,
@@ -415,10 +375,6 @@ class EventDetailFragment() : Fragment(), EventDetailHost
         collapsingToolbar.setContentScrimColor(trackColor)
         collapsingToolbar.setStatusBarScrimColor(trackColor)
         backdrop.setBackgroundColor(trackColor)
-    }
-
-    private fun updateBackdropDrawable(backdropDrawable: Drawable)
-    {
-        backdrop.setImageDrawable(backdropDrawable)
+        backdrop.setImageResource(drawableResourceId)
     }
 }
