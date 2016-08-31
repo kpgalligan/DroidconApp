@@ -8,7 +8,9 @@ public enum Track
 {
     DEVELOPMENT("Develop", "development", "droidcon_blue", "selector_blue"),
     DESIGN("Design", "design", "droidcon_pink", "selector_pink"),
-    BUSINESS("Business", "business", "orange", "selector_orange");
+    BUSINESS("Business", "business", "orange", "selector_orange"),
+    DEVDESIGN("Dev/Design", "devdesign", "droidcon_blue", "selector_blue"),
+    DESIGNLAB("Design Lab", "designlab", "droidcon_blue", "selector_blue");
 
     public String getServerName()
     {
