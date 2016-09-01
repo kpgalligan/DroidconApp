@@ -62,3 +62,4 @@ xcuserdata/
 *.moved-aside
 *.xccheckout
 *.xcscmblueprint
+**/google-services.json
