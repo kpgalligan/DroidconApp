@@ -63,3 +63,4 @@ xcuserdata/
 *.xccheckout
 *.xcscmblueprint
 **/google-services.json
+**/crashlytics.properties
