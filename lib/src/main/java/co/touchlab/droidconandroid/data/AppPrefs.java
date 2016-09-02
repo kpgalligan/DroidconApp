@@ -23,13 +23,14 @@ public class AppPrefs
     public static final String CAN_VOTE            = "can_vote";
     public static final String COVER_KEY        = "cover_key";
     public static final String CONVENTION_START = "convention_start";
-    public static final String CONVENTION_END   = "convention_end";
-    public static final String REFRESH_TIME     = "refresh_time";
-    public static final String MY_RSVPS_LOADED  = "myrsvps3";
-    public static final String VOTE_INTRO       = "vote_intro";
-    public static final String ALLOW_NOTIFS     = "allow_notifs";
-    public static final String SHOW_NOTIF_CARD  = "show_notif_card";
-    public static final String VIDEO_DEVICE_ID  = "VIDEO_DEVICE_ID";
+    public static final String CONVENTION_END  = "convention_end";
+    public static final String REFRESH_TIME    = "refresh_time";
+    public static final String MY_RSVPS_LOADED = "myrsvps3";
+    public static final String VOTE_INTRO      = "vote_intro";
+    public static final String ALLOW_NOTIFS    = "allow_notifs";
+    public static final String SHOW_NOTIF_CARD = "show_notif_card";
+    public static final String VIDEO_DEVICE_ID = "VIDEO_DEVICE_ID";
+    public static final String SHOW_SLACK_DIALOG = "show_slack_dialog";
 
     private static AppPrefs instance;
 
@@ -207,6 +208,16 @@ public class AppPrefs
     public long getRefreshTime()
     {
         return prefs.getLong(REFRESH_TIME, 0);
+    }
+
+    public boolean getShowSlackDialog()
+    {
+        return prefs.getBoolean(SHOW_SLACK_DIALOG, true);
+    }
+
+    public void setShowSlackDialog(boolean show)
+    {
+        setBoolean(SHOW_SLACK_DIALOG, show);
     }
 
     public boolean getSeenVoteIntro(){return prefs.getBoolean(VOTE_INTRO, false);}
