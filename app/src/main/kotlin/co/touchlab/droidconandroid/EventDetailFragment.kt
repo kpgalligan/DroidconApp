@@ -18,7 +18,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import co.touchlab.android.threading.eventbus.EventBusExt
 import co.touchlab.android.threading.tasks.TaskQueue
 import co.touchlab.droidconandroid.data.Event
 import co.touchlab.droidconandroid.data.Track
@@ -214,6 +213,10 @@ class EventDetailFragment() : Fragment(), EventDetailHost
 
     override fun resetStreamProgress(){
         recycler.adapter.notifyDataSetChanged()
+    }
+
+    override fun openSlack(slackLink: String, slackLinkHttp: String, showSlackDialog: Boolean) {
+        SlackHelper.openSlack(activity, slackLink, slackLinkHttp, showSlackDialog)
     }
 
     /**

@@ -63,6 +63,9 @@
     <style name="AlertDialogTheme" parent="Theme.AppCompat.Light.Dialog.Alert">
         <item name="colorAccent">@color/primary_dark</item>
         <item name="android:windowTitleStyle">@style/AlertTitleTextStyle</item>
+    </style>
+
+    <style name="GrayEditText">
         <item name="colorControlActivated">@color/text_gray</item>
         <item name="colorControlHighlight">@color/text_gray</item>
     </style>

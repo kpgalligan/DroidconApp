@@ -3,7 +3,6 @@ package co.touchlab.droidconandroid
 import android.content.Context
 import android.content.Intent
 import android.graphics.PorterDuff
-import android.net.Uri
 import android.nfc.NdefMessage
 import android.nfc.NdefRecord
 import android.nfc.NfcAdapter
@@ -240,7 +239,9 @@ open class ScheduleActivity : AppCompatActivity(), NfcAdapter.CreateNdefMessageC
                         appbar.setExpanded(true)
                     }
                     R.string.chat_on_slack -> {
-                        launchSlack()
+                        SlackHelper.openSlack(this@ScheduleActivity, conferenceDataPresenter!!.slackLink,
+                                conferenceDataPresenter!!.slackLinkHttp,
+                                conferenceDataPresenter!!.shouldShowSlackDialog())
                     }
 
                     R.string.social -> FindUserKot.startMe(this@ScheduleActivity)
@@ -333,11 +334,6 @@ open class ScheduleActivity : AppCompatActivity(), NfcAdapter.CreateNdefMessageC
                 UserDetailActivity.callMe(this, ua.userCode)
             }
         }
-    }
-
-    private fun launchSlack() {
-        val intent = Intent(Intent.ACTION_VIEW, Uri.parse("slack://open?team=T26RNU7R9"))
-        startActivity(intent)
     }
 
     private fun isTablet() : Boolean {
