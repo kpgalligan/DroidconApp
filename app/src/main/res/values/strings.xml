@@ -24,6 +24,7 @@
     <string name="navigation_drawer_close">Close</string>
     <string name="explore">Schedule</string>
     <string name="my_schedule">My agenda</string>
+    <string name="chat_on_slack">Chat on Slack</string>
 
     <string name="map">Map</string>
     <string name="social">Social profiles</string>
