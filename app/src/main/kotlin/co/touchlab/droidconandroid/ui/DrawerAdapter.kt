@@ -104,6 +104,7 @@ class DrawerAdapter(drawerItems: List<Any>, drawerClickListener: DrawerClickList
                 navHolder.itemView.highlight.visibility = View.GONE
             }
             navHolder.itemView.icon.setImageDrawable(drawable)
+            navHolder.itemView.action_icon.visibility = if (navItem.showAction) View.VISIBLE else View.GONE
 
             navHolder.itemView.setOnClickListener {
                 if (selectedPos != position)
@@ -187,15 +188,4 @@ interface DrawerClickListener
 
 }
 
-class NavigationItem
-{
-
-    val titleRes: Int
-    val iconRes: Int
-
-    constructor(titleRes: Int, iconRes: Int)
-    {
-        this.titleRes = titleRes
-        this.iconRes = iconRes
-    }
-}
+class NavigationItem(val titleRes: Int, val iconRes: Int, val showAction: Boolean = false)

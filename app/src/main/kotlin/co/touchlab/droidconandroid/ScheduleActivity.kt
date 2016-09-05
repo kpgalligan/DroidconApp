@@ -238,6 +238,11 @@ open class ScheduleActivity : AppCompatActivity(), NfcAdapter.CreateNdefMessageC
                         allEvents = false
                         appbar.setExpanded(true)
                     }
+                    R.string.chat_on_slack -> {
+                        SlackHelper.openSlack(this@ScheduleActivity, conferenceDataPresenter!!.slackLink,
+                                conferenceDataPresenter!!.slackLinkHttp,
+                                conferenceDataPresenter!!.shouldShowSlackDialog())
+                    }
 
                     R.string.social -> FindUserKot.startMe(this@ScheduleActivity)
                     R.string.profile -> createEditUserProfile(this@ScheduleActivity)
@@ -265,6 +270,7 @@ open class ScheduleActivity : AppCompatActivity(), NfcAdapter.CreateNdefMessageC
         drawerItems.add(NavigationItem(R.string.explore, R.drawable.vic_event_black_24dp))
         drawerItems.add(NavigationItem(R.string.my_schedule, R.drawable.vic_clock_black_24dp))
         drawerItems.add(NavigationItem(R.string.profile, R.drawable.vic_account_circle_black_24dp))
+        drawerItems.add(NavigationItem(R.string.chat_on_slack, R.drawable.vic_slack_24dp, true))
         drawerItems.add("divider_placeholder")
         drawerItems.add(NavigationItem(R.string.sponsors, R.drawable.vic_star_circle))
         drawerItems.add(NavigationItem(R.string.about, R.drawable.vic_info_outline_black_24dp))
