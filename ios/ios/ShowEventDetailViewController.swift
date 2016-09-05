@@ -84,6 +84,10 @@ import UIKit
     func showTicketOptionsWithNSString(email: String!, withNSString link: String!, withNSString cover: String!) {
         // TODO
     }
+    
+    func openSlackWithNSString(slackLink: String!, withNSString slackLinkHttp: String!, withBoolean showSlackDialog: jboolean) {
+        // TODO
+    }
 
     
     // MARK: TableView

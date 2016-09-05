@@ -7,12 +7,14 @@ import com.google.j2objc.annotations.AutoreleasePool;
 
 import java.util.List;
 
+import co.touchlab.droidconandroid.data.AppPrefs;
 import co.touchlab.droidconandroid.data.Block;
 import co.touchlab.droidconandroid.data.Event;
 import co.touchlab.droidconandroid.tasks.Queues;
 import co.touchlab.droidconandroid.tasks.SeedScheduleDataTask;
 import co.touchlab.droidconandroid.tasks.UpdateAlertsTask;
 import co.touchlab.droidconandroid.tasks.persisted.RefreshScheduleData;
+import co.touchlab.droidconandroid.utils.SlackUtils;
 
 /**
  * Created by kgalligan on 4/15/16.
@@ -100,6 +102,22 @@ public class ConferenceDataPresenter extends AbstractEventBusPresenter
         }
 
         return false;
+    }
+
+    public String getSlackLink()
+    {
+        return SlackUtils.createSlackLink(null);
+    }
+
+    public String getSlackLinkHttp()
+    {
+
+        return SlackUtils.createSlackLinkHttp(null);
+    }
+
+    public boolean shouldShowSlackDialog()
+    {
+        return AppPrefs.getInstance(getContext()).getShowSlackDialog();
     }
 
     public interface EventRow
