@@ -11,7 +11,7 @@ import android.os.Bundle
 import android.os.Handler
 import android.support.design.widget.TabLayout
 import android.support.v4.app.FragmentManager
-import android.support.v4.app.FragmentStatePagerAdapter
+import android.support.v4.app.FragmentPagerAdapter
 import android.support.v4.content.ContextCompat
 import android.support.v4.widget.DrawerLayout
 import android.support.v7.app.ActionBarDrawerToggle
@@ -402,17 +402,19 @@ open class ScheduleActivity : AppCompatActivity(), NfcAdapter.CreateNdefMessageC
                     start += DateUtils.DAY_IN_MILLIS
                 }
 
-                view_pager.adapter = ScheduleFragmentPagerAdapter(
-                        supportFragmentManager,
-                        dates,
-                        allEvents)
-                view_pager.addOnPageChangeListener(TabLayout.TabLayoutOnPageChangeListener(tabs))
-                tabs.setupWithViewPager(view_pager)
+                if(view_pager.adapter == null) {
+                    view_pager.adapter = ScheduleFragmentPagerAdapter(
+                            supportFragmentManager,
+                            dates,
+                            allEvents)
+                    view_pager.addOnPageChangeListener(TabLayout.TabLayoutOnPageChangeListener(tabs))
+                    tabs.setupWithViewPager(view_pager)
+                }
             }
         }
     }
 
-    class ScheduleFragmentPagerAdapter(fm: FragmentManager, dates: List<Long>, allEvents: Boolean) : FragmentStatePagerAdapter(fm) {
+    class ScheduleFragmentPagerAdapter(fm: FragmentManager, dates: List<Long>, allEvents: Boolean) : FragmentPagerAdapter(fm) {
         private var dates = dates
         private var allEvents = allEvents
         private var fragmentManager = fm
