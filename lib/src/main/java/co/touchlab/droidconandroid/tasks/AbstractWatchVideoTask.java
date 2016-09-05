@@ -51,6 +51,8 @@ public abstract class AbstractWatchVideoTask extends Task
         }
         catch(Exception e)
         {
+            CrashReport.logException(e);
+
             if(e instanceof RetrofitError)
             {
                 RetrofitError retrofitError = (RetrofitError) e;

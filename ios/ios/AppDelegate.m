@@ -9,8 +9,6 @@
 #import "AppDelegate.h"
 #import "ViewController.h"
 #import "co/touchlab/droidconandroid/presenter/AppManager.h"
-//#import "co/touchlab/droidconandroid/PlatformClientContainer.h"
-#import "co/touchlab/droidconandroid/presenter/PlatformClient.h"
 #import "co/touchlab/droidconandroid/ios/IosPlatformClient.h"
 #import "co/touchlab/droidconandroid/tasks/persisted/RefreshScheduleData.h"
 #import "android/content/IOSContext.h"
@@ -31,7 +29,8 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
-    [Fabric with:@[[Crashlytics class]]];
+    [FIRApp configure];
+//    [Fabric with:@[[Crashlytics class]]];
 
     NSError* configureError;
     [[GGLContext sharedInstance] configureWithError: &configureError];
@@ -40,11 +39,12 @@
     [GIDSignIn sharedInstance].delegate = self;
     
     [AndroidOsLooper prepareMainLooper];
-    [DCPAppManager initContextWithAndroidContentContext:[AndroidContentIOSContext new]
-                         withDCPPlatformClient:[CoTouchlabDroidconandroidIosIosPlatformClient new]
-                         withDCPAppManager_LoadDataSeed:self];
     
-//    [CoTouchlabDroidconandroidPlatformClientContainer initPlatformClientWithCoTouchlabDroidconandroidPlatformClient:[CoTouchlabDroidconandroidIosIosPlatformClient new]];
+    DCIosPlatformClient* platformClient = [[DCIosPlatformClient alloc] initWithDCIosFirebase:self];
+    
+    [DCPAppManager initContextWithAndroidContentContext:[AndroidContentIOSContext new]
+                         withDCPPlatformClient:platformClient
+                         withDCPAppManager_LoadDataSeed:self];
     
     Reachability *reachability = [Reachability reachabilityWithHostname:[[NSURL URLWithString:[[DCPAppManager getPlatformClient] baseUrl]] host]];
     
@@ -60,24 +60,13 @@
     [reachability startNotifier];
     
     // Register for remote notifications
-    if (floor(NSFoundationVersionNumber) <= NSFoundationVersionNumber_iOS_7_1) {
-        // iOS 7.1 or earlier
-        UIRemoteNotificationType allNotificationTypes =
-        (UIRemoteNotificationTypeSound | UIRemoteNotificationTypeAlert | UIRemoteNotificationTypeBadge);
-        [application registerForRemoteNotificationTypes:allNotificationTypes];
-    } else {
-        // iOS 8 or later
-        // [START register_for_notifications]
-        UIUserNotificationType allNotificationTypes =
-        (UIUserNotificationTypeSound | UIUserNotificationTypeAlert | UIUserNotificationTypeBadge);
-        UIUserNotificationSettings *settings =
-        [UIUserNotificationSettings settingsForTypes:allNotificationTypes categories:nil];
-        [[UIApplication sharedApplication] registerUserNotificationSettings:settings];
-        [[UIApplication sharedApplication] registerForRemoteNotifications];
-        // [END register_for_notifications]
-    }
-    
-    [FIRApp configure];
+    UIUserNotificationType allNotificationTypes =
+    (UIUserNotificationTypeSound | UIUserNotificationTypeAlert | UIUserNotificationTypeBadge);
+    UIUserNotificationSettings *settings =
+    [UIUserNotificationSettings settingsForTypes:allNotificationTypes categories:nil];
+    [[UIApplication sharedApplication] registerUserNotificationSettings:settings];
+    [[UIApplication sharedApplication] registerForRemoteNotifications];
+
     return YES;
 }
 
@@ -194,6 +183,32 @@ didSignInForUser:(GIDGoogleUser *)user
         NSLog(@"Couldn't find file!");
         return nil;
     }
+}
+
+- (void)logFirebaseNativeWithNSString:(NSString *)s{
+    FIRCrashLog(s);
+}
+
+- (void)logPushFirebaseNativeWithNSString:(NSString *)s{
+//    CLS_LOG(@"%@", s);
+//    NSError *error = [NSError errorWithDomain:@"droidcon" code:200 userInfo:@{@"Error reason": @"Wrap Java Error"}];
+//    [CrashlyticsKit recordError:error];
+    FIRCrashLog(s);
+//    assert(NO);
+}
+
+- (void)logEventWithNSString:(NSString *)name
+           withNSStringArray:(IOSObjectArray *)params{
+    NSMutableDictionary *dict = [[NSMutableDictionary alloc]initWithCapacity:[params length]/2];
+    
+    for(int i=0; i<[params length]; )
+    {
+        [dict setObject:[params objectAtIndex:i+1] forKey:(NSString*)[params objectAtIndex:i]];
+        i = i+2;
+    }
+    
+    [FIRAnalytics logEventWithName:name parameters:dict];
+    
 }
 
 @end

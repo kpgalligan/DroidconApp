@@ -17,6 +17,7 @@
 		631B99091C7D6533008AA20D /* iosTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 631B99081C7D6533008AA20D /* iosTests.m */; };
 		631B99141C7D6533008AA20D /* iosUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = 631B99131C7D6533008AA20D /* iosUITests.m */; };
 		639320311D77FF700047224B /* dataseeds in Resources */ = {isa = PBXBuildFile; fileRef = 639320301D77FF700047224B /* dataseeds */; };
+		63BF9CB71D7DB9F4005570E0 /* DroidconNYC-FirebaseServiceAccount.json in Resources */ = {isa = PBXBuildFile; fileRef = 63BF9CB61D7DB9F4005570E0 /* DroidconNYC-FirebaseServiceAccount.json */; };
 		63EE30CC1CC5E1BD00B64D3D /* CheckLoginController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63EE30CB1CC5E1BD00B64D3D /* CheckLoginController.swift */; };
 		63EE30CE1CC6985800B64D3D /* StartScreenViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63EE30CD1CC6985800B64D3D /* StartScreenViewController.swift */; };
 		63EE30D01CC6AD4400B64D3D /* WelcomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63EE30CF1CC6AD4400B64D3D /* WelcomeViewController.swift */; };
@@ -84,6 +85,7 @@
 		631B99131C7D6533008AA20D /* iosUITests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = iosUITests.m; sourceTree = "<group>"; };
 		631B99151C7D6533008AA20D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		639320301D77FF700047224B /* dataseeds */ = {isa = PBXFileReference; lastKnownFileType = folder; path = dataseeds; sourceTree = "<group>"; };
+		63BF9CB61D7DB9F4005570E0 /* DroidconNYC-FirebaseServiceAccount.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "DroidconNYC-FirebaseServiceAccount.json"; sourceTree = "<group>"; };
 		63EE30CB1CC5E1BD00B64D3D /* CheckLoginController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CheckLoginController.swift; sourceTree = "<group>"; };
 		63EE30CD1CC6985800B64D3D /* StartScreenViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StartScreenViewController.swift; sourceTree = "<group>"; };
 		63EE30CF1CC6AD4400B64D3D /* WelcomeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WelcomeViewController.swift; sourceTree = "<group>"; };
@@ -203,6 +205,7 @@
 		631B98ED1C7D6533008AA20D /* ios */ = {
 			isa = PBXGroup;
 			children = (
+				63BF9CB61D7DB9F4005570E0 /* DroidconNYC-FirebaseServiceAccount.json */,
 				639320301D77FF700047224B /* dataseeds */,
 				95FCC1561D59131400633A15 /* GoogleService-Info.plist */,
 				631B98F11C7D6533008AA20D /* AppDelegate.h */,
@@ -292,9 +295,10 @@
 				631B98E91C7D6533008AA20D /* Resources */,
 				6DD8DA101221ACE133AD02E0 /* [CP] Embed Pods Frameworks */,
 				EA05F18FF894EE320A2E9E52 /* [CP] Copy Pods Resources */,
-				63EE30E01CD0626900B64D3D /* ShellScript */,
+				63EE30E01CD0626900B64D3D /* Run Script */,
 				3C359A7AAFFDC6B84973AE0B /* 📦 Embed Pods Frameworks */,
 				18385CEF9384BB42B46C103F /* 📦 Copy Pods Resources */,
+				63BF9CB51D7DB833005570E0 /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -403,6 +407,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				63BF9CB71D7DB9F4005570E0 /* DroidconNYC-FirebaseServiceAccount.json in Resources */,
 				FA258F5E1C934BA200986E0D /* dataseed.json in Resources */,
 				639320311D77FF700047224B /* dataseeds in Resources */,
 				631B98FE1C7D6533008AA20D /* LaunchScreen.storyboard in Resources */,
@@ -568,13 +573,27 @@
 			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
 			showEnvVarsInLog = 0;
 		};
-		63EE30E01CD0626900B64D3D /* ShellScript */ = {
+		63BF9CB51D7DB833005570E0 /* ShellScript */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "# Replace this with the GOOGLE_APP_ID from your GoogleService-Info.plist file\nGOOGLE_APP_ID=1:654878069390:ios:e5f6678978f79e96\n\n# Replace the /Path/To/ServiceAccount.json with the path to the key you just downloaded\n\"${PODS_ROOT}\"/FirebaseCrash/upload-sym \"${SRCROOT}/ios/DroidconNYC-FirebaseServiceAccount.json\"";
+		};
+		63EE30E01CD0626900B64D3D /* Run Script */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Run Script";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;

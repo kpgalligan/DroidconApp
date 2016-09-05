@@ -82,7 +82,29 @@ import UIKit
     }
     
     func showTicketOptionsWithNSString(email: String!, withNSString link: String!, withNSString cover: String!) {
-        print("Need a ticket")
+        //1. Create the alert controller.
+        //It looks like %1$s isn\'t associated with a streaming-enabled ticket.
+        let formatted = String(format: "It looks like %@ isn\'t associated with a streaming-enabled ticket. If you already bought a ticket, enter the associated email address below. Otherwise, you can pick up a ticket now!", email)
+        
+        let alert = UIAlertController(title: "Whoops!", message: formatted, preferredStyle: .Alert)
+        
+        //2. Add the text field. You can configure it however you need.
+        alert.addTextFieldWithConfigurationHandler({ (textField) -> Void in
+            textField.text = ""
+        })
+        
+        //3. Grab the value from the text field, and print it when the user clicks OK.
+        alert.addAction(UIAlertAction(title: "Cancel", style: .Default,handler: { (action) -> Void in
+            
+        }))
+        alert.addAction(UIAlertAction(title: "OK", style: .Default, handler: { (action) -> Void in
+            let textField = alert.textFields![0] as UITextField
+//            print("Text field: \(textField.text)")
+            self.eventDetailPresenter.setEventbriteEmailWithNSString(textField.text, withNSString: link, withNSString: cover)
+        }))
+        
+        // 4. Present the alert.
+        self.presentViewController(alert, animated: true, completion: nil)
     }
 
     

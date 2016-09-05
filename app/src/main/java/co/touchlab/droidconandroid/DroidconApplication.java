@@ -3,7 +3,9 @@ package co.touchlab.droidconandroid;
 import android.app.ActivityManager;
 import android.app.Application;
 import android.content.Context;
+import android.os.Bundle;
 
+import com.google.firebase.analytics.FirebaseAnalytics;
 import com.google.firebase.crash.FirebaseCrash;
 
 import org.apache.commons.io.IOUtils;
@@ -77,6 +79,18 @@ public class DroidconApplication extends Application
                     //                Crashlytics.logException(t);
                 }
 
+                @Override
+                public void logEvent(String name, String... params)
+                {
+                    Bundle bundle = new Bundle();
+                    for(int i=0; i<params.length; )
+                    {
+                        bundle.putString(params[i], params[i+1]);
+                        i= i+2;
+                    }
+                    FirebaseAnalytics.getInstance(DroidconApplication.this)
+                            .logEvent(name, bundle);
+                }
 
                 @Override
                 public String getString(String id)
