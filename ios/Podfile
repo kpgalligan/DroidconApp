@@ -48,6 +48,7 @@ pod 'j2objc-intellijannotations-release', :configuration => ['Release'], :path =
     pod 'JWPlayer-SDK', '~> 2.4.1'
     pod 'Firebase/Core'
     pod 'Firebase/Messaging'
+    pod 'Firebase/Crash'
 end
 
 target 'iosTests' do
@@ -83,6 +84,7 @@ pod 'j2objc-intellijannotations-release', :configuration => ['Release'], :path =
     pod 'Reachability', '~> 3.2'
     pod 'Firebase/Core'
     pod 'Firebase/Messaging'
+    pod 'Firebase/Crash'
 end
 
 target 'iosUITests' do

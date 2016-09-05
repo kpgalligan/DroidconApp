@@ -6,10 +6,19 @@ PODS:
     - FirebaseAnalytics (~> 3.3)
   - Firebase/Core (3.5.2):
     - Firebase/Analytics
+  - Firebase/Crash (3.5.2):
+    - Firebase/Analytics
+    - FirebaseCrash (= 1.0.7)
   - Firebase/Messaging (3.5.2):
     - Firebase/Analytics
     - FirebaseMessaging (= 1.1.1)
   - FirebaseAnalytics (3.3.1):
+    - FirebaseInstanceID (~> 1.0)
+    - GoogleInterchangeUtilities (~> 1.2)
+    - GoogleSymbolUtilities (~> 1.1)
+    - GoogleUtilities (~> 1.2)
+  - FirebaseCrash (1.0.7):
+    - FirebaseAnalytics (~> 3.2)
     - FirebaseInstanceID (~> 1.0)
     - GoogleInterchangeUtilities (~> 1.2)
     - GoogleSymbolUtilities (~> 1.1)
@@ -81,6 +90,7 @@ DEPENDENCIES:
   - Crashlytics
   - Fabric
   - Firebase/Core
+  - Firebase/Crash
   - Firebase/Messaging
   - Google/SignIn
   - j2objc-androidbase-debug (from `../lib/build/doppelDependencyExploded/co_touchlab_doppel_androidbase_0_3_1_SNAPSHOT`)
@@ -173,6 +183,7 @@ SPEC CHECKSUMS:
   Fabric: 5755268d0171435ab167e3d0878a28a777deaf10
   Firebase: 94e63112efcad75226c0356a8f3032397b8547c9
   FirebaseAnalytics: d968d4d5f6aeb795cd64144337bcd233e530efc6
+  FirebaseCrash: 2efeb3715b76ac843b841529ce413efb67e5fd4d
   FirebaseInstanceID: ba1e640935235e5fac39dfa816fe7660e72e1a8a
   FirebaseMessaging: 6bc7cd2ecb875c1a9c0f8b94956398aa3145bbb8
   Google: 813c467362eabc11385f5a5cc9ad0cb651a58f4e
@@ -215,6 +226,6 @@ SPEC CHECKSUMS:
   Reachability: 33e18b67625424e47b6cde6d202dce689ad7af96
   Toast-Swift: 25c3d98db42dc70d9a77b5006ee000e0becb458e
 
-PODFILE CHECKSUM: d7d64c2afbe7041f557c6b037324aac975e75a96
+PODFILE CHECKSUM: bcea920cd8dcbcd1ca4b590c50ffb89794ac0ea6
 
 COCOAPODS: 1.0.0

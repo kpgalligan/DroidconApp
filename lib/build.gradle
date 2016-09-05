@@ -51,5 +51,7 @@ j2objcConfig {
     translateArgs '--prefix', 'co.touchlab.droidconandroid.presenter=DCP'
     translateArgs '--prefix', 'co.touchlab.droidconandroid.tasks=DCT'
 
+    extraObjcCompilerArgs '-fmodules'
+
     finalConfigure()          // Must be last call to configuration
 }

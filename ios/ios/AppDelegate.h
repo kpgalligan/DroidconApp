@@ -9,8 +9,9 @@
 #import <UIKit/UIKit.h>
 #import <Google/SignIn.h>
 #import "co/touchlab/droidconandroid/presenter/AppManager.h"
+#import "co/touchlab/droidconandroid/ios/IosFirebase.h"
 
-@interface AppDelegate : UIResponder <UIApplicationDelegate, DCPAppManager_LoadDataSeed, GIDSignInDelegate>
+@interface AppDelegate : UIResponder <UIApplicationDelegate, DCPAppManager_LoadDataSeed, DCIosFirebase, GIDSignInDelegate>
 
 @property (strong, nonatomic) UIWindow *window;
 
