@@ -11,7 +11,7 @@ import android.os.Bundle
 import android.os.Handler
 import android.support.design.widget.TabLayout
 import android.support.v4.app.FragmentManager
-import android.support.v4.app.FragmentStatePagerAdapter
+import android.support.v4.app.FragmentPagerAdapter
 import android.support.v4.content.ContextCompat
 import android.support.v4.widget.DrawerLayout
 import android.support.v7.app.ActionBarDrawerToggle
@@ -238,6 +238,11 @@ open class ScheduleActivity : AppCompatActivity(), NfcAdapter.CreateNdefMessageC
                         allEvents = false
                         appbar.setExpanded(true)
                     }
+                    R.string.chat_on_slack -> {
+                        SlackHelper.openSlack(this@ScheduleActivity, conferenceDataPresenter!!.slackLink,
+                                conferenceDataPresenter!!.slackLinkHttp,
+                                conferenceDataPresenter!!.shouldShowSlackDialog())
+                    }
 
                     R.string.social -> FindUserKot.startMe(this@ScheduleActivity)
                     R.string.profile -> createEditUserProfile(this@ScheduleActivity)
@@ -265,6 +270,7 @@ open class ScheduleActivity : AppCompatActivity(), NfcAdapter.CreateNdefMessageC
         drawerItems.add(NavigationItem(R.string.explore, R.drawable.vic_event_black_24dp))
         drawerItems.add(NavigationItem(R.string.my_schedule, R.drawable.vic_clock_black_24dp))
         drawerItems.add(NavigationItem(R.string.profile, R.drawable.vic_account_circle_black_24dp))
+        drawerItems.add(NavigationItem(R.string.chat_on_slack, R.drawable.vic_slack_24dp, true))
         drawerItems.add("divider_placeholder")
         drawerItems.add(NavigationItem(R.string.sponsors, R.drawable.vic_star_circle))
         drawerItems.add(NavigationItem(R.string.about, R.drawable.vic_info_outline_black_24dp))
@@ -402,17 +408,19 @@ open class ScheduleActivity : AppCompatActivity(), NfcAdapter.CreateNdefMessageC
                     start += DateUtils.DAY_IN_MILLIS
                 }
 
-                view_pager.adapter = ScheduleFragmentPagerAdapter(
-                        supportFragmentManager,
-                        dates,
-                        allEvents)
-                view_pager.addOnPageChangeListener(TabLayout.TabLayoutOnPageChangeListener(tabs))
-                tabs.setupWithViewPager(view_pager)
+                if(view_pager.adapter == null) {
+                    view_pager.adapter = ScheduleFragmentPagerAdapter(
+                            supportFragmentManager,
+                            dates,
+                            allEvents)
+                    view_pager.addOnPageChangeListener(TabLayout.TabLayoutOnPageChangeListener(tabs))
+                    tabs.setupWithViewPager(view_pager)
+                }
             }
         }
     }
 
-    class ScheduleFragmentPagerAdapter(fm: FragmentManager, dates: List<Long>, allEvents: Boolean) : FragmentStatePagerAdapter(fm) {
+    class ScheduleFragmentPagerAdapter(fm: FragmentManager, dates: List<Long>, allEvents: Boolean) : FragmentPagerAdapter(fm) {
         private var dates = dates
         private var allEvents = allEvents
         private var fragmentManager = fm

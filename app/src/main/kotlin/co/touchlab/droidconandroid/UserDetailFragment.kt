@@ -11,6 +11,7 @@ import android.provider.ContactsContract
 import android.support.v4.app.Fragment
 import android.support.v4.content.ContextCompat
 import android.support.v7.app.AppCompatActivity
+import android.text.Html
 import android.text.TextUtils
 import android.view.LayoutInflater
 import android.view.View
@@ -249,7 +250,8 @@ class UserDetailFragment() : Fragment()
 
         if (! TextUtils.isEmpty(userAccount.profile))
         {
-            bio.text = userAccount.profile
+
+            bio.text = Html.fromHtml(StringUtils.trimToEmpty(userAccount.profile)!!)
             bio.visibility = View.VISIBLE
         }
 

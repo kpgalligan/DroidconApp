@@ -239,6 +239,7 @@
                 android:drawableStart="@drawable/vic_bio_black_24dp"
                 android:drawableTint="@color/primary_dark_50"
                 android:padding="@dimen/padding_medium"
+                android:autoLink="web"
                 android:textColor="@color/primary_dark_50"
                 android:visibility="gone"
                 tools:text="Bio"/>

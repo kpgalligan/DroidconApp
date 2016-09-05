@@ -126,6 +126,9 @@ class EventDetailAdapter(val context: Context, val frag:EventDetailFragment, val
                     presenter.callStartVideo(detail.link, detail.cover)
                     notifyDataSetChanged()
                 }
+                streamVH.itemView.slackButton.setOnClickListener {
+                    presenter.openSlack()
+                }
                 if(BuildConfig.DEBUG)
                 {
                     streamVH.itemView.stream.setOnLongClickListener {
