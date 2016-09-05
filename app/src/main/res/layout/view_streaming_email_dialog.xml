@@ -24,7 +24,7 @@
         android:layout_height="match_parent"/>
 
     <EditText
-        android:theme="@style/AlertDialogTheme"
+        android:theme="@style/GrayEditText"
         android:id="@+id/streaming_email_edit_text"
         android:hint="email address"
         android:textSize="14sp"

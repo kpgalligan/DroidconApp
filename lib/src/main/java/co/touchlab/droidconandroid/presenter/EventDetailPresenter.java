@@ -14,6 +14,7 @@ import co.touchlab.droidconandroid.tasks.EventDetailLoadTask;
 import co.touchlab.droidconandroid.tasks.Queues;
 import co.touchlab.droidconandroid.tasks.RemoveRsvpTask;
 import co.touchlab.droidconandroid.tasks.StartWatchVideoTask;
+import co.touchlab.droidconandroid.utils.SlackUtils;
 
 /**
  * Created by kgalligan on 4/25/16.
@@ -41,7 +42,7 @@ public class EventDetailPresenter extends AbstractEventBusPresenter
 
     public void callStartVideo(String link, String cover)
     {
-        TaskQueue.loadQueueNetwork(getContext()).execute(new StartWatchVideoTask(link, cover));
+        TaskQueue.loadQueueNetwork(getContext()).execute(new StartWatchVideoTask(eventId, link, cover));
     }
 
     public void onEventMainThread(EventDetailLoadTask task)
@@ -118,9 +119,16 @@ public class EventDetailPresenter extends AbstractEventBusPresenter
         }
     }
 
-    public void setEventbriteEmail(@NotNull CharSequence email, String link, String cover)
+    public void setEventbriteEmail(String email, String link, String cover)
     {
-        AppPrefs.getInstance(getContext()).setEventbriteEmail(email.toString());
+        AppPrefs.getInstance(getContext()).setEventbriteEmail(email);
         callStartVideo(link, cover);
+    }
+
+    public void openSlack()
+    {
+        String slackLink = SlackUtils.createSlackLink(eventDetailLoadTask.event.venue);
+        String slackLinkHttp = SlackUtils.createSlackLinkHttp(eventDetailLoadTask.event.venue);
+        host.openSlack(slackLink, slackLinkHttp, AppPrefs.getInstance(getContext()).getShowSlackDialog());
     }
 }

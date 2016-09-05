@@ -3,7 +3,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="@dimen/height_small"
+    android:layout_height="@dimen/height_small" xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="?attr/selectableItemBackground"
     android:orientation="vertical"
     android:theme="@style/drawerTheme">
@@ -41,6 +41,15 @@
             android:singleLine="true"
             android:textColor="@color/selectable_text_black"
             tools:text="Schedule"/>
+
+        <ImageView
+            android:id="@+id/action_icon"
+            android:layout_width="@dimen/height_xxtiny"
+            android:layout_height="@dimen/height_xxtiny"
+            android:layout_gravity="center_vertical|right"
+            android:tint="#979797"
+            android:contentDescription="@string/cd_navigation_icon"
+            app:srcCompat="@drawable/ic_launch_black_24dp"/>
 
     </FrameLayout>
 

@@ -2,7 +2,7 @@
 <RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content" xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <ImageView
         android:id="@+id/image"
@@ -13,8 +13,9 @@
         android:layout_marginStart="@dimen/padding_large"
         android:layout_marginTop="@dimen/padding_large"
         android:contentDescription="@string/cd_stream_icon"
+        android:tint="#FF0000"
         android:src="@drawable/ic_videocam_black_24dp"
-        android:tint="@color/primary_dark_50"/>
+        />
 
     <TextView
         android:id="@+id/stream"
@@ -28,7 +29,7 @@
         android:padding="@dimen/padding_large"
         android:text="@string/live_stream"
         android:textAllCaps="true"
-        android:textColor="@color/primary_dark_50"
+        android:textColor="#FF0000"
         android:textSize="@dimen/text_small"
         android:textStyle="bold"/>
 
@@ -44,9 +45,19 @@
         android:padding="@dimen/padding_large"
         android:text="@string/live_stream_loading"
         android:textAllCaps="true"
-        android:textColor="@color/text_gray"
+        android:textColor="#FF0000"
         android:textSize="@dimen/text_small"
         android:visibility="gone"
         android:textStyle="bold"/>
+    <ImageView
+        style="@style/Widget.AppCompat.ActionButton"
+        android:id="@+id/slackButton"
+        app:srcCompat="@drawable/vic_slack_24dp"
+        android:tint="#FF0000"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:layout_centerVertical="true"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
 
 </RelativeLayout>

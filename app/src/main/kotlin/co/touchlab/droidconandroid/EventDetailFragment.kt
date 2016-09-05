@@ -18,7 +18,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import co.touchlab.android.threading.eventbus.EventBusExt
 import co.touchlab.android.threading.tasks.TaskQueue
 import co.touchlab.droidconandroid.data.Event
 import co.touchlab.droidconandroid.data.Track
@@ -178,7 +177,7 @@ class EventDetailFragment() : Fragment(), EventDetailHost
                 {
                     val buttonText = "Continue"
                     dialog.setButton(AlertDialog.BUTTON_POSITIVE, buttonText, { dialogInterface, i ->
-                        presenter!!.setEventbriteEmail(email, link, cover)
+                        presenter!!.setEventbriteEmail(email!!.toString(), link, cover)
                     })
                     // setButton doesn't update the title after dialog is shown, use getButton
                     dialog.getButton(AlertDialog.BUTTON_POSITIVE).text = buttonText
@@ -214,6 +213,10 @@ class EventDetailFragment() : Fragment(), EventDetailHost
 
     override fun resetStreamProgress(){
         recycler.adapter.notifyDataSetChanged()
+    }
+
+    override fun openSlack(slackLink: String, slackLinkHttp: String, showSlackDialog: Boolean) {
+        SlackHelper.openSlack(activity, slackLink, slackLinkHttp, showSlackDialog)
     }
 
     /**

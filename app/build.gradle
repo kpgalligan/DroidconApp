@@ -20,6 +20,8 @@ def conventionid = properties.getProperty('conventionid')
 def baseurl = properties.getProperty('baseurl')
 def voteends = properties.getProperty('voteends')
 def releasePassword = properties.getProperty('releasePassword')
+def crashlyticsApiKey = properties.getProperty('crashlyticsApiKey')
+def jwLicenseKey = properties.getProperty('jwLicenseKey')
 
 repositories {
     flatDir {
@@ -44,6 +46,8 @@ android {
 //        buildConfigField "int", "CONVENTION_ID", "$conventionid"
         buildConfigField "String", "BASE_URL", "\"$baseurl\""
 //        buildConfigField "String", "VOTE_ENDS", "\"$voteends\""
+        resValue "string", "crashlytics_api_key", "$crashlyticsApiKey"
+        resValue "string", "jw_license_key", "$jwLicenseKey"
     }
 
     productFlavors {
