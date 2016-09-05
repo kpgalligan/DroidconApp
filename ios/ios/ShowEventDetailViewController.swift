@@ -82,7 +82,29 @@ import UIKit
     }
     
     func showTicketOptionsWithNSString(email: String!, withNSString link: String!, withNSString cover: String!) {
-        // TODO
+        //1. Create the alert controller.
+        //It looks like %1$s isn\'t associated with a streaming-enabled ticket.
+        let formatted = String(format: "It looks like %@ isn\'t associated with a streaming-enabled ticket. If you already bought a ticket, enter the associated email address below. Otherwise, you can pick up a ticket now!", email)
+        
+        let alert = UIAlertController(title: "Whoops!", message: formatted, preferredStyle: .Alert)
+        
+        //2. Add the text field. You can configure it however you need.
+        alert.addTextFieldWithConfigurationHandler({ (textField) -> Void in
+            textField.text = ""
+        })
+        
+        //3. Grab the value from the text field, and print it when the user clicks OK.
+        alert.addAction(UIAlertAction(title: "Cancel", style: .Default,handler: { (action) -> Void in
+            
+        }))
+        alert.addAction(UIAlertAction(title: "OK", style: .Default, handler: { (action) -> Void in
+            let textField = alert.textFields![0] as UITextField
+//            print("Text field: \(textField.text)")
+            self.eventDetailPresenter.setEventbriteEmailWithNSString(textField.text, withNSString: link, withNSString: cover)
+        }))
+        
+        // 4. Present the alert.
+        self.presentViewController(alert, animated: true, completion: nil)
     }
     
     func openSlackWithNSString(slackLink: String!, withNSString slackLinkHttp: String!, withBoolean showSlackDialog: jboolean) {
@@ -110,12 +132,12 @@ import UIKit
             
             cell.loadInfo(titleString!, description: descriptionString!, track: trackNumString!, time: dateTime!, event: event, eventDetailPresenter: eventDetailPresenter)
             cell.selectionStyle = UITableViewCellSelectionStyle.None
-            if (event.isNow() && event.getStreamUrl() != nil) {
+//            if (event.isNow() && event.getStreamUrl() != nil) {
                 cell.liveStreamButton.addTarget(self, action: #selector(ShowEventDetailViewController.liveStreamTapped(_:)), forControlEvents: UIControlEvents.TouchUpInside)
-            } else {
-                cell.liveStreamButton.hidden = true
-                cell.liveStreamIcon.hidden = true
-            }
+//            } else {
+//                cell.liveStreamButton.hidden = true
+//                cell.liveStreamIcon.hidden = true
+//            }
             return cell
         } else {
             let cell:SpeakerTableViewCell = tableView.dequeueReusableCellWithIdentifier("speakerCell") as! SpeakerTableViewCell
@@ -159,7 +181,7 @@ import UIKit
     }
     
     func liveStreamTapped(sender: UIButton) {
-        eventDetailPresenter.callStartVideoWithNSString(event.getStreamUrl(), withNSString: event.getCoverUrl())
+        eventDetailPresenter.callStartVideoWithNSString("http://content.bitsontherun.com/videos/3XnJSIm4-injeKYZS.mp4", withNSString: event.getCoverUrl())
     }
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {

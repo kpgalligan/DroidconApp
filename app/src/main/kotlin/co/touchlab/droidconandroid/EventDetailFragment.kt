@@ -177,7 +177,7 @@ class EventDetailFragment() : Fragment(), EventDetailHost
                 {
                     val buttonText = "Continue"
                     dialog.setButton(AlertDialog.BUTTON_POSITIVE, buttonText, { dialogInterface, i ->
-                        presenter!!.setEventbriteEmail(email, link, cover)
+                        presenter!!.setEventbriteEmail(email!!.toString(), link, cover)
                     })
                     // setButton doesn't update the title after dialog is shown, use getButton
                     dialog.getButton(AlertDialog.BUTTON_POSITIVE).text = buttonText
