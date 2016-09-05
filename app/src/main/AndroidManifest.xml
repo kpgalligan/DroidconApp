@@ -113,10 +113,10 @@
 
         <meta-data
             android:name="com.crashlytics.ApiKey"
-            android:value="90b5b9675372e1f2aff36d43ea5d6869040d37f3"/>
+            android:value="@string/crashlytics_api_key"/>
         <meta-data
             android:name="JW_LICENSE_KEY"
-            android:value="qksLYd8ZDZwx8FGNKEF1in29YKvqZ9lK9GMuBnwZarYc4jXHwAjJ6r0zbns="/>
+            android:value="@string/jw_license_key"/>
 
         <activity android:name=".VideoActivity"
                   android:configChanges="keyboard|keyboardHidden|orientation|screenSize">
