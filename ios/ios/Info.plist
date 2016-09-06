@@ -39,20 +39,6 @@
 	</array>
 	<key>CFBundleVersion</key>
 	<string>1A001</string>
-	<key>Fabric</key>
-	<dict>
-		<key>APIKey</key>
-		<string>90b5b9675372e1f2aff36d43ea5d6869040d37f3</string>
-		<key>Kits</key>
-		<array>
-			<dict>
-				<key>KitInfo</key>
-				<dict/>
-				<key>KitName</key>
-				<string>Crashlytics</string>
-			</dict>
-		</array>
-	</dict>
 	<key>JWPlayerKey</key>
 	<string>BrPL0+c6WZB7vzcOunl7GvBj8l3qbIqVweQRKLd7Rguiz7ffetbDnucrFn4=</string>
 	<key>LSRequiresIPhoneOS</key>
