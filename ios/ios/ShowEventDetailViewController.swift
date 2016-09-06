@@ -132,12 +132,12 @@ import UIKit
             
             cell.loadInfo(titleString!, description: descriptionString!, track: trackNumString!, time: dateTime!, event: event, eventDetailPresenter: eventDetailPresenter)
             cell.selectionStyle = UITableViewCellSelectionStyle.None
-//            if (event.isNow() && event.getStreamUrl() != nil) {
+            if (/*event.isNow() &&*/ event.getStreamUrl() != nil) {
                 cell.liveStreamButton.addTarget(self, action: #selector(ShowEventDetailViewController.liveStreamTapped(_:)), forControlEvents: UIControlEvents.TouchUpInside)
-//            } else {
-//                cell.liveStreamButton.hidden = true
-//                cell.liveStreamIcon.hidden = true
-//            }
+            } else {
+                cell.liveStreamButton.hidden = true
+                cell.liveStreamIcon.hidden = true
+            }
             return cell
         } else {
             let cell:SpeakerTableViewCell = tableView.dequeueReusableCellWithIdentifier("speakerCell") as! SpeakerTableViewCell
@@ -181,7 +181,7 @@ import UIKit
     }
     
     func liveStreamTapped(sender: UIButton) {
-        eventDetailPresenter.callStartVideoWithNSString("http://content.bitsontherun.com/videos/3XnJSIm4-injeKYZS.mp4", withNSString: event.getCoverUrl())
+        eventDetailPresenter.callStartVideoWithNSString(event.getStreamUrl(), withNSString: event.getCoverUrl())
     }
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
