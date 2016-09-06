@@ -152,7 +152,8 @@ class EditProfileViewController: UIViewController,  UIImagePickerControllerDeleg
     
     func setProfilePhotoWithNSString(avatarUrl: String!, withNSString name: String!) {
         if avatarUrl != nil {
-            profileImageView.kf_setImageWithURL(NSURL(string: avatarUrl)!)
+            // Fix me
+            // profileImageView.kf_setImageWithURL(NSURL(string: avatarUrl)!)
         }
     }
     
