@@ -1,4 +1,8 @@
 package co.touchlab.droidconandroid.tasks;
+import java.sql.SQLException;
+
+import co.touchlab.droidconandroid.data.DatabaseHelper;
+import co.touchlab.droidconandroid.data.Event;
 import co.touchlab.droidconandroid.network.WatchVideoRequest;
 import co.touchlab.droidconandroid.presenter.AppManager;
 import co.touchlab.droidconandroid.utils.AnalyticsEvents;
@@ -25,7 +29,22 @@ public class StartWatchVideoTask extends AbstractWatchVideoTask
     {
 //        if(email != null)
 //            throw new UnsupportedOperationException("Hey, test");
-        AppManager.getPlatformClient().logEvent(AnalyticsEvents.START_VIDEO, "eventId", Long.toString(eventId));
+        logEvent();
         return watchVideoRequest.startWatchVideo(conventionId, email, uuid);
+    }
+
+    private void logEvent()
+    {
+        try
+        {
+            Event event = DatabaseHelper.getInstance(AppManager.getContext())
+                    .getEventDao()
+                    .queryForId(eventId);
+            AppManager.getPlatformClient().logEvent(AnalyticsEvents.START_VIDEO, "item_id", Long.toString(eventId), "item_name", event.name);
+        }
+        catch(SQLException e)
+        {
+            throw new RuntimeException(e);
+        }
     }
 }

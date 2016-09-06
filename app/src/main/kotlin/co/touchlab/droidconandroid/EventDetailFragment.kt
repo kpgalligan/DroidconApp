@@ -27,6 +27,7 @@ import co.touchlab.droidconandroid.presenter.EventDetailPresenter
 import co.touchlab.droidconandroid.tasks.AddRsvpTask
 import co.touchlab.droidconandroid.tasks.RemoveRsvpTask
 import co.touchlab.droidconandroid.tasks.StartWatchVideoTask
+import com.google.firebase.analytics.FirebaseAnalytics
 import com.wnafee.vector.compat.ResourcesCompat
 import kotlinx.android.synthetic.main.fragment_event_detail.*
 import kotlinx.android.synthetic.main.view_streaming_email_dialog.view.*
@@ -196,6 +197,7 @@ class EventDetailFragment() : Fragment(), EventDetailHost
     }
 
     private fun buildEmailString(email: String): SpannableStringBuilder {
+
         val baseEmailString = activity.getString(R.string.streaming_email, email)
         val stringBuider = SpannableStringBuilder(baseEmailString)
         val fcs = ForegroundColorSpan(ContextCompat.getColor(activity, R.color.primary))
@@ -309,10 +311,9 @@ class EventDetailFragment() : Fragment(), EventDetailHost
 
         adapter.addHeader(event.name, venueFormatString.format(event.venue.name, formattedStart, formattedEnd))
 
-//        if(event.isNow && !TextUtils.isEmpty(event.getStreamUrl()))
-//            adapter.addStream(event.getStreamUrl(), event.getCoverUrl())
+        if(/*event.isNow && */!TextUtils.isEmpty(event.getStreamUrl()))
+            adapter.addStream(event.getStreamUrl(), event.getCoverUrl())
 
-        //        if(event.isNow && !TextUtils.isEmpty(event.getStreamUrl()))
             adapter.addStream("http://content.bitsontherun.com/videos/3XnJSIm4-injeKYZS.mp4", "")
 
         if (event.isNow)

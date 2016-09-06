@@ -4,6 +4,7 @@ import android.app.ActivityManager;
 import android.app.Application;
 import android.content.Context;
 import android.os.Bundle;
+import android.util.Log;
 
 import com.google.firebase.analytics.FirebaseAnalytics;
 import com.google.firebase.crash.FirebaseCrash;
@@ -42,9 +43,10 @@ public class DroidconApplication extends Application
     {
         super.onCreate();
         EventBusExt.getDefault().register(this);
-        //        Fabric.with(this, new Crashlytics());
 
-//        if(!getCurrentProcessName(this).contains("background_crash"))
+        String currentProcessName = getCurrentProcessName(this);
+        Log.i(DroidconApplication.class.getSimpleName(), "currentProcessName: "+ currentProcessName );
+        if(!currentProcessName.contains("background_crash"))
         {
             PlatformClient platformClient = new co.touchlab.droidconandroid.presenter.PlatformClient()
             {
@@ -76,7 +78,6 @@ public class DroidconApplication extends Application
                 public void logException(Throwable t)
                 {
                     FirebaseCrash.report(t);
-                    //                Crashlytics.logException(t);
                 }
 
                 @Override

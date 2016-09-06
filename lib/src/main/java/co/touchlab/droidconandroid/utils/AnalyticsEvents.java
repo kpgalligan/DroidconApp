@@ -5,4 +5,9 @@ package co.touchlab.droidconandroid.utils;
 public class AnalyticsEvents
 {
     public static final String START_VIDEO = "START_VIDEO";
+
+    //eventId, name
+    public static final String OPEN_EVENT = "OPEN_EVENT";
+
+
 }
