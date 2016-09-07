@@ -81,7 +81,7 @@ PODS:
   - j2objc-squeaky-core-release (1.0)
   - j2objc-squeaky-query-debug (1.0)
   - j2objc-squeaky-query-release (1.0)
-  - JWPlayer-SDK (2.4.4)
+  - JWPlayer-SDK (2.4.5)
   - Kingfisher (2.5.1)
   - Reachability (3.2)
   - Toast-Swift (1.3.0)
@@ -221,7 +221,7 @@ SPEC CHECKSUMS:
   j2objc-squeaky-core-release: 6df9376cd5b9a92d50de75a63c914f575d8ae88d
   j2objc-squeaky-query-debug: 2b9ac92f9ead53ecf978bc9afeae8a4604156647
   j2objc-squeaky-query-release: 0fdc4d55256d70e11c3d4d15f49950d6a2e65dfc
-  JWPlayer-SDK: 722eac9a793c94c8c0f78671083cc03995c92f09
+  JWPlayer-SDK: 1ba739f5df41266b4ed77a4af245c07f23930885
   Kingfisher: 9b82e0e1f1a296f149a50bbc2214532eaa4df4f1
   Reachability: 33e18b67625424e47b6cde6d202dce689ad7af96
   Toast-Swift: 25c3d98db42dc70d9a77b5006ee000e0becb458e
