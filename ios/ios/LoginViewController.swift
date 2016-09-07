@@ -7,7 +7,6 @@
 //
 
 import UIKit
-import Crashlytics
 
 
 class LoginViewController: UIViewController, DCPLoginScreenPresenter_Host, GIDSignInUIDelegate
@@ -17,22 +16,7 @@ class LoginViewController: UIViewController, DCPLoginScreenPresenter_Host, GIDSi
     override func viewDidLoad() {
         presenter = DCPLoginScreenPresenter(androidContentContext: DCPAppManager.getContext(), withDCPLoginScreenPresenter_Host: self)
         GIDSignIn.sharedInstance().uiDelegate = self
-        let viewController = UIApplication.sharedApplication().keyWindow?.rootViewController;
-        NSLog("heyo")
-        NSLog((viewController?.title)!)
-        
-        let button = UIButton(type: UIButtonType.RoundedRect)
-        button.frame = CGRectMake(20, 50, 100, 30)
-        button.setTitle("Crash", forState: UIControlState.Normal)
-        button.addTarget(self, action: #selector(LoginViewController.crashButtonTapped(_:)), forControlEvents: UIControlEvents.TouchUpInside)
-        view.addSubview(button)
-
     }
-    
-    @IBAction func crashButtonTapped(sender: AnyObject) {
-        Crashlytics.sharedInstance().crash()
-    }
-
     
     func loggedIn(user: GIDGoogleUser)
     {

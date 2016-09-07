@@ -295,6 +295,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 631B99181C7D6533008AA20D /* Build configuration list for PBXNativeTarget "ios" */;
 			buildPhases = (
+				3FB9AAD61E84B5AE023687EE /* 📦 Check Pods Manifest.lock */,
 				A5BD1C57694B216B9ACD0FB3 /* [CP] Check Pods Manifest.lock */,
 				FB15BDC90ED9271229794282 /* [CP] Check Pods Manifest.lock */,
 				44DE23B9D422AACD96482296 /* [CP] Check Pods Manifest.lock */,
@@ -304,7 +305,6 @@
 				631B98E91C7D6533008AA20D /* Resources */,
 				6DD8DA101221ACE133AD02E0 /* [CP] Embed Pods Frameworks */,
 				EA05F18FF894EE320A2E9E52 /* [CP] Copy Pods Resources */,
-				63EE30E01CD0626900B64D3D /* Run Script */,
 				3C359A7AAFFDC6B84973AE0B /* 📦 Embed Pods Frameworks */,
 				18385CEF9384BB42B46C103F /* 📦 Copy Pods Resources */,
 				63BF9CB51D7DB833005570E0 /* ShellScript */,
@@ -322,6 +322,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 631B991B1C7D6533008AA20D /* Build configuration list for PBXNativeTarget "iosTests" */;
 			buildPhases = (
+				3D37BFCB66229BC15B176609 /* 📦 Check Pods Manifest.lock */,
 				0DDFB3E6342422A60E27C39C /* [CP] Check Pods Manifest.lock */,
 				0401F5D754ECD651CA55F09F /* [CP] Check Pods Manifest.lock */,
 				4ADFA7188E05A380D7FB1124 /* [CP] Check Pods Manifest.lock */,
@@ -348,6 +349,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 631B991E1C7D6533008AA20D /* Build configuration list for PBXNativeTarget "iosUITests" */;
 			buildPhases = (
+				23A0D32EE34D33EC55C968EC /* 📦 Check Pods Manifest.lock */,
 				EB97482FEF65C7B46258CA87 /* [CP] Check Pods Manifest.lock */,
 				6071AEF9EE0E752F5ABF3CF7 /* [CP] Check Pods Manifest.lock */,
 				EECE534BCAF213B373DD5048 /* [CP] Check Pods Manifest.lock */,
@@ -522,6 +524,21 @@
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-ios/Pods-ios-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
+		23A0D32EE34D33EC55C968EC /* 📦 Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "📦 Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
 		3C359A7AAFFDC6B84973AE0B /* 📦 Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -535,6 +552,36 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-ios/Pods-ios-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		3D37BFCB66229BC15B176609 /* 📦 Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "📦 Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		3FB9AAD61E84B5AE023687EE /* 📦 Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "📦 Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
 			showEnvVarsInLog = 0;
 		};
 		44DE23B9D422AACD96482296 /* [CP] Check Pods Manifest.lock */ = {
@@ -594,20 +641,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "# Replace this with the GOOGLE_APP_ID from your GoogleService-Info.plist file\nGOOGLE_APP_ID=1:654878069390:ios:e5f6678978f79e96\n\n# Replace the /Path/To/ServiceAccount.json with the path to the key you just downloaded\n\"${PODS_ROOT}\"/FirebaseCrash/upload-sym \"${SRCROOT}/ios/DroidconNYC-FirebaseServiceAccount.json\"";
-		};
-		63EE30E01CD0626900B64D3D /* Run Script */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "Run Script";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Fabric/run\" 90b5b9675372e1f2aff36d43ea5d6869040d37f3 a70308da17e66d33b166e029eabb96754f40e2dd2ec0fefd2a48e1c89e76f7a6";
 		};
 		682279DBCF54752B8CF6D0E1 /* [CP] Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
