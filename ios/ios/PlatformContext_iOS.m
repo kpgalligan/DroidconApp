@@ -52,14 +52,14 @@
     IOSObjectArray *objArray;
     NSMutableArray *array = [[NSMutableArray alloc] init];
     
-    if (!self.isDayTwo) {
-        DCPConferenceDayHolder *daySchedule = [self.conferenceDays objectAtIndex:0];
+    int index = self.isDayTwo ? 1 : 0;
+    
+    if (self.conferenceDays.count > index)
+    {
+        DCPConferenceDayHolder *daySchedule = [self.conferenceDays objectAtIndex:index];
         objArray = daySchedule->hourHolders_;
-    } else {
-        DCPConferenceDayHolder *daySchedule = [self.conferenceDays objectAtIndex:1];
-        objArray = daySchedule->hourHolders_;
+        [array addObjectsFromArray:[self convertIOSObjectArrayToArray:objArray]];
     }
-    [array addObjectsFromArray:[self convertIOSObjectArrayToArray:objArray]];
     
     if (self.dateFormatter == nil) {
         self.dateFormatter = [[NSDateFormatter alloc] init];
@@ -148,32 +148,28 @@
 
 - (void)loadCallbackWithDCPConferenceDayHolderArray:(IOSObjectArray *)conferenceDayHolders
 {
-    if (!self.successfulRequest) {
-        self.hourBlocks = [[NSMutableArray alloc] init];
-        
-        self.conferenceDays = (NSArray *)conferenceDayHolders;
-        [self updateTableData];
-        [self.reloadDelegate reloadTableView];
-        
+//    if(! self.successfulRequest) {
+    self.hourBlocks = [[NSMutableArray alloc] init];
+    
+    self.conferenceDays = (NSArray *)conferenceDayHolders;
+    [self updateTableData];
+    [self.reloadDelegate reloadTableView];
+    
         self.successfulRequest = YES;
-        NSLog(@"Received data from server.");
-    }
+    NSLog(@"Received data from server.");
+//    }
 }
 
 #pragma Table View - Delegate
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
+    int index = self.isDayTwo ? 1 : 0;
     
-    if(self.conferenceDays == nil)
+    if(self.conferenceDays == nil || self.conferenceDays.count <= index)
         return 0;
-    
-    if (!self.isDayTwo) {
-        DCPConferenceDayHolder *daySchedule = [self.conferenceDays objectAtIndex:0];
-        return daySchedule->hourHolders_->size_;
-    } else {
-        DCPConferenceDayHolder *daySchedule = [self.conferenceDays objectAtIndex:1];
-        return daySchedule->hourHolders_->size_;
-    }
+
+    DCPConferenceDayHolder *daySchedule = [self.conferenceDays objectAtIndex:index];
+    return daySchedule->hourHolders_->size_;
 
 }
 
