@@ -22,7 +22,7 @@ import UIKit
     
     @IBOutlet weak var tableView : UITableView!
     @IBOutlet weak var rsvpButton: UIButton!
-    
+    @IBOutlet weak var headerImage: UIImageView!
     // MARK: Lifecycle events
     
     override func viewWillAppear(animated: Bool) {
@@ -62,9 +62,11 @@ import UIKit
     
     func dataRefresh() {
         event = eventDetailPresenter.getEventDetailLoadTask().getEvent()
+        print("dataRefresh: \(event.getCategory())")
         speakers = PlatformContext_iOS.javaListToNSArray(eventDetailPresenter.getEventDetailLoadTask().getEvent().getSpeakerList()) as? [DCDEventSpeaker]
         tableView.reloadData()
         updateButton()
+        updateHeaderImage()
     }
     
     func callStreamActivityWithDCTStartWatchVideoTask(task: DCTStartWatchVideoTask){
@@ -129,7 +131,7 @@ import UIKit
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         if indexPath.section == 0 {
             let cell:EventTableViewCell = tableView.dequeueReusableCellWithIdentifier("eventCell") as! EventTableViewCell
-            
+
             cell.loadInfo(titleString!, description: descriptionString!, track: trackNumString!, time: dateTime!, event: event, eventDetailPresenter: eventDetailPresenter)
             cell.selectionStyle = UITableViewCellSelectionStyle.None
             if (/*event.isNow() &&*/ event.getStreamUrl() != nil) {
@@ -148,6 +150,7 @@ import UIKit
                 let imageUrl = userAccount!.avatarImageUrl() ?? ""
                 cell.loadInfo(userAccount!.valueForKey("name_") as! String, info: speakerDescription as! String, imgUrl: imageUrl)
             }
+            
             cell.selectionStyle = UITableViewCellSelectionStyle.None
             return cell
         }
@@ -164,7 +167,6 @@ import UIKit
         rsvpButton.layer.shadowOpacity = 1.0
         updateButton()
     }
-
     
     func updateButton() {
         if (event.isRsvped()) {
@@ -176,6 +178,31 @@ import UIKit
         }
     }
     
+    //TODO Use Track class from shared lib folder.
+    func updateHeaderImage() {
+        
+        let imageName : String
+        let categoary : String  = event.getCategory() != nil ? event.getCategory()! : "Design" // Default to design (Same as Android)
+        
+        switch categoary {
+            case "Design":
+                imageName = "illo_designtalk"
+                break
+            case "Dev/Design":
+                imageName = "illo_designdevtalk"
+                break
+            case "Design Lab":
+                imageName = "illo_designlab"
+                break
+            default:
+                imageName = "illo_devtalk"
+                break
+        }
+        
+        let image : UIImage = UIImage(named:imageName)!
+        headerImage.image = image
+    }
+
     @IBAction func toggleRsvp(sender: UIButton) {
         eventDetailPresenter.toggleRsvp()
     }
