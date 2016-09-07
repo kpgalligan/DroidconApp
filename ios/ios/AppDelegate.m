@@ -14,8 +14,6 @@
 #import "android/content/IOSContext.h"
 #import "android/os/Looper.h"
 #import "UIViewController+Utils.h"
-#import <Fabric/Fabric.h>
-#import <Crashlytics/Crashlytics.h>
 #import "Reachability.h"
 @import Firebase;
 
@@ -30,7 +28,6 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
     [FIRApp configure];
-//    [Fabric with:@[[Crashlytics class]]];
 
     NSError* configureError;
     [[GGLContext sharedInstance] configureWithError: &configureError];

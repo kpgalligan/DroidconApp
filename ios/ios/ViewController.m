@@ -16,7 +16,6 @@
 #import "java/util/ArrayList.h"
 #import "java/util/List.h"
 #import "NoteTableViewCell.h"
-#import <Crashlytics/Crashlytics.h>
 @import FirebaseMessaging;
 
 
