@@ -26,7 +26,6 @@
 
 @property (nonatomic, weak) id <PlatformContext_iOSDelegate> reloadDelegate;
 
-@property (nonatomic, assign) BOOL successfulRequest;
 @property (nonatomic, assign) BOOL isDayTwo;
 @property (nonatomic, strong) __block NSDateFormatter *dateFormatter;
 @property (nonatomic, strong) __block NSDateFormatter *timeFormatter;
