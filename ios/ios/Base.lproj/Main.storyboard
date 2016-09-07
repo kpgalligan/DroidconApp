@@ -140,7 +140,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="551"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="ZbT-NM-odG">
+                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="ZbT-NM-odG">
                                 <rect key="frame" x="0.0" y="64" width="600" height="160"/>
                                 <color key="backgroundColor" red="0.0" green="0.35294117650000001" blue="0.87843137250000003" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
@@ -156,7 +156,7 @@
                                         <rect key="frame" x="0.0" y="50" width="600" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" placeholderIntrinsicWidth="600" placeholderIntrinsicHeight="44" tableViewCell="Txp-Dm-ZXs" id="cbK-4e-e7e">
-                                            <rect key="frame" x="0.0" y="0.0" width="600" height="43.5"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="600" height="44"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         </tableViewCellContentView>
@@ -200,6 +200,7 @@
                     </view>
                     <navigationItem key="navigationItem" id="QGW-s4-6wP"/>
                     <connections>
+                        <outlet property="headerImage" destination="ZbT-NM-odG" id="dLB-dR-eGx"/>
                         <outlet property="rsvpButton" destination="xQK-un-yDe" id="0IK-0O-WyP"/>
                         <outlet property="tableView" destination="VLj-AE-5LA" id="ccs-68-hng"/>
                         <segue destination="2Cs-7c-HEa" kind="show" identifier="LiveStream" id="0Yf-uw-4Ku"/>
