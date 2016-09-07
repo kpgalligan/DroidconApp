@@ -14,7 +14,8 @@ class DroidconTabBarViewController: UITabBarController {
         super.viewDidLoad()
         
         // Sets the background color of the selected UITabBarItem
-        UITabBar.appearance().selectionIndicatorImage = UIImage().makeImageWithColorAndSize(UIColor(red:(0/255.0), green:(90/255.0), blue:(224/255.0), alpha: 1.0), size: CGSizeMake(tabBar.frame.width/4, tabBar.frame.height))
+        UITabBar.appearance().selectionIndicatorImage = UIImage().makeImageWithColorAndSize(UIColor(red:(0/255.0), green:(90/255.0), blue:(224/255.0), alpha: 1.0), size:
+            CGSizeMake(tabBar.frame.width/CGFloat((tabBar.items?.count)!), tabBar.frame.height))
         
         // Sets the tab bar text appearance
         UITabBarItem.appearance().setTitleTextAttributes([NSForegroundColorAttributeName: UIColor.whiteColor()], forState:.Normal)
