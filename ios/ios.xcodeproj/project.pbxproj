@@ -74,7 +74,7 @@
 		4C81B70E1D76162000DFB89C /* SponsorPhotoCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SponsorPhotoCell.swift; sourceTree = "<group>"; };
 		4C81B7121D7616C500DFB89C /* SponsorsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SponsorsViewController.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		560EE4CE7F61AD15C1BA858D /* Pods_iosUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_iosUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		631B98EB1C7D6533008AA20D /* ios.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ios.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		631B98EB1C7D6533008AA20D /* Droicon NYC 2016.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Droicon NYC 2016.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		631B98EF1C7D6533008AA20D /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		631B98F11C7D6533008AA20D /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		631B98F21C7D6533008AA20D /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -201,7 +201,7 @@
 		631B98EC1C7D6533008AA20D /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				631B98EB1C7D6533008AA20D /* ios.app */,
+				631B98EB1C7D6533008AA20D /* Droicon NYC 2016.app */,
 				631B99041C7D6533008AA20D /* iosTests.xctest */,
 				631B990F1C7D6533008AA20D /* iosUITests.xctest */,
 			);
@@ -295,7 +295,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 631B99181C7D6533008AA20D /* Build configuration list for PBXNativeTarget "ios" */;
 			buildPhases = (
-				3FB9AAD61E84B5AE023687EE /* 📦 Check Pods Manifest.lock */,
+				3FB9AAD61E84B5AE023687EE /* [CP] Check Pods Manifest.lock */,
 				A5BD1C57694B216B9ACD0FB3 /* [CP] Check Pods Manifest.lock */,
 				FB15BDC90ED9271229794282 /* [CP] Check Pods Manifest.lock */,
 				44DE23B9D422AACD96482296 /* [CP] Check Pods Manifest.lock */,
@@ -308,6 +308,7 @@
 				3C359A7AAFFDC6B84973AE0B /* 📦 Embed Pods Frameworks */,
 				18385CEF9384BB42B46C103F /* 📦 Copy Pods Resources */,
 				63BF9CB51D7DB833005570E0 /* ShellScript */,
+				068A0A361D81F83E00076283 /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -315,14 +316,14 @@
 			);
 			name = ios;
 			productName = ios;
-			productReference = 631B98EB1C7D6533008AA20D /* ios.app */;
+			productReference = 631B98EB1C7D6533008AA20D /* Droicon NYC 2016.app */;
 			productType = "com.apple.product-type.application";
 		};
 		631B99031C7D6533008AA20D /* iosTests */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 631B991B1C7D6533008AA20D /* Build configuration list for PBXNativeTarget "iosTests" */;
 			buildPhases = (
-				3D37BFCB66229BC15B176609 /* 📦 Check Pods Manifest.lock */,
+				3D37BFCB66229BC15B176609 /* [CP] Check Pods Manifest.lock */,
 				0DDFB3E6342422A60E27C39C /* [CP] Check Pods Manifest.lock */,
 				0401F5D754ECD651CA55F09F /* [CP] Check Pods Manifest.lock */,
 				4ADFA7188E05A380D7FB1124 /* [CP] Check Pods Manifest.lock */,
@@ -349,7 +350,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 631B991E1C7D6533008AA20D /* Build configuration list for PBXNativeTarget "iosUITests" */;
 			buildPhases = (
-				23A0D32EE34D33EC55C968EC /* 📦 Check Pods Manifest.lock */,
+				23A0D32EE34D33EC55C968EC /* [CP] Check Pods Manifest.lock */,
 				EB97482FEF65C7B46258CA87 /* [CP] Check Pods Manifest.lock */,
 				6071AEF9EE0E752F5ABF3CF7 /* [CP] Check Pods Manifest.lock */,
 				EECE534BCAF213B373DD5048 /* [CP] Check Pods Manifest.lock */,
@@ -464,6 +465,19 @@
 			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
 			showEnvVarsInLog = 0;
 		};
+		068A0A361D81F83E00076283 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Fabric/run\" 90b5b9675372e1f2aff36d43ea5d6869040d37f3 a70308da17e66d33b166e029eabb96754f40e2dd2ec0fefd2a48e1c89e76f7a6";
+		};
 		0A6247AEC8D968A764B28F56 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -524,14 +538,14 @@
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-ios/Pods-ios-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		23A0D32EE34D33EC55C968EC /* 📦 Check Pods Manifest.lock */ = {
+		23A0D32EE34D33EC55C968EC /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
-			name = "📦 Check Pods Manifest.lock";
+			name = "[CP] Check Pods Manifest.lock";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -554,14 +568,14 @@
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-ios/Pods-ios-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		3D37BFCB66229BC15B176609 /* 📦 Check Pods Manifest.lock */ = {
+		3D37BFCB66229BC15B176609 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
-			name = "📦 Check Pods Manifest.lock";
+			name = "[CP] Check Pods Manifest.lock";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -569,14 +583,14 @@
 			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
 			showEnvVarsInLog = 0;
 		};
-		3FB9AAD61E84B5AE023687EE /* 📦 Check Pods Manifest.lock */ = {
+		3FB9AAD61E84B5AE023687EE /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
-			name = "📦 Check Pods Manifest.lock";
+			name = "[CP] Check Pods Manifest.lock";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1036,7 +1050,8 @@
 					"-ljre_emul",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = co.touchlab.ios.albany;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_MODULE_NAME = ios;
+				PRODUCT_NAME = "Droicon NYC 2016";
 				PROVISIONING_PROFILE = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "ios/ios-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
@@ -1075,7 +1090,8 @@
 					"-ljre_emul",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = co.touchlab.ios.albany;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_MODULE_NAME = ios;
+				PRODUCT_NAME = "Droicon NYC 2016";
 				PROVISIONING_PROFILE = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "ios/ios-Bridging-Header.h";
 			};
