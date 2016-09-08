@@ -180,18 +180,20 @@ import UIKit
     
     //TODO Use Track class from shared lib folder.
     func updateHeaderImage() {
+        let track : DCDTrack  = (event.getCategory() ?? "").isEmpty ?
+            DCDTrack.findByServerNameWithNSString("Design") : // Default to design (Same as Android)
+        DCDTrack.findByServerNameWithNSString(event.getCategory())
         
-        let imageName : String
-        let categoary : String  = event.getCategory() != nil ? event.getCategory()! : "Design" // Default to design (Same as Android)
+        var imageName : String
         
-        switch categoary {
-            case "Design":
-                imageName = "illo_designtalk"
-                break
-            case "Dev/Design":
+        switch track {
+            case DCDTrack.findByServerNameWithNSString("Dev/Design"):
                 imageName = "illo_designdevtalk"
                 break
-            case "Design Lab":
+            case DCDTrack.findByServerNameWithNSString("Design"):
+                imageName = "illo_designtalk"
+                break
+            case DCDTrack.findByServerNameWithNSString("Design Lab"):
                 imageName = "illo_designlab"
                 break
             default:
@@ -199,8 +201,7 @@ import UIKit
                 break
         }
         
-        let image : UIImage = UIImage(named:imageName)!
-        headerImage.image = image
+        headerImage.image =  UIImage(named:imageName)!
     }
 
     @IBAction func toggleRsvp(sender: UIButton) {
