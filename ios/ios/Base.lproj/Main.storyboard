@@ -1283,6 +1283,7 @@
         <!--Login Controller-->
         <scene sceneID="gTY-rS-FiO">
             <objects>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="LIS-oJ-e8g" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <viewController storyboardIdentifier="Long View Controller" title="Login Controller" id="VoE-y7-8Qu" customClass="LoginViewController" customModule="ios" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="Dk3-nq-cPB"/>
@@ -1353,11 +1354,9 @@
                         </variation>
                     </view>
                     <connections>
-                        <outlet property="signInButton" destination="jgK-ET-Vgx" id="VLi-tK-Cf5"/>
                         <segue destination="hAB-Au-Rvm" kind="show" identifier="Schedule" id="wiZ-ik-Hhb"/>
                     </connections>
                 </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="LIS-oJ-e8g" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="155" y="217"/>
         </scene>
@@ -1385,10 +1384,10 @@
         <image name="illo_welcome" width="360" height="360"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="kJT-kk-HsE"/>
-        <segue reference="wiZ-ik-Hhb"/>
-        <segue reference="pVg-yj-H2O"/>
         <segue reference="Y1n-90-loS"/>
+        <segue reference="pVg-yj-H2O"/>
+        <segue reference="wiZ-ik-Hhb"/>
+        <segue reference="kJT-kk-HsE"/>
     </inferredMetricsTieBreakers>
     <color key="tintColor" red="0.066666666666666666" green="0.30196078431372547" blue="0.85882352941176465" alpha="1" colorSpace="calibratedRGB"/>
 </document>
