@@ -1333,15 +1333,14 @@
         <image name="ic_query_builder_white" width="24" height="24"/>
         <image name="ic_sponsor" width="24" height="24"/>
         <image name="ic_twitter" width="200" height="200"/>
-        <image name="illo_beyourself" width="360" height="360"/>
         <image name="illo_planahead" width="360" height="360"/>
         <image name="illo_welcome" width="360" height="360"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="6Qh-G4-O2e"/>
-        <segue reference="pVg-yj-H2O"/>
-        <segue reference="wiZ-ik-Hhb"/>
         <segue reference="kJT-kk-HsE"/>
+        <segue reference="wiZ-ik-Hhb"/>
+        <segue reference="pVg-yj-H2O"/>
+        <segue reference="Y1n-90-loS"/>
     </inferredMetricsTieBreakers>
     <color key="tintColor" red="0.066666666666666666" green="0.30196078431372547" blue="0.85882352941176465" alpha="1" colorSpace="calibratedRGB"/>
 </document>
