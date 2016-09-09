@@ -13,15 +13,9 @@ class LoginViewController: UIViewController, DCPLoginScreenPresenter_Host, GIDSi
 {
     var presenter: DCPLoginScreenPresenter?
     
-    @IBOutlet weak var signInButton: GIDSignInButton!
-    @IBOutlet weak var fakeButotn: UIButton!
-    
     override func viewDidLoad() {
         presenter = DCPLoginScreenPresenter(androidContentContext: DCPAppManager.getContext(), withDCPLoginScreenPresenter_Host: self)
         GIDSignIn.sharedInstance().uiDelegate = self
-        
-        
-        
     }
     
     func loggedIn(user: GIDGoogleUser)
@@ -39,9 +33,4 @@ class LoginViewController: UIViewController, DCPLoginScreenPresenter_Host, GIDSi
         }
     }
     
-//    - (void)loggedIn:(NSString *)token
-//    withName:(NSString *)name
-//    {
-//    [self.dataPresenter loginUserWithNSString:token withNSString:name];
-//    }
 }
