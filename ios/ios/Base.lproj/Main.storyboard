@@ -960,7 +960,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Welcome to Droidcon NYC!" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="YSM-rN-Nbl">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="Welcome to Droidcon NYC!" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="YSM-rN-Nbl">
                                 <rect key="frame" x="38" y="436" width="241" height="18"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="241" id="OnX-oO-d8e"/>
@@ -979,14 +979,37 @@
                                 <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" image="illo_welcome" translatesAutoresizingMaskIntoConstraints="NO" id="BLC-KQ-aRb">
+                                <rect key="frame" x="20" y="20" width="560" height="408"/>
+                            </imageView>
                         </subviews>
                         <color key="backgroundColor" red="0.0" green="0.3529411764705882" blue="0.8784313725490196" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
+                            <constraint firstItem="BLC-KQ-aRb" firstAttribute="leading" secondItem="OpV-hy-Zqz" secondAttribute="leadingMargin" id="DVx-yr-FII"/>
                             <constraint firstItem="s3I-iW-ww4" firstAttribute="top" secondItem="YSM-rN-Nbl" secondAttribute="bottom" constant="8" id="KYE-qg-ywR"/>
+                            <constraint firstItem="BLC-KQ-aRb" firstAttribute="centerX" secondItem="OpV-hy-Zqz" secondAttribute="centerX" id="OFZ-LJ-AaL"/>
+                            <constraint firstAttribute="leadingMargin" secondItem="BLC-KQ-aRb" secondAttribute="leading" id="PY3-Nd-s9D"/>
+                            <constraint firstItem="BLC-KQ-aRb" firstAttribute="leading" secondItem="OpV-hy-Zqz" secondAttribute="leadingMargin" constant="20" id="QQV-A1-MRk"/>
+                            <constraint firstItem="BLC-KQ-aRb" firstAttribute="bottom" secondItem="YSM-rN-Nbl" secondAttribute="top" id="Z0e-PC-aUR"/>
+                            <constraint firstItem="BLC-KQ-aRb" firstAttribute="top" secondItem="OpV-hy-Zqz" secondAttribute="topMargin" id="ZVX-gr-Cht"/>
                             <constraint firstItem="s3I-iW-ww4" firstAttribute="leading" secondItem="OpV-hy-Zqz" secondAttribute="leadingMargin" constant="18" id="gDz-dh-bQT"/>
+                            <constraint firstItem="BLC-KQ-aRb" firstAttribute="trailing" secondItem="OpV-hy-Zqz" secondAttribute="trailingMargin" constant="20" id="lh8-gV-oqT"/>
                             <constraint firstItem="YSM-rN-Nbl" firstAttribute="leading" secondItem="OpV-hy-Zqz" secondAttribute="leading" constant="38" id="mmD-hO-Iaw"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="BLC-KQ-aRb" secondAttribute="trailing" id="u6m-pS-GLl"/>
                             <constraint firstItem="ajx-tI-duj" firstAttribute="top" secondItem="s3I-iW-ww4" secondAttribute="bottom" constant="88" id="wXH-3k-jWC"/>
+                            <constraint firstItem="BLC-KQ-aRb" firstAttribute="top" secondItem="Q0h-Sd-7WB" secondAttribute="bottom" id="ymC-EJ-SP9"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="BLC-KQ-aRb" secondAttribute="trailing" id="zsF-Fn-nxk"/>
                         </constraints>
+                        <variation key="default">
+                            <mask key="constraints">
+                                <exclude reference="DVx-yr-FII"/>
+                                <exclude reference="OFZ-LJ-AaL"/>
+                                <exclude reference="QQV-A1-MRk"/>
+                                <exclude reference="ZVX-gr-Cht"/>
+                                <exclude reference="lh8-gV-oqT"/>
+                                <exclude reference="u6m-pS-GLl"/>
+                            </mask>
+                        </variation>
                     </view>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="1cF-A1-Tu5" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -1025,14 +1048,27 @@
                                 <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" image="illo_planahead" translatesAutoresizingMaskIntoConstraints="NO" id="6DT-1Z-msr">
+                                <rect key="frame" x="20" y="20" width="560" height="408"/>
+                            </imageView>
                         </subviews>
                         <color key="backgroundColor" red="0.0" green="0.35294117650000001" blue="0.87843137250000003" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
+                            <constraint firstItem="6DT-1Z-msr" firstAttribute="bottom" secondItem="pnx-fI-jnz" secondAttribute="top" id="1bT-ry-UnC"/>
                             <constraint firstItem="pnx-fI-jnz" firstAttribute="leading" secondItem="ObV-KU-Mxa" secondAttribute="leading" constant="48" id="Ao4-S4-GY1"/>
+                            <constraint firstItem="6DT-1Z-msr" firstAttribute="top" secondItem="CGQ-Ye-vO2" secondAttribute="bottom" id="FSl-6b-8IF"/>
                             <constraint firstItem="XUI-tV-Tg0" firstAttribute="top" secondItem="F4b-li-esl" secondAttribute="bottom" constant="108" id="O4p-gT-T9a"/>
                             <constraint firstItem="F4b-li-esl" firstAttribute="leading" secondItem="ObV-KU-Mxa" secondAttribute="leading" constant="48" id="QXJ-WL-JxO"/>
                             <constraint firstItem="F4b-li-esl" firstAttribute="top" secondItem="pnx-fI-jnz" secondAttribute="bottom" constant="8" id="Zj7-Kx-FIJ"/>
+                            <constraint firstItem="6DT-1Z-msr" firstAttribute="leading" secondItem="ObV-KU-Mxa" secondAttribute="leadingMargin" id="aiC-GG-7oW"/>
+                            <constraint firstItem="6DT-1Z-msr" firstAttribute="centerX" secondItem="ObV-KU-Mxa" secondAttribute="centerX" id="amd-gN-sYP"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="6DT-1Z-msr" secondAttribute="trailing" id="mPD-u0-s0f"/>
                         </constraints>
+                        <variation key="default">
+                            <mask key="constraints">
+                                <exclude reference="amd-gN-sYP"/>
+                            </mask>
+                        </variation>
                     </view>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Pkb-kg-84g" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -1074,13 +1110,20 @@
                                 <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" image="illo_beyourself" translatesAutoresizingMaskIntoConstraints="NO" id="uFX-p1-i85">
+                                <rect key="frame" x="20" y="20" width="560" height="408"/>
+                            </imageView>
                         </subviews>
                         <color key="backgroundColor" red="0.0" green="0.35294117650000001" blue="0.87843137250000003" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
                             <constraint firstItem="hZw-wW-pnk" firstAttribute="top" secondItem="iRS-DX-bWG" secondAttribute="bottom" constant="8" id="3tg-DT-mrJ"/>
+                            <constraint firstItem="uFX-p1-i85" firstAttribute="leading" secondItem="SQb-ea-3b8" secondAttribute="leadingMargin" id="7k7-ed-BAC"/>
                             <constraint firstItem="hZw-wW-pnk" firstAttribute="leading" secondItem="SQb-ea-3b8" secondAttribute="leading" constant="48" id="83U-D7-vPv"/>
                             <constraint firstItem="iRS-DX-bWG" firstAttribute="leading" secondItem="SQb-ea-3b8" secondAttribute="leading" constant="48" id="GdW-rd-BER"/>
                             <constraint firstItem="z5A-cH-zrZ" firstAttribute="top" secondItem="hZw-wW-pnk" secondAttribute="bottom" constant="108" id="e5o-tk-hf8"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="uFX-p1-i85" secondAttribute="trailing" id="oB5-c0-Iql"/>
+                            <constraint firstItem="uFX-p1-i85" firstAttribute="bottom" secondItem="iRS-DX-bWG" secondAttribute="top" id="ot5-wO-P0o"/>
+                            <constraint firstItem="uFX-p1-i85" firstAttribute="top" secondItem="tR9-f8-tyD" secondAttribute="bottom" id="srb-Sf-5Dp"/>
                         </constraints>
                     </view>
                 </viewController>
@@ -1290,6 +1333,9 @@
         <image name="ic_query_builder_white" width="24" height="24"/>
         <image name="ic_sponsor" width="24" height="24"/>
         <image name="ic_twitter" width="200" height="200"/>
+        <image name="illo_beyourself" width="360" height="360"/>
+        <image name="illo_planahead" width="360" height="360"/>
+        <image name="illo_welcome" width="360" height="360"/>
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="6Qh-G4-O2e"/>
