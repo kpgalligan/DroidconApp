@@ -41,7 +41,7 @@ class EditProfileViewController: UIViewController,  UIImagePickerControllerDeleg
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+
         if editProfilePresenter != nil {
             editProfilePresenter.unregister()
         }
