@@ -195,32 +195,32 @@ SPEC CHECKSUMS:
   GoogleSignIn: '09036ed61f8e75f1424100d63f7719480b2428c3'
   GoogleSymbolUtilities: 33117db1b5f290c6fbf259585e4885b4c84b98d7
   GoogleUtilities: 56c5ac05b7aa5dc417a1bb85221a9516e04d7032
-  j2objc-androidbase-debug: 72d8fefb2968de9094c3a24f87c15a5e5db6ec07
-  j2objc-androidbase-release: 33f38b1d99f0b117eb5bdeed689d67966fd08444
-  j2objc-androidbasetest-debug: 3e416a7aff87fa72dc0b8fa5918fc51b3147bd57
-  j2objc-androidbasetest-release: 56d6e500886e8be1d6abadac3ed699b60ae4b0fe
-  j2objc-commons-io-debug: dae0594d47f8bbffa39184be4f9ef24d17cb37ec
-  j2objc-commons-io-release: 14fe9de205b6d33466be84e034513cc7ddfb64e9
-  j2objc-commons-lang3-debug: 255333eeb6fa112e8142f764ec009ed68a50c7b9
-  j2objc-commons-lang3-release: edc59a9bdd235823219d8ade8ae2044ee1cac6a9
-  j2objc-eventbus-debug: 27d1c7779ea89aa9fbaf39f23b7e6007372c8fc0
-  j2objc-eventbus-release: ce4fa0107cd578b63579efffc27c7f2f59bcb8fb
-  j2objc-gson-debug: fff2440302666a12083864510dd79dbde6eb4c68
-  j2objc-gson-release: 49f0162ea81e5c7e587225004acf0dbd22a4374c
-  j2objc-intellijannotations-debug: c4395c77d1869bf1fe77a48f407e554e8e2e5af7
-  j2objc-intellijannotations-release: ec44dca476621d9bbe66411ff5e3c997147c7e34
-  j2objc-lib-debug: 22f5ba52679a723b8d035de50622acacc278cb0b
-  j2objc-lib-release: e65c33bb4c12f7f1131dc58cca9c4b64e2afb75c
-  j2objc-magicthreads-debug: ebea956a3ad790c184479cc7fe1536e6dc274a7e
-  j2objc-magicthreads-release: 0232b5b4805779b89e3ca804d8a598903455b054
-  j2objc-retrofit-debug: c386eaa4d18b8693b9d32f4311116edba2217660
-  j2objc-retrofit-release: 5e976ae19441f00019d650509de5ad0d8625297e
-  j2objc-rxjava-debug: 670fbbf68cc9360165ff219af43b7679aabd71a7
-  j2objc-rxjava-release: 4b3a378c2323779b4f4bd5a375cece07247a5f2a
-  j2objc-squeaky-core-debug: ed0e24514ebe7569573b9d1b0ff101809756e70f
-  j2objc-squeaky-core-release: 18aca37b1b983081e6cf00fa53a46d9157d27fb2
-  j2objc-squeaky-query-debug: b5ddd3c401ffddb8c03515e0f179e6845001444b
-  j2objc-squeaky-query-release: a02ae7f35715c5f9eede8642cdbabca5c1842f92
+  j2objc-androidbase-debug: efc08fbc24e62f37c3c06a97a3b502e6c7798e79
+  j2objc-androidbase-release: 638dba23b8e0e4be02313a2d18d69e6df1cd67da
+  j2objc-androidbasetest-debug: cb03c7114d4fcd94718122bfe2bb3daec851df84
+  j2objc-androidbasetest-release: 6d19f19aa7f4df55e7ed556d072e096510ca7a69
+  j2objc-commons-io-debug: f5712d2db685732a504ebd48df35a8f96adaf304
+  j2objc-commons-io-release: d36920ec4f1bff273f99647e36f62dea5025a639
+  j2objc-commons-lang3-debug: 4f1e132a6b8aed5717dcfd2a76a0e4555fb01a5d
+  j2objc-commons-lang3-release: 4539f0da98a39c84a1a0d83bf15d0a4ed303a025
+  j2objc-eventbus-debug: 1a411d58322b58f4f1bcb61f6ed7734e0ebc8dfa
+  j2objc-eventbus-release: c0c38aee0db2b8a563113683de49eb65868d4760
+  j2objc-gson-debug: 11ad50ac3d99852f800b28397a2ac6ac7764d7f6
+  j2objc-gson-release: e1a940421233f00ffd289de6a592ebfe988b3b81
+  j2objc-intellijannotations-debug: 75dc9a0d3d72d216fffbbf6cda10ad754412762f
+  j2objc-intellijannotations-release: 9ab71f0ebf9cc801a46784755792aba179bd9854
+  j2objc-lib-debug: f0141193ed4fff9ffca72eb967339df6da264b37
+  j2objc-lib-release: ca05cc98935aa3b23db183b851413b8d277555ef
+  j2objc-magicthreads-debug: b78907a70398bedb1e2f0150f1d064e133f12431
+  j2objc-magicthreads-release: 45c99a387153fd2ee1bb4b398d230be25f7b5e1b
+  j2objc-retrofit-debug: 9316822c10a59ca2d1363c156dd34e82eb2788a6
+  j2objc-retrofit-release: f6c7fc00b63a20e66591aa90052c5bec18dd4a77
+  j2objc-rxjava-debug: 7ebb5d1e3220770156ecbce7a524ad7ab174f823
+  j2objc-rxjava-release: 6995a152f5d66694bd414c33e51bb0fa13566c57
+  j2objc-squeaky-core-debug: 5c05b3c33994ff86156ff4b7679858ff2d3eef61
+  j2objc-squeaky-core-release: 6df9376cd5b9a92d50de75a63c914f575d8ae88d
+  j2objc-squeaky-query-debug: 2b9ac92f9ead53ecf978bc9afeae8a4604156647
+  j2objc-squeaky-query-release: 0fdc4d55256d70e11c3d4d15f49950d6a2e65dfc
   JWPlayer-SDK: 1ba739f5df41266b4ed77a4af245c07f23930885
   Kingfisher: 9b82e0e1f1a296f149a50bbc2214532eaa4df4f1
   Reachability: 33e18b67625424e47b6cde6d202dce689ad7af96
