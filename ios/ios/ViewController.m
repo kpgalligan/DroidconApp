@@ -25,7 +25,6 @@
 @property (nonatomic, assign) long track;
 @property (nonatomic, strong) NSMutableArray *notesArray;
 @property (nonatomic, strong) NSMutableArray *imagesArray;
-@property (nonatomic, strong) NSMutableArray *conferenceDays;
 @property (nonatomic, strong) PlatformContext_iOS *platformContext;
 @property (nonatomic, strong) DCPConferenceDataPresenter *dataPresenter;
 @property (nonatomic, strong) JavaUtilArrayList *notes;
@@ -45,14 +44,7 @@ BOOL allEvents = NO;
         allEvents = NO;
         self.navigationItem.title = @"My Agenda";
     }
-    
-    self.tableView.tableHeaderView = nil;
-    self.tableView.tableFooterView = nil;
-    
-    [self loadConferenceSchedule];
-    self.tableView.delegate = self.platformContext;
-    self.tableView.dataSource = self.platformContext;
-    
+
     // Hide the nav bar shadow
     [self.navigationController.navigationBar setShadowImage:[[UIImage alloc] init]];
     [self.navigationController.navigationBar setBackgroundImage:[[UIImage alloc]init] forBarMetrics:UIBarMetricsDefault];
@@ -63,6 +55,17 @@ BOOL allEvents = NO;
     [[FIRMessaging messaging] subscribeToTopic:@"/topics/ios"];
 }
 
+- (void) viewWillAppear:(BOOL)animated
+{
+    // refresh every time it appears so that we see updates, doesn't seem to affect scroll position of list
+    [self loadConferenceSchedule];
+    self.tableView.tableHeaderView = nil;
+    self.tableView.tableFooterView = nil;
+    
+    self.tableView.delegate = self.platformContext;
+    self.tableView.dataSource = self.platformContext;
+}
+
 - (void)createSDASimple
 {
     if(self.platformContext == nil)
@@ -71,6 +74,10 @@ BOOL allEvents = NO;
     self.platformContext = pcios;
     self.platformContext.reloadDelegate = self;
     self.dataPresenter = [[DCPConferenceDataPresenter alloc] initWithAndroidContentContext:[DCPAppManager getContext] withDCPConferenceDataHost:pcios withBoolean:allEvents];
+    }
+    else
+    {
+        [self.dataPresenter refreshConferenceData];
     }
 }
 
@@ -117,6 +124,7 @@ BOOL allEvents = NO;
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
+
     if ([[segue identifier] isEqualToString:@"ShowEventDetail"]) {
         ShowEventDetailViewController *detailVC = segue.destinationViewController;
         DCDEvent *event = (DCDEvent *)sender;

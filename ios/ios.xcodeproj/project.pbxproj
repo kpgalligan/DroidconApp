@@ -382,7 +382,7 @@
 				TargetAttributes = {
 					631B98EA1C7D6533008AA20D = {
 						CreatedOnToolsVersion = 7.2;
-						DevelopmentTeam = 2UER9BPG44;
+						DevelopmentTeam = YG5H2S2Y2B;
 					};
 					631B99031C7D6533008AA20D = {
 						CreatedOnToolsVersion = 7.2;
@@ -1040,10 +1040,7 @@
 				);
 				INFOPLIST_FILE = ios/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				LIBRARY_SEARCH_PATHS = (
-					"$(inherited)",
-					"/Users/kgalligan/bin/j2objc-1.0.2/lib",
-				);
+				LIBRARY_SEARCH_PATHS = "$(inherited)";
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-lsqlite3",
@@ -1080,10 +1077,7 @@
 				);
 				INFOPLIST_FILE = ios/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				LIBRARY_SEARCH_PATHS = (
-					"$(inherited)",
-					"/Users/kgalligan/bin/j2objc-1.0.2/lib",
-				);
+				LIBRARY_SEARCH_PATHS = "$(inherited)";
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-lsqlite3",
