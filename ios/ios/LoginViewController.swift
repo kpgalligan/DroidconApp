@@ -33,9 +33,4 @@ class LoginViewController: UIViewController, DCPLoginScreenPresenter_Host, GIDSi
         }
     }
     
-//    - (void)loggedIn:(NSString *)token
-//    withName:(NSString *)name
-//    {
-//    [self.dataPresenter loginUserWithNSString:token withNSString:name];
-//    }
 }
