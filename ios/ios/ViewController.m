@@ -116,6 +116,7 @@ BOOL allEvents = NO;
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
+
     if ([[segue identifier] isEqualToString:@"ShowEventDetail"]) {
         ShowEventDetailViewController *detailVC = segue.destinationViewController;
         DCDEvent *event = (DCDEvent *)sender;
