@@ -48,7 +48,12 @@ public class ConferenceDataPresenter extends AbstractEventBusPresenter
         Log.w(ConferenceDataPresenter.class.getSimpleName(), "LoadConferenceDataTask returned");
 
         Queues.localQueue(getContext()).execute(new UpdateAlertsTask());
-        conferenceDataHost.loadCallback(task.conferenceDayHolders);
+
+        // Since this task is called from both the Schedule and My Agenda, make sure this flag is the same
+        if(allEvents == task.allEvents)
+        {
+            conferenceDataHost.loadCallback(task.conferenceDayHolders);
+        }
     }
 
     public void onEventMainThread(RefreshScheduleData task)
