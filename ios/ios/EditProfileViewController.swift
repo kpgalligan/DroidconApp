@@ -124,7 +124,7 @@ class EditProfileViewController: UIViewController,  UIImagePickerControllerDeleg
                                                                    withNSString: twitterField.text,
                                                                    withNSString: linkedInField.text,
                                                                    withNSString: websiteField.text,
-                                                                   withNSString:facebookField.text,
+                                                                   withNSString: facebookField.text,
                                                                    withNSString: phoneField.text,
                                                                    withNSString: emailField.text,
                                                                    withNSString: gplusField.text,
