@@ -80,11 +80,18 @@ func == (lhs: SponsorItem, rhs: SponsorItem) -> Bool {
     return lhs.spanCount == rhs.spanCount
 }
 
-let SPONSOR_GENERAL   = 0
-let SPONSOR_STREAMING = 1
-let SPONSOR_PARTY     = 2
 
 class Sponsor {
+    
+    static let SPONSOR_GENERAL   = 0
+    static let SPONSOR_STREAMING = 1
+    static let SPONSOR_PARTY     = 2
+    static let SPONSOR_ALL       = 3
+    
+    class func allSponsors() -> Int
+    {
+        return Sponsor.SPONSOR_ALL
+    }
     
     let processingQueue = NSOperationQueue()
     
@@ -137,12 +144,14 @@ class Sponsor {
         
         var photoUrl = "https://s3.amazonaws.com/droidconsponsers/"
         switch sponsorType {
-        case SPONSOR_STREAMING:
-            photoUrl.appendContentsOf("sponsors_stream.json")
-        case SPONSOR_PARTY:
-            photoUrl.appendContentsOf("sponsors_party.json")
-        default:
-            photoUrl.appendContentsOf("sponsors_general.json")
+            case Sponsor.SPONSOR_STREAMING:
+                photoUrl.appendContentsOf("sponsors_stream.json")
+            case Sponsor.SPONSOR_PARTY:
+                photoUrl.appendContentsOf("sponsors_party.json")
+            case Sponsor.SPONSOR_ALL:
+                photoUrl.appendContentsOf("sponsors_all.json")
+            default:
+                photoUrl.appendContentsOf("sponsors_general.json")
         }
         return NSURL(string: photoUrl)!;
     }
