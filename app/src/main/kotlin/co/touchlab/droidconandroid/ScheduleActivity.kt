@@ -106,14 +106,8 @@ open class ScheduleActivity : AppCompatActivity(), NfcAdapter.CreateNdefMessageC
 
         Handler().post(RefreshRunnable())
 
-        val prefs = AppPrefs.getInstance(this)
-        val lastRefresh = prefs.refreshTime
-
-        if (prefs.isLoggedIn
-                && (System.currentTimeMillis() - lastRefresh > (DateUtils.HOUR_IN_MILLIS * 6)))
-        {
-            RefreshScheduleData.callMe(this)
-        }
+        // will refresh data from server only if it is old
+        conferenceDataPresenter!!.refreshFromServer()
 
         if (isTablet())
         {

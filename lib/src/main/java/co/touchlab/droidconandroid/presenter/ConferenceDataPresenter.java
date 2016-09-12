@@ -21,6 +21,8 @@ import co.touchlab.droidconandroid.utils.SlackUtils;
  */
 public class ConferenceDataPresenter extends AbstractEventBusPresenter
 {
+    public static final long SERVER_REFRESH_TIME = 3600000 * 6; // 6 hours
+
     private final ConferenceDataHost conferenceDataHost;
     private final boolean allEvents;
 
@@ -41,6 +43,17 @@ public class ConferenceDataPresenter extends AbstractEventBusPresenter
     public void refreshConferenceData()
     {
         Queues.localQueue(getContext()).execute(new LoadConferenceDataTask(allEvents));
+    }
+
+    public void refreshFromServer()
+    {
+        AppPrefs prefs = AppPrefs.getInstance(getContext());
+
+        if (prefs.isLoggedIn()
+                && (System.currentTimeMillis() - prefs.getRefreshTime() > SERVER_REFRESH_TIME))
+        {
+            RefreshScheduleData.callMe(getContext());
+        }
     }
 
     public void onEventMainThread(LoadConferenceDataTask task)
