@@ -65,6 +65,9 @@ BOOL allEvents = NO;
     
     self.tableView.delegate = self.platformContext;
     self.tableView.dataSource = self.platformContext;
+    
+    // will refresh data from server only if it is old
+    [self.dataPresenter refreshFromServer];
 }
 
 - (void)createSDASimple
