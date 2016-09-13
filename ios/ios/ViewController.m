@@ -11,6 +11,7 @@
 #import "co/touchlab/droidconandroid/presenter/ConferenceDayHolder.h"
 #import "co/touchlab/droidconandroid/presenter/AppManager.h"
 #import "co/touchlab/droidconandroid/data/Block.h"
+#import "co/touchlab/droidconandroid/data/Venue.h"
 #import "android/content/IOSContext.h"
 #import "PlatformContext_iOS.h"
 #import "java/util/ArrayList.h"
@@ -133,7 +134,6 @@ BOOL allEvents = NO;
         detailVC.descriptionString = event->description__;
         detailVC.event = event;
         detailVC.speakers = speakers;
-        detailVC.trackNumString = [NSString stringWithFormat:@"%ld", (self.track+1)];
         detailVC.dateTime = [self.platformContext getEventTimeFromStart:[event getStartFormatted] andEnd:[event getEndFormatted]];
     }
 }

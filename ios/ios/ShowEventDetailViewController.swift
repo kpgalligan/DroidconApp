@@ -15,7 +15,6 @@ import UIKit
     var titleString: String?
     var descriptionString: String?
     var dateTime: String?
-    var trackNumString: String?
     var event: DCDEvent!
     var speakers: [DCDEventSpeaker]?
     var eventDetailPresenter: DCPEventDetailPresenter!
@@ -132,7 +131,7 @@ import UIKit
         if indexPath.section == 0 {
             let cell:EventTableViewCell = tableView.dequeueReusableCellWithIdentifier("eventCell") as! EventTableViewCell
 
-            cell.loadInfo(titleString!, description: descriptionString!, track: trackNumString!, time: dateTime!, event: event, eventDetailPresenter: eventDetailPresenter)
+            cell.loadInfo(titleString!, description: descriptionString!, track: event!.getVenue().getName(), time: dateTime!, event: event, eventDetailPresenter: eventDetailPresenter)
             cell.selectionStyle = UITableViewCellSelectionStyle.None
             if (/*event.isNow() &&*/ event.getStreamUrl() != nil) {
                 cell.liveStreamButton.addTarget(self, action: #selector(ShowEventDetailViewController.liveStreamTapped(_:)), forControlEvents: UIControlEvents.TouchUpInside)

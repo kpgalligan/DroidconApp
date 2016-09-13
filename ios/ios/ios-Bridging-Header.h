@@ -19,7 +19,10 @@
 //#import "co/touchlab/simpledaggerapp/NoteStorage.h"
 #import "PlatformContext_iOS.h"
 #import "java/util/ArrayList.h"
+
 #import "java/util/List.h"
+#import "co/touchlab/droidconandroid/data/Event.h"
+#import "co/touchlab/droidconandroid/data/Venue.h"
 #import "co/touchlab/droidconandroid/data/Track.h"
 #import "co/touchlab/droidconandroid/data/UserAccount.h"
 #import "co/touchlab/droidconandroid/data/EventSpeaker.h"
