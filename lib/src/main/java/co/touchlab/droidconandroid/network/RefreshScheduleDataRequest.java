@@ -1,6 +1,7 @@
 package co.touchlab.droidconandroid.network;
 
 import co.touchlab.droidconandroid.network.dao.Convention;
+import co.touchlab.droidconandroid.network.dao.EventVideoDetails;
 import retrofit.http.GET;
 import retrofit.http.Path;
 
@@ -11,4 +12,7 @@ public interface RefreshScheduleDataRequest
 {
     @GET("/dataTest/scheduleData/{conventionId}")
     Convention getScheduleData(@Path("conventionId")Integer conventionId);
+
+    @GET("/dataTest/eventVideoDetails/{eventId}")
+    EventVideoDetails getEventVideoDetails(@Path("eventId")Long eventId);
 }

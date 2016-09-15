@@ -9,6 +9,7 @@
 #import "co/touchlab/droidconandroid/presenter/EditProfilePresenter.h"
 #import "co/touchlab/droidconandroid/presenter/EditProfileHost.h"
 #import "co/touchlab/droidconandroid/tasks/EventDetailLoadTask.h"
+#import "co/touchlab/droidconandroid/tasks/EventVideoDetailsTask.h"
 #import "co/touchlab/droidconandroid/tasks/StartWatchVideoTask.h"
 
 #import "co/touchlab/droidconandroid/data/AppPrefs.h"
@@ -20,6 +21,7 @@
 #import "PlatformContext_iOS.h"
 #import "java/util/ArrayList.h"
 
+#import "java/lang/Integer.h"
 #import "java/util/List.h"
 #import "co/touchlab/droidconandroid/data/Event.h"
 #import "co/touchlab/droidconandroid/data/Venue.h"

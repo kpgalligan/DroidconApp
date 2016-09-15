@@ -107,7 +107,7 @@ open class ScheduleActivity : AppCompatActivity(), NfcAdapter.CreateNdefMessageC
         Handler().post(RefreshRunnable())
 
         // will refresh data from server only if it is old
-        conferenceDataPresenter!!.refreshFromServer()
+        conferenceDataPresenter?.refreshFromServer()
 
         if (isTablet())
         {

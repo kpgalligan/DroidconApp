@@ -68,6 +68,10 @@ import UIKit
         updateHeaderImage()
     }
     
+    func videoDataRefresh() {
+        tableView.reloadData()
+    }
+    
     func callStreamActivityWithDCTStartWatchVideoTask(task: DCTStartWatchVideoTask){
         performSegueWithIdentifier("LiveStream", sender: self)
     }
@@ -133,8 +137,18 @@ import UIKit
 
             cell.loadInfo(titleString!, description: descriptionString!, track: event!.getVenue().getName(), time: dateTime!, event: event, eventDetailPresenter: eventDetailPresenter)
             cell.selectionStyle = UITableViewCellSelectionStyle.None
-            if (/*event.isNow() &&*/ event.getStreamUrl() != nil) {
+            
+            let videoDetailsTask:DCTEventVideoDetailsTask? = eventDetailPresenter.getEventVideoDetailsTask()
+            
+            if (videoDetailsTask != nil && (videoDetailsTask!.getStreamUrl() != nil || videoDetailsTask!.getVideoUrl() != nil)) {
                 cell.liveStreamButton.addTarget(self, action: #selector(ShowEventDetailViewController.liveStreamTapped(_:)), forControlEvents: UIControlEvents.TouchUpInside)
+                cell.liveStreamButton.hidden = false
+                cell.liveStreamIcon.hidden = false
+                if(videoDetailsTask!.getStreamUrl() != nil){
+                    cell.liveStreamButton.setTitle("LIVE STREAM", forState: UIControlState.Normal)
+                } else {
+                    cell.liveStreamButton.setTitle("VIDEO", forState: UIControlState.Normal)
+                }
             } else {
                 cell.liveStreamButton.hidden = true
                 cell.liveStreamIcon.hidden = true
@@ -208,15 +222,21 @@ import UIKit
     }
     
     func liveStreamTapped(sender: UIButton) {
-        eventDetailPresenter.callStartVideoWithNSString(event.getStreamUrl(), withNSString: event.getCoverUrl())
+        eventDetailPresenter.callStartVideoWithNSString(eventDetailPresenter.getEventVideoDetailsTask().getStreamUrl(), withNSString: "")
     }
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         if(segue.identifier == "LiveStream") {
             let liveStreamVC = (segue.destinationViewController as! LiveStreamViewController)
             liveStreamVC.titleString = titleString
-            liveStreamVC.streamUrl = event.getStreamUrl()
-            liveStreamVC.coverUrl = event.getCoverUrl()
+            if(eventDetailPresenter.getEventVideoDetailsTask().getStreamUrl() != nil){
+                liveStreamVC.streamUrl = eventDetailPresenter.getEventVideoDetailsTask().getStreamUrl()
+            }else{
+                liveStreamVC.streamUrl = eventDetailPresenter.getEventVideoDetailsTask().getVideoUrl()
+                liveStreamVC.startMillis = eventDetailPresenter.getEventVideoDetailsTask().getStartMillis().intValue()
+            }
+            
+            liveStreamVC.coverUrl = ""
         }
     }
 }

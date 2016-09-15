@@ -40,7 +40,7 @@
                             <constraint firstAttribute="height" constant="50" id="f0I-t6-Rc2"/>
                         </constraints>
                         <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="12"/>
-                        <state key="normal" title="LIVE STREAM">
+                        <state key="normal">
                             <color key="titleColor" red="0.0" green="0.25490196079999999" blue="0.63921568630000003" alpha="1" colorSpace="calibratedRGB"/>
                         </state>
                     </button>

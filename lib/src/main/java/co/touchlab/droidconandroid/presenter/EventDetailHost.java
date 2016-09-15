@@ -7,6 +7,7 @@ import co.touchlab.droidconandroid.tasks.StartWatchVideoTask;
 public interface EventDetailHost
 {
     void dataRefresh();
+    void videoDataRefresh();
     void callStreamActivity(StartWatchVideoTask task);
     void resetStreamProgress();
     void reportError(String error);

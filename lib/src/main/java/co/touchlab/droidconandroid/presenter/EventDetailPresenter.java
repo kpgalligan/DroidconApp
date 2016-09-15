@@ -11,6 +11,7 @@ import co.touchlab.android.threading.tasks.utils.TaskQueueHelper;
 import co.touchlab.droidconandroid.data.AppPrefs;
 import co.touchlab.droidconandroid.tasks.AddRsvpTask;
 import co.touchlab.droidconandroid.tasks.EventDetailLoadTask;
+import co.touchlab.droidconandroid.tasks.EventVideoDetailsTask;
 import co.touchlab.droidconandroid.tasks.Queues;
 import co.touchlab.droidconandroid.tasks.RemoveRsvpTask;
 import co.touchlab.droidconandroid.tasks.StartWatchVideoTask;
@@ -21,11 +22,12 @@ import co.touchlab.droidconandroid.utils.SlackUtils;
  */
 public class EventDetailPresenter extends AbstractEventBusPresenter
 {
-    private final long                eventId;
+    private final long eventId;
 
     @Weak
-    private       EventDetailHost     host;
-    private       EventDetailLoadTask eventDetailLoadTask;
+    private EventDetailHost       host;
+    private EventDetailLoadTask   eventDetailLoadTask;
+    private EventVideoDetailsTask eventVideoDetailsTask;
 
     public EventDetailPresenter(Context context, long eventId, EventDetailHost host)
     {
@@ -42,14 +44,31 @@ public class EventDetailPresenter extends AbstractEventBusPresenter
 
     public void callStartVideo(String link, String cover)
     {
-        TaskQueue.loadQueueNetwork(getContext()).execute(new StartWatchVideoTask(eventId, link, cover));
+        TaskQueue.loadQueueNetwork(getContext())
+                .execute(new StartWatchVideoTask(eventId, link, cover));
     }
 
     public void onEventMainThread(EventDetailLoadTask task)
     {
-        Log.w("asdf", "EventDetailLoadTask "+ eventId);
+        Log.w("asdf", "EventDetailLoadTask " + eventId);
         eventDetailLoadTask = task;
+        refreshVideoData();
         host.dataRefresh();
+    }
+
+    private void refreshVideoData()
+    {
+        TaskQueue.loadQueueNetwork(getContext()).execute(new EventVideoDetailsTask(eventId));
+    }
+
+    public void onEventMainThread(EventVideoDetailsTask task)
+    {
+        if(task.getEventId() == eventId)
+        {
+            Log.w("asdf", "EventVideoDetailsTask " + eventId);
+            eventVideoDetailsTask = task;
+            host.videoDataRefresh();
+        }
     }
 
     public void onEventMainThread(RemoveRsvpTask task)
@@ -71,7 +90,9 @@ public class EventDetailPresenter extends AbstractEventBusPresenter
         }
         else if(task.unauthorized)
         {
-            host.showTicketOptions(AppPrefs.getInstance(getContext()).getEventbriteEmail(), task.link, task.cover);
+            host.showTicketOptions(AppPrefs.getInstance(getContext()).getEventbriteEmail(),
+                    task.link,
+                    task.cover);
         }
         else
         {
@@ -81,7 +102,8 @@ public class EventDetailPresenter extends AbstractEventBusPresenter
 
     public boolean isStreamStarting()
     {
-        return TaskQueueHelper.hasTasksOfType(TaskQueue.loadQueueNetwork(getContext()), StartWatchVideoTask.class);
+        return TaskQueueHelper.hasTasksOfType(TaskQueue.loadQueueNetwork(getContext()),
+                StartWatchVideoTask.class);
     }
 
     private boolean ready()
@@ -92,6 +114,11 @@ public class EventDetailPresenter extends AbstractEventBusPresenter
     public EventDetailLoadTask getEventDetailLoadTask()
     {
         return eventDetailLoadTask;
+    }
+
+    public EventVideoDetailsTask getEventVideoDetailsTask()
+    {
+        return eventVideoDetailsTask;
     }
 
     @Override
@@ -111,7 +138,7 @@ public class EventDetailPresenter extends AbstractEventBusPresenter
         if(eventDetailLoadTask.event.isRsvped())
         {
             Queues.localQueue(getContext())
-                  .execute(new RemoveRsvpTask(eventDetailLoadTask.event.id));
+                    .execute(new RemoveRsvpTask(eventDetailLoadTask.event.id));
         }
         else
         {
@@ -129,6 +156,8 @@ public class EventDetailPresenter extends AbstractEventBusPresenter
     {
         String slackLink = SlackUtils.createSlackLink(eventDetailLoadTask.event.venue);
         String slackLinkHttp = SlackUtils.createSlackLinkHttp(eventDetailLoadTask.event.venue);
-        host.openSlack(slackLink, slackLinkHttp, AppPrefs.getInstance(getContext()).getShowSlackDialog());
+        host.openSlack(slackLink,
+                slackLinkHttp,
+                AppPrefs.getInstance(getContext()).getShowSlackDialog());
     }
 }

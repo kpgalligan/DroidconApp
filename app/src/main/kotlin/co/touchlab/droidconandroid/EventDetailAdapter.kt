@@ -42,8 +42,8 @@ class EventDetailAdapter(val context: Context, val frag:EventDetailFragment, val
         data.add(HeaderDetail(TYPE_HEADER, title, venue))
     }
 
-    fun addStream(link: String, cover: String) {
-        data.add(StreamDetail(TYPE_STREAM, link, cover))
+    fun addStream(link: String, cover: String, liveNow: Boolean) {
+        data.add(StreamDetail(TYPE_STREAM, link, cover, liveNow))
     }
 
     fun addBody(description: String) {
@@ -121,30 +121,41 @@ class EventDetailAdapter(val context: Context, val frag:EventDetailFragment, val
 
             TYPE_STREAM -> {
                 val streamVH = holder as StreamVH
-                streamVH.itemView.stream.setOnClickListener {
-                    val detail = data[position] as StreamDetail
+                val detail = data[position] as StreamDetail
+                streamVH.itemView.streamNow.setOnClickListener {
+                    presenter.callStartVideo(detail.link, detail.cover)
+                    notifyDataSetChanged()
+                }
+                streamVH.itemView.streamNotNow.setOnClickListener {
                     presenter.callStartVideo(detail.link, detail.cover)
                     notifyDataSetChanged()
                 }
                 streamVH.itemView.slackButton.setOnClickListener {
                     presenter.openSlack()
                 }
-                if(BuildConfig.DEBUG)
-                {
-                    streamVH.itemView.stream.setOnLongClickListener {
-                        val detail = data[position] as StreamDetail
-                        presenter.setEventbriteEmail("debug@touchlab.co", detail.link, detail.cover)
-                        true
-                    }
-                }
 
                 if(presenter.isStreamStarting) {
                     streamVH.itemView.streamLoading.visibility = View.VISIBLE
-                    streamVH.itemView.stream.visibility = View.GONE
+                    streamVH.itemView.streamNow.visibility = View.GONE
+                    streamVH.itemView.streamNotNow.visibility = View.GONE
                 }
                 else {
                     streamVH.itemView.streamLoading.visibility = View.GONE
-                    streamVH.itemView.stream.visibility = View.VISIBLE
+                    if(detail.liveNow) {
+                        streamVH.itemView.streamNow.visibility = View.VISIBLE
+                        streamVH.itemView.streamNotNow.visibility = View.GONE
+                        streamVH.itemView.imageLive.visibility = View.VISIBLE
+                        streamVH.itemView.imageNotLive.visibility = View.GONE
+                        streamVH.itemView.slackButton.visibility = View.VISIBLE
+                    }
+                    else{
+                        streamVH.itemView.streamNow.visibility = View.GONE
+                        streamVH.itemView.streamNotNow.visibility = View.VISIBLE
+                        streamVH.itemView.imageLive.visibility = View.GONE
+                        streamVH.itemView.imageNotLive.visibility = View.VISIBLE
+                        streamVH.itemView.slackButton.visibility = View.GONE
+                    }
+
                 }
             }
 
@@ -211,7 +222,7 @@ class EventDetailAdapter(val context: Context, val frag:EventDetailFragment, val
 
     inner class TextDetail(type: Int, val text: String, val icon: Int) : Detail(type)
 
-    inner class StreamDetail(type: Int, val link: String, val cover: String) : Detail(type)
+    inner class StreamDetail(type: Int, val link: String, val cover: String, val liveNow: Boolean) : Detail(type)
 
     inner class SpeakerDetail(type: Int, val avatar: String?, val name: String, val company: String, val bio: String?, val userCode: String) : Detail(type)
 

@@ -25,9 +25,9 @@ import co.touchlab.droidconandroid.data.UserAccount
 import co.touchlab.droidconandroid.presenter.EventDetailHost
 import co.touchlab.droidconandroid.presenter.EventDetailPresenter
 import co.touchlab.droidconandroid.tasks.AddRsvpTask
+import co.touchlab.droidconandroid.tasks.EventVideoDetailsTask
 import co.touchlab.droidconandroid.tasks.RemoveRsvpTask
 import co.touchlab.droidconandroid.tasks.StartWatchVideoTask
-import com.google.firebase.analytics.FirebaseAnalytics
 import com.wnafee.vector.compat.ResourcesCompat
 import kotlinx.android.synthetic.main.fragment_event_detail.*
 import kotlinx.android.synthetic.main.view_streaming_email_dialog.view.*
@@ -131,6 +131,11 @@ class EventDetailFragment() : Fragment(), EventDetailHost
         updateTrackColor(findTrackIdArg())
     }
 
+    override fun videoDataRefresh()
+    {
+        dataRefresh()
+    }
+
     override fun dataRefresh()
     {
         if (! presenter !!.eventDetailLoadTask.eventId.equals(findEventIdArg()))
@@ -142,6 +147,7 @@ class EventDetailFragment() : Fragment(), EventDetailHost
         updateFAB(event)
 
         updateContent(event,
+                presenter !!.eventVideoDetailsTask,
                 presenter !!.eventDetailLoadTask.speakers,
                 presenter !!.eventDetailLoadTask.conflict)
     }
@@ -288,7 +294,7 @@ class EventDetailFragment() : Fragment(), EventDetailHost
     /**
      * Adds all the content to the recyclerView
      */
-    private fun updateContent(event: Event, speakers: List<UserAccount>?, conflict: Boolean)
+    private fun updateContent(event: Event, videoDetailsTask: EventVideoDetailsTask?, speakers: List<UserAccount>?, conflict: Boolean)
     {
         val adapter = EventDetailAdapter(activity, this, presenter!!, trackColor)
 
@@ -311,10 +317,8 @@ class EventDetailFragment() : Fragment(), EventDetailHost
 
         adapter.addHeader(event.name, venueFormatString.format(event.venue.name, formattedStart, formattedEnd))
 
-        if(/*event.isNow && */!TextUtils.isEmpty(event.getStreamUrl()))
-            adapter.addStream(event.getStreamUrl(), event.getCoverUrl())
-
-            adapter.addStream("http://content.bitsontherun.com/videos/3XnJSIm4-injeKYZS.mp4", "")
+        if(videoDetailsTask != null && videoDetailsTask.hasStream())
+            adapter.addStream(videoDetailsTask.mergedStreamLink, "", videoDetailsTask.isNow)
 
         if (event.isNow)
             adapter.addInfo("<i><b>" + resources.getString(R.string.event_now) + "</b></i>")

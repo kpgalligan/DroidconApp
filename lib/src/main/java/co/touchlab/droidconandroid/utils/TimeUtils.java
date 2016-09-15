@@ -7,6 +7,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.Locale;
+import java.util.TimeZone;
 
 /**
  * Created by izzyoji :) on 8/5/15.
@@ -18,7 +19,10 @@ public class TimeUtils
         @Override
         protected DateFormat initialValue()
         {
-            return new SimpleDateFormat("MM/dd/yyyy hh:mma", Locale.US);
+            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("MM/dd/yyyy hh:mma",
+                    Locale.US);
+            simpleDateFormat.setTimeZone(TimeZone.getTimeZone("America/New_York"));
+            return simpleDateFormat;
         }
     };
     private static GregorianCalendar       calendar    = new GregorianCalendar();

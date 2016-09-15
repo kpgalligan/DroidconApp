@@ -18,6 +18,7 @@ class LiveStreamViewController: UIViewController, JWPlayerDelegate {
     var titleString: String?
     var streamUrl: String?
     var coverUrl: String?
+    var startMillis: Int = 0
     
     override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: NSBundle?) {
         super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
