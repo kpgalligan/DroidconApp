@@ -30,4 +30,3 @@
 #import "co/touchlab/droidconandroid/data/EventSpeaker.h"
 #import <Google/SignIn.h>
 #import <Crashlytics/Crashlytics.h>
-#import <JWPlayer-SDK/JWPlayerController.h>

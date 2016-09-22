@@ -223,11 +223,6 @@ import UIKit
     }
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        if(segue.identifier == "LiveStream") {
-            let liveStreamVC = (segue.destinationViewController as! LiveStreamViewController)
-            liveStreamVC.titleString = titleString
-            liveStreamVC.streamUrl = eventDetailPresenter.getEventVideoDetailsTask().getMergedStreamLink()
-            liveStreamVC.coverUrl = ""
-        }
+        
     }
 }

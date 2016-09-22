@@ -36,7 +36,6 @@
 		F92EB65A1D5A5EEC003B47B7 /* WelcomePageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F92EB6591D5A5EEC003B47B7 /* WelcomePageViewController.swift */; };
 		F92EB65C1D5B7D3B003B47B7 /* Welcome4ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F92EB65B1D5B7D3B003B47B7 /* Welcome4ViewController.swift */; };
 		F9903FA21D3FBEC70050687E /* DroidconTabBarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9903FA11D3FBEC70050687E /* DroidconTabBarViewController.swift */; };
-		F9B8C7011D539328000724FC /* LiveStreamViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9B8C7001D539328000724FC /* LiveStreamViewController.swift */; };
 		F9D6952D1D47AF9D0095F0F9 /* AboutViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9D6952C1D47AF9D0095F0F9 /* AboutViewController.swift */; };
 		FA258F5E1C934BA200986E0D /* dataseed.json in Resources */ = {isa = PBXBuildFile; fileRef = FA258F5D1C934BA200986E0D /* dataseed.json */; };
 		FA258F611C937F5900986E0D /* NoteTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = FA258F601C937F5900986E0D /* NoteTableViewCell.xib */; };
@@ -112,7 +111,6 @@
 		F92EB6591D5A5EEC003B47B7 /* WelcomePageViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WelcomePageViewController.swift; sourceTree = "<group>"; };
 		F92EB65B1D5B7D3B003B47B7 /* Welcome4ViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Welcome4ViewController.swift; sourceTree = "<group>"; };
 		F9903FA11D3FBEC70050687E /* DroidconTabBarViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DroidconTabBarViewController.swift; sourceTree = "<group>"; };
-		F9B8C7001D539328000724FC /* LiveStreamViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LiveStreamViewController.swift; sourceTree = "<group>"; };
 		F9D6952C1D47AF9D0095F0F9 /* AboutViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AboutViewController.swift; sourceTree = "<group>"; };
 		FA258F5D1C934BA200986E0D /* dataseed.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = dataseed.json; sourceTree = "<group>"; };
 		FA258F601C937F5900986E0D /* NoteTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = NoteTableViewCell.xib; sourceTree = "<group>"; };
@@ -242,7 +240,6 @@
 				F9903FA11D3FBEC70050687E /* DroidconTabBarViewController.swift */,
 				F92CCB481D3FF35D0048C8A2 /* EditProfileViewController.swift */,
 				F9D6952C1D47AF9D0095F0F9 /* AboutViewController.swift */,
-				F9B8C7001D539328000724FC /* LiveStreamViewController.swift */,
 				F92EB6591D5A5EEC003B47B7 /* WelcomePageViewController.swift */,
 				F92EB65B1D5B7D3B003B47B7 /* Welcome4ViewController.swift */,
 				4C81B70A1D75E7B500DFB89C /* SponsorImage.swift */,
@@ -912,7 +909,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				F9B8C7011D539328000724FC /* LiveStreamViewController.swift in Sources */,
 				F92CCB491D3FF35D0048C8A2 /* EditProfileViewController.swift in Sources */,
 				63EE30DF1CD025AC00B64D3D /* EventListCell.swift in Sources */,
 				63EE30D21CC6C76200B64D3D /* LoginViewController.swift in Sources */,
@@ -1079,8 +1075,8 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Distribution";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEFINES_MODULE = YES;
 				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
@@ -1117,8 +1113,8 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Distribution";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
 				DEFINES_MODULE = YES;
 				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
 				ENABLE_BITCODE = YES;

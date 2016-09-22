@@ -45,7 +45,6 @@ pod 'j2objc-intellijannotations-release', :configuration => ['Release'], :path =
     pod 'Kingfisher', '~> 2.4'
     pod 'Toast-Swift', '~> 1.3.0'
     pod 'Reachability', '~> 3.2'
-    pod 'JWPlayer-SDK', '~> 2.4.1'
     pod 'Firebase/Core'
     pod 'Firebase/Messaging'
     pod 'Firebase/Crash'

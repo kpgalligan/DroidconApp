@@ -1,18 +1,18 @@
 PODS:
-  - Crashlytics (3.8.1):
+  - Crashlytics (3.8.2):
     - Fabric (~> 1.6.3)
   - Fabric (1.6.8)
-  - Firebase/Analytics (3.5.2):
-    - FirebaseAnalytics (~> 3.3)
-  - Firebase/Core (3.5.2):
+  - Firebase/Analytics (3.6.0):
+    - FirebaseAnalytics (= 3.4.2)
+  - Firebase/Core (3.6.0):
     - Firebase/Analytics
-  - Firebase/Crash (3.5.2):
+  - Firebase/Crash (3.6.0):
     - Firebase/Analytics
     - FirebaseCrash (= 1.0.7)
-  - Firebase/Messaging (3.5.2):
+  - Firebase/Messaging (3.6.0):
     - Firebase/Analytics
-    - FirebaseMessaging (= 1.1.1)
-  - FirebaseAnalytics (3.3.1):
+    - FirebaseMessaging (= 1.2.0)
+  - FirebaseAnalytics (3.4.2):
     - FirebaseInstanceID (~> 1.0)
     - GoogleInterchangeUtilities (~> 1.2)
     - GoogleSymbolUtilities (~> 1.1)
@@ -24,7 +24,7 @@ PODS:
     - GoogleSymbolUtilities (~> 1.1)
     - GoogleUtilities (~> 1.2)
   - FirebaseInstanceID (1.0.8)
-  - FirebaseMessaging (1.1.1):
+  - FirebaseMessaging (1.2.0):
     - FirebaseAnalytics (~> 3.3)
     - FirebaseInstanceID (~> 1.0)
     - GoogleInterchangeUtilities (~> 1.2)
@@ -81,8 +81,7 @@ PODS:
   - j2objc-squeaky-core-release (1.0)
   - j2objc-squeaky-query-debug (1.0)
   - j2objc-squeaky-query-release (1.0)
-  - JWPlayer-SDK (2.4.5)
-  - Kingfisher (2.5.1)
+  - Kingfisher (2.6.0)
   - Reachability (3.2)
   - Toast-Swift (1.3.0)
 
@@ -119,7 +118,6 @@ DEPENDENCIES:
   - j2objc-squeaky-core-release (from `../lib/build/doppelDependencyExploded/doppl_co_touchlab_squeaky_squeaky_core_0_5_0_2`)
   - j2objc-squeaky-query-debug (from `../lib/build/doppelDependencyExploded/doppl_co_touchlab_squeaky_squeaky_query_0_5_0_2`)
   - j2objc-squeaky-query-release (from `../lib/build/doppelDependencyExploded/doppl_co_touchlab_squeaky_squeaky_query_0_5_0_2`)
-  - JWPlayer-SDK (~> 2.4.1)
   - Kingfisher (~> 2.4)
   - Reachability (~> 3.2)
   - Toast-Swift (~> 1.3.0)
@@ -179,13 +177,13 @@ EXTERNAL SOURCES:
     :path: ../lib/build/doppelDependencyExploded/doppl_co_touchlab_squeaky_squeaky_query_0_5_0_2
 
 SPEC CHECKSUMS:
-  Crashlytics: 4391d8df0b125345e9f209c5db6e7f40a6a8435d
+  Crashlytics: 27acca95a01b042a8294291dd6dff27f8f6af6d7
   Fabric: 5755268d0171435ab167e3d0878a28a777deaf10
-  Firebase: 94e63112efcad75226c0356a8f3032397b8547c9
-  FirebaseAnalytics: d968d4d5f6aeb795cd64144337bcd233e530efc6
+  Firebase: 34187200ef4979dbd485c7aa685ef078bf587c86
+  FirebaseAnalytics: 3f5358d9104adf159cc8d99b7b501e50099a39ad
   FirebaseCrash: 2efeb3715b76ac843b841529ce413efb67e5fd4d
   FirebaseInstanceID: ba1e640935235e5fac39dfa816fe7660e72e1a8a
-  FirebaseMessaging: 6bc7cd2ecb875c1a9c0f8b94956398aa3145bbb8
+  FirebaseMessaging: 789d23fd796594dfb55dcf36cd325541df887c22
   Google: 813c467362eabc11385f5a5cc9ad0cb651a58f4e
   GoogleAppUtilities: f1730f91f67767b453c289577040dd3f425ffdc7
   GoogleAuthUtilities: d7a19615cd7627688afcf181737f1011ee8b5a23
@@ -221,11 +219,10 @@ SPEC CHECKSUMS:
   j2objc-squeaky-core-release: 802908a6e5b3420ef3d50790238a65471ca2f66c
   j2objc-squeaky-query-debug: 72b0e80a2cab608e09ee99f4eede100b7f3d052b
   j2objc-squeaky-query-release: e66d5d948fc8bc91089209f538857842e596a54f
-  JWPlayer-SDK: 1ba739f5df41266b4ed77a4af245c07f23930885
-  Kingfisher: 9b82e0e1f1a296f149a50bbc2214532eaa4df4f1
+  Kingfisher: d84c5fd176ea86cc7b8aac65fd55feda6f70f130
   Reachability: 33e18b67625424e47b6cde6d202dce689ad7af96
   Toast-Swift: 25c3d98db42dc70d9a77b5006ee000e0becb458e
 
-PODFILE CHECKSUM: bcea920cd8dcbcd1ca4b590c50ffb89794ac0ea6
+PODFILE CHECKSUM: 0d41d4c0150ebaa0c740d0678a8f3ac88915a79e
 
 COCOAPODS: 1.0.0
