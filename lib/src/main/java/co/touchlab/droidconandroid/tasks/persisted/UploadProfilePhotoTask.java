@@ -1,6 +1,5 @@
 package co.touchlab.droidconandroid.tasks.persisted;
 import android.content.Context;
-import android.util.Log;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
@@ -73,7 +72,7 @@ public class UploadProfilePhotoTask extends PersistedTask
         // Log the server response
         int serverResponseCode = connection.getResponseCode();
         String serverResponseMessage = connection.getResponseMessage();
-        Log.i(TAG, "Server response: " + serverResponseCode + ": " + serverResponseMessage);
+        AppManager.getPlatformClient().log("Server response: " + serverResponseCode + ": " + serverResponseMessage);
 
         // Close the streams
         in.close();
@@ -90,7 +89,6 @@ public class UploadProfilePhotoTask extends PersistedTask
     @Override
     protected boolean handleError(Context context, Throwable e)
     {
-        Log.w(TAG, "Whoops", e);
         AppManager.getPlatformClient().logException(e);
         return true;
     }

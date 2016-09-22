@@ -42,7 +42,6 @@ class Welcome4ViewController: UIViewController, UICollectionViewDataSource, UICo
             
             // Check for error
             if error != nil {
-                print("Error searching : \(error)")
                 return
             }
             
@@ -108,9 +107,11 @@ class Welcome4ViewController: UIViewController, UICollectionViewDataSource, UICo
         
         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0)) {
             let data = NSData(contentsOfURL: url!)
-            dispatch_async(dispatch_get_main_queue(), {
-                cell.imageView.image = UIImage(data: data!)
-            });
+            if(data != nil){
+                dispatch_async(dispatch_get_main_queue(), {
+                    cell.imageView.image = UIImage(data: data!)
+                });
+            }
         }
         
         return cell

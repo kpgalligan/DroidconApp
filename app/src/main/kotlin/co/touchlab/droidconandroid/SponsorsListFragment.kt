@@ -14,7 +14,9 @@ import android.widget.ImageView
 import co.touchlab.android.threading.eventbus.EventBusExt
 import co.touchlab.android.threading.tasks.TaskQueue
 import co.touchlab.droidconandroid.network.SponsorsResult
+import co.touchlab.droidconandroid.presenter.AppManager
 import co.touchlab.droidconandroid.tasks.SponsorsTask
+import co.touchlab.droidconandroid.utils.AnalyticsEvents
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.fragment_sponsors_list.*
 import java.util.*
@@ -142,6 +144,8 @@ class SponsorsListFragment() : Fragment() {
 
                 // Set view click
                 vh.itemView.setOnClickListener {
+                    AppManager.getPlatformClient()
+                            .logEvent(AnalyticsEvents.CLICK_SPONSOR, AnalyticsEvents.PARAM_ITEM_NAME, data.sponsorLink)
                     val intent = Intent(Intent.ACTION_VIEW, Uri.parse(data.sponsorLink))
                     startActivity(intent)
                 }

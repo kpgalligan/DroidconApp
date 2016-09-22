@@ -110,7 +110,6 @@ class EditProfileViewController: UIViewController,  UIImagePickerControllerDeleg
             let image = info[UIImagePickerControllerOriginalImage] as! UIImage
             let data = UIImagePNGRepresentation(image)
             data!.writeToFile(path, atomically: true)
-            print(path)
             editProfilePresenter.uploadProfilePhotoWithNSString(path)
         }
         

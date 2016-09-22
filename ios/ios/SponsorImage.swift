@@ -38,7 +38,6 @@ class SponsorItem : Equatable {
                                                     response, data, error in
                                                     
                                                     if error != nil {
-                                                        print(error)
                                                         completion(photo: self, error: error)
                                                         return
                                                     }
@@ -101,7 +100,6 @@ class Sponsor {
         
         NSURLConnection.sendAsynchronousRequest(searchRequest, queue: processingQueue) {response, data, error in
             if error != nil {
-                print("sendAsynchronousRequest error")
                 completion(results: nil,error: error)
                 return
             }

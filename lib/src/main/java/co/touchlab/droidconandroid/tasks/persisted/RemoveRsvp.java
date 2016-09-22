@@ -1,6 +1,5 @@
 package co.touchlab.droidconandroid.tasks.persisted;
 import android.content.Context;
-import android.util.Log;
 
 import co.touchlab.android.threading.tasks.helper.RetrofitPersistedTask;
 import co.touchlab.droidconandroid.CrashReport;
@@ -40,7 +39,6 @@ public class RemoveRsvp extends RetrofitPersistedTask
     @Override
     protected boolean handleError(Context context, Throwable e)
     {
-        Log.e("RSVP", "Error removing RSVP eventID: " + eventId , e);
         CrashReport.logException(e);
         return true;
     }

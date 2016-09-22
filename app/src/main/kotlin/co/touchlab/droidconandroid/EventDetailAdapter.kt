@@ -32,6 +32,7 @@ private const val TYPE_STREAM: Int = 6
 private const val TYPE_FEEDBACK: Int = 7
 const val EXTRA_STREAM_LINK = "EXTRA_STREAM_LINK"
 const val EXTRA_STREAM_COVER = "EXTRA_STREAM_COVER"
+const val EXTRA_EVENT_ID = "EXTRA_EVENT_ID"
 
 class EventDetailAdapter(val context: Context, val frag:EventDetailFragment, val presenter:EventDetailPresenter, val trackColor: Int) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     //dataset

@@ -1,6 +1,5 @@
 package co.touchlab.droidconandroid.tasks.persisted;
 import android.content.Context;
-import android.util.Log;
 
 import org.apache.commons.lang3.StringUtils;
 
@@ -109,7 +108,6 @@ public class RefreshScheduleData extends RetrofitPersistedTask
     @Override
     protected boolean handleError(Context context, Throwable e)
     {
-        Log.e("Schedule", "Error fetching schedule data", e);
         CrashReport.logException(e);
         return true;
     }

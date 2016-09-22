@@ -1,6 +1,4 @@
 package co.touchlab.droidconandroid.ios;
-import android.util.Log;
-
 import com.google.j2objc.annotations.ObjectiveCName;
 
 import java.io.PrintWriter;
@@ -43,7 +41,6 @@ public class IosPlatformClient implements PlatformClient
     @Override
     public void log(String s)
     {
-        Log.e("IosPlatformClient", s);
         iosFirebase.logFirebaseNative(s);
     }
 
@@ -54,7 +51,6 @@ public class IosPlatformClient implements PlatformClient
     @Override
     public void logException(Throwable t)
     {
-        Log.e("IosPlatformClient", "", t);
         StringWriter sw = new StringWriter();
         PrintWriter pw = new PrintWriter(sw);
         t.printStackTrace(pw);

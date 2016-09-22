@@ -1,6 +1,5 @@
 package co.touchlab.droidconandroid.tasks.persisted;
 import android.content.Context;
-import android.util.Log;
 
 import co.touchlab.android.threading.tasks.helper.RetrofitPersistedTask;
 import co.touchlab.droidconandroid.CrashReport;
@@ -32,7 +31,6 @@ public class AddRsvp extends RetrofitPersistedTask
                 .getPlatformClient()).create(RsvpRequest.class);
         if (eventId != null && rsvpUuid != null) {
             BasicIdResult basicIdResult = rsvpRequest.addRsvp(eventId, rsvpUuid);
-            Log.w("asdf", "Result id: " + basicIdResult.id);
         } else {
             throw new IllegalArgumentException("Some value is null: " + eventId + "/" + rsvpUuid);
         }
@@ -41,7 +39,6 @@ public class AddRsvp extends RetrofitPersistedTask
     @Override
     protected boolean handleError(Context context, Throwable e)
     {
-        Log.e("RSVP", "Error adding RSVP eventID: " + eventId , e);
         CrashReport.logException(e);
         return true;
     }

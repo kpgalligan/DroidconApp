@@ -52,8 +52,8 @@ import UIKit
         
         styleButton()
     }
-
-    override func viewDidDisappear(animated: Bool) {
+    
+    deinit {
         eventDetailPresenter.unregister()
     }
     
@@ -61,7 +61,6 @@ import UIKit
     
     func dataRefresh() {
         event = eventDetailPresenter.getEventDetailLoadTask().getEvent()
-        print("dataRefresh: \(event.getCategory())")
         speakers = PlatformContext_iOS.javaListToNSArray(eventDetailPresenter.getEventDetailLoadTask().getEvent().getSpeakerList()) as? [DCDEventSpeaker]
         tableView.reloadData()
         updateButton()
@@ -77,9 +76,8 @@ import UIKit
     }
     
     func reportErrorWithNSString(error: String){
-        print(error)
-//        let alert = UIAlertView(title: "Video Error", message: error as String, delegate: nil, cancelButtonTitle: "Ok")
-//        alert.show()
+        let alert = UIAlertView(title: "Video Error", message: error as String, delegate: nil, cancelButtonTitle: "Ok")
+        alert.show()
     }
     
     func resetStreamProgress() {
@@ -104,7 +102,6 @@ import UIKit
         }))
         alert.addAction(UIAlertAction(title: "OK", style: .Default, handler: { (action) -> Void in
             let textField = alert.textFields![0] as UITextField
-//            print("Text field: \(textField.text)")
             self.eventDetailPresenter.setEventbriteEmailWithNSString(textField.text, withNSString: link, withNSString: cover)
         }))
         
@@ -140,14 +137,14 @@ import UIKit
             
             let videoDetailsTask:DCTEventVideoDetailsTask? = eventDetailPresenter.getEventVideoDetailsTask()
             
-            if (videoDetailsTask != nil && (videoDetailsTask!.getStreamUrl() != nil || videoDetailsTask!.getVideoUrl() != nil)) {
+            if (videoDetailsTask != nil && videoDetailsTask!.hasStream()) {
                 cell.liveStreamButton.addTarget(self, action: #selector(ShowEventDetailViewController.liveStreamTapped(_:)), forControlEvents: UIControlEvents.TouchUpInside)
                 cell.liveStreamButton.hidden = false
                 cell.liveStreamIcon.hidden = false
-                if(videoDetailsTask!.getStreamUrl() != nil){
+                if(videoDetailsTask!.isNow()){
                     cell.liveStreamButton.setTitle("LIVE STREAM", forState: UIControlState.Normal)
                 } else {
-                    cell.liveStreamButton.setTitle("VIDEO", forState: UIControlState.Normal)
+                    cell.liveStreamButton.setTitle("STREAM ARCHIVE", forState: UIControlState.Normal)
                 }
             } else {
                 cell.liveStreamButton.hidden = true
@@ -222,20 +219,14 @@ import UIKit
     }
     
     func liveStreamTapped(sender: UIButton) {
-        eventDetailPresenter.callStartVideoWithNSString(eventDetailPresenter.getEventVideoDetailsTask().getStreamUrl(), withNSString: "")
+        eventDetailPresenter.callStartVideoWithNSString(eventDetailPresenter.getEventVideoDetailsTask().getMergedStreamLink(), withNSString: "")
     }
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         if(segue.identifier == "LiveStream") {
             let liveStreamVC = (segue.destinationViewController as! LiveStreamViewController)
             liveStreamVC.titleString = titleString
-            if(eventDetailPresenter.getEventVideoDetailsTask().getStreamUrl() != nil){
-                liveStreamVC.streamUrl = eventDetailPresenter.getEventVideoDetailsTask().getStreamUrl()
-            }else{
-                liveStreamVC.streamUrl = eventDetailPresenter.getEventVideoDetailsTask().getVideoUrl()
-                liveStreamVC.startMillis = eventDetailPresenter.getEventVideoDetailsTask().getStartMillis().intValue()
-            }
-            
+            liveStreamVC.streamUrl = eventDetailPresenter.getEventVideoDetailsTask().getMergedStreamLink()
             liveStreamVC.coverUrl = ""
         }
     }

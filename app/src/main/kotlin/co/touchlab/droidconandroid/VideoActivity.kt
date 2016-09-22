@@ -8,6 +8,9 @@ import android.text.TextUtils
 import android.widget.Toast
 import co.touchlab.android.threading.eventbus.EventBusExt
 import co.touchlab.android.threading.tasks.TaskQueue
+import co.touchlab.droidconandroid.presenter.EventDetailPresenter
+import co.touchlab.droidconandroid.presenter.VideoPlayerHost
+import co.touchlab.droidconandroid.presenter.VideoPlayerPresenter
 import co.touchlab.droidconandroid.tasks.CheckWatchVideoTask
 import com.google.firebase.crash.FirebaseCrash
 import com.longtailvideo.jwplayer.events.listeners.VideoPlayerEvents
@@ -15,15 +18,21 @@ import com.longtailvideo.jwplayer.media.playlists.PlaylistItem
 import kotlinx.android.synthetic.main.activity_video.*
 import java.util.*
 
-class VideoActivity : AppCompatActivity(), VideoPlayerEvents.OnFullscreenListener {
-    var handler:Handler? = null
-    var checkCount:Int = 0
+class VideoActivity : AppCompatActivity(), VideoPlayerEvents.OnFullscreenListener, VideoPlayerHost {
+
+    override fun shutDownForce(s: String?) {
+        Toast.makeText(this, s, Toast.LENGTH_LONG).show()
+        finish()
+    }
+
+    private var presenter: VideoPlayerPresenter? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_video)
         val link = intent.getStringExtra(EXTRA_STREAM_LINK)
         val cover = intent.getStringExtra(EXTRA_STREAM_COVER)
+        val eventId = intent.getLongExtra(EXTRA_EVENT_ID, -1)
         if (!TextUtils.isEmpty(link)) {
             val builder = PlaylistItem.Builder().file(link)
 
@@ -35,29 +44,8 @@ class VideoActivity : AppCompatActivity(), VideoPlayerEvents.OnFullscreenListene
             FirebaseCrash.report(RuntimeException("Failed to load video link"))
             finish()
         }
-        EventBusExt.getDefault().register(this)
-        handler = Handler()
-    }
 
-    inner class CheckVideoRunnable : Runnable {
-        override fun run() {
-            TaskQueue.loadQueueNetwork(this@VideoActivity).execute(CheckWatchVideoTask())
-            checkCount++
-        }
-    }
-
-    @Suppress("unused")
-    fun onEventMainThread(task: CheckWatchVideoTask)
-    {
-        if(task.videoOk)
-        {
-            checkWatchVideoDelayed()
-        }
-        else
-        {
-            Toast.makeText(this, "Another device watching video", Toast.LENGTH_LONG).show();
-            finish()
-        }
+        presenter = VideoPlayerPresenter(this, this, eventId)
     }
 
     override fun onResume() {
@@ -65,21 +53,11 @@ class VideoActivity : AppCompatActivity(), VideoPlayerEvents.OnFullscreenListene
         super.onResume()
         jwplayer.onResume()
 
-        checkCount = 0
-        checkWatchVideoDelayed()
-    }
-
-    private fun checkWatchVideoDelayed() {
-        var waitLength: Long = 5 * 60 * 1000
-        if(checkCount == 0)
-        {
-            waitLength = (Random().nextInt(30) + 20) * 1000L
-        }
-        handler?.postDelayed(CheckVideoRunnable(), waitLength)
+        presenter!!.startChecking()
     }
 
     override fun onPause() {
-        handler?.removeCallbacks(CheckVideoRunnable())
+        presenter!!.stopChecking()
 
         // Let JW Player know that the app is going to the background
         jwplayer.onPause()
@@ -87,9 +65,9 @@ class VideoActivity : AppCompatActivity(), VideoPlayerEvents.OnFullscreenListene
     }
 
     override fun onDestroy() {
+        presenter!!.unregister()
         // Let JW Player know that the app is being destroyed
         jwplayer.onDestroy()
-        EventBusExt.getDefault().unregister(this)
         super.onDestroy()
     }
 

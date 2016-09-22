@@ -1,7 +1,5 @@
 package co.touchlab.droidconandroid.network;
 
-import android.util.Log;
-
 import com.google.gson.Gson;
 import com.google.gson.JsonParseException;
 
@@ -58,7 +56,6 @@ public class GsonConverter implements Converter
         byte[] bytes = IOUtils.toByteArray(in);
 
         String bodyString = new String(bytes);
-        Log.w("Gson", bodyString);
 
         isr = new InputStreamReader(new ByteArrayInputStream(bytes), charset);
       return gson.fromJson(isr, type);

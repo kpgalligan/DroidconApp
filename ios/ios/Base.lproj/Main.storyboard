@@ -667,7 +667,7 @@
                                             </label>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" lineBreakMode="wordWrap" numberOfLines="20" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="VIh-7I-yAB">
                                                 <rect key="frame" x="38" y="60" width="554" height="43"/>
-                                                <string key="text">The Droidcon app is coded in-house by the touchlab team.  Worked on by Liam, Izzy, Sam, Ramona and Kevin. It’s a bit of an experiment, written largely in Kotlin, and including a new(ish) ORM framework. Fun stuff. The code is open source, at:</string>
+                                                <string key="text">The Droidcon app is coded in-house by the touchlab team.  Worked on by Liam, Izzy, Sam, Ramona, Walter, Brad and Kevin (ie almost everybody). The UI is native iOS. Networking, storage, logic built with j2objc/Doppl. Open source (soon) at:</string>
                                                 <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                 <nil key="highlightedColor"/>
@@ -694,11 +694,11 @@
                                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="wordWrap" numberOfLines="20" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0Me-pN-hgs">
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" usesAttributedText="YES" lineBreakMode="wordWrap" numberOfLines="20" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0Me-pN-hgs">
                                                 <rect key="frame" x="38" y="282" width="554" height="84"/>
                                                 <attributedString key="attributedText">
                                                     <fragment>
-                                                        <string key="content">Touchlab is a developer founded and run development shop focused on building amazing Android experiences with great design as a foundational principle. We’re a group of Android experts who believe that Android can and must be better. We believe that what we built yesterday was great, but what we build with you tomorrow will be even better. And we’re currently hiring. Want to join a team where Android isn’t that other platform, where we care about pushing our favorite technology forward, and where you can get more involved with the community at large? Get in touch:</string>
+                                                        <string key="content">Touchlab is a developer founded and run development shop focused on building amazing mobile experiences with great design as a foundational principle. We’re a group of mobile experts who believe that mobile can and must be better. We believe that what we built yesterday was great, but what we build with you tomorrow will be even better. And we’re currently hiring. Get in touch:</string>
                                                         <attributes>
                                                             <color key="NSColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                             <font key="NSFont" size="12" name="HelveticaNeue"/>
@@ -710,12 +710,12 @@
                                             </label>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="20" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ZmA-0b-uKl">
                                                 <rect key="frame" x="38" y="180" width="554" height="58"/>
-                                                <string key="text">Droidcon conferences around the world support the Android platform and create a global network for developers and companies. We offer best-in-class presentations from leaders in all parts of the Android ecosystem, including core development, embedded solutions, augmented reality, business solutions, and games.</string>
+                                                <string key="text">Droidcon conferences around the world support mobile development and create a global network for developers and companies. We offer best-in-class presentations from leaders in all parts of the mobile ecosystem, including core development, embedded solutions, augmented reality, business solutions, and games.</string>
                                                 <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
-                                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" editable="NO" text="http://touchlab.co" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="4x5-1P-Yeg">
+                                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" misplaced="YES" editable="NO" text="http://touchlab.co" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="4x5-1P-Yeg">
                                                 <rect key="frame" x="38" y="374" width="554" height="38"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="38" id="Q1n-Bh-XzO"/>
@@ -1452,10 +1452,10 @@
         <image name="illo_welcome" width="360" height="360"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="4Vw-w5-vXH"/>
-        <segue reference="wiZ-ik-Hhb"/>
-        <segue reference="pVg-yj-H2O"/>
         <segue reference="Y1n-90-loS"/>
+        <segue reference="pVg-yj-H2O"/>
+        <segue reference="wiZ-ik-Hhb"/>
+        <segue reference="kJT-kk-HsE"/>
     </inferredMetricsTieBreakers>
     <color key="tintColor" red="0.066666666666666666" green="0.30196078431372547" blue="0.85882352941176465" alpha="1" colorSpace="calibratedRGB"/>
 </document>

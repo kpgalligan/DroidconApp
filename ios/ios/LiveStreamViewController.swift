@@ -18,7 +18,6 @@ class LiveStreamViewController: UIViewController, JWPlayerDelegate {
     var titleString: String?
     var streamUrl: String?
     var coverUrl: String?
-    var startMillis: Int = 0
     
     override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: NSBundle?) {
         super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
@@ -87,7 +86,6 @@ class LiveStreamViewController: UIViewController, JWPlayerDelegate {
         let callback: String = userInfo["event"] as! String
         
         if(callback == "onTime") {return}
-        //print(callback)
     }
     
     func controlCenter() {

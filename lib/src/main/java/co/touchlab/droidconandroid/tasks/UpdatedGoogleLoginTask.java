@@ -1,7 +1,6 @@
 package co.touchlab.droidconandroid.tasks;
 import android.content.Context;
 import android.text.TextUtils;
-import android.util.Log;
 
 import org.apache.commons.lang3.StringUtils;
 
@@ -59,8 +58,6 @@ public class UpdatedGoogleLoginTask extends Task
 
         RefreshScheduleData.callMe(context);
 
-        Log.w(UpdatedGoogleLoginTask.class.getSimpleName(), "Logged in! "+ userAccount.email);
-
         if (! TextUtils.isEmpty(imageURL))
             PersistedTaskQueueFactory.getInstance(context).execute(new UploadProfilePhotoTask(imageURL, false));
 //
@@ -72,7 +69,6 @@ public class UpdatedGoogleLoginTask extends Task
     protected boolean handleError(Context context, Throwable e)
     {
         CrashReport.logException(e);
-        Log.w("GoogleLoginTask", "", e);
         failed = true;
         EventBusExt.getDefault().post(this);
         return true;

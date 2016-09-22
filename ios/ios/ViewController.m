@@ -87,7 +87,6 @@ BOOL allEvents = NO;
 
 - (IBAction)updateTable:(id)sender
 {
-    NSLog(@"Updating Table");
     if ([self.dayChooser selectedSegmentIndex] == 0) {
         self.platformContext.isDayTwo = NO;
     } else {
@@ -111,7 +110,6 @@ BOOL allEvents = NO;
 #pragma PlatformContext_iOS - Delegate
 - (void)reloadTableView
 {
-    NSLog(@"Look, we're here");
     [self.tableView reloadData];
 }
 

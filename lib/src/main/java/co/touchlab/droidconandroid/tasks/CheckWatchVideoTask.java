@@ -7,9 +7,16 @@ import retrofit.client.Response;
  */
 public class CheckWatchVideoTask extends AbstractWatchVideoTask
 {
+    private final long eventId;
+
+    public CheckWatchVideoTask(long eventId)
+    {
+        this.eventId = eventId;
+    }
+
     @Override
     Response callVideoUrl(WatchVideoRequest watchVideoRequest, String email, String uuid, long conventionId)
     {
-        return watchVideoRequest.checkWatchVideo(conventionId, email, uuid);
+        return watchVideoRequest.checkWatchVideo(conventionId, email, uuid, Long.toString(eventId));
     }
 }

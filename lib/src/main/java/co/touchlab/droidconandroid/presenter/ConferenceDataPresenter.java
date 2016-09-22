@@ -1,7 +1,6 @@
 package co.touchlab.droidconandroid.presenter;
 import android.content.Context;
 import android.text.TextUtils;
-import android.util.Log;
 
 import com.google.j2objc.annotations.AutoreleasePool;
 
@@ -58,8 +57,6 @@ public class ConferenceDataPresenter extends AbstractEventBusPresenter
 
     public void onEventMainThread(LoadConferenceDataTask task)
     {
-        Log.w(ConferenceDataPresenter.class.getSimpleName(), "LoadConferenceDataTask returned");
-
         Queues.localQueue(getContext()).execute(new UpdateAlertsTask());
 
         // Since this task is called from both the Schedule and My Agenda, make sure this flag is the same

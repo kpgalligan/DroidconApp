@@ -154,7 +154,6 @@
     [self updateTableData];
     [self.reloadDelegate reloadTableView];
     
-    NSLog(@"Received data from server.");
 }
 
 #pragma Table View - Delegate

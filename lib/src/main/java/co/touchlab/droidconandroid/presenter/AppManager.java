@@ -10,7 +10,6 @@ import java.util.Date;
 import co.touchlab.droidconandroid.data.AppPrefs;
 import co.touchlab.droidconandroid.tasks.Queues;
 import co.touchlab.droidconandroid.tasks.SeedScheduleDataTask;
-import co.touchlab.droidconandroid.tasks.persisted.RefreshScheduleData;
 import co.touchlab.droidconandroid.utils.TimeUtils;
 
 /**

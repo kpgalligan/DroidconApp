@@ -2,7 +2,6 @@ package co.touchlab.droidconandroid.data;
 
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
-import android.util.Log;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -13,6 +12,7 @@ import java.util.Set;
 import java.util.concurrent.Callable;
 
 import co.touchlab.droidconandroid.data.staff.EventAttendee;
+import co.touchlab.droidconandroid.presenter.AppManager;
 import co.touchlab.droidconandroid.tasks.persisted.RefreshScheduleData;
 import co.touchlab.squeaky.dao.Dao;
 import co.touchlab.squeaky.db.sqlite.SQLiteDatabaseImpl;
@@ -176,7 +176,7 @@ public class DatabaseHelper extends SqueakyOpenHelper
         }
         catch(Exception e)
         {
-            Log.e(DatabaseHelper.class.getName(), e.getMessage());
+            AppManager.getPlatformClient().logException(e);
             throw new RuntimeException(e);
         }
         finally

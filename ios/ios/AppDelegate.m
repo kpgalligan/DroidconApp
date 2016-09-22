@@ -49,11 +49,11 @@
     Reachability *reachability = [Reachability reachabilityWithHostname:[[NSURL URLWithString:[[DCPAppManager getPlatformClient] baseUrl]] host]];
     
     reachability.reachableBlock = ^(Reachability *reachability) {
-        NSLog(@"Network is reachable.");
+        
     };
     
     reachability.unreachableBlock = ^(Reachability *reachability) {
-        NSLog(@"Network is unreachable.");
+        
     };
     
     // Start Monitoring
@@ -157,9 +157,9 @@ didSignInForUser:(GIDGoogleUser *)user
 - (void)connectToFcm {
     [[FIRMessaging messaging] connectWithCompletion:^(NSError * _Nullable error) {
         if (error != nil) {
-            NSLog(@"Unable to connect to FCM. %@", error);
+            
         } else {
-            NSLog(@"Connected to FCM.");
+            
         }
     }];
 }
@@ -180,7 +180,6 @@ didSignInForUser:(GIDGoogleUser *)user
         return myString;
     }
     else {
-        NSLog(@"Couldn't find file!");
         return nil;
     }
 }

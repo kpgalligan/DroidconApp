@@ -1,6 +1,5 @@
 package co.touchlab.droidconandroid.tasks.persisted;
 import android.content.Context;
-import android.util.Log;
 
 import java.sql.SQLException;
 
@@ -58,7 +57,6 @@ public class UpdateUserProfileCommand extends RetrofitPersistedTask
     @Override
     protected boolean handleError(Context context, Throwable e)
     {
-        Log.e("User Profile", "Error while updating the user profile", e);
         CrashReport.logException(e);
         return true;
     }
