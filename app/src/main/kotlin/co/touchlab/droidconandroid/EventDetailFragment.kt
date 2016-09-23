@@ -28,10 +28,10 @@ import co.touchlab.droidconandroid.tasks.AddRsvpTask
 import co.touchlab.droidconandroid.tasks.EventVideoDetailsTask
 import co.touchlab.droidconandroid.tasks.RemoveRsvpTask
 import co.touchlab.droidconandroid.tasks.StartWatchVideoTask
+import co.touchlab.droidconandroid.utils.TimeUtils
 import com.wnafee.vector.compat.ResourcesCompat
 import kotlinx.android.synthetic.main.fragment_event_detail.*
 import kotlinx.android.synthetic.main.view_streaming_email_dialog.view.*
-import java.text.SimpleDateFormat
 import java.util.*
 
 /**
@@ -220,7 +220,8 @@ class EventDetailFragment() : Fragment(), EventDetailHost
     }
 
     override fun resetStreamProgress(){
-        recycler.adapter.notifyDataSetChanged()
+        if(recycler.adapter != null)
+            recycler.adapter.notifyDataSetChanged()
     }
 
     override fun openSlack(slackLink: String, slackLinkHttp: String, showSlackDialog: Boolean) {
@@ -301,7 +302,7 @@ class EventDetailFragment() : Fragment(), EventDetailHost
         //Construct the time and venue string and add it to the adapter
         val startDateVal = Date(event.startDateLong !!)
         val endDateVal = Date(event.endDateLong !!)
-        val timeFormat = SimpleDateFormat("hh:mm a", Locale.US)
+        val timeFormat = TimeUtils.makeDateFormat("h:mm a")
         val venueFormatString = resources.getString(R.string.event_venue_time)
 
         var formattedStart = timeFormat.format(startDateVal)

@@ -59,32 +59,35 @@ class SponsorsListFragment() : Fragment() {
     @Suppress("unused")
     fun onEventMainThread(task: SponsorsTask) {
         if (task.type == arguments.getInt(SPONSOR_TYPE)) {
-            val totalSpanCount = task.response!!.totalSpanCount
-
             // Filter through and insert "filler items" .. TODO This is a hack
             var finalList: ArrayList<Any> = ArrayList()
-            val lastIndex = task.response!!.sponsors.lastIndex
-            val spanCounts = SparseIntArray()
-            for (sponsor in task.response!!.sponsors) {
-                // Add object to results
-                finalList.add(sponsor)
+            var totalSpanCount = 1
 
-                // Increment count
-                var currentCount = spanCounts.get(sponsor.spanCount, -1)
-                if (currentCount == -1) {
-                    spanCounts.put(sponsor.spanCount, 1)
-                    currentCount = 1
-                } else {
-                    spanCounts.put(sponsor.spanCount, ++currentCount)
-                }
+            if(task.response != null) {
+                totalSpanCount = task.response!!.totalSpanCount
+                val lastIndex = task.response!!.sponsors.lastIndex
+                val spanCounts = SparseIntArray()
+                for (sponsor in task.response!!.sponsors) {
+                    // Add object to results
+                    finalList.add(sponsor)
 
-                // Check if last item of group, if so, insert any spaces if needed
-                val index = task.response!!.sponsors.indexOf(sponsor)
-                if (index != lastIndex && sponsor.spanCount != task.response!!.sponsors[index + 1].spanCount) {
-                    var emptySpots = (totalSpanCount - (currentCount * sponsor.spanCount) % totalSpanCount) / sponsor.spanCount
-                    while (emptySpots > 0){
-                        finalList.add(Empty(sponsor.spanCount))
-                        emptySpots--
+                    // Increment count
+                    var currentCount = spanCounts.get(sponsor.spanCount, -1)
+                    if (currentCount == -1) {
+                        spanCounts.put(sponsor.spanCount, 1)
+                        currentCount = 1
+                    } else {
+                        spanCounts.put(sponsor.spanCount, ++currentCount)
+                    }
+
+                    // Check if last item of group, if so, insert any spaces if needed
+                    val index = task.response!!.sponsors.indexOf(sponsor)
+                    if (index != lastIndex && sponsor.spanCount != task.response!!.sponsors[index + 1].spanCount) {
+                        var emptySpots = (totalSpanCount - (currentCount * sponsor.spanCount) % totalSpanCount) / sponsor.spanCount
+                        while (emptySpots > 0) {
+                            finalList.add(Empty(sponsor.spanCount))
+                            emptySpots--
+                        }
                     }
                 }
             }

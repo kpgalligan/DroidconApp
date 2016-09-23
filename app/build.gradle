@@ -38,8 +38,8 @@ android {
         applicationId "co.touchlab.droidconandroid"
         minSdkVersion 16
         targetSdkVersion 22
-        versionCode 914
-        versionName "0.9.14"
+        versionCode 917
+        versionName "0.9.17"
 
 //        multiDexEnabled true
 

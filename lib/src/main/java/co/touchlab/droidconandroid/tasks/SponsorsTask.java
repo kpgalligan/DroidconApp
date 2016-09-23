@@ -55,7 +55,7 @@ public class SponsorsTask extends Task
     protected boolean handleError(Context context, Throwable throwable)
     {
         CrashReport.logException(throwable);
-        return false;
+        return true;
     }
 
     @Override

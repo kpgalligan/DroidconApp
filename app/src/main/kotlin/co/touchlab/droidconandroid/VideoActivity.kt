@@ -2,21 +2,15 @@ package co.touchlab.droidconandroid
 
 import android.content.res.Configuration
 import android.os.Bundle
-import android.os.Handler
 import android.support.v7.app.AppCompatActivity
 import android.text.TextUtils
 import android.widget.Toast
-import co.touchlab.android.threading.eventbus.EventBusExt
-import co.touchlab.android.threading.tasks.TaskQueue
-import co.touchlab.droidconandroid.presenter.EventDetailPresenter
 import co.touchlab.droidconandroid.presenter.VideoPlayerHost
 import co.touchlab.droidconandroid.presenter.VideoPlayerPresenter
-import co.touchlab.droidconandroid.tasks.CheckWatchVideoTask
 import com.google.firebase.crash.FirebaseCrash
 import com.longtailvideo.jwplayer.events.listeners.VideoPlayerEvents
 import com.longtailvideo.jwplayer.media.playlists.PlaylistItem
 import kotlinx.android.synthetic.main.activity_video.*
-import java.util.*
 
 class VideoActivity : AppCompatActivity(), VideoPlayerEvents.OnFullscreenListener, VideoPlayerHost {
 

@@ -126,7 +126,8 @@ class UserDetailFragment() : Fragment()
 
                 override fun onError()
                 {
-                    placeholder_emoji.text = EmojiUtil.getEmojiForUser(userAccount.name)
+                    if(placeholder_emoji != null)
+                        placeholder_emoji.text = EmojiUtil.getEmojiForUser(userAccount.name)
                 }
             }
 

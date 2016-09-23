@@ -14,22 +14,29 @@ import java.util.TimeZone;
  */
 public class TimeUtils
 {
-    public static  ThreadLocal<DateFormat> DATE_FORMAT = new ThreadLocal<DateFormat>()
+    public static final TimeZone TIME_ZONE = TimeZone.getTimeZone("America/New_York");
+    public static ThreadLocal<DateFormat> DATE_FORMAT = new ThreadLocal<DateFormat>()
     {
         @Override
         protected DateFormat initialValue()
         {
-            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("MM/dd/yyyy hh:mma",
-                    Locale.US);
-            simpleDateFormat.setTimeZone(TimeZone.getTimeZone("America/New_York"));
-            return simpleDateFormat;
+            return makeDateFormat("MM/dd/yyyy hh:mma");
         }
     };
-    private static GregorianCalendar       calendar    = new GregorianCalendar();
+
+    public static SimpleDateFormat makeDateFormat(String format)
+    {
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat(format, Locale.US);
+        simpleDateFormat.setTimeZone(TIME_ZONE);
+        return simpleDateFormat;
+    }
 
     @NotNull
     public static Long sanitize(@NotNull Date date)
     {
+        GregorianCalendar       calendar    = new GregorianCalendar();
+
+        calendar.setTimeZone(TIME_ZONE);
         calendar.setTime(date);
         calendar.set(Calendar.HOUR_OF_DAY, 0);            // set hour to midnight
         calendar.set(Calendar.MINUTE, 0);                 // set minute in hour

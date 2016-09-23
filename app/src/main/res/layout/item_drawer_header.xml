@@ -14,6 +14,11 @@
         android:contentDescription="@string/cd_profile_cover_image"
         android:scaleType="centerCrop"/>
 
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:src="@drawable/headergradient"/>
+
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"

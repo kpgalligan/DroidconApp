@@ -15,6 +15,8 @@ import co.touchlab.droidconandroid.data.Block;
 import co.touchlab.droidconandroid.data.DatabaseHelper;
 import co.touchlab.droidconandroid.data.Event;
 import co.touchlab.droidconandroid.data.ScheduleBlock;
+import co.touchlab.droidconandroid.network.DataHelper;
+import co.touchlab.droidconandroid.utils.TimeUtils;
 import co.touchlab.squeaky.dao.Dao;
 import co.touchlab.squeaky.stmt.Where;
 
@@ -23,9 +25,13 @@ import co.touchlab.squeaky.stmt.Where;
  */
 public class ConferenceDataHelper
 {
-    static SimpleDateFormat df         = new SimpleDateFormat("MM/dd/yyyy hh:mma", Locale.US);
-    static SimpleDateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy", Locale.US);
-    static SimpleDateFormat timeFormat = new SimpleDateFormat("h:mma", Locale.US);
+    final static SimpleDateFormat dateFormat;
+    final static SimpleDateFormat timeFormat;
+
+    static {
+        dateFormat = TimeUtils.makeDateFormat("MM/dd/yyyy");
+        timeFormat = TimeUtils.makeDateFormat("h:mma");
+    }
 
     public static String dateToDayString(Date d)
     {

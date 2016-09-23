@@ -44,7 +44,6 @@ import com.squareup.picasso.Callback
 import com.squareup.picasso.Picasso
 import com.wnafee.vector.compat.ResourcesCompat
 import kotlinx.android.synthetic.main.activity_schedule.*
-import java.text.SimpleDateFormat
 import java.util.*
 
 const val HTTPS_S3_AMAZONAWS_COM_DROIDCONIMAGES: String = "https://s3.amazonaws.com/droidconimages/"
@@ -419,7 +418,7 @@ open class ScheduleActivity : AppCompatActivity(), NfcAdapter.CreateNdefMessageC
         private var allEvents = allEvents
         private var fragmentManager = fm
 
-        private val tabDateFormat = SimpleDateFormat("MMM dd", Locale.US)
+        private val tabDateFormat = TimeUtils.makeDateFormat("MMM dd")
 
         override fun getCount(): Int {
             return dates.size

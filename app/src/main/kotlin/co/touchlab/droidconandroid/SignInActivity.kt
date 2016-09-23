@@ -220,7 +220,14 @@ public class SignInActivity : AppCompatActivity(), LoginScreenPresenter.Host {
         val args = Bundle();
         args.putInt(DIALOG_ERROR, errorCode);
         dialogFragment.setArguments(args);
-        dialogFragment.show(getSupportFragmentManager(), "errordialog");
+        try {
+            dialogFragment.show(getSupportFragmentManager(), "errordialog");
+        }
+        catch (e: Exception)
+        {
+            //Meh
+        }
+
     }
 
     fun onDialogDismissed()
