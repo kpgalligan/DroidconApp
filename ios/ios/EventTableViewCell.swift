@@ -24,9 +24,9 @@ class EventTableViewCell: UITableViewCell {
         self.event = event
         self.eventDetailPresenter = eventDetailPresenter
         
-        titleLabel.text = title
+        titleLabel.text = title.stringByReplacingOccurrencesOfString("Android", withString: "[Sad Puppy]")
         timeInfoLabel.text = "Track " + track + ", " + time
-        descriptionLabel.attributedText = formatHTMLString(description)
+        descriptionLabel.attributedText = formatHTMLString(description.stringByReplacingOccurrencesOfString("Android", withString: "[Sad Puppy]"))
         
         titleLabel.sizeToFit()
         timeInfoLabel.sizeToFit()

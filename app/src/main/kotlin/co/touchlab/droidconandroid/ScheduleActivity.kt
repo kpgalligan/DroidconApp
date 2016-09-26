@@ -43,6 +43,8 @@ import com.google.firebase.messaging.FirebaseMessaging
 import com.squareup.picasso.Callback
 import com.squareup.picasso.Picasso
 import com.wnafee.vector.compat.ResourcesCompat
+import com.zendesk.sdk.feedback.ui.ContactZendeskActivity
+import com.zendesk.sdk.support.SupportActivity
 import kotlinx.android.synthetic.main.activity_schedule.*
 import java.util.*
 
@@ -242,6 +244,10 @@ open class ScheduleActivity : AppCompatActivity(), NfcAdapter.CreateNdefMessageC
 
                     R.string.about -> AboutActivity.callMe(this@ScheduleActivity)
                     R.string.sponsors -> SponsorsActivity.startMe(this@ScheduleActivity)
+                    R.string.zendesk -> {
+                        ContactZendeskActivity.startActivity(this@ScheduleActivity, null)
+//                        SupportActivity.Builder().show(this@ScheduleActivity)
+                    }
                 }
 
                 Handler().post(RefreshRunnable())
@@ -267,6 +273,8 @@ open class ScheduleActivity : AppCompatActivity(), NfcAdapter.CreateNdefMessageC
         drawerItems.add("divider_placeholder")
         drawerItems.add(NavigationItem(R.string.sponsors, R.drawable.vic_star_circle))
         drawerItems.add(NavigationItem(R.string.about, R.drawable.vic_info_outline_black_24dp))
+        drawerItems.add("divider_placeholder")
+        drawerItems.add(NavigationItem(R.string.zendesk, R.drawable.icon_zendesk))
         return drawerItems
     }
 

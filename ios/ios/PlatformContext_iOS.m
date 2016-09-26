@@ -181,7 +181,7 @@
     if ([eventObj isKindOfClass:[DCDEvent class]]) {
         DCDEvent *event = (DCDEvent *)eventObj;
         NSArray *speakers = [self getSpeakersArrayFromEvent:event];
-        [cell.titleLabel setText: event->name_];
+        [cell.titleLabel setText: [event->name_ stringByReplacingOccurrencesOfString:@"Android" withString:@"[Sad Puppy]"]];
         [cell.speakerNamesLabel setText:[self formatSpeakerStringFromArray:speakers]];
         [cell.timeLabel setText:hourHolder->hourStringDisplay_];
         

@@ -34,10 +34,9 @@ public class EventDetailPresenter extends AbstractEventBusPresenter
         super(context);
         this.eventId = eventId;
         this.host = host;
-        refreshData();
     }
 
-    private void refreshData()
+    public void refreshData()
     {
         Queues.localQueue(getContext()).execute(new EventDetailLoadTask(this.eventId));
     }
@@ -69,7 +68,7 @@ public class EventDetailPresenter extends AbstractEventBusPresenter
         );
     }
 
-    private void refreshVideoData()
+    public void refreshVideoData()
     {
         TaskQueue.loadQueueNetwork(getContext()).execute(new EventVideoDetailsTask(eventId));
     }

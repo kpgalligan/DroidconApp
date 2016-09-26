@@ -117,6 +117,11 @@ class EventDetailFragment() : Fragment(), EventDetailHost
         return inflater !!.inflate(R.layout.fragment_event_detail, null)
     }
 
+    override fun onResume() {
+        super.onResume()
+        presenter!!.refreshData()
+    }
+
     override fun onViewCreated(view: View?, savedInstanceState: Bundle?)
     {
         super.onViewCreated(view, savedInstanceState)

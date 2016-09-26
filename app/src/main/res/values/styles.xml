@@ -8,6 +8,28 @@
         <item name="colorControlHighlight">@color/accent</item>
         <item name="colorPrimary">@color/primary_dark</item>
         <item name="colorPrimaryDark">@color/primary_dark</item>
+
+        <!-- RateMyApp attributes -->
+        <item name="RateMyAppButtonStyle">@style/rma_button</item>
+        <item name="RateMyAppTitleStyle">@style/rma_title</item>
+        <item name="RateMyAppPaddingTop">80dp</item>
+        <item name="RateMyAppPaddingBottom">@dimen/view_vertical_margin</item>
+        <item name="RateMyAppDividerStyle">@style/rma_divider</item>
+        <item name="RateMyAppDividerHeight">@dimen/rma_divider_height</item>
+
+        <!-- Conversations drawable icon in SupportActivity -->
+        <item name="helpConversationsIcon">@drawable/help_conversations_icon_dark</item>
+
+        <!-- Send and attach icons in ContactZendeskActivity -->
+        <item name="contactAttachmentIcon">@drawable/contact_attachment_icon_dark</item>
+        <item name="contactSendIcon">@drawable/contact_send_icon_selector_dark</item>
+
+        <!-- Send and attach icons in ViewRequestActivity -->
+        <item name="viewRequestSendIcon">@drawable/view_request_send_icon_selector_dark</item>
+        <item name="viewRequestAttachmentIcon">@drawable/view_request_attachment_icon_dark</item>
+
+        <!-- New request icon in RequestActivity -->
+        <item name="requestListAddIcon">@drawable/request_list_add_icon_dark</item>
     </style>
 
     <style name="AppTheme" parent="AppTheme.Base">

@@ -8,6 +8,9 @@ import android.util.Log;
 
 import com.google.firebase.analytics.FirebaseAnalytics;
 import com.google.firebase.crash.FirebaseCrash;
+import com.zendesk.sdk.model.access.AnonymousIdentity;
+import com.zendesk.sdk.model.access.Identity;
+import com.zendesk.sdk.network.impl.ZendeskConfig;
 
 import org.apache.commons.io.IOUtils;
 
@@ -116,6 +119,11 @@ public class DroidconApplication extends Application
                     }
                 }
             });
+
+            ZendeskConfig.INSTANCE.init(this, "https://touchlab.zendesk.com", "8082e21f6ba50718655a123aa8976cfc0c73ab176d9dd032", "mobile_sdk_client_3173f8d2177ce4419250");
+            Identity anonymousIdentity = new AnonymousIdentity.Builder().build();
+            ZendeskConfig.INSTANCE.setIdentity(anonymousIdentity);
+
         }
     }
 

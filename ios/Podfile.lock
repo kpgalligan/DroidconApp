@@ -81,7 +81,7 @@ PODS:
   - j2objc-squeaky-core-release (1.0)
   - j2objc-squeaky-query-debug (1.0)
   - j2objc-squeaky-query-release (1.0)
-  - JWPlayer-SDK (2.4.5)
+  - JWPlayer-SDK (2.5.3)
   - Kingfisher (2.6.0)
   - Reachability (3.2)
   - Toast-Swift (1.3.0)
@@ -119,7 +119,7 @@ DEPENDENCIES:
   - j2objc-squeaky-core-release (from `../lib/build/doppelDependencyExploded/doppl_co_touchlab_squeaky_squeaky_core_0_5_0_2`)
   - j2objc-squeaky-query-debug (from `../lib/build/doppelDependencyExploded/doppl_co_touchlab_squeaky_squeaky_query_0_5_0_2`)
   - j2objc-squeaky-query-release (from `../lib/build/doppelDependencyExploded/doppl_co_touchlab_squeaky_squeaky_query_0_5_0_2`)
-  - JWPlayer-SDK (~> 2.4.1)
+  - JWPlayer-SDK (~> 2.5.2)
   - Kingfisher (~> 2.4)
   - Reachability (~> 3.2)
   - Toast-Swift (~> 1.3.0)
@@ -221,11 +221,11 @@ SPEC CHECKSUMS:
   j2objc-squeaky-core-release: 802908a6e5b3420ef3d50790238a65471ca2f66c
   j2objc-squeaky-query-debug: 72b0e80a2cab608e09ee99f4eede100b7f3d052b
   j2objc-squeaky-query-release: e66d5d948fc8bc91089209f538857842e596a54f
-  JWPlayer-SDK: 1ba739f5df41266b4ed77a4af245c07f23930885
+  JWPlayer-SDK: a165970c3ae346918c167fb85de9eba47d28cee8
   Kingfisher: d84c5fd176ea86cc7b8aac65fd55feda6f70f130
   Reachability: 33e18b67625424e47b6cde6d202dce689ad7af96
   Toast-Swift: 25c3d98db42dc70d9a77b5006ee000e0becb458e
 
-PODFILE CHECKSUM: bcea920cd8dcbcd1ca4b590c50ffb89794ac0ea6
+PODFILE CHECKSUM: 83c415ef091a2f88929392a0413a547dbfc348b2
 
 COCOAPODS: 1.0.0

@@ -37,6 +37,8 @@ import UIKit
         
         eventDetailPresenter = DCPEventDetailPresenter(androidContentContext: DCPAppManager.getContext(), withLong: event.getId(), withDCPEventDetailHost: self)
         
+        eventDetailPresenter.refreshData()
+        
         tableView.rowHeight = UITableViewAutomaticDimension
         tableView.estimatedRowHeight = 800
 
