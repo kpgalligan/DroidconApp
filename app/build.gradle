@@ -22,6 +22,9 @@ def voteends = properties.getProperty('voteends')
 def releasePassword = properties.getProperty('releasePassword')
 def crashlyticsApiKey = properties.getProperty('crashlyticsApiKey')
 def jwLicenseKey = properties.getProperty('jwLicenseKey')
+def zendeskurl = properties.getProperty('zendeskurl')
+def zendeskappid = properties.getProperty('zendeskappid')
+def zendeskauthid = properties.getProperty('zendeskauthid')
 
 repositories {
     flatDir {
@@ -50,6 +53,10 @@ android {
 //        buildConfigField "String", "VOTE_ENDS", "\"$voteends\""
         resValue "string", "crashlytics_api_key", "$crashlyticsApiKey"
         resValue "string", "jw_license_key", "$jwLicenseKey"
+
+        buildConfigField "String", "zendeskurl", "\"$zendeskurl\""
+        buildConfigField "String", "zendeskappid", "\"$zendeskappid\""
+        buildConfigField "String", "zendeskauthid", "\"$zendeskauthid\""
     }
 
     productFlavors {

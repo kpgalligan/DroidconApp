@@ -4,6 +4,14 @@
 .DS_Store
 
 Pods
+Podfile.lock
+Podfile_save
+*.xcuserstate
+
+## Obj-C/Swift specific
+*.hmap
+*.ipa
+
 
 # built application files
 *.apk
@@ -29,7 +37,6 @@ gen/
     #.idea/workspace.xml - uncomment this and comment/delete .idea if it better suit your needs
 /*/local.properties
 /*/out
-/*/*/build
 /*/*/production
 *.iml
 *.iws
@@ -44,7 +51,6 @@ release.jks
 
     #Xcode
 ## Build generated
-build/
 DerivedData/
 
 ## Various settings
@@ -64,3 +70,5 @@ xcuserdata/
 *.xcscmblueprint
 **/google-services.json
 **/crashlytics.properties
+
+DroidconNYC-FirebaseServiceAccount.json

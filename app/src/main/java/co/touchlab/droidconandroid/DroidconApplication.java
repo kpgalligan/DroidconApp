@@ -120,7 +120,10 @@ public class DroidconApplication extends Application
                 }
             });
 
-            ZendeskConfig.INSTANCE.init(this, "https://touchlab.zendesk.com", "8082e21f6ba50718655a123aa8976cfc0c73ab176d9dd032", "mobile_sdk_client_3173f8d2177ce4419250");
+            ZendeskConfig.INSTANCE.init(this,
+                    BuildConfig.zendeskurl,
+                    BuildConfig.zendeskappid,
+                    BuildConfig.zendeskauthid);
             Identity anonymousIdentity = new AnonymousIdentity.Builder().build();
             ZendeskConfig.INSTANCE.setIdentity(anonymousIdentity);
 
