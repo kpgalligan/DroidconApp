@@ -1,7 +1,32 @@
 # Overview
 
-Android app for Droidcon NYC 2015.  Designed and built by Touch Lab team
- members Liam, Izzy, Sam, and Kevin.
+Android app for Droidcon NYC 2016 (earlier versions at NYC 2015 and SF 2016).
+
+# To Build
+
+You will have a difficult time building this out of the box. In its current state, you'll need to sign up for and include:
+
+* Firebase (crash, analytics, messaging)
+* Google OAuth
+* JWPlayer
+* Zendesk
+
+For iOS, you'll also need to sign up for OAuth, Firebase, and Crashlytics.
+
+In local.properties you'll need to add:
+
+* j2objc.home - Doppl flavored dist of j2objc
+* baseurl - Backend server url
+* crashlyticsApiKey
+* jwLicenseKey
+* releasePassword
+* zendeskurl
+* zendeskappid
+* zendeskauthid
+
+For the iOS/Doppl stuff you'll need various things that aren't quite released yet, so you'll need to reach out.
+
+Post Droidcon we'll set up a test conference instance and setup to make playing with the app simpler.
 
 # Server
 
