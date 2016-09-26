@@ -2,6 +2,10 @@
 
 Android app for Droidcon NYC 2016 (earlier versions at NYC 2015 and SF 2016).
 
+# Secret Keys
+
+If you look at history really hard you might find some things that shouldn't have been put in the repo. It would be great if you didn't do that. Thanks.
+
 # To Build
 
 You will have a difficult time building this out of the box. In its current state, you'll need to sign up for and include:
