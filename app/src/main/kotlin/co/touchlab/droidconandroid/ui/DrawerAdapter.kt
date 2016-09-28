@@ -8,12 +8,8 @@ import android.text.TextUtils
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import co.touchlab.droidconandroid.HTTPS_S3_AMAZONAWS_COM_DROIDCONIMAGES
 import co.touchlab.droidconandroid.R
 import co.touchlab.droidconandroid.data.AppPrefs
-import co.touchlab.droidconandroid.utils.EmojiUtil
-import com.squareup.picasso.Callback
-import com.squareup.picasso.Picasso
 import com.wnafee.vector.compat.ResourcesCompat
 import kotlinx.android.synthetic.main.item_drawer.view.*
 import kotlinx.android.synthetic.main.item_drawer_header.view.*
@@ -31,48 +27,30 @@ class DrawerAdapter(drawerItems: List<Any>, drawerClickListener: DrawerClickList
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder?, position: Int)
     {
-        val context = holder !!.itemView.context
+        val context = holder!!.itemView.context
         if (getItemViewType(position) == VIEW_TYPE_HEADER)
         {
             val headerHolder = holder as HeaderViewHolder
-            val avatarKey = AppPrefs.getInstance(context).avatarKey
+
             val name = AppPrefs.getInstance(context).name
-            if (! TextUtils.isEmpty(avatarKey))
+            if (!TextUtils.isEmpty(name))
             {
-                val callback = object : Callback
-                {
-                    override fun onSuccess()
-                    {
-                       headerHolder.itemView.header_placeholder_emoji.text = ""
-                    }
-
-                    override fun onError()
-                    {
-                        headerHolder.itemView.header_placeholder_emoji.text = EmojiUtil.getEmojiForUser(name)
-                    }
-                }
-                Picasso.with(context)
-                        .load(HTTPS_S3_AMAZONAWS_COM_DROIDCONIMAGES + avatarKey)
-                        .placeholder(R.drawable.circle_profile_placeholder)
-                        .into(headerHolder.itemView.avatar, callback)
-
-            }
-            else
+                headerHolder.itemView.name.visibility = View.VISIBLE
+                headerHolder.itemView.name.text = name
+            } else
             {
-                headerHolder.itemView.header_placeholder_emoji.text = EmojiUtil.getEmojiForUser(name)
+                headerHolder.itemView.name.visibility = View.GONE
             }
 
-            val coverKey = AppPrefs.getInstance(context).coverKey
-            if (! TextUtils.isEmpty(coverKey))
+            val email = AppPrefs.getInstance(context).email
+            if (!TextUtils.isEmpty(email))
             {
-                Picasso.with(context)
-
-                        .load(HTTPS_S3_AMAZONAWS_COM_DROIDCONIMAGES + coverKey)
-                        .into(headerHolder.itemView.cover)
+                headerHolder.itemView.email.visibility = View.VISIBLE
+                headerHolder.itemView.email.text = email
+            } else
+            {
+                headerHolder.itemView.email.visibility = View.GONE
             }
-
-            headerHolder.itemView.name.text = AppPrefs.getInstance(context).name
-            headerHolder.itemView.email.text = AppPrefs.getInstance(context).email
 
             headerHolder.itemView.setOnClickListener {
                 if (selectedPos != position)
@@ -81,8 +59,7 @@ class DrawerAdapter(drawerItems: List<Any>, drawerClickListener: DrawerClickList
                 }
             }
 
-        }
-        else if (getItemViewType(position) == VIEW_TYPE_NAVIGATION)
+        } else if (getItemViewType(position) == VIEW_TYPE_NAVIGATION)
         {
             val navItem = dataSet[position] as NavigationItem
             val navHolder = holder as NavigationViewHolder
@@ -96,8 +73,7 @@ class DrawerAdapter(drawerItems: List<Any>, drawerClickListener: DrawerClickList
                 drawable.colorFilter = PorterDuffColorFilter(ContextCompat.getColor(context,
                         R.color.nav_icon_highlight), PorterDuff.Mode.SRC_IN)
                 navHolder.itemView.highlight.visibility = View.VISIBLE
-            }
-            else
+            } else
             {
                 drawable.colorFilter = PorterDuffColorFilter(ContextCompat.getColor(context,
                         R.color.drawer_icons), PorterDuff.Mode.SRC_IN)
@@ -133,19 +109,17 @@ class DrawerAdapter(drawerItems: List<Any>, drawerClickListener: DrawerClickList
         val v: View
         if (viewType == VIEW_TYPE_NAVIGATION)
         {
-            v = LayoutInflater.from(parent !!.context).inflate(R.layout.item_drawer, parent, false)
+            v = LayoutInflater.from(parent!!.context).inflate(R.layout.item_drawer, parent, false)
             return NavigationViewHolder(v)
-        }
-        else if (viewType == VIEW_TYPE_HEADER)
+        } else if (viewType == VIEW_TYPE_HEADER)
         {
-            v = LayoutInflater.from(parent !!.context).inflate(R.layout.item_drawer_header,
+            v = LayoutInflater.from(parent!!.context).inflate(R.layout.item_drawer_header,
                     parent,
                     false)
             return HeaderViewHolder(v)
-        }
-        else
+        } else
         {
-            v = LayoutInflater.from(parent !!.context).inflate(R.layout.item_drawer_divider,
+            v = LayoutInflater.from(parent!!.context).inflate(R.layout.item_drawer_divider,
                     parent,
                     false)
             return DividerViewHolder(v)
@@ -158,12 +132,10 @@ class DrawerAdapter(drawerItems: List<Any>, drawerClickListener: DrawerClickList
         if (position == 0)
         {
             return VIEW_TYPE_HEADER
-        }
-        else if (dataSet[position] is NavigationItem)
+        } else if (dataSet[position] is NavigationItem)
         {
             return VIEW_TYPE_NAVIGATION
-        }
-        else
+        } else
         {
             return VIEW_TYPE_DIVIDER
         }
