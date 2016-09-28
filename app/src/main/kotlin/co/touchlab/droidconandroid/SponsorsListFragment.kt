@@ -142,7 +142,7 @@ class SponsorsListFragment() : Fragment() {
                 vh.image!!.contentDescription = data.sponsorName
                 Picasso.with(context)
                         .load(data.sponsorImage)
-                        .placeholder(R.drawable.placeholder_sponsor_image)
+                        .placeholder(android.R.color.white)
                         .into(vh.image)
 
                 // Set view click
