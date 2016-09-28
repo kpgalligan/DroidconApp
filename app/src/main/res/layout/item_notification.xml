@@ -22,7 +22,6 @@
         android:layout_marginLeft="@dimen/notify_card_margin_start"
         android:layout_marginRight="@dimen/padding_xmicro"
         android:layout_marginStart="@dimen/notify_card_margin_start"
-        android:stateListAnimator="@anim/lift"
         card_view:cardBackgroundColor="@color/card_bg_event"
         card_view:cardCornerRadius="0dp"
         tools:targetApi="lollipop">
