@@ -6,7 +6,6 @@ import android.content.res.ColorStateList
 import android.graphics.drawable.Drawable
 import android.net.Uri
 import android.os.Bundle
-import android.support.design.widget.CoordinatorLayout
 import android.support.v4.app.Fragment
 import android.support.v4.content.ContextCompat
 import android.support.v7.app.AlertDialog
@@ -282,19 +281,7 @@ class EventDetailFragment() : Fragment(), EventDetailHost
             }
         }
 
-        val p = fab.layoutParams as CoordinatorLayout.LayoutParams
-        if (event.isPast)
-        {
-            p.anchorId = View.NO_ID
-            fab.layoutParams = p
-            fab.visibility = View.GONE
-        }
-        else
-        {
-            p.anchorId = R.id.appbar
-            fab.layoutParams = p
-            fab.visibility = View.VISIBLE
-        }
+        fab.visibility = if (event.isPast) View.GONE else View.VISIBLE
     }
 
     /**
