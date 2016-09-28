@@ -69,6 +69,7 @@
         android:layout_marginLeft="@dimen/event_fab_margin"
         android:layout_marginStart="@dimen/event_fab_margin"
         app:layout_anchorGravity="bottom"
+        app:layout_anchor="@id/appbar"
         app:fabSize="mini"
         app:borderWidth="0dp"
         android:visibility="gone"/>
