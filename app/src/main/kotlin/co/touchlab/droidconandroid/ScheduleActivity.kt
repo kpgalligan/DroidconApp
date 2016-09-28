@@ -44,7 +44,6 @@ import com.squareup.picasso.Callback
 import com.squareup.picasso.Picasso
 import com.wnafee.vector.compat.ResourcesCompat
 import com.zendesk.sdk.feedback.ui.ContactZendeskActivity
-import com.zendesk.sdk.support.SupportActivity
 import kotlinx.android.synthetic.main.activity_schedule.*
 import java.util.*
 
@@ -54,36 +53,45 @@ private const val POSITION_MY_SCHEDULE = 2
 private const val ALL_EVENTS = "all_events"
 const val ALPHA_OPAQUE = 255
 
-fun startScheduleActivity(c: Context) {
+fun startScheduleActivity(c: Context)
+{
     c.startActivity(Intent(c, ScheduleActivity::class.java))
 }
 
-open class ScheduleActivity : AppCompatActivity(), NfcAdapter.CreateNdefMessageCallback {
+open class ScheduleActivity : AppCompatActivity(), NfcAdapter.CreateNdefMessageCallback
+{
     private var conferenceDataPresenter: ConferenceDataPresenter? = null
     private var allEvents = true
 
-    override fun onCreate(savedInstanceState: Bundle?) {
+    override fun onCreate(savedInstanceState: Bundle?)
+    {
         super.onCreate(savedInstanceState)
         FirebaseMessaging.getInstance().subscribeToTopic("all")
         FirebaseMessaging.getInstance().subscribeToTopic("android")
-        when (AppManager.findStartScreen(getString(R.string.voting_ends))) {
-            AppManager.AppScreens.Welcome -> {
+        when (AppManager.findStartScreen(getString(R.string.voting_ends)))
+        {
+            AppManager.AppScreens.Welcome ->
+            {
                 startActivity(WelcomeActivity.getLaunchIntent(this@ScheduleActivity, false))
                 finish()
                 return
             }
-            AppManager.AppScreens.Login -> {
+            AppManager.AppScreens.Login ->
+            {
                 startActivity(SignInActivity.getLaunchIntent(this@ScheduleActivity))
                 finish()
                 return
             }
-            AppManager.AppScreens.Voting -> {
+            AppManager.AppScreens.Voting ->
+            {
                 VotingIntroActivity.callMe(this@ScheduleActivity)
                 finish()
                 return
             }
-            else -> {
-                if (savedInstanceState != null) {
+            else ->
+            {
+                if (savedInstanceState != null)
+                {
                     allEvents = savedInstanceState.getBoolean(ALL_EVENTS)
                 }
 
@@ -93,7 +101,8 @@ open class ScheduleActivity : AppCompatActivity(), NfcAdapter.CreateNdefMessageC
         }
     }
 
-    override fun onStart() {
+    override fun onStart()
+    {
         super.onStart()
         setupToolbar()
         setupNavigationDrawer()
@@ -102,7 +111,8 @@ open class ScheduleActivity : AppCompatActivity(), NfcAdapter.CreateNdefMessageC
         EventBusExt.getDefault().register(this)
     }
 
-    override fun onResume() {
+    override fun onResume()
+    {
         super.onResume()
 
         Handler().post(RefreshRunnable())
@@ -113,8 +123,7 @@ open class ScheduleActivity : AppCompatActivity(), NfcAdapter.CreateNdefMessageC
         if (isTablet())
         {
             drawer_layout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_OPEN, drawer_recycler)
-        }
-        else
+        } else
         {
             drawer_layout.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED, drawer_recycler)
             drawer_layout.closeDrawer(drawer_recycler)
@@ -123,33 +132,38 @@ open class ScheduleActivity : AppCompatActivity(), NfcAdapter.CreateNdefMessageC
 
     override fun onBackPressed()
     {
-        when {
+        when
+        {
             !isTablet() &&
                     drawer_layout.isDrawerOpen(drawer_recycler) -> drawer_layout.closeDrawer(drawer_recycler)
             else -> super.onBackPressed()
         }
     }
 
-    override fun onSaveInstanceState(outState: Bundle) {
+    override fun onSaveInstanceState(outState: Bundle)
+    {
         super.onSaveInstanceState(outState)
         outState.putBoolean(ALL_EVENTS, allEvents)
     }
 
-    override fun onStop() {
+    override fun onStop()
+    {
         EventBusExt.getDefault().unregister(this)
         super.onStop()
     }
 
-    override fun onDestroy() {
+    override fun onDestroy()
+    {
         super.onDestroy()
         conferenceDataPresenter?.unregister()
     }
 
-    private fun setupToolbar() {
+    private fun setupToolbar()
+    {
         setSupportActionBar(toolbar)
         supportActionBar?.setDisplayShowTitleEnabled(false)
-        supportActionBar?.setDisplayHomeAsUpEnabled(! isTablet())
-        supportActionBar?.setHomeButtonEnabled(! isTablet())
+        supportActionBar?.setDisplayHomeAsUpEnabled(!isTablet())
+        supportActionBar?.setHomeButtonEnabled(!isTablet())
 
         schedule_backdrop.setImageDrawable(ResourcesCompat.getDrawable(this,
                 R.drawable.superglyph_outline360x114dp))
@@ -157,7 +171,7 @@ open class ScheduleActivity : AppCompatActivity(), NfcAdapter.CreateNdefMessageC
         val avatarKey = AppPrefs.getInstance(this).avatarKey
         val name = AppPrefs.getInstance(this).name
 
-        if (! TextUtils.isEmpty(avatarKey))
+        if (!TextUtils.isEmpty(avatarKey))
         {
             val callback = object : Callback
             {
@@ -176,15 +190,15 @@ open class ScheduleActivity : AppCompatActivity(), NfcAdapter.CreateNdefMessageC
                     .load(HTTPS_S3_AMAZONAWS_COM_DROIDCONIMAGES + avatarKey)
                     .placeholder(R.drawable.circle_profile_placeholder)
                     .into(schedule_toolbar_profile, callback)
-        }
-        else
+        } else
         {
             schedule_toolbar_profile.setImageDrawable(ResourcesCompat.getDrawable(this, R.drawable.circle_profile_placeholder))
             schedule_placeholder_emoji.text = EmojiUtil.getEmojiForUser(name)
         }
 
         appbar.addOnOffsetChangedListener { appBarLayout, verticalOffset ->
-            if (appBarLayout.totalScrollRange > 0) {
+            if (appBarLayout.totalScrollRange > 0)
+            {
                 val percentage: Float = 1 - (Math.abs(verticalOffset).toFloat() / appBarLayout.totalScrollRange)
                 schedule_toolbar_title.alpha = percentage
                 schedule_toolbar_profile.alpha = percentage
@@ -204,13 +218,13 @@ open class ScheduleActivity : AppCompatActivity(), NfcAdapter.CreateNdefMessageC
         }
     }
 
-    private fun setupNavigationDrawer() {
+    private fun setupNavigationDrawer()
+    {
 
-        if(isTablet())
+        if (isTablet())
         {
             drawer_layout.setScrimColor(ContextCompat.getColor(this, android.R.color.transparent))
-        }
-        else
+        } else
         {
             val drawerToggle = ActionBarDrawerToggle(
                     this, drawer_layout, toolbar,
@@ -220,20 +234,26 @@ open class ScheduleActivity : AppCompatActivity(), NfcAdapter.CreateNdefMessageC
             drawerToggle.syncState()
         }
 
-        drawer_recycler.adapter = DrawerAdapter(getDrawerItems(), object : DrawerClickListener {
-            override fun onNavigationItemClick(position: Int, titleRes: Int) {
-                if (! isTablet()) drawer_layout.closeDrawer(drawer_recycler)
+        drawer_recycler.adapter = DrawerAdapter(getDrawerItems(), object : DrawerClickListener
+        {
+            override fun onNavigationItemClick(position: Int, titleRes: Int)
+            {
+                if (!isTablet()) drawer_layout.closeDrawer(drawer_recycler)
 
-                when (titleRes) {
-                    R.string.explore -> {
+                when (titleRes)
+                {
+                    R.string.explore ->
+                    {
                         allEvents = true
                         appbar.setExpanded(true)
                     }
-                    R.string.my_schedule -> {
+                    R.string.my_schedule ->
+                    {
                         allEvents = false
                         appbar.setExpanded(true)
                     }
-                    R.string.chat_on_slack -> {
+                    R.string.chat_on_slack ->
+                    {
                         SlackHelper.openSlack(this@ScheduleActivity, conferenceDataPresenter!!.slackLink,
                                 conferenceDataPresenter!!.slackLinkHttp,
                                 conferenceDataPresenter!!.shouldShowSlackDialog())
@@ -244,7 +264,8 @@ open class ScheduleActivity : AppCompatActivity(), NfcAdapter.CreateNdefMessageC
 
                     R.string.about -> AboutActivity.callMe(this@ScheduleActivity)
                     R.string.sponsors -> SponsorsActivity.startMe(this@ScheduleActivity)
-                    R.string.zendesk -> {
+                    R.string.zendesk ->
+                    {
                         ContactZendeskActivity.startActivity(this@ScheduleActivity, null)
 //                        SupportActivity.Builder().show(this@ScheduleActivity)
                     }
@@ -255,31 +276,36 @@ open class ScheduleActivity : AppCompatActivity(), NfcAdapter.CreateNdefMessageC
                 adjustToolBarAndDrawers()
             }
 
-            override fun onHeaderItemClick() {
-                launchUserDetail()
+            override fun onHeaderItemClick()
+            {
+                //launchUserDetail()
+                createEditUserProfile(this@ScheduleActivity)
             }
         })
         drawer_recycler.layoutManager = LinearLayoutManager(this)
         drawer_layout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED, filter_wrapper)
     }
 
-    private fun getDrawerItems(): List<Any> {
+    private fun getDrawerItems(): List<Any>
+    {
         val drawerItems = ArrayList<Any>()
         drawerItems.add("header_placeholder")
         drawerItems.add(NavigationItem(R.string.explore, R.drawable.vic_event_black_24dp))
         drawerItems.add(NavigationItem(R.string.my_schedule, R.drawable.vic_clock_black_24dp))
-        drawerItems.add(NavigationItem(R.string.profile, R.drawable.vic_account_circle_black_24dp))
+        //drawerItems.add(NavigationItem(R.string.profile, R.drawable.vic_account_circle_black_24dp))
         drawerItems.add(NavigationItem(R.string.chat_on_slack, R.drawable.vic_slack_24dp, true))
         drawerItems.add("divider_placeholder")
-        drawerItems.add(NavigationItem(R.string.sponsors, R.drawable.vic_star_circle))
         drawerItems.add(NavigationItem(R.string.about, R.drawable.vic_info_outline_black_24dp))
+        drawerItems.add(NavigationItem(R.string.sponsors, R.drawable.vic_star_circle))
         drawerItems.add("divider_placeholder")
         drawerItems.add(NavigationItem(R.string.zendesk, R.drawable.icon_zendesk))
         return drawerItems
     }
 
-    private fun adjustToolBarAndDrawers() {
-        if (allEvents) {
+    private fun adjustToolBarAndDrawers()
+    {
+        if (allEvents)
+        {
             (drawer_recycler.adapter as DrawerAdapter).setSelectedPosition(POSITION_EXPLORE)
             schedule_toolbar_title.setText(R.string.app_name)
             schedule_backdrop.setColorFilter(ContextCompat.getColor(this, R.color.glyph_foreground_dark))
@@ -293,7 +319,8 @@ open class ScheduleActivity : AppCompatActivity(), NfcAdapter.CreateNdefMessageC
             toolbar.navigationIcon = menuIconDark
 
             schedule_toolbar_notif.visibility = View.GONE
-        } else {
+        } else
+        {
             (drawer_recycler.adapter as DrawerAdapter).setSelectedPosition(POSITION_MY_SCHEDULE)
             schedule_toolbar_title.setText(R.string.my_schedule)
             schedule_backdrop.setColorFilter(ContextCompat.getColor(this, R.color.glyph_foreground_light))
@@ -309,13 +336,13 @@ open class ScheduleActivity : AppCompatActivity(), NfcAdapter.CreateNdefMessageC
             schedule_toolbar_notif.visibility = View.VISIBLE
         }
 
-        if(AppPrefs.getInstance(this).allowNotifications)
+        if (AppPrefs.getInstance(this).allowNotifications)
             schedule_toolbar_notif.setImageResource(R.drawable.vic_notifications_active_black_24dp)
         else
             schedule_toolbar_notif.setImageResource(R.drawable.vic_notifications_none_black_24dp)
     }
 
-    private fun updateNotifications(allow:Boolean)
+    private fun updateNotifications(allow: Boolean)
     {
         val prefs = AppPrefs.getInstance(this)
         prefs.allowNotifications = allow
@@ -325,32 +352,40 @@ open class ScheduleActivity : AppCompatActivity(), NfcAdapter.CreateNdefMessageC
         adjustToolBarAndDrawers()
     }
 
-    private fun launchUserDetail() {
+    private fun launchUserDetail()
+    {
         val userId = AppPrefs.getInstance(this).userId
-        if (userId != null) {
+        if (userId != null)
+        {
             val ua = DatabaseHelper.getInstance(this).userAccountDao.queryForId(
                     userId)
-            if (ua != null && ua.userCode != null && !TextUtils.isEmpty(ua.userCode)) {
-                if (! isTablet()) drawer_layout.closeDrawer(drawer_recycler)
+            if (ua != null && ua.userCode != null && !TextUtils.isEmpty(ua.userCode))
+            {
+                if (!isTablet()) drawer_layout.closeDrawer(drawer_recycler)
                 UserDetailActivity.callMe(this, ua.userCode)
             }
         }
     }
 
-    private fun isTablet() : Boolean {
+    private fun isTablet(): Boolean
+    {
         return resources.getBoolean(R.bool.is_tablet)
     }
 
-    private fun initNfc() {
+    private fun initNfc()
+    {
         NfcAdapter.getDefaultAdapter(this)?.setNdefPushMessageCallback(this, this)
     }
 
-    override fun createNdefMessage(event: NfcEvent?): NdefMessage? {
+    override fun createNdefMessage(event: NfcEvent?): NdefMessage?
+    {
         val userId = AppPrefs.getInstance(this).userId
-        if (userId != null) {
+        if (userId != null)
+        {
             val ua = DatabaseHelper.getInstance(this).userAccountDao.queryForId(
                     userId)
-            if (ua != null && ua.userCode != null && !TextUtils.isEmpty(ua.userCode)) {
+            if (ua != null && ua.userCode != null && !TextUtils.isEmpty(ua.userCode))
+            {
                 val msg = NdefMessage(arrayOf(NdefRecord.createMime("application/vnd.co.touchlab.droidconandroid",
                         ua.userCode.toByteArray())
                         , NdefRecord.createApplicationRecord("co.touchlab.droidconandroid")))
@@ -361,36 +396,44 @@ open class ScheduleActivity : AppCompatActivity(), NfcAdapter.CreateNdefMessageC
     }
 
     @Suppress("unused", "UNUSED_PARAMETER")
-    fun onEventMainThread(eventDetailTask: RefreshScheduleData) {
+    fun onEventMainThread(eventDetailTask: RefreshScheduleData)
+    {
         Handler().post(RefreshRunnable())
     }
 
     @Suppress("unused", "UNUSED_PARAMETER")
-    fun onEventMainThread(command: UploadProfilePhotoTask) {
+    fun onEventMainThread(command: UploadProfilePhotoTask)
+    {
         drawer_recycler.adapter.notifyDataSetChanged()
         setupToolbar()
     }
 
     @Suppress("unused", "UNUSED_PARAMETER")
-    fun onEventMainThread(command: UploadCoverCommand) {
+    fun onEventMainThread(command: UploadCoverCommand)
+    {
         drawer_recycler.adapter.notifyDataSetChanged()
     }
 
     @Suppress("unused", "UNUSED_PARAMETER")
-    fun onEventMainThread(notificationEvent: UpdateAllowNotificationEvent) {
+    fun onEventMainThread(notificationEvent: UpdateAllowNotificationEvent)
+    {
         //Have to handle the notification card way out here so it can update both fragments.
         //Set the app prefs and bounce it back down to the adapter
         updateNotifications(notificationEvent.allow)
     }
 
-    class ConfHost : ConferenceDataHost {
-        override fun loadCallback(conferenceDayHolders: Array<out ConferenceDayHolder>?) {
+    class ConfHost : ConferenceDataHost
+    {
+        override fun loadCallback(conferenceDayHolders: Array<out ConferenceDayHolder>?)
+        {
             EventBusExt.getDefault().post(conferenceDayHolders)
         }
     }
 
-    inner class RefreshRunnable() : Runnable {
-        override fun run() {
+    inner class RefreshRunnable() : Runnable
+    {
+        override fun run()
+        {
             conferenceDataPresenter?.unregister()
             conferenceDataPresenter = ConferenceDataPresenter(this@ScheduleActivity,
                     ConfHost(),
@@ -400,16 +443,19 @@ open class ScheduleActivity : AppCompatActivity(), NfcAdapter.CreateNdefMessageC
             val startString: String? = AppPrefs.getInstance(this@ScheduleActivity).conventionStartDate
             val endString: String? = AppPrefs.getInstance(this@ScheduleActivity).conventionEndDate
 
-            if (!TextUtils.isEmpty(startString) && !TextUtils.isEmpty(endString)) {
+            if (!TextUtils.isEmpty(startString) && !TextUtils.isEmpty(endString))
+            {
                 var start: Long = TimeUtils.sanitize(TimeUtils.DATE_FORMAT.get().parse(startString))
                 val end: Long = TimeUtils.sanitize(TimeUtils.DATE_FORMAT.get().parse(endString))
 
-                while (start <= end) {
+                while (start <= end)
+                {
                     dates.add(start)
                     start += DateUtils.DAY_IN_MILLIS
                 }
 
-                if(view_pager.adapter == null) {
+                if (view_pager.adapter == null)
+                {
                     view_pager.adapter = ScheduleFragmentPagerAdapter(
                             supportFragmentManager,
                             dates,
@@ -421,33 +467,41 @@ open class ScheduleActivity : AppCompatActivity(), NfcAdapter.CreateNdefMessageC
         }
     }
 
-    class ScheduleFragmentPagerAdapter(fm: FragmentManager, dates: List<Long>, allEvents: Boolean) : FragmentPagerAdapter(fm) {
+    class ScheduleFragmentPagerAdapter(fm: FragmentManager, dates: List<Long>, allEvents: Boolean) : FragmentPagerAdapter(fm)
+    {
         private var dates = dates
         private var allEvents = allEvents
         private var fragmentManager = fm
 
         private val tabDateFormat = TimeUtils.makeDateFormat("MMM dd")
 
-        override fun getCount(): Int {
+        override fun getCount(): Int
+        {
             return dates.size
         }
 
-        override fun getItem(position: Int): ScheduleDataFragment? {
+        override fun getItem(position: Int): ScheduleDataFragment?
+        {
             return createScheduleDataFragment(allEvents, dates[position], position)
         }
 
-        override fun getPageTitle(position: Int): CharSequence? {
+        override fun getPageTitle(position: Int): CharSequence?
+        {
             return tabDateFormat.format(Date(dates[position]))
         }
 
-        fun updateFrags(track: Track) {
-            for (fragment in fragmentManager.fragments) {
-                    (fragment as? ScheduleDataFragment)?.filter(track)
+        fun updateFrags(track: Track)
+        {
+            for (fragment in fragmentManager.fragments)
+            {
+                (fragment as? ScheduleDataFragment)?.filter(track)
             }
         }
 
-        fun updateNotifCard() {
-            for (fragment in fragmentManager.fragments) {
+        fun updateNotifCard()
+        {
+            for (fragment in fragmentManager.fragments)
+            {
                 (fragment as? ScheduleDataFragment)?.updateNotifCard()
             }
         }
