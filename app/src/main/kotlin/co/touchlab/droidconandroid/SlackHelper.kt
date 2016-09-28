@@ -49,6 +49,8 @@ class SlackHelper {
                     return
                 }
             }
+
+            intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
             activity.startActivity(intent)
         }
     }
