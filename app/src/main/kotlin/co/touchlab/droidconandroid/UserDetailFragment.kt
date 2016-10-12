@@ -121,7 +121,8 @@ class UserDetailFragment() : Fragment()
             {
                 override fun onSuccess()
                 {
-                    placeholder_emoji.text = ""
+                    if(placeholder_emoji != null)
+                       placeholder_emoji.text = ""
                 }
 
                 override fun onError()
