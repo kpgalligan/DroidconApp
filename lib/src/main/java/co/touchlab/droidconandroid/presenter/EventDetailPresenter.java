@@ -75,7 +75,7 @@ public class EventDetailPresenter extends AbstractEventBusPresenter
 
     public void onEventMainThread(EventVideoDetailsTask task)
     {
-        if(task.getEventId() == eventId)
+        if(task.getEventId() == eventId && eventDetailLoadTask != null)
         {
             eventVideoDetailsTask = task;
             host.videoDataRefresh();
