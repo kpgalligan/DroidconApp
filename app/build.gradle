@@ -37,7 +37,7 @@ repositories {
 
 android {
     compileSdkVersion 24
-    buildToolsVersion '22.0.1'
+    buildToolsVersion "24.0.3"
 
     defaultConfig {
         applicationId "co.touchlab.droidconandroid"
