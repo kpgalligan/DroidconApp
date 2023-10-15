@@ -192,7 +192,9 @@ class EventDetailAdapter(val context: Context, val frag:EventDetailFragment, val
                 nameView.setTextColor(trackColor)
 
                 speakerVH.itemView.setOnClickListener({
-                    UserDetailActivity.callMe(context as Activity, user.userCode)
+                    if (!TextUtils.isEmpty(user.userCode)) {
+                        UserDetailActivity.callMe(context as Activity, user.userCode)
+                    }
                 })
 
                 val bioSpanned = Html.fromHtml(StringUtils.trimToEmpty(user.bio)!!)
